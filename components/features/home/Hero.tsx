@@ -18,6 +18,7 @@ export default async function Hero() {
 
   return (
     <section
+      id="inicio"
       className="relative min-h-screen flex items-center pt-16 grain overflow-hidden"
       role="main"
       aria-label={t("title") + " " + t("subtitle")}
@@ -65,7 +66,7 @@ export default async function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link href="#categories" passHref>
+              <Link href="#invitaciones" passHref>
                 <Button
                   size="lg"
                   className="shadow-elegant group"

@@ -8,10 +8,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import React from "react";
 import Image from "next/image";
+import { useURLParams } from "@/hooks/useURLParams";
+import { scrollToSection } from "@/utils/scrolls";
 
 interface CategoriesSwiperProps {
   categories: Category[];
@@ -20,8 +21,8 @@ interface CategoriesSwiperProps {
 const CategoriesSwiperComponent = function CategoriesSwiper({
   categories,
 }: CategoriesSwiperProps) {
-  const locale = useLocale();
   const t = useTranslations("Categories");
+  const { updateParam } = useURLParams("categories");
 
   return (
     <Swiper
@@ -75,15 +76,20 @@ const CategoriesSwiperComponent = function CategoriesSwiper({
               <p className="text-sm text-white/90 mb-4">
                 {category.description}
               </p>
-              <Link href={`/${locale}/templates?categories=${category.id}`}>
-                <div className="flex items-center text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span>{t("viewDesigns")}</span>
-                  <ArrowRight
-                    className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
-                    aria-hidden="true"
-                  />
-                </div>
-              </Link>
+              <button
+                type="button"
+                className="flex items-center text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                onClick={() => {
+                  updateParam([category.id]);
+                  scrollToSection("invitaciones");
+                }}
+              >
+                <span>{t("viewDesigns")}</span>
+                <ArrowRight
+                  className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </button>
             </div>
           </div>
         </SwiperSlide>

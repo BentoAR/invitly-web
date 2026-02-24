@@ -1,26 +1,23 @@
 import { getTranslations } from "next-intl/server";
-import { getLocale } from "next-intl/server";
 import { Instagram, Mail, Phone, Sparkles } from "lucide-react";
 import { Container } from "./Container";
-import Link from "next/link";
 
 export default async function Footer() {
   const t = await getTranslations("Footer");
-  const locale = await getLocale();
   return (
     <footer className="border-t bg-secondary/30 mt-20">
       <Container>
         <div className="py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <Link
-              href={`/${locale}`}
+            <a
+              href="#inicio"
               className="flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity"
             >
               <Sparkles className="h-6 w-6 text-primary" />
               <span className="font-display text-xl font-semibold">
                 Invitly
               </span>
-            </Link>
+            </a>
             <p className="text-sm text-muted-foreground max-w-md">
               {t("description")}
             </p>
@@ -30,28 +27,28 @@ export default async function Footer() {
             <h4 className="font-semibold mb-4">{t("navigation")}</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link
-                  href={`/${locale}`}
+                <a
+                  href="#inicio"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t("home")}
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  href={`/${locale}/templates`}
+                <a
+                  href="#invitaciones"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t("invitations")}
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  href={`/${locale}/contact`}
+                <a
+                  href="#contacto"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t("contact")}
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

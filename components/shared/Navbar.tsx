@@ -1,5 +1,4 @@
 "use client";
-import { Link } from "@/src/i18n/routing";
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { Menu, X, Sparkles } from "lucide-react";
@@ -8,14 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { LanguageToggle } from "@/components/ui/language-toggle";
 import { Container } from "@/components/shared/Container";
-import { scrollToSection } from "@/utils/scrolls";
 
 export const Navbar = () => {
   const t = useTranslations("Navbar");
   const navLinks = [
-    { name: t("inicio"), id: "/" },
-    { name: t("invitaciones"), id: "/templates" },
-    { name: t("contacto"), id: "/contact" },
+    { name: t("inicio"), id: "inicio" },
+    { name: t("invitaciones"), id: "invitaciones" },
+    { name: t("contacto"), id: "contacto" },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -37,24 +35,20 @@ export const Navbar = () => {
     >
       <Container>
         <div className="flex h-16 items-center justify-between">
-          <button
-            onClick={() => scrollToSection("inicio")}
-            className="flex items-center gap-2 group"
-          >
+          <a href="#inicio" className="flex items-center gap-2 group">
             <Sparkles className="h-6 w-6 text-primary transition-transform group-hover:rotate-12" />
             <span className="font- text-xl font-semibold">{t("brand")}</span>
-          </button>
+          </a>
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.id}
-                href={link.id}
-                prefetch={true}
+                href={`#${link.id}`}
                 className="text-sm font-medium transition-colors hover:text-primary relative text-foreground"
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -75,15 +69,14 @@ export const Navbar = () => {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <div className="flex flex-col gap-6 mt-8 ml-4">
                 {navLinks.map((link) => (
-                  <Link
-                    prefetch
+                  <a
                     key={link.id}
-                    href={link.id}
+                    href={`#${link.id}`}
                     className="text-lg font-medium transition-colors hover:text-primary text-left text-foreground"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.name}
-                  </Link>
+                  </a>
                 ))}
               </div>
             </SheetContent>
