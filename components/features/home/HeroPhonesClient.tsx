@@ -20,222 +20,135 @@ export default function HeroPhonesClient({
 }: HeroPhonesClientProps) {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const floatTweensRef = useRef<gsap.core.Tween[]>([]);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      if (topRef.current && bottomRef.current) {
-        const root = document.querySelector("#inicio");
-        const q = root ? gsap.utils.selector(root) : null;
-        const titleEl =
-          q && (q("[data-hero='title']")[0] as HTMLElement | undefined);
-        const subtitleEl =
-          q && (q("[data-hero='subtitle']")[0] as HTMLElement | undefined);
-        const ctaEl =
-          q && (q("[data-hero='cta']")[0] as HTMLElement | undefined);
+      const top = topRef.current;
+      const bottom = bottomRef.current;
+      if (!top || !bottom) return;
 
-        gsap.set(
-          [topRef.current, bottomRef.current, titleEl, subtitleEl, ctaEl],
-          { autoAlpha: 0 }
+      const root = document.querySelector("#inicio");
+      const q = root ? gsap.utils.selector(root) : null;
+      const titleEl =
+        q && (q("[data-hero='title']")[0] as HTMLElement | undefined);
+      const subtitleEl =
+        q && (q("[data-hero='subtitle']")[0] as HTMLElement | undefined);
+      const ctaEl =
+        q && (q("[data-hero='cta']")[0] as HTMLElement | undefined);
+      const contentEl =
+        q && (q("[data-hero='content']")[0] as HTMLElement | undefined);
+
+      const allEls = [top, bottom, titleEl, subtitleEl, ctaEl].filter(
+        Boolean
+      ) as HTMLElement[];
+
+      gsap.set(allEls, { autoAlpha: 0 });
+
+      const intro = gsap.timeline();
+      intro
+        .fromTo(
+          top,
+          { y: -40, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.9, ease: "power3.out" }
+        )
+        .fromTo(
+          bottom,
+          { y: -60, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 1.1, ease: "power3.out" },
+          0.08
         );
 
-        const intro = gsap.timeline();
-        intro
-          .fromTo(
-            topRef.current,
-            { y: -40, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.9, ease: "power3.out" }
-          )
-          .fromTo(
-            bottomRef.current,
-            { y: -60, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 1.1, ease: "power3.out" },
-            0.08
-          )
-          .add(() => {
-            gsap.to(topRef.current, {
+      if (titleEl) {
+        intro.fromTo(
+          titleEl,
+          { y: 24, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" },
+          0.05
+        );
+      }
+      if (subtitleEl) {
+        intro.fromTo(
+          subtitleEl,
+          { y: 20, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.85, ease: "power3.out" },
+          0.12
+        );
+      }
+      if (ctaEl) {
+        intro.fromTo(
+          ctaEl,
+          { y: 16, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.9, ease: "power3.out" },
+          0.2
+        );
+      }
+
+      intro.add(() => {
+        const floatTop = gsap.to(top, {
+          y: -12,
+          duration: 1.7,
+          ease: "sine.inOut",
+          repeat: -1,
+          yoyo: true,
+        });
+        const floatBottom = gsap.to(bottom, {
+          y: 16,
+          duration: 3.1,
+          ease: "sine.inOut",
+          repeat: -1,
+          yoyo: true,
+        });
+        floatTweensRef.current = [floatTop, floatBottom];
+      });
+
+      const scrollOut = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#inicio",
+          start: "top top",
+          endTrigger: "#invitaciones",
+          end: "top top",
+          scrub: 1.2,
+          pin: true,
+          anticipatePin: 1,
+          onEnter: () => {
+            floatTweensRef.current.forEach((tw) => tw.kill());
+            gsap.set(top, { y: 0 });
+            gsap.set(bottom, { y: 0 });
+          },
+          onLeaveBack: () => {
+            gsap.set(top, { y: 0 });
+            gsap.set(bottom, { y: 0 });
+            const floatTop = gsap.to(top, {
               y: -12,
               duration: 1.7,
               ease: "sine.inOut",
               repeat: -1,
               yoyo: true,
             });
-            gsap.to(bottomRef.current, {
+            const floatBottom = gsap.to(bottom, {
               y: 16,
               duration: 3.1,
               ease: "sine.inOut",
               repeat: -1,
               yoyo: true,
             });
-          });
-
-        intro
-          .fromTo(
-            titleEl,
-            { y: 24, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" },
-            0.05
-          )
-          .fromTo(
-            subtitleEl,
-            { y: 20, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.85, ease: "power3.out" },
-            0.12
-          )
-          .fromTo(
-            ctaEl,
-            { y: 16, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.9, ease: "power3.out" },
-            0.2
-          );
-      }
-
-      if (topRef.current && bottomRef.current) {
-        const root = document.querySelector("#inicio");
-        const q = root ? gsap.utils.selector(root) : null;
-        const contentEl =
-          q && (q("[data-hero='content']")[0] as HTMLElement | undefined);
-        const titleEl =
-          q && (q("[data-hero='title']")[0] as HTMLElement | undefined);
-        const subtitleEl =
-          q && (q("[data-hero='subtitle']")[0] as HTMLElement | undefined);
-        const ctaEl =
-          q && (q("[data-hero='cta']")[0] as HTMLElement | undefined);
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: "#inicio",
-            start: "top top",
-            end: "+=520",
-            scrub: 1.4,
-            pin: true,
-            anticipatePin: 1,
+            floatTweensRef.current = [floatTop, floatBottom];
           },
-        });
+        },
+      });
 
-        tl.to(topRef.current, { yPercent: -160, ease: "none" }, 0)
-          .to(
-            bottomRef.current,
-            { xPercent: 90, yPercent: 90, ease: "none" },
-            0
-          )
-          .to(
-            titleEl,
-            { xPercent: -140, ease: "none" },
-            0
-          )
-          .to(
-            subtitleEl,
-            { xPercent: -120, ease: "none" },
-            0.06
-          )
-          .to(
-            ctaEl,
-            { xPercent: -100, ease: "none" },
-            0.12
-          )
-          .to(
-            contentEl,
-            { xPercent: -120, ease: "none" },
-            0
-          );
-
-        gsap.to(topRef.current, {
-          yPercent: -220,
-          ease: "none",
-          scrollTrigger: {
-            trigger: "#inicio",
-            start: "bottom top",
-            end: "bottom+=300 top",
-            scrub: 1.4,
-          },
-        });
-
-        gsap.to(bottomRef.current, {
-          xPercent: 120,
-          yPercent: 120,
-          ease: "none",
-          scrollTrigger: {
-            trigger: "#inicio",
-            start: "bottom top",
-            end: "bottom+=300 top",
-            scrub: 1.4,
-          },
-        });
-
-        if (titleEl) {
-          gsap.to(titleEl, {
-            xPercent: -180,
-            ease: "none",
-            scrollTrigger: {
-              trigger: "#inicio",
-              start: "bottom top",
-              end: "bottom+=300 top",
-              scrub: 1.4,
-            },
-          });
-        }
-
-        if (subtitleEl) {
-          gsap.to(subtitleEl, {
-            xPercent: -160,
-            ease: "none",
-            scrollTrigger: {
-              trigger: "#inicio",
-              start: "bottom top",
-              end: "bottom+=300 top",
-              scrub: 1.4,
-            },
-          });
-        }
-
-        if (ctaEl) {
-          gsap.to(ctaEl, {
-            xPercent: -140,
-            ease: "none",
-            scrollTrigger: {
-              trigger: "#inicio",
-              start: "bottom top",
-              end: "bottom+=300 top",
-              scrub: 1.4,
-            },
-          });
-        }
-
-        if (contentEl) {
-          gsap.to(contentEl, {
-            xPercent: -160,
-            ease: "none",
-            scrollTrigger: {
-              trigger: "#inicio",
-              start: "bottom top",
-              end: "bottom+=300 top",
-              scrub: 0.8,
-            },
-          });
-        }
-
-        gsap.to(topRef.current, {
-          x: 22,
-          ease: "sine.inOut",
-          scrollTrigger: {
-            trigger: "#inicio",
-            start: "top top",
-            end: "+=520",
-            scrub: 1.4,
-          },
-        });
-
-        gsap.to(bottomRef.current, {
-          x: -18,
-          ease: "sine.inOut",
-          scrollTrigger: {
-            trigger: "#inicio",
-            start: "top top",
-            end: "+=520",
-            scrub: 1.4,
-          },
-        });
-      }
+      scrollOut
+        .to(top, { yPercent: -220, x: 22, ease: "none" }, 0)
+        .to(
+          bottom,
+          { xPercent: 120, yPercent: 120, x: -18, ease: "none" },
+          0
+        )
+        .to(titleEl, { xPercent: -180, ease: "none" }, 0)
+        .to(subtitleEl, { xPercent: -160, ease: "none" }, 0.04)
+        .to(ctaEl, { xPercent: -140, ease: "none" }, 0.08)
+        .to(contentEl, { xPercent: -160, ease: "none" }, 0);
     });
 
     return () => ctx.revert();
