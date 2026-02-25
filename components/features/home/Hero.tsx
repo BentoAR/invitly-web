@@ -1,10 +1,11 @@
 import { ArrowRight, PhoneCall, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/shared/Container";
-import heroImage from "@/assets/hero-event.jpg";
-import Image from "next/image";
+import phoneTopImage from "@/assets/imgi_28_1771333296-compressor-png-image.png";
+import phoneBottomImage from "@/assets/imgi_30_1770851752-bottom-png-image.png";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+import HeroPhonesClient from "@/components/features/home/HeroPhonesClient";
 
 export default async function Hero() {
   const t = await getTranslations("Hero");
@@ -30,42 +31,29 @@ export default async function Hero() {
 
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[600px]">
-          <div className="order-2 lg:order-1">
-            <div className="relative rounded-2xl overflow-hidden shadow-elegant">
-              <Image
-                src={heroImage}
-                alt={t("imageAlt")}
-                className="w-full h-[400px] lg:h-[600px] object-cover"
-                width={1200}
-                height={600}
-                priority
-                role="img"
-              />
-              <div
-                className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"
-                aria-hidden="true"
-              />
-            </div>
-          </div>
-
-          <div className="order-1 lg:order-2 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-              <Sparkles className="h-4 w-4" aria-hidden="true" />
-              <span>{t("badge")}</span>
-            </div>
-
-            <h1 className="font-display text-4xl md:text-5xl lg:text-5xl font-bold mb-6 leading-tight">
+          <div
+            data-hero="content"
+            className="order-1 lg:order-1 text-center lg:text-left"
+          >
+            <h1
+              data-hero="title"
+              className="font-display text-5xl sm:text-6xl lg:text-7xl font-normal mb-6 leading-tight"
+            >
               {t("title")}{" "}
-              <span className="relative inline-block text-primary">
-                <span className="inset-0">{words[0]}</span>
-              </span>
+         
             </h1>
 
-            <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0">
+            <p
+              data-hero="subtitle"
+              className="text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0"
+            >
               {t("subtitle")}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div
+              data-hero="cta"
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            >
               <Link href="#invitaciones" passHref>
                 <Button
                   size="lg"
@@ -106,6 +94,13 @@ export default async function Hero() {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="order-2 lg:order-2">
+            <HeroPhonesClient
+              topImage={phoneTopImage}
+              bottomImage={phoneBottomImage}
+              imageAlt={t("imageAlt")}
+            />
           </div>
         </div>
       </Container>
