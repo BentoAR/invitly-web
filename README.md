@@ -1,4 +1,4 @@
-# Invitly - Plataforma de Invitaciones Digitales
+# bento - Plataforma de Invitaciones Digitales
 
 Aplicación web para explorar y solicitar invitaciones digitales personalizadas.
 
@@ -37,7 +37,7 @@ Aplicación web para explorar y solicitar invitaciones digitales personalizadas.
 ```bash
 # Clonar el repositorio
 git clone <repository-url>
-cd invitly-front
+cd bento-front
 
 # Instalar dependencias
 npm install
@@ -68,7 +68,7 @@ npm run lint
 ## 📁 Estructura del Proyecto
 
 ```
-invitly-front/
+bento-front/
 ├── app/[locale]/          # Pages (Home, Templates, Contact)
 ├── components/
 │   ├── features/         # Por feature (home, templates, contact)

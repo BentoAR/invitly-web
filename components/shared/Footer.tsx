@@ -15,7 +15,7 @@ export default async function Footer() {
             >
               <Sparkles className="h-6 w-6 text-primary" />
               <span className="font-display text-xl font-semibold">
-                Invitly
+                Bento
               </span>
             </a>
             <p className="text-sm text-muted-foreground max-w-md">
@@ -62,7 +62,7 @@ export default async function Footer() {
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Mail className="h-4 w-4" />
-                <span>hola@Invitly.com</span>
+                <span>hola@Bento.com</span>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Instagram className="h-4 w-4" />
@@ -72,7 +72,7 @@ export default async function Footer() {
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"
                 >
-                  @Invitly
+                  @Bento
                 </a>
               </li>
             </ul>

@@ -11,7 +11,7 @@ import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
 import ChatBot from "@/components/shared/ChatBot";
 
 export const metadata = {
-  title: "Invitly - Invitaciones Digitales Personalizadas",
+  title: "Bento",
   description:
     "Crea invitaciones digitales personalizadas para cualquier evento. Elige tu categoría y sorprende a tus invitados con diseños exclusivos.",
 };

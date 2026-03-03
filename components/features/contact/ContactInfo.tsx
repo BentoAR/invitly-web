@@ -40,10 +40,10 @@ export default function ContactInfo() {
               <p className="font-medium">{t("email")}</p>
               <p className="text-sm text-muted-foreground">
                 <a
-                  href="mailto:hola@Invitly.com"
-                  aria-label={t("email") + " hola@Invitly.com"}
+                  href="mailto:hola@Bento.com"
+                  aria-label={t("email") + " hola@Bento.com"}
                 >
-                  hola@Invitly.com
+                  hola@Bento.com
                 </a>
               </p>
             </div>
@@ -59,9 +59,9 @@ export default function ContactInfo() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:underline"
-                aria-label="Instagram Invitly (abre en nueva pestaña)"
+                aria-label="Instagram Bento (abre en nueva pestaña)"
               >
-                @Invitly
+                @Bento
               </a>
             </div>
           </div>
