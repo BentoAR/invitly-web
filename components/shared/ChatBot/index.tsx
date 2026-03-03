@@ -14,7 +14,6 @@ export default function ChatBot() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const welcomeSentRef = useRef(false);
 
-  // Auto scroll al final de los mensajes
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -23,7 +22,6 @@ export default function ChatBot() {
     scrollToBottom();
   }, [messages]);
 
-  // Función para enviar mensaje del bot
   const sendBotMessage = useCallback((stepId: string) => {
     const step = chatbotSteps[stepId];
     if (!step) return;
@@ -44,7 +42,6 @@ export default function ChatBot() {
     }, step.delay || 800);
   }, []);
 
-  // Enviar mensaje de bienvenida solo una vez al abrir
   useEffect(() => {
     if (isOpen && messages.length === 0 && !welcomeSentRef.current) {
       welcomeSentRef.current = true;
@@ -57,7 +54,6 @@ export default function ChatBot() {
     }
   }, [isOpen, messages.length, sendBotMessage]);
 
-  // Función para manejar la selección de opciones
   const handleOptionClick = (option: ChatOption) => {
     // Agregar mensaje del usuario
     setMessages((prev) => {
@@ -70,7 +66,6 @@ export default function ChatBot() {
       return [...prev, userMessage];
     });
 
-    // Manejar la acción según el tipo
     switch (option.action) {
       case "respond":
         if (option.nextStep) {
@@ -81,19 +76,18 @@ export default function ChatBot() {
         break;
 
       case "navigate":
-        // No hay navegación activa en este flujo
         break;
 
       case "contact":
         if (option.id === "whatsapp") {
-          const whatsappUrl = `https://wa.me/${chatbotConfig.whatsappNumber}?text=Hola,%20necesito%20ayuda%20con%20Invitly`;
+          const whatsappUrl = `https://wa.me/${chatbotConfig.whatsappNumber}?text=Hola,%20necesito%20ayuda%20con%20Bento`;
           window.open(whatsappUrl, "_blank");
         }
         break;
 
       case "external":
         if (option.id === "send_email") {
-          const mailtoUrl = `mailto:${chatbotConfig.contactEmail}?subject=Consulta desde Invitly`;
+          const mailtoUrl = `mailto:${chatbotConfig.contactEmail}?subject=Consulta desde Bento`;
           window.open(mailtoUrl, "_blank");
         }
         break;
@@ -137,7 +131,7 @@ export default function ChatBot() {
                 🤖
               </div>
               <div>
-                <h3 className="font-bold text-lg">Asistente Invitly</h3>
+                <h3 className="font-bold text-lg">Asistente Bento</h3>
                 <p className="text-xs opacity-90">Siempre disponible</p>
               </div>
             </div>
@@ -209,7 +203,7 @@ export default function ChatBot() {
             )}
 
           <div className="p-3 bg-background text-center text-xs text-primary border-t border-primary">
-            Powered by Invitly • Siempre aquí para ayudarte 💜
+            Powered by Bento • Siempre aquí para ayudarte 💜
           </div>
         </div>
       )}

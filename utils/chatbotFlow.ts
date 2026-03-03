@@ -6,7 +6,7 @@ export const chatbotSteps: Record<string, ChatStep> = {
   welcome: {
     id: "welcome",
     message:
-      "¡Hola! 👋 Soy el asistente virtual de Invitly. ¿En qué puedo ayudarte hoy?",
+      "¡Hola! 👋 Soy el asistente virtual de Bento. ¿En qué puedo ayudarte hoy?",
     options: [
       {
         id: "pricing",
@@ -42,7 +42,7 @@ export const chatbotSteps: Record<string, ChatStep> = {
   pricing: {
     id: "pricing",
     message:
-      "Tenemos un único plan:\n\n💎 Plan Invitly\n• Valor: $20.000 (pago único por invitación)\n• Acceso a todas las plantillas premium\n• Entrega de la invitación lista hasta 3 meses antes del evento\n• Soporte prioritario por WhatsApp y email\n• Sin marca de agua\n\n¿Te gustaría saber cómo funciona la entrega o el proceso de compra?",
+      "Tenemos un único plan:\n\n💎 Plan Bento\n• Valor: $20.000 (pago único por invitación)\n• Acceso a todas las plantillas premium\n• Entrega de la invitación lista hasta 3 meses antes del evento\n• Soporte prioritario por WhatsApp y email\n• Sin marca de agua\n\n¿Te gustaría saber cómo funciona la entrega o el proceso de compra?",
     options: [
       {
         id: "whatsapp",
@@ -142,7 +142,7 @@ export const chatbotConfig = {
   welcomeMessage: chatbotSteps.welcome.message,
   fallbackMessage:
     "Lo siento, no entendí eso. ¿Puedes elegir una de las opciones del menú?",
-  contactEmail: "soporte@invitly.com",
+  contactEmail: "soporte@Bento.com",
   contactPhone: "+1234567890",
   whatsappNumber: "1234567890",
 };
