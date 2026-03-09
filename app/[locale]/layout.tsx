@@ -8,7 +8,6 @@ import { notFound } from "next/navigation";
 import { routing } from "@/src/i18n/routing";
 import { Toaster } from "@/components/ui/sonner";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
-import ChatBot from "@/components/shared/ChatBot";
 
 export const metadata = {
   title: "Bento",
@@ -43,7 +42,6 @@ export default async function RootLayout({
             <Navbar />
             <main>{children}</main>
             <Footer />
-            <ChatBot />
           </ReactQueryProvider>
         </NextIntlClientProvider>
       </body>
