@@ -106,10 +106,10 @@ export default function HeroPhonesClient({
         scrollTrigger: {
           trigger: "#inicio",
           start: "top top",
-          endTrigger: "#invitaciones",
-          end: "top top",
+          end: "+=160%",
           scrub: 1.2,
           pin: true,
+          pinSpacing: false,
           anticipatePin: 1,
           onEnter: () => {
             floatTweensRef.current.forEach((tw) => tw.kill());
@@ -155,30 +155,38 @@ export default function HeroPhonesClient({
   }, []);
 
   return (
-    <div className="relative h-[640px] sm:h-[740px] lg:h-[900px]">
-      <div
-        ref={topRef}
-        className="absolute left-1/2 -translate-x-1/2 top-8 z-20 w-[108%] sm:w-[102%] lg:w-[96%]"
-      >
-        <Image
-          src={topImage}
-          alt={imageAlt}
-          className="w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.25)]"
-          priority
-          role="img"
-        />
-      </div>
-      <div
-        ref={bottomRef}
-        className="absolute left-1/2 -translate-x-1/2 top-32 z-10 w-[100%] sm:w-[94%] lg:w-[88%]"
-      >
-        <Image
-          src={bottomImage}
-          alt={imageAlt}
-          className="w-full h-auto drop-shadow-[0_24px_50px_rgba(0,0,0,0.25)]"
-          priority
-          role="img"
-        />
+    <div
+      className="fixed inset-0 pointer-events-none hidden lg:block"
+      style={{ zIndex: 20 }}
+      aria-hidden="true"
+    >
+      <div className="absolute right-0 top-0 w-1/2 h-full flex items-center">
+        <div className="relative w-[85%] mx-auto h-[640px]">
+          <div
+            ref={topRef}
+            className="absolute left-1/2 -translate-x-1/2 top-8 w-[78%]"
+          >
+            <Image
+              src={topImage}
+              alt={imageAlt}
+              className="w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.25)]"
+              priority
+              role="img"
+            />
+          </div>
+          <div
+            ref={bottomRef}
+            className="absolute left-1/2 -translate-x-1/2 top-28 w-[70%]"
+          >
+            <Image
+              src={bottomImage}
+              alt={imageAlt}
+              className="w-full h-auto drop-shadow-[0_24px_50px_rgba(0,0,0,0.25)]"
+              priority
+              role="img"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

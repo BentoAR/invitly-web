@@ -22,6 +22,27 @@
     "loading": "Loading",
     "viewDesigns": "View designs"
   },
+  "HowItWorks": {
+    "badge": "Super simple",
+    "title": "Your invitation in 3 steps",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Choose your design",
+        "description": "Browse over 200 unique designs. Weddings, quinceañeras, birthdays and more. Find the one that best represents your celebration."
+      },
+      {
+        "number": "02",
+        "title": "Customize the details",
+        "description": "Add your event info, photos, music and colors. No technical knowledge needed. Your invitation is ready in under 5 minutes."
+      },
+      {
+        "number": "03",
+        "title": "Share with your guests",
+        "description": "Send the link via WhatsApp, Instagram or email. Guests confirm their attendance with one click and you see it in real time."
+      }
+    ]
+  },
   "Features": {
     "badge": "All included",
     "title": "What does your invitation include?",

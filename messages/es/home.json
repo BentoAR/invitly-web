@@ -22,6 +22,27 @@
     "loading": "Cargando",
     "viewDesigns": "Ver diseños"
   },
+  "HowItWorks": {
+    "badge": "Súper simple",
+    "title": "Tu invitación en 3 pasos",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Elegí tu diseño",
+        "description": "Explorá más de 200 diseños únicos. Casamientos, quinceaños, cumpleaños y más. Encontrá el que mejor representa tu celebración."
+      },
+      {
+        "number": "02",
+        "title": "Personalizá los detalles",
+        "description": "Agregá la información del evento, fotos, música y colores. Sin conocimientos técnicos. En menos de 5 minutos tenés tu invitación lista."
+      },
+      {
+        "number": "03",
+        "title": "Compartí con tus invitados",
+        "description": "Enviá el link por WhatsApp, Instagram o email. Tus invitados confirman asistencia con un clic y vos lo ves en tiempo real."
+      }
+    ]
+  },
   "Features": {
     "badge": "Todo incluido",
     "title": "¿Qué incluye tu invitación?",
