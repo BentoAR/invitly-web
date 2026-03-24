@@ -57,7 +57,7 @@ export default function TemplatesSection() {
         id="invitaciones"
         className="relative min-h-screen"
         style={{
-          backgroundColor: "#C4A882", // Color accent
+          backgroundColor: "#EDE9DA",
           zIndex: 30, // Mayor que HowItWorks (25) para taparlo
           position: "relative",
           isolation: "isolate",
@@ -77,7 +77,7 @@ export default function TemplatesSection() {
         >
           <path
             ref={pathRef}
-            fill="#C4A882" // Mismo color que el background de la section
+            fill="#EDE9DA"
             d="M 0 600 Q 50 -50, 100 600 L 100 700 L 0 700 Z"
           />
         </svg>
