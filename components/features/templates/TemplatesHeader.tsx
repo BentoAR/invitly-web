@@ -1,4 +1,9 @@
-export function TemplatesHeader() {
+type TemplatesHeaderProps = {
+  title: string;
+  description: string;
+};
+
+export function TemplatesHeader({ title, description }: TemplatesHeaderProps) {
   return (
     <div className="mb-12 md:mb-16">
       <p
@@ -19,12 +24,14 @@ export function TemplatesHeader() {
           letterSpacing: "-0.03em",
         }}
       >
-        Invitaciones
-        <br />
-        <span style={{ color: "rgba(32,0,65,0.45)", fontStyle: "italic" }}>
-          que enamoran.
-        </span>
+        {title}
       </h2>
+      <p
+        className="mt-4 max-w-2xl text-base md:text-lg"
+        style={{ color: "rgba(32,0,65,0.7)" }}
+      >
+        {description}
+      </p>
       <div
         className="mt-8 h-px w-16"
         style={{ backgroundColor: "#bc8129", opacity: 0.6 }}
