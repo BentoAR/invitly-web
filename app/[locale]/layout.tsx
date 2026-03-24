@@ -1,4 +1,5 @@
 import { ReactQueryProvider } from "@/components/shared/ReactQueryProvider";
+import { SmoothScroll } from "@/components/shared/SmoothScroll";
 import "./globals.css";
 import { Navbar } from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
@@ -40,7 +41,9 @@ export default async function RootLayout({
           <ReactQueryProvider>
             <Toaster />
             <Navbar />
-            <main>{children}</main>
+            <SmoothScroll>
+              <main>{children}</main>
+            </SmoothScroll>
             <Footer />
           </ReactQueryProvider>
         </NextIntlClientProvider>

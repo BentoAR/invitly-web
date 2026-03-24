@@ -278,6 +278,7 @@ export default function HowItWorksClient({
           aria-hidden="true"
         />
 
+
         <div ref={headerRef} className="absolute top-16 left-0 right-0 text-center px-8 lg:right-auto lg:w-1/2 lg:text-left lg:pl-16 lg:pr-8 z-10">
           <p className="font-mono text-xs tracking-[0.3em] uppercase mb-4" style={{ color: "rgba(32,0,65,0.4)" }}>
             {subtitle}

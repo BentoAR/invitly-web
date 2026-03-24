@@ -23,7 +23,7 @@ export default function TemplatesSection() {
       const startCurve = "M 0 600 Q 50 -50, 100 600 L 100 700 L 0 700 Z";
       const endCurve = "M 0 600 Q 50 500, 100 600 L 100 700 L 0 700 Z";
 
-      gsap.set(path, { attr: { d: startCurve } });
+      gsap.set(path, { attr: { d: startCurve }, visibility: "visible" });
 
       gsap.to(path, {
         attr: { d: endCurve },
@@ -66,6 +66,7 @@ export default function TemplatesSection() {
           ref={pathRef}
           fill="#EDE9DA"
           d="M 0 600 Q 50 -50, 100 600 L 100 700 L 0 700 Z"
+          style={{ visibility: "hidden" }}
         />
       </svg>
 
