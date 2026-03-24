@@ -144,11 +144,20 @@ export default function HeroPhonesClient({
           bottom,
           { xPercent: 120, yPercent: 120, x: -18, ease: "none" },
           0
-        )
-        .to(titleEl, { xPercent: -180, ease: "none" }, 0)
-        .to(subtitleEl, { xPercent: -160, ease: "none" }, 0.04)
-        .to(ctaEl, { xPercent: -140, ease: "none" }, 0.08)
-        .to(contentEl, { xPercent: -160, ease: "none" }, 0);
+        );
+
+      if (titleEl) {
+        scrollOut.to(titleEl, { xPercent: -180, ease: "none" }, 0);
+      }
+      if (subtitleEl) {
+        scrollOut.to(subtitleEl, { xPercent: -160, ease: "none" }, 0.04);
+      }
+      if (ctaEl) {
+        scrollOut.to(ctaEl, { xPercent: -140, ease: "none" }, 0.08);
+      }
+      if (contentEl) {
+        scrollOut.to(contentEl, { xPercent: -160, ease: "none" }, 0);
+      }
     });
 
     return () => ctx.revert();

@@ -43,25 +43,25 @@ describe("Componente Hero", () => {
     const HeroComponent = await Hero();
     render(HeroComponent);
 
-    const categoriesButton = screen.getByRole("link", {
-      name: /ver categorías/i,
-    });
-    expect(categoriesButton).toHaveAttribute("href", "#categories");
+    const categoriesButton = screen.getByLabelText(/ver categorías/i);
+    const link = categoriesButton.closest("a");
+    expect(link).toHaveAttribute("href", "#invitaciones");
   });
 
   it("debería tener un botón de contacto que abra WhatsApp con el mensaje correcto", async () => {
     const HeroComponent = await Hero();
     render(HeroComponent);
 
-    const contactButton = screen.getByRole("link", { name: /contactanos/i });
+    const contactButton = screen.getByLabelText(/contactanos/i);
+    const link = contactButton.closest("a");
     const expectedMessage = encodeURIComponent(
       "Hola! 👋 Me das una mano para hacer mi invitacion digital?"
     );
     const expectedHref = `https://wa.me/5491112345678?text=${expectedMessage}`;
 
-    expect(contactButton).toHaveAttribute("href", expectedHref);
-    expect(contactButton).toHaveAttribute("target", "_blank");
-    expect(contactButton).toHaveAttribute("rel", "noopener noreferrer");
+    expect(link).toHaveAttribute("href", expectedHref);
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
 
   it("debería mostrar las estadísticas correctamente", async () => {

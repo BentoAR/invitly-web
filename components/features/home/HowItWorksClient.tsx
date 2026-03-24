@@ -92,20 +92,20 @@ export default function HowItWorksClient({
           .fromTo(rightPanelRefs.current[0], { x: 60, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: "power2.out", duration: 0.5 }, 0.5);
       });
 
-      const scrollLength = (n - 1) * window.innerHeight * 3.5;
+      const scrollLength = (n - 1) * window.innerHeight * 2.2;
       ScrollTrigger.create({ trigger: section, pin: true, start: "top top", end: `+=${scrollLength}`, anticipatePin: 1 });
 
       const colParallax = [
-        { from:   0, to: 100 },
-        { from:  80, to:   0 },
-        { from:   0, to: 100 },
+        { from:   0, to: 280 },
+        { from: 220, to:   0 },
+        { from:   0, to: 280 },
       ];
       colRefs.current.forEach((el, ci) => {
         if (!el) return;
         const { from, to } = colParallax[ci];
         gsap.fromTo(el,
           { y: from },
-          { y: to, ease: "none", scrollTrigger: { trigger: section, start: "top top", end: `+=${scrollLength}`, scrub: 2 } }
+          { y: to, ease: "none", scrollTrigger: { trigger: section, start: "top top", end: `+=${scrollLength}`, scrub: 0.8 } }
         );
       });
 
@@ -116,17 +116,17 @@ export default function HowItWorksClient({
       tl.to({}, { duration: 1.5 });
 
       for (let i = 0; i < n - 1; i++) {
-        tl.to(descRefs.current[i], { height: 0, autoAlpha: 0, duration: 0.3, ease: "power2.in" });
-        tl.to(titleRefs.current[i], { opacity: 0.35, duration: 0.3 }, "<");
-        tl.to(bgNumRefs.current[i], { autoAlpha: 0, duration: 0.25 }, "<");
-        tl.to(dotRefs.current[i], { scale: 0.5, opacity: 0.3, duration: 0.2 }, "<");
+        tl.to(descRefs.current[i], { height: 0, autoAlpha: 0, duration: 0.6, ease: "power2.in" });
+        tl.to(titleRefs.current[i], { opacity: 0.35, duration: 0.6 }, "<");
+        tl.to(bgNumRefs.current[i], { autoAlpha: 0, duration: 0.5 }, "<");
+        tl.to(dotRefs.current[i], { scale: 0.5, opacity: 0.3, duration: 0.4 }, "<");
 
-        tl.to(rightPanelRefs.current[i + 1], { y: "0%", duration: 0.5, ease: "power3.out" }, "<0.05");
+        tl.to(rightPanelRefs.current[i + 1], { y: "0%", duration: 0.9, ease: "power3.out" }, "<0.05");
 
-        tl.to(descRefs.current[i + 1], { height: heights[i + 1], autoAlpha: 1, duration: 0.35, ease: "power2.out" });
-        tl.to(titleRefs.current[i + 1], { opacity: 1, duration: 0.3 }, "<");
-        tl.to(bgNumRefs.current[i + 1], { autoAlpha: 1, duration: 0.3 }, "<");
-        tl.to(dotRefs.current[i + 1], { scale: 1, opacity: 1, duration: 0.2 }, "<");
+        tl.to(descRefs.current[i + 1], { height: heights[i + 1], autoAlpha: 1, duration: 0.7, ease: "power2.out" });
+        tl.to(titleRefs.current[i + 1], { opacity: 1, duration: 0.6 }, "<");
+        tl.to(bgNumRefs.current[i + 1], { autoAlpha: 1, duration: 0.6 }, "<");
+        tl.to(dotRefs.current[i + 1], { scale: 1, opacity: 1, duration: 0.4 }, "<");
 
         tl.to({}, { duration: 1.5 });
       }
@@ -140,7 +140,7 @@ export default function HowItWorksClient({
       id="como-funciona"
       ref={sectionRef}
       className="relative h-screen overflow-hidden flex flex-col items-center justify-center"
-      style={{ backgroundColor: "#ffffff", zIndex: 10, position: "relative", isolation: "isolate" }}
+      style={{ backgroundColor: "#ffffff", zIndex: 25, position: "relative", isolation: "isolate" }}
       aria-label={sectionTitle}
     >
       <div
@@ -205,6 +205,18 @@ export default function HowItWorksClient({
             className="absolute inset-0 flex items-center justify-center"
             style={{ backgroundColor: "#DADAC9" }}
           >
+            {si === 1 && (
+              <>
+                <Image
+                  src="https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/backgrounds/optimized.webp"
+                  alt=""
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+                <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.35)" }} />
+              </>
+            )}
             {si === 0 && templateImages.length > 0 && (
               <div className="absolute inset-0 flex gap-6 overflow-hidden px-6">
                 <div ref={(el) => { colRefs.current[0] = el; }} className="flex flex-col gap-10 flex-1" style={{ marginLeft: "-45%", height: "calc(100% + 200px)", marginTop: "-100px" }}>

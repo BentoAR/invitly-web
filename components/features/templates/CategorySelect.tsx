@@ -61,6 +61,7 @@ export function CategorySelect() {
         if (cat) addCategory(cat);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories]);
 
   if (!categories) return null;

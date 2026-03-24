@@ -45,7 +45,7 @@ export default function ContactForm() {
         position: "top-right",
       });
       form.reset();
-    } catch (error) {
+    } catch {
       toast.error(t("form.error"), {
         description: t("form.errorDescription"),
         position: "top-right",
