@@ -85,7 +85,7 @@ export default function HowItWorksClient({
           .fromTo(rightPanelRefs.current[0], { x: 60, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: "power2.out", duration: 0.5 }, 0.5);
 
         // Pin de la sección (solo desktop)
-        const scrollLength = (n - 1) * window.innerHeight * 2.2;
+        const scrollLength = (n - 1) * window.innerHeight * 5.5;
         ScrollTrigger.create({
           trigger: section,
           pin: true,
