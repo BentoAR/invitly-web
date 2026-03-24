@@ -19,16 +19,20 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScroll();
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
       setHasScrolled(latest > 50);
+      setIsHidden(latest > window.innerHeight * 0.85);
     });
     return () => unsubscribe();
   }, [scrollY]);
 
   return (
     <motion.nav
+      animate={{ y: isHidden ? "-100%" : "0%" }}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-border/20 ${
         hasScrolled ? "shadow-md bg-background/95 backdrop-blur-md" : ""
       }`}
