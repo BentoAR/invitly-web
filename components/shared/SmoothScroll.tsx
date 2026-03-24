@@ -9,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // No aplicar en mobile — el scroll táctil nativo ya tiene inercia
     if (window.innerWidth < 768) return;
 
     const lenis = new Lenis({
@@ -18,7 +17,6 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       smoothWheel: true,
     });
 
-    // Conectar Lenis con GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
     gsap.ticker.add((time) => {

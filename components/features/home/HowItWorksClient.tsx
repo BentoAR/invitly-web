@@ -33,6 +33,7 @@ export default function HowItWorksClient({
   templateImages?: string[];
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const dotsContainerRef = useRef<HTMLDivElement>(null);
@@ -131,6 +132,9 @@ export default function HowItWorksClient({
 
           stepTl.to({}, { duration: 1.5 });
         }
+
+        // Oscurecer al final del timeline, cuando TemplatesSection entra
+        stepTl.to(overlayRef.current, { opacity: 1, duration: 1.5, ease: "none" });
 
         // Cleanup automático cuando matchMedia deja de aplicar
         return () => {};
@@ -275,6 +279,12 @@ export default function HowItWorksClient({
         <div
           className="absolute inset-y-0 right-0 w-1/2"
           style={{ backgroundColor: "#DADAC9", zIndex: 0 }}
+          aria-hidden="true"
+        />
+        <div
+          ref={overlayRef}
+          className="absolute inset-0 pointer-events-none"
+          style={{ backgroundColor: "rgba(0,0,0,0.75)", opacity: 0, zIndex: 40 }}
           aria-hidden="true"
         />
 
