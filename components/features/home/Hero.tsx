@@ -5,6 +5,7 @@ import phoneTopImage from "@/assets/imgi_28_1771333296-compressor-png-image.png"
 import phoneBottomImage from "@/assets/imgi_30_1770851752-bottom-png-image.png";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+import Image from "next/image";
 import HeroPhonesClient from "@/components/features/home/HeroPhonesClient";
 import HeroTypewriter from "@/components/features/home/HeroTypewriter";
 
@@ -97,8 +98,27 @@ export default async function Hero() {
                 ))}
               </div>
             </div>
-            {/* Right column empty on desktop — phones rendered in fixed overlay below */}
-            <div className="order-2 lg:order-2" aria-hidden="true" />
+            {/* Right column: phones in mobile flow (lg:hidden) — desktop uses fixed overlay */}
+            <div className="order-2 lg:order-2" aria-hidden="true">
+              <div className="lg:hidden relative h-[340px] mt-4">
+                <div className="absolute inset-x-0 mx-auto top-0 w-[72%] animate-float-slow drop-shadow-[0_24px_48px_rgba(0,0,0,0.22)]">
+                  <Image
+                    src={phoneTopImage}
+                    alt={t("imageAlt")}
+                    className="w-full h-auto"
+                    priority
+                  />
+                </div>
+                <div className="absolute inset-x-0 mx-auto top-16 w-[64%] animate-float-medium drop-shadow-[0_20px_40px_rgba(0,0,0,0.20)]">
+                  <Image
+                    src={phoneBottomImage}
+                    alt={t("imageAlt")}
+                    className="w-full h-auto"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </section>
