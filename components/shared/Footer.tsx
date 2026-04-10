@@ -44,6 +44,14 @@ export default async function Footer() {
               </li>
               <li>
                 <a
+                  href="#precios"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t("pricing")}
+                </a>
+              </li>
+              <li>
+                <a
                   href="#contacto"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
@@ -79,8 +87,9 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="py-6 border-t text-center text-sm text-muted-foreground">
+        <div className="py-6 border-t flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-muted-foreground">
           <p>{t("copyright")}</p>
+          <p>{t("madeIn")}</p>
         </div>
       </Container>
     </footer>

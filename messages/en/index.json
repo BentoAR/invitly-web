@@ -2,17 +2,22 @@
   "Navbar": {
     "inicio": "Home",
     "invitaciones": "Invitations",
+    "precios": "Pricing",
     "contacto": "Contact",
-    "brand": "Bento"
+    "brand": "Bento",
+    "login": "Log in",
+    "cta": "Create my invitation"
   },
   "Footer": {
     "description": "We create unique and elegant digital invitations for your most special moments. Personalized design with cutting-edge technology.",
     "navigation": "Navigation",
     "home": "Home",
     "invitations": "Invitations",
+    "pricing": "Pricing",
     "contact": "Contact",
     "contactTitle": "Contact",
-    "copyright": "© 2025 Bento. All rights reserved."
+    "madeIn": "Made with ♥ in Argentina",
+    "copyright": "© 2026 Bento. All rights reserved."
   },
   "WhatsappHelp": {
     "helpButton": "Need help? Talk to us"

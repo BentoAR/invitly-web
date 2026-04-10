@@ -1,4 +1,4 @@
-import { ArrowRight, PhoneCall } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/shared/Container";
 import phoneTopImage from "@/assets/imgi_28_1771333296-compressor-png-image.png";
@@ -8,6 +8,10 @@ import Link from "next/link";
 import Image from "next/image";
 import HeroPhonesClient from "@/components/features/home/HeroPhonesClient";
 import HeroTypewriter from "@/components/features/home/HeroTypewriter";
+
+const APP_URL = "https://app.bento.com.ar";
+// TODO: reemplazar con el link de una invitación pública de demo (sin login)
+const DEMO_INVITATION_URL = "#";
 
 export default async function Hero() {
   const t = await getTranslations("Hero");
@@ -57,35 +61,38 @@ export default async function Hero() {
                 data-hero="cta"
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
-                <Link href="#invitaciones" passHref>
+                <Link href={`${APP_URL}/register`} target="_blank" rel="noopener noreferrer">
                   <Button
                     size="lg"
-                    className="shadow-elegant group"
-                    aria-label={t("button.categories")}
+                    className="shadow-elegant group w-full sm:w-auto"
+                    aria-label={t("button.primary")}
                   >
-                    {t("button.categories")}
+                    {t("button.primary")}
                     <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                   </Button>
                 </Link>
                 <Link
-                  href={`https://wa.me/5491112345678?text=${encodeURIComponent(
-                    t("whatsappMessage")
-                  )}`}
+                  href={DEMO_INVITATION_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <Button
                     variant="outline"
                     size="lg"
-                    aria-label={t("button.contact")}
+                    className="w-full sm:w-auto"
+                    aria-label={t("button.secondary")}
                   >
-                    {t("button.contact")}
-                    <PhoneCall className="ml-2 h-4 w-4" aria-hidden="true" />
+                    {t("button.secondary")}
+                    <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
                   </Button>
                 </Link>
               </div>
 
-              <div className="mt-12 grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
+              <p className="mt-4 text-xs text-muted-foreground text-center lg:text-left">
+                {t("trust")}
+              </p>
+
+              <div className="mt-10 grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
                 {stats.map((stat, index) => (
                   <div key={index}>
                     <div className="font-display text-3xl font-bold text-primary">

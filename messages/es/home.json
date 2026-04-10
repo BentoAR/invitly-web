@@ -2,14 +2,15 @@
   "Hero": {
     "badge": "Invitaciones únicas y personalizadas",
     "title": "Todo tu evento, en un solo lugar.",
-    "subtitle": "Bento reúne diseño, invitaciones y gestión de invitados en una sola plataforma.",
+    "subtitle": "Diseñá, enviá y gestioná las confirmaciones de tus invitados — todo desde el celular, en menos de 5 minutos.",
     "button": {
-      "categories": "Ver categorías",
-      "contact": "Contactanos"
+      "primary": "Crear mi invitación gratis",
+      "secondary": "Ver un ejemplo real"
     },
+    "trust": "Sin tarjeta de crédito · Listo en minutos · +10.000 eventos en Argentina",
     "stats": {
-      "designs": "Diseños",
-      "clients": "Clientes",
+      "designs": "Plantillas disponibles",
+      "clients": "Eventos organizados",
       "satisfaction": "Satisfacción"
     },
     "words": ["especiales", "únicos"],
@@ -29,17 +30,17 @@
       {
         "number": "01",
         "title": "Elegí tu diseño",
-        "description": "Explorá más de 200 diseños únicos. Casamientos, quinceaños, cumpleaños y más. Encontrá el que mejor representa tu celebración."
+        "description": "Elegí entre más de 200 plantillas hechas por diseñadores. Casamiento campestre, quinceañero moderno, cumpleaños infantil — hay para todos los estilos."
       },
       {
         "number": "02",
         "title": "Personalizá los detalles",
-        "description": "Agregá la información del evento, fotos, música y colores. Sin conocimientos técnicos. En menos de 5 minutos tenés tu invitación lista."
+        "description": "Editá el texto, las fotos, la música y los colores — sin saber de diseño ni tecnología. Si podés usar WhatsApp, podés usar Bento."
       },
       {
         "number": "03",
         "title": "Compartí con tus invitados",
-        "description": "Enviá el link por WhatsApp, Instagram o email. Tus invitados confirman asistencia con un clic y vos lo ves en tiempo real."
+        "description": "Mandá el link por WhatsApp o Instagram. Cada invitado confirma con un toque y vos ves las confirmaciones en tiempo real, sin llamar a nadie."
       }
     ]
   },
@@ -49,28 +50,20 @@
     "description": "Cada invitación viene con todas las herramientas que necesitas para crear una experiencia memorable para tus invitados",
     "features": [
       {
-        "title": "Diseño Personalizado",
-        "description": "Cada invitación es única y diseñada especialmente para tu evento"
+        "title": "Invitaciones que impresionan",
+        "description": "Tus invitados no van a poder creer que una invitación digital puede verse así. Animaciones, tipografías premium y diseños únicos para cada tipo de evento."
       },
       {
-        "title": "100% Digital",
-        "description": "Invitaciones interactivas que se ven perfectas en cualquier dispositivo"
+        "title": "Confirmaciones en tiempo real",
+        "description": "Sabé exactamente quién viene y quién no, sin llamar a nadie. Tu lista de invitados actualizada al instante, desde cualquier celular."
       },
       {
-        "title": "Gestión de RSVP",
-        "description": "Controla confirmaciones y gestiona tu lista de invitados automáticamente"
+        "title": "Enviá por donde quieras",
+        "description": "Un solo link que funciona en WhatsApp, Instagram, email o donde quieras. Sin apps, sin downloads, sin complicaciones para tus invitados."
       },
       {
-        "title": "Recordatorios",
-        "description": "Envío automático de recordatorios para que nadie se olvide de tu evento"
-      },
-      {
-        "title": "Galería Interactiva",
-        "description": "Incluye fotos y videos que cobran vida con animaciones elegantes"
-      },
-      {
-        "title": "Música de Fondo",
-        "description": "Añade la banda sonora perfecta para crear el ambiente ideal"
+        "title": "Playlist colaborativa",
+        "description": "Dejá que tus invitados agreguen las canciones que quieren escuchar. El DJ del evento, elegido por todos."
       }
     ],
     "benefitsTitle": "Y mucho más incluido",

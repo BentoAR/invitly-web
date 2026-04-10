@@ -1,21 +1,10 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  Palette,
-  Smartphone,
-  Users,
-  Bell,
-  Camera,
-  Music,
-  LucideIcon,
-} from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const ICONS: LucideIcon[] = [Palette, Smartphone, Users, Bell, Camera, Music];
 
 type Feature = { title: string; description: string };
 
@@ -27,304 +16,311 @@ export default function FeaturesScrollSequence({
   sectionTitle: string;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const blockRefs = useRef<(HTMLDivElement | null)[]>([]);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const progressRef = useRef<HTMLDivElement>(null);
+  const eyebrowRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const imageInnerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useLayoutEffect(() => {
-    const n = features.length;
-    const section = sectionRef.current;
-    if (!section || n === 0) return;
+  useEffect(() => {
+    if (features.length === 0) return;
+
+    // Set initial states before ScrollTrigger calculates positions
+    // to prevent flash of unstyled content on slow connections
+    features.forEach((_, i) => {
+      const text = textRefs.current[i];
+      const eyebrow = eyebrowRefs.current[i];
+      const image = imageRefs.current[i];
+
+      if (text) gsap.set(text, { y: 60, opacity: 0 });
+      if (eyebrow) gsap.set(eyebrow, { y: 20, opacity: 0 });
+      if (image) gsap.set(image, { y: 40, opacity: 0, scale: 0.92 });
+    });
+
+    // After lazy-load, give the browser one frame to finalize layout
+    // before ScrollTrigger calculates trigger positions.
+    const rafId = requestAnimationFrame(() => ScrollTrigger.refresh());
 
     const ctx = gsap.context(() => {
-      textRefs.current.forEach((el, i) =>
-        gsap.set(el, { autoAlpha: i === 0 ? 1 : 0, y: i === 0 ? 0 : 48 })
-      );
-      cardRefs.current.forEach((el, i) =>
-        gsap.set(el, { autoAlpha: i === 0 ? 1 : 0, y: i === 0 ? 0 : 24 })
-      );
-      dotRefs.current.forEach((el, i) =>
-        gsap.set(el, { scale: i === 0 ? 1 : 0.6, opacity: i === 0 ? 1 : 0.25 })
-      );
-      gsap.set(progressRef.current, {
-        scaleX: 0,
-        transformOrigin: "left center",
+      features.forEach((_, i) => {
+        const block = blockRefs.current[i];
+        const text = textRefs.current[i];
+        const eyebrow = eyebrowRefs.current[i];
+        const image = imageRefs.current[i];
+        const imageInner = imageInnerRefs.current[i];
+
+        if (!block || !text || !image) return;
+
+        // Eyebrow number: entra primero, fade + y corto
+        if (eyebrow) {
+          gsap.fromTo(
+            eyebrow,
+            { y: 20, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: block,
+                start: "top 85%",
+                end: "top 60%",
+                scrub: 1.2,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        }
+
+        // Texto: entrada dramática desde abajo con clipPath reveal
+        // y: 60 → 0 + opacity mientras el bloque sube en viewport
+        gsap.fromTo(
+          text,
+          {
+            y: 60,
+            opacity: 0,
+            clipPath: "inset(0 0 100% 0)",
+          },
+          {
+            y: 0,
+            opacity: 1,
+            clipPath: "inset(0 0 0% 0)",
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: block,
+              start: "top 85%",
+              end: "top 30%",
+              scrub: 1.2,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+
+        // Imagen: entra con y + scale, staggered respecto al texto
+        // (end más tardío = termina de entrar después que el texto)
+        gsap.fromTo(
+          image,
+          { y: 40, opacity: 0, scale: 0.92 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: block,
+              start: "top 80%",
+              end: "top 25%",
+              scrub: 1.5,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+
+        // Parallax interno: image inner viaja y -40 → 40 mientras
+        // el bloque completo cruza el viewport (efecto depth)
+        if (imageInner) {
+          gsap.fromTo(
+            imageInner,
+            { y: -40 },
+            {
+              y: 40,
+              ease: "none",
+              scrollTrigger: {
+                trigger: block,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        }
       });
+    }, sectionRef);
 
-      const scrollLength = (n - 1) * window.innerHeight;
-
-      ScrollTrigger.create({
-        trigger: section,
-        pin: true,
-        start: "top top",
-        end: `+=${scrollLength}`,
-        anticipatePin: 1,
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: `+=${scrollLength}`,
-          scrub: 1.6,
-        },
-      });
-
-      for (let i = 0; i < n - 1; i++) {
-        tl.to(textRefs.current[i], {
-          y: -48,
-          autoAlpha: 0,
-          duration: 0.3,
-          ease: "power2.in",
-        });
-        tl.to(
-          cardRefs.current[i],
-          { y: -24, autoAlpha: 0, duration: 0.28, ease: "power2.in" },
-          "<"
-        );
-        tl.to(dotRefs.current[i], { scale: 0.6, opacity: 0.25, duration: 0.2 }, "<");
-        tl.to(dotRefs.current[i + 1], { scale: 1, opacity: 1, duration: 0.2 }, "<");
-        tl.to(
-          progressRef.current,
-          { scaleX: (i + 1) / (n - 1), duration: 0.4, ease: "none" },
-          "<"
-        );
-
-        tl.fromTo(
-          textRefs.current[i + 1],
-          { y: 48, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.3, ease: "power2.out" }
-        );
-        tl.fromTo(
-          cardRefs.current[i + 1],
-          { y: 24, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.3, ease: "power2.out" },
-          "<"
-        );
-
-        tl.to({}, { duration: 0.55 });
-      }
-    }, section);
-
-    return () => ctx.revert();
+    return () => {
+      cancelAnimationFrame(rafId);
+      ctx.revert();
+    };
   }, [features.length]);
 
   return (
     <section
       id="caracteristicas"
       ref={sectionRef}
-      className="relative h-screen overflow-hidden flex items-center"
-      style={{ backgroundColor: "#0e0c1a" }}
       aria-label={sectionTitle}
+      style={{ backgroundColor: "#ffffff", overflow: "hidden" }}
     >
-      {/* Ambient glow — top left */}
+      {/* ── Section header ── */}
       <div
-        className="absolute -top-40 -left-40 w-[560px] h-[560px] rounded-full pointer-events-none"
+        className="max-w-6xl mx-auto px-8 lg:px-16"
         style={{
-          background:
-            "radial-gradient(circle, rgba(32,0,65,0.9) 0%, transparent 70%)",
+          paddingTop: "clamp(80px, 12vh, 140px)",
+          paddingBottom: "clamp(60px, 8vh, 100px)",
         }}
-        aria-hidden="true"
-      />
-      {/* Ambient glow — bottom right */}
-      <div
-        className="absolute -bottom-40 -right-20 w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(188,129,41,0.07) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+      >
+        <p
+          className="font-mono text-xs tracking-[0.35em] uppercase mb-5"
+          style={{ color: "#bc8129" }}
+        >
+          Funcionalidades
+        </p>
+        <h2
+          className="font-display font-normal leading-[1.08]"
+          style={{
+            fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+            color: "#200041",
+            letterSpacing: "-0.03em",
+          }}
+        >
+          Todo lo que necesitás
+          <br />
+          <span style={{ fontStyle: "italic", color: "rgba(32,0,65,0.35)" }}>
+            para tu evento.
+          </span>
+        </h2>
+      </div>
 
-      <div className="w-full max-w-[82rem] mx-auto px-8 lg:px-16 grid grid-cols-1 lg:grid-cols-[1fr_1px_1fr] gap-0 lg:gap-0 items-center h-full">
+      {/* ── Feature blocks ── */}
+      {features.map((feature, i) => {
+        const textIsLeft = i % 2 === 0;
+        const isLast = i === features.length - 1;
 
-        {/* Left — text panels */}
-        <div className="relative h-full flex items-center pr-0 lg:pr-20">
-          {features.map((feature, i) => {
-            const Icon = ICONS[i % ICONS.length];
-            return (
-              <div
-                key={i}
-                ref={(el) => {
-                  textRefs.current[i] = el;
-                }}
-                className="absolute left-0"
-              >
-                {/* Counter */}
-                <div
-                  className="font-mono text-xs tracking-[0.35em] uppercase mb-8 flex items-center gap-3"
-                  style={{ color: "#bc8129" }}
-                >
-                  <span>{String(i + 1).padStart(2, "0")}</span>
-                  <span
-                    className="flex-1 h-px max-w-[40px]"
-                    style={{ background: "rgba(188,129,41,0.4)" }}
-                  />
-                  <span style={{ color: "rgba(255,252,247,0.3)" }}>
-                    {String(features.length).padStart(2, "0")}
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h3
-                  className="font-display font-normal leading-[1.1] mb-8"
-                  style={{
-                    fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-                    color: "#fffcf7",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  {feature.title}
-                </h3>
-
-                {/* Description */}
-                <p
-                  className="leading-relaxed max-w-sm"
-                  style={{
-                    fontSize: "1.0625rem",
-                    color: "rgba(255,252,247,0.55)",
-                    lineHeight: "1.75",
-                  }}
-                >
-                  {feature.description}
-                </p>
-
-                {/* Icon badge */}
-                <div className="mt-10 flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{
-                      background: "rgba(255,252,247,0.05)",
-                      border: "1px solid rgba(255,252,247,0.08)",
-                    }}
-                  >
-                    <Icon
-                      className="w-4 h-4"
-                      style={{ color: "rgba(255,252,247,0.4)" }}
-                      strokeWidth={1.5}
-                    />
-                  </div>
-                  <span
-                    className="text-xs tracking-widest uppercase font-medium"
-                    style={{ color: "rgba(255,252,247,0.25)" }}
-                  >
-                    {feature.title}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Divider */}
-        <div
-          className="hidden lg:block self-stretch my-16"
-          style={{ background: "rgba(255,252,247,0.06)" }}
-          aria-hidden="true"
-        />
-
-        {/* Right — decorative cards */}
-        <div className="hidden lg:flex relative h-full items-center justify-center pl-20">
-          {features.map((feature, i) => (
-            <div
-              key={i}
+        const textBlock = (
+          <div
+            ref={(el) => {
+              textRefs.current[i] = el;
+            }}
+            style={{ willChange: "transform, opacity" }}
+          >
+            {/* Eyebrow */}
+            <p
               ref={(el) => {
-                cardRefs.current[i] = el;
+                eyebrowRefs.current[i] = el;
               }}
-              className="absolute w-full max-w-sm"
+              className="font-mono text-xs tracking-[0.35em] uppercase mb-5"
+              style={{ color: "#bc8129", willChange: "transform, opacity" }}
             >
-              <div
-                className="relative rounded-2xl overflow-hidden p-10"
+              {String(i + 1).padStart(2, "0")}
+            </p>
+
+            {/* Title */}
+            <h3
+              className="font-display font-normal leading-[1.1] mb-6"
+              style={{
+                fontSize: "clamp(2.5rem, 4.5vw, 4rem)",
+                color: "#200041",
+                letterSpacing: "-0.03em",
+              }}
+            >
+              {feature.title}
+            </h3>
+
+            {/* Description */}
+            <p
+              style={{
+                color: "rgba(32,0,65,0.55)",
+                fontSize: "1rem",
+                lineHeight: "1.75",
+                maxWidth: "45ch",
+              }}
+            >
+              {feature.description}
+            </p>
+          </div>
+        );
+
+        const imageBlock = (
+          <div
+            ref={(el) => {
+              imageRefs.current[i] = el;
+            }}
+            className="w-full overflow-hidden"
+            style={{
+              borderRadius: "1.5rem",
+              willChange: "transform, opacity",
+            }}
+          >
+            <div
+              ref={(el) => {
+                imageInnerRefs.current[i] = el;
+              }}
+              className="w-full flex items-center justify-center"
+              style={{
+                aspectRatio: "4/3",
+                background:
+                  "linear-gradient(135deg, #DADAC9 0%, #EDE9DA 100%)",
+                // scale: 1.15 creates the parallax bleed so inner content
+                // can shift y without showing gaps at the edges
+                transform: "scale(1.15)",
+              }}
+            >
+              <span
+                className="font-display italic select-none"
                 style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,252,247,0.04) 0%, rgba(255,252,247,0.01) 100%)",
-                  border: "1px solid rgba(255,252,247,0.07)",
-                  backdropFilter: "blur(8px)",
+                  fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)",
+                  color: "rgba(32,0,65,0.3)",
+                  letterSpacing: "-0.01em",
+                  // counteract parent scale so text reads at normal size
+                  transform: "scale(0.87)",
+                  display: "block",
                 }}
               >
-                {/* Large background number */}
-                <div
-                  className="absolute -bottom-4 -right-2 font-display font-normal leading-none select-none pointer-events-none"
-                  style={{
-                    fontSize: "clamp(8rem, 18vw, 14rem)",
-                    color: "rgba(255,252,247,0.035)",
-                    letterSpacing: "-0.04em",
-                  }}
-                  aria-hidden="true"
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </div>
+                {feature.title}
+              </span>
+            </div>
+          </div>
+        );
 
-                {/* Card content */}
-                <div className="relative z-10">
-                  <div
-                    className="text-xs tracking-[0.25em] uppercase font-mono mb-6"
-                    style={{ color: "#bc8129" }}
-                  >
-                    Bento
-                  </div>
-                  <div
-                    className="font-display font-normal leading-tight mb-4"
-                    style={{
-                      fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
-                      color: "#fffcf7",
-                      letterSpacing: "-0.01em",
-                    }}
-                  >
-                    {feature.title}
-                  </div>
-                  <p
-                    style={{
-                      fontSize: "0.9375rem",
-                      color: "rgba(255,252,247,0.4)",
-                      lineHeight: "1.7",
-                    }}
-                  >
-                    {feature.description}
-                  </p>
+        return (
+          <div key={i}>
+            {/* Feature block */}
+            <div
+              ref={(el) => {
+                blockRefs.current[i] = el;
+              }}
+              className="max-w-6xl mx-auto px-8 lg:px-16"
+              style={{
+                paddingTop: "clamp(100px, 15vh, 180px)",
+                paddingBottom: "clamp(100px, 15vh, 180px)",
+              }}
+            >
+              {/* Desktop: two-column grid with alternating order */}
+              <div className="hidden lg:grid grid-cols-2 gap-20 items-center">
+                {textIsLeft ? (
+                  <>
+                    <div>{textBlock}</div>
+                    <div>{imageBlock}</div>
+                  </>
+                ) : (
+                  <>
+                    <div>{imageBlock}</div>
+                    <div>{textBlock}</div>
+                  </>
+                )}
+              </div>
 
-                  {/* Gold separator */}
-                  <div
-                    className="mt-8 h-px w-12"
-                    style={{ background: "rgba(188,129,41,0.5)" }}
-                  />
-                </div>
+              {/* Mobile: always image-top, text-bottom */}
+              <div className="flex flex-col gap-10 lg:hidden">
+                <div>{imageBlock}</div>
+                <div>{textBlock}</div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Vertical progress dots — right edge */}
-      <div
-        className="absolute right-6 lg:right-8 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10"
-        aria-hidden="true"
-      >
-        {features.map((_, i) => (
-          <span
-            key={i}
-            ref={(el) => {
-              dotRefs.current[i] = el;
-            }}
-            className="block w-1 h-1 rounded-full"
-            style={{ background: "#bc8129" }}
-          />
-        ))}
-      </div>
-
-      {/* Progress bar — bottom */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px z-10"
-        style={{ background: "rgba(255,252,247,0.06)" }}
-        aria-hidden="true"
-      >
-        <div
-          ref={progressRef}
-          className="h-full origin-left"
-          style={{ background: "#bc8129" }}
-        />
-      </div>
+            {/* Divider between blocks, not after the last */}
+            {!isLast && (
+              <div
+                className="max-w-6xl mx-auto px-8 lg:px-16"
+                aria-hidden="true"
+              >
+                <div
+                  className="w-full h-px"
+                  style={{ background: "rgba(32,0,65,0.06)" }}
+                />
+              </div>
+            )}
+          </div>
+        );
+      })}
     </section>
   );
 }

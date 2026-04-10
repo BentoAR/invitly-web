@@ -2,14 +2,15 @@
   "Hero": {
     "badge": "Unique and personalized invitations",
     "title": "Your entire event, in one place.",
-    "subtitle": "Bento brings together design, invitations, and guest management in a single platform.",
+    "subtitle": "Design, send, and manage your guest confirmations — all from your phone, in under 5 minutes.",
     "button": {
-      "categories": "See categories",
-      "contact": "Contact us"
+      "primary": "Create my invitation for free",
+      "secondary": "See a real example"
     },
+    "trust": "No credit card · Ready in minutes · +10,000 events across Argentina",
     "stats": {
-      "designs": "Designs",
-      "clients": "Clients",
+      "designs": "Templates available",
+      "clients": "Events organized",
       "satisfaction": "Satisfaction"
     },
     "words": ["special", "unique"],
@@ -29,17 +30,17 @@
       {
         "number": "01",
         "title": "Choose your design",
-        "description": "Browse over 200 unique designs. Weddings, quinceañeras, birthdays and more. Find the one that best represents your celebration."
+        "description": "Pick from over 200 designer-made templates. Rustic wedding, modern quinceañera, kids birthday — there's something for every style."
       },
       {
         "number": "02",
         "title": "Customize the details",
-        "description": "Add your event info, photos, music and colors. No technical knowledge needed. Your invitation is ready in under 5 minutes."
+        "description": "Edit the text, photos, music and colors — no design or tech knowledge needed. If you can use WhatsApp, you can use Bento."
       },
       {
         "number": "03",
         "title": "Share with your guests",
-        "description": "Send the link via WhatsApp, Instagram or email. Guests confirm their attendance with one click and you see it in real time."
+        "description": "Send the link via WhatsApp or Instagram. Each guest confirms with a tap and you see confirmations in real time, without calling anyone."
       }
     ]
   },
@@ -49,28 +50,20 @@
     "description": "Each invitation comes with all the tools you need to create a memorable experience for your guests",
     "features": [
       {
-        "title": "Personalized Design",
-        "description": "Each invitation is unique and designed especially for your event"
+        "title": "Invitations that impress",
+        "description": "Your guests won't believe a digital invitation can look this good. Animations, premium typography and unique designs for every event type."
       },
       {
-        "title": "100% Digital",
-        "description": "Interactive invitations that look perfect on any device"
+        "title": "Real-time confirmations",
+        "description": "Know exactly who's coming and who isn't, without calling anyone. Your guest list updated instantly, from any phone."
       },
       {
-        "title": "RSVP Management",
-        "description": "Track confirmations and manage your guest list automatically"
+        "title": "Share anywhere",
+        "description": "One link that works on WhatsApp, Instagram, email or wherever. No apps, no downloads, no friction for your guests."
       },
       {
-        "title": "Reminders",
-        "description": "Automatic reminders so no one forgets your event"
-      },
-      {
-        "title": "Interactive Gallery",
-        "description": "Include photos and videos that come alive with elegant animations"
-      },
-      {
-        "title": "Background Music",
-        "description": "Add the perfect soundtrack to set the ideal mood"
+        "title": "Collaborative playlist",
+        "description": "Let your guests add the songs they want to hear. The event DJ, chosen by everyone."
       }
     ],
     "benefitsTitle": "And much more included",
