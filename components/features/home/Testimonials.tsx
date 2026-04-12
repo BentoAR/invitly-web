@@ -161,7 +161,7 @@ export default function Testimonials() {
     <section
       ref={sectionRef}
       id="testimonios"
-      className="relative py-24 bg-background overflow-hidden"
+      className="relative py-12 md:py-24 bg-background overflow-hidden"
       style={{ zIndex: 40, position: "relative", isolation: "isolate" }}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-16">

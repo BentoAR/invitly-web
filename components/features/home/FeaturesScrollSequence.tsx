@@ -3,6 +3,10 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,7 +59,6 @@ export default function FeaturesScrollSequence({
   const titleWrapRef      = useRef<HTMLDivElement>(null);
   const eyebrowRef        = useRef<HTMLParagraphElement>(null);
   const cardRefs          = useRef<(HTMLDivElement | null)[]>([]);
-  const mobileCardRefs    = useRef<(HTMLDivElement | null)[]>([]);
   const indicatorsRef     = useRef<HTMLDivElement>(null);
   const overlayRef        = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -106,7 +109,7 @@ export default function FeaturesScrollSequence({
       gsap.matchMedia().add("(min-width: 1024px)", () => {
         const phase1 = window.innerHeight * 1;
         const phase2 = window.innerHeight * n * 0.3;
-        const phase3 = window.innerHeight * n * 1;
+        const phase3 = window.innerHeight * n * 1.5;
         const phase4 = window.innerHeight * 0.3;
         const scrollDist = phase1 + phase2 + phase3 + phase4;
 
@@ -124,7 +127,7 @@ export default function FeaturesScrollSequence({
             trigger: desktopSection,
             start: "top top",
             end: `+=${scrollDist}`,
-            scrub: 1.2,
+            scrub: 2.5,
             invalidateOnRefresh: true,
           },
         });
@@ -176,7 +179,7 @@ export default function FeaturesScrollSequence({
           }, focusPhaseStart);
         }
 
-        const focusStep = 1.8;
+        const focusStep = 3;
 
         cards.forEach((card, i) => {
           const startTime = focusPhaseStart + 0.3 + i * focusStep;
@@ -204,13 +207,13 @@ export default function FeaturesScrollSequence({
             zIndex: 100,
             opacity: 1,
             rotation: 0,
-            duration: focusStep * 0.35,
+            duration: focusStep * 0.25,
             ease: "power2.out",
             onStart: () => setActiveIndex(i),
           }, startTime);
 
           // Return to position
-          const returnTime = startTime + focusStep * 0.7;
+          const returnTime = startTime + focusStep * 0.65;
           const slot = CARD_SLOTS[i];
 
           // Hide overlay
@@ -250,27 +253,7 @@ export default function FeaturesScrollSequence({
 
       // ══ MOBILE ══
       gsap.matchMedia().add("(max-width: 1023px)", () => {
-        const mobileCards = mobileCardRefs.current.filter(Boolean) as HTMLDivElement[];
-
-        mobileCards.forEach((card) => {
-          gsap.fromTo(
-            card,
-            { opacity: 0, y: 40 },
-            {
-              opacity: 1,
-              y: 0,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 88%",
-                end: "top 60%",
-                scrub: 1,
-                invalidateOnRefresh: true,
-              },
-            }
-          );
-        });
-
+        // No animations in mobile - keep it simple
         return () => {};
       });
     }, desktopSection);
@@ -363,7 +346,7 @@ export default function FeaturesScrollSequence({
               visibility: "hidden",
             }}
           >
-            <FeatureCard />
+            <FeatureCard feature={features[i % features.length]} />
           </div>
         ))}
 
@@ -393,11 +376,9 @@ export default function FeaturesScrollSequence({
       <section
         id="caracteristicas-mobile"
         aria-label={sectionTitle}
-        className="lg:hidden"
+        className="lg:hidden py-12 md:py-20"
         style={{
           backgroundColor: "#FAFAF9",
-          paddingTop: "clamp(72px, 14vh, 128px)",
-          paddingBottom: "clamp(72px, 14vh, 128px)",
         }}
       >
         <div className="text-center px-6 mb-12">
@@ -415,13 +396,33 @@ export default function FeaturesScrollSequence({
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 px-5 max-w-2xl mx-auto">
+        <Swiper
+          modules={[Pagination]}
+          spaceBetween={20}
+          slidesPerView={1}
+          centeredSlides={true}
+          pagination={{ 
+            clickable: true,
+          }}
+          breakpoints={{
+            640: {
+              slidesPerView: 1.2,
+              spaceBetween: 24,
+            },
+          }}
+          className="features-swiper-pagination max-w-md mx-auto px-5"
+          style={{
+            paddingBottom: "3.5rem"
+          }}
+        >
           {Array.from({ length: N_CARDS }).map((_, i) => (
-            <div key={i} ref={(el) => { mobileCardRefs.current[i] = el; }}>
-              <FeatureCard />
-            </div>
+            <SwiperSlide key={i}>
+              <div style={{ height: "280px" }}>
+                <FeatureCard feature={features[i % features.length]} />
+              </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </section>
     </>
   );
@@ -429,9 +430,12 @@ export default function FeaturesScrollSequence({
 
 // ─── FeatureCard ──────────────────────────────────────────────────────────────
 
-function FeatureCard() {
+function FeatureCard({ feature }: { feature?: { title: string; description: string } }) {
+  if (!feature) return null;
+  
   return (
     <article
+      className="p-6 flex flex-col justify-center"
       style={{
         backgroundColor: "#ffffff",
         border: "1px solid rgba(32,0,65,0.07)",
@@ -440,6 +444,27 @@ function FeatureCard() {
         width: "100%",
         boxShadow: "0 8px 32px rgba(32,0,65,0.08), 0 1px 0 rgba(255,255,255,0.9) inset",
       }}
-    />
+    >
+      <h3 
+        className="font-semibold mb-3"
+        style={{ 
+          fontSize: "clamp(1.1rem, 1.5vw, 1.35rem)", 
+          color: "#200041",
+          lineHeight: 1.3
+        }}
+      >
+        {feature.title}
+      </h3>
+      <p 
+        className="leading-relaxed"
+        style={{
+          fontSize: "clamp(0.9rem, 1.1vw, 1rem)",
+          color: "rgba(32,0,65,0.7)",
+          lineHeight: 1.6
+        }}
+      >
+        {feature.description}
+      </p>
+    </article>
   );
 }

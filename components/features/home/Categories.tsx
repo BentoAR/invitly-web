@@ -24,7 +24,7 @@ export default async function Categories() {
       <WaveDivider flipY height={80} color="accent" />
       <section
         id="categorias"
-        className="py-20 bg-linear-to-b from-accent to-background relative overflow-x-hidden"
+        className="py-12 md:py-20 bg-linear-to-b from-accent to-background relative overflow-x-hidden"
         role="main"
         aria-label={t("title") + " " + t("description")}
       >

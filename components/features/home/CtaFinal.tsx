@@ -97,7 +97,7 @@ export default function CtaFinal() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="contacto" className="py-24 bg-secondary/20">
+    <section ref={sectionRef} id="contacto" className="py-12 md:py-24 bg-secondary/20">
       <Container>
         {/* Dual CTA — split divergente */}
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20">

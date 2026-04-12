@@ -5,7 +5,7 @@ import ContactForm from "@/components/features/contact/ContactForm";
 
 export default async function ContactSection() {
   return (
-    <section id="contacto" className="py-20 bg-secondary/20" role="main">
+    <section id="contacto" className="py-12 md:py-20 bg-secondary/20" role="main">
       <Container>
         <ContactTitle />
         <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">

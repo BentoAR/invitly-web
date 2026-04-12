@@ -78,7 +78,7 @@ export default function SocialProofBanner() {
   return (
     <div
       ref={bannerRef}
-      className="w-full bg-secondary/30 border-y border-border/30 py-4 overflow-hidden cursor-default"
+      className="w-full bg-secondary/30 border-y border-border/30 md:py-4 overflow-hidden cursor-default"
       onMouseEnter={() => tweenRef.current?.pause()}
       onMouseLeave={() => tweenRef.current?.resume()}
     >

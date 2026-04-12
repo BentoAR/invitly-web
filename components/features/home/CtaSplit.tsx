@@ -31,28 +31,31 @@ export default function CtaSplit() {
     const right = rightColRef.current;
     if (!left || !right) return;
 
-    gsap.set(left, { autoAlpha: 0, x: -60 });
-    gsap.set(right, { autoAlpha: 0, x: 60 });
-
     const rafId = requestAnimationFrame(() => ScrollTrigger.refresh());
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: left,
-          start: "top 88%", end: "top 30%",
-          scrub: 1.2, invalidateOnRefresh: true,
-        },
+      // Only animate on desktop
+      gsap.matchMedia().add("(min-width: 1024px)", () => {
+        gsap.set(left, { autoAlpha: 0, x: -60 });
+        gsap.set(right, { autoAlpha: 0, x: 60 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: left,
+            start: "top 88%", end: "top 30%",
+            scrub: 1.2, invalidateOnRefresh: true,
+          },
+        });
+        tl.fromTo(left,
+          { autoAlpha: 0, x: -60 },
+          { autoAlpha: 1, x: 0, ease: "power3.out", duration: 0.6 },
+          0
+        ).fromTo(right,
+          { autoAlpha: 0, x: 60 },
+          { autoAlpha: 1, x: 0, ease: "power3.out", duration: 0.6 },
+          0.1
+        );
       });
-      tl.fromTo(left,
-        { autoAlpha: 0, x: -60 },
-        { autoAlpha: 1, x: 0, ease: "power3.out", duration: 0.6 },
-        0
-      ).fromTo(right,
-        { autoAlpha: 0, x: 60 },
-        { autoAlpha: 1, x: 0, ease: "power3.out", duration: 0.6 },
-        0.1
-      );
 
       // Shimmer en loop sobre el CTA
       if (shimmerRef.current) {
@@ -68,13 +71,13 @@ export default function CtaSplit() {
   }, []);
 
   return (
-    <div ref={sectionRef} className="py-16">
+    <div ref={sectionRef} className="py-8 md:py-16">
       <Container>
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Self-service */}
           <div
             ref={leftColRef}
-            className="flex flex-col gap-5 rounded-2xl border border-primary/30 bg-background p-8"
+            className="flex flex-col gap-5 p-8 border-0 md:rounded-2xl md:border md:border-primary/30 bg-background"
             style={{ willChange: "transform, opacity" }}
           >
             <div>
@@ -104,7 +107,7 @@ export default function CtaSplit() {
 
           <div
             ref={rightColRef}
-            className="flex flex-col justify-center gap-4 rounded-2xl border border-border/60 bg-background/50 p-8"
+            className="flex flex-col justify-center gap-4 p-8 border-0 md:rounded-2xl md:border md:border-border/60 bg-background/50"
             style={{ willChange: "transform, opacity" }}
           >
             <p className="font-mono text-xs tracking-[0.35em] uppercase" style={{ color: "#bc8129" }}>

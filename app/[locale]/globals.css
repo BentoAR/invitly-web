@@ -265,4 +265,24 @@
 
   .animate-float-slow   { animation: float-slow   1.8s ease-in-out infinite; }
   .animate-float-medium { animation: float-medium 3.2s ease-in-out infinite; }
+
+  /* Features Swiper Styles */
+  .features-swiper-pagination .swiper-pagination {
+    bottom: 0 !important;
+  }
+
+  .features-swiper-pagination .swiper-pagination-bullet {
+    width: 10px !important;
+    height: 10px !important;
+    background: rgba(32, 0, 65, 0.2) !important;
+    opacity: 1 !important;
+    transition: all 0.3s ease !important;
+    border-radius: 5px !important;
+  }
+
+  .features-swiper-pagination .swiper-pagination-bullet-active {
+    width: 32px !important;
+    background: #bc8129 !important;
+    box-shadow: 0 2px 8px rgba(188, 129, 41, 0.4) !important;
+  }
 }

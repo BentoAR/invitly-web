@@ -149,7 +149,7 @@ export default function HowItWorksClient({
       {/* ─── MOBILE LAYOUT (< lg) ─── */}
       <section
         id="como-funciona"
-        className="lg:hidden px-6 py-20"
+        className="lg:hidden px-6 py-12 md:py-20"
         style={{ backgroundColor: "#ffffff" }}
         aria-label={sectionTitle}
       >
