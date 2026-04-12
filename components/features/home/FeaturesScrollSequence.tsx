@@ -1,12 +1,48 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 type Feature = { title: string; description: string };
+
+// ─── Fixed card count ─────────────────────────────────────────────────────────
+const N_CARDS = 6;
+
+// ─── Card positions: circular distribution around center ────
+const CARD_SLOTS: Array<{
+  top?: string;
+  right?: string;
+  bottom?: string;
+  left?: string;
+  xPercent?: number;
+}> = [
+  { top: "20%",  right: "15%" },   // 0 – top-right
+  { top: "12%",  left: "50%", xPercent: -50 },  // 1 – top-center (centered with xPercent)
+  { top: "20%",  left: "15%" },    // 2 – top-left
+  { bottom: "20%", left: "15%" },  // 3 – bottom-left
+  { bottom: "12%", left: "50%", xPercent: -50 }, // 4 – bottom-center (centered with xPercent)
+  { bottom: "20%", right: "15%" }, // 5 – bottom-right
+];
+
+// Final resting rotation per slot
+const CARD_ROTATIONS = [2, 0, -2, -2, 0, 2];
+
+// Entry: from outside the circle
+const CARD_ENTRY: Array<{ x: number; y: number; rotation: number }> = [
+  { x:  800, y: -400, rotation:  18 },  // from top-right
+  { x:    0, y: -600, rotation:   0 },  // from top
+  { x: -800, y: -400, rotation: -18 },  // from top-left
+  { x: -800, y:  400, rotation: -18 },  // from bottom-left
+  { x:    0, y:  600, rotation:   0 },  // from bottom
+  { x:  800, y:  400, rotation:  18 },  // from bottom-right
+];
+
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function FeaturesScrollSequence({
   features,
@@ -15,127 +51,229 @@ export default function FeaturesScrollSequence({
   features: Feature[];
   sectionTitle: string;
 }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const blockRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const textRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const eyebrowRefs = useRef<(HTMLParagraphElement | null)[]>([]);
-  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const imageInnerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const desktopSectionRef = useRef<HTMLDivElement>(null);
+  const titleWrapRef      = useRef<HTMLDivElement>(null);
+  const eyebrowRef        = useRef<HTMLParagraphElement>(null);
+  const cardRefs          = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileCardRefs    = useRef<(HTMLDivElement | null)[]>([]);
+  const indicatorsRef     = useRef<HTMLDivElement>(null);
+  const overlayRef        = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (features.length === 0) return;
+  useLayoutEffect(() => {
+    const desktopSection = desktopSectionRef.current;
+    const titleWrap      = titleWrapRef.current;
+    const eyebrow        = eyebrowRef.current;
+    const indicators     = indicatorsRef.current;
+    const overlay        = overlayRef.current;
+    if (!desktopSection || !titleWrap) return;
 
-    // Set initial states before ScrollTrigger calculates positions
-    // to prevent flash of unstyled content on slow connections
-    features.forEach((_, i) => {
-      const text = textRefs.current[i];
-      const eyebrow = eyebrowRefs.current[i];
-      const image = imageRefs.current[i];
+    const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
+    const n = N_CARDS;
 
-      if (text) gsap.set(text, { y: 60, opacity: 0 });
-      if (eyebrow) gsap.set(eyebrow, { y: 20, opacity: 0 });
-      if (image) gsap.set(image, { y: 40, opacity: 0, scale: 0.92 });
+    // Initial states
+    gsap.set(titleWrap, { scale: 1, yPercent: 0, transformOrigin: "50% 50%" });
+    if (eyebrow)    gsap.set(eyebrow,    { autoAlpha: 1, yPercent: 0 });
+    if (indicators) gsap.set(indicators, { autoAlpha: 0, y: 20 });
+    if (overlay)    gsap.set(overlay,    { autoAlpha: 0 });
+
+    cards.forEach((card, i) => {
+      const slot = CARD_SLOTS[i];
+      gsap.set(card, {
+        // Set final position properties first
+        left: slot.left || "auto",
+        right: slot.right || "auto",
+        top: slot.top || "auto",
+        bottom: slot.bottom || "auto",
+        xPercent: slot.xPercent ?? 0,
+        yPercent: 0,
+        // Then offset with entry animation values
+        x: CARD_ENTRY[i]?.x ?? 0,
+        y: CARD_ENTRY[i]?.y ?? 0,
+        rotation: CARD_ENTRY[i]?.rotation ?? 0,
+        // Visual properties
+        visibility: "visible",
+        opacity: 0,
+        scale: 0.9,
+        willChange: "transform, opacity",
+      });
     });
 
-    // After lazy-load, give the browser one frame to finalize layout
-    // before ScrollTrigger calculates trigger positions.
     const rafId = requestAnimationFrame(() => ScrollTrigger.refresh());
 
     const ctx = gsap.context(() => {
-      features.forEach((_, i) => {
-        const block = blockRefs.current[i];
-        const text = textRefs.current[i];
-        const eyebrow = eyebrowRefs.current[i];
-        const image = imageRefs.current[i];
-        const imageInner = imageInnerRefs.current[i];
+      // ══ DESKTOP ══
+      gsap.matchMedia().add("(min-width: 1024px)", () => {
+        const phase1 = window.innerHeight * 1;
+        const phase2 = window.innerHeight * n * 0.3;
+        const phase3 = window.innerHeight * n * 1;
+        const phase4 = window.innerHeight * 0.3;
+        const scrollDist = phase1 + phase2 + phase3 + phase4;
 
-        if (!block || !text || !image) return;
+        ScrollTrigger.create({
+          trigger: desktopSection,
+          pin: true,
+          start: "top top",
+          end: `+=${scrollDist}`,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        });
 
-        // Eyebrow number: entra primero, fade + y corto
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: desktopSection,
+            start: "top top",
+            end: `+=${scrollDist}`,
+            scrub: 1.2,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // ── Phase 1: Title shrinks ──
+        tl.to(titleWrap, {
+          scale: 0.5,
+          yPercent: -60,
+          ease: "power2.inOut",
+          duration: 1.2,
+        }, 0);
+
         if (eyebrow) {
-          gsap.fromTo(
-            eyebrow,
-            { y: 20, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: block,
-                start: "top 85%",
-                end: "top 60%",
-                scrub: 1.2,
-                invalidateOnRefresh: true,
-              },
-            }
-          );
+          tl.to(eyebrow, {
+            autoAlpha: 0,
+            yPercent: -30,
+            ease: "power2.in",
+            duration: 0.8,
+          }, 0);
         }
 
-        // Texto: entrada dramática desde abajo con clipPath reveal
-        // y: 60 → 0 + opacity mientras el bloque sube en viewport
-        gsap.fromTo(
-          text,
-          {
-            y: 60,
-            opacity: 0,
-            clipPath: "inset(0 0 100% 0)",
-          },
-          {
-            y: 0,
-            opacity: 1,
-            clipPath: "inset(0 0 0% 0)",
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: block,
-              start: "top 85%",
-              end: "top 30%",
-              scrub: 1.2,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
+        // ── Phase 2: Cards scatter in (overlapping with title) ──
+        const cardStart = 0.2;
+        const cardStep  = 0.4;
 
-        // Imagen: entra con y + scale, staggered respecto al texto
-        // (end más tardío = termina de entrar después que el texto)
-        gsap.fromTo(
-          image,
-          { y: 40, opacity: 0, scale: 0.92 },
-          {
-            y: 0,
+        cards.forEach((card, i) => {
+          const slot = CARD_SLOTS[i];
+          tl.to(card, {
             opacity: 1,
             scale: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: block,
-              start: "top 80%",
-              end: "top 25%",
-              scrub: 1.5,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
+            x: 0,
+            y: 0,
+            xPercent: slot.xPercent ?? 0,
+            rotation: CARD_ROTATIONS[i] ?? 0,
+            ease: "power3.out",
+            duration: 1.0,
+          }, cardStart + i * cardStep);
+        });
 
-        // Parallax interno: image inner viaja y -40 → 40 mientras
-        // el bloque completo cruza el viewport (efecto depth)
-        if (imageInner) {
+        // ── Phase 3: Show indicators then focus cards one by one ──
+        const focusPhaseStart = cardStart + n * cardStep + 0.5;
+
+        if (indicators) {
+          tl.to(indicators, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.4,
+            ease: "power2.out",
+          }, focusPhaseStart);
+        }
+
+        const focusStep = 1.8;
+
+        cards.forEach((card, i) => {
+          const startTime = focusPhaseStart + 0.3 + i * focusStep;
+
+          // Show overlay
+          if (overlay) {
+            tl.to(overlay, {
+              autoAlpha: 1,
+              duration: focusStep * 0.2,
+              ease: "power2.out",
+            }, startTime);
+          }
+
+          // Focus this card - move to center using absolute positioning
+          tl.to(card, {
+            left: "50%",
+            top: "50%",
+            xPercent: -50,
+            yPercent: -50,
+            x: 0,
+            y: 0,
+            width: "70vh",
+            height: "70vh",
+            scale: 1,
+            zIndex: 100,
+            opacity: 1,
+            rotation: 0,
+            duration: focusStep * 0.35,
+            ease: "power2.out",
+            onStart: () => setActiveIndex(i),
+          }, startTime);
+
+          // Return to position
+          const returnTime = startTime + focusStep * 0.7;
+          const slot = CARD_SLOTS[i];
+
+          // Hide overlay
+          if (overlay) {
+            tl.to(overlay, {
+              autoAlpha: 0,
+              duration: focusStep * 0.15,
+              ease: "power2.in",
+            }, returnTime);
+          }
+
+          tl.to(card, {
+            left: slot.left || "auto",
+            right: slot.right || "auto", 
+            top: slot.top || "auto",
+            bottom: slot.bottom || "auto",
+            width: "clamp(220px, 18vw, 280px)",
+            height: "clamp(220px, 18vw, 280px)",
+            xPercent: slot.xPercent ?? 0,
+            yPercent: 0,
+            x: 0,
+            y: 0,
+            scale: 1,
+            rotation: CARD_ROTATIONS[i] ?? 0,
+            zIndex: 20,
+            duration: focusStep * 0.25,
+            ease: "power2.inOut",
+            onComplete: i === n - 1 ? () => setActiveIndex(null) : undefined,
+          }, returnTime);
+        });
+
+        // Final hold
+        tl.to({}, { duration: 0.6 });
+
+        return () => {};
+      });
+
+      // ══ MOBILE ══
+      gsap.matchMedia().add("(max-width: 1023px)", () => {
+        const mobileCards = mobileCardRefs.current.filter(Boolean) as HTMLDivElement[];
+
+        mobileCards.forEach((card) => {
           gsap.fromTo(
-            imageInner,
-            { y: -40 },
+            card,
+            { opacity: 0, y: 40 },
             {
-              y: 40,
-              ease: "none",
+              opacity: 1,
+              y: 0,
+              ease: "power2.out",
               scrollTrigger: {
-                trigger: block,
-                start: "top bottom",
-                end: "bottom top",
+                trigger: card,
+                start: "top 88%",
+                end: "top 60%",
                 scrub: 1,
                 invalidateOnRefresh: true,
               },
             }
           );
-        }
+        });
+
+        return () => {};
       });
-    }, sectionRef);
+    }, desktopSection);
 
     return () => {
       cancelAnimationFrame(rafId);
@@ -144,183 +282,164 @@ export default function FeaturesScrollSequence({
   }, [features.length]);
 
   return (
-    <section
-      id="caracteristicas"
-      ref={sectionRef}
-      aria-label={sectionTitle}
-      style={{ backgroundColor: "#ffffff", overflow: "hidden" }}
-    >
-      {/* ── Section header ── */}
-      <div
-        className="max-w-6xl mx-auto px-8 lg:px-16"
+    <>
+      {/* ══ DESKTOP ══ */}
+      <section
+        id="caracteristicas"
+        ref={desktopSectionRef}
+        aria-label={sectionTitle}
+        className="hidden lg:block relative"
+        style={{ height: "100vh", backgroundColor: "#FAFAF9", overflow: "hidden" }}
+      >
+        {/* Gradient background */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(188,129,41,0.04) 0%, transparent 60%)",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Dot pattern */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(32,0,65,0.03) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+            maskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%)",
+            WebkitMaskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%)",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Overlay for focus effect */}
+        <div
+          ref={overlayRef}
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundColor: "rgba(0,0,0,0.75)",
+            zIndex: 50,
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Title */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center"
+          style={{ zIndex: 10, pointerEvents: "none" }}
+        >
+          <p
+            ref={eyebrowRef}
+            className="font-mono uppercase text-center"
+            style={{ fontSize: "0.7rem", letterSpacing: "0.4em", color: "#bc8129", marginBottom: "1.5rem" }}
+          >
+            Funcionalidades
+          </p>
+          <div ref={titleWrapRef} style={{ willChange: "transform" }}>
+            <h2
+              className="font-display font-normal text-center leading-[1.06]"
+              style={{
+                fontSize: "clamp(3.5rem, 8vw, 7.5rem)",
+                color: "#200041",
+                letterSpacing: "-0.04em",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {sectionTitle}
+            </h2>
+          </div>
+        </div>
+
+        {/* Cards */}
+        {Array.from({ length: N_CARDS }).map((_, i) => (
+          <div
+            key={i}
+            ref={(el) => { cardRefs.current[i] = el; }}
+            className="absolute"
+            style={{
+              width: "clamp(220px, 18vw, 280px)",
+              height: "clamp(220px, 18vw, 280px)",
+              zIndex: activeIndex === i ? 100 : 20,
+              visibility: "hidden",
+            }}
+          >
+            <FeatureCard />
+          </div>
+        ))}
+
+        {/* Indicators */}
+        <div
+          ref={indicatorsRef}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3"
+          style={{ zIndex: 60 }}
+        >
+          {Array.from({ length: N_CARDS }).map((_, i) => (
+            <div
+              key={i}
+              className="transition-all duration-500"
+              style={{
+                width: activeIndex === i ? 32 : 10,
+                height: 10,
+                borderRadius: 5,
+                backgroundColor: activeIndex === i ? "#bc8129" : "rgba(32,0,65,0.2)",
+                boxShadow: activeIndex === i ? "0 2px 8px rgba(188,129,41,0.4)" : "none",
+              }}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* ══ MOBILE ══ */}
+      <section
+        id="caracteristicas-mobile"
+        aria-label={sectionTitle}
+        className="lg:hidden"
         style={{
-          paddingTop: "clamp(80px, 12vh, 140px)",
-          paddingBottom: "clamp(60px, 8vh, 100px)",
+          backgroundColor: "#FAFAF9",
+          paddingTop: "clamp(72px, 14vh, 128px)",
+          paddingBottom: "clamp(72px, 14vh, 128px)",
         }}
       >
-        <p
-          className="font-mono text-xs tracking-[0.35em] uppercase mb-5"
-          style={{ color: "#bc8129" }}
-        >
-          Funcionalidades
-        </p>
-        <h2
-          className="font-display font-normal leading-[1.08]"
-          style={{
-            fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-            color: "#200041",
-            letterSpacing: "-0.03em",
-          }}
-        >
-          Todo lo que necesitás
-          <br />
-          <span style={{ fontStyle: "italic", color: "rgba(32,0,65,0.35)" }}>
-            para tu evento.
-          </span>
-        </h2>
-      </div>
-
-      {/* ── Feature blocks ── */}
-      {features.map((feature, i) => {
-        const textIsLeft = i % 2 === 0;
-        const isLast = i === features.length - 1;
-
-        const textBlock = (
-          <div
-            ref={(el) => {
-              textRefs.current[i] = el;
-            }}
-            style={{ willChange: "transform, opacity" }}
+        <div className="text-center px-6 mb-12">
+          <p
+            className="font-mono uppercase"
+            style={{ fontSize: "0.68rem", letterSpacing: "0.38em", color: "#bc8129", marginBottom: "1rem" }}
           >
-            {/* Eyebrow */}
-            <p
-              ref={(el) => {
-                eyebrowRefs.current[i] = el;
-              }}
-              className="font-mono text-xs tracking-[0.35em] uppercase mb-5"
-              style={{ color: "#bc8129", willChange: "transform, opacity" }}
-            >
-              {String(i + 1).padStart(2, "0")}
-            </p>
-
-            {/* Title */}
-            <h3
-              className="font-display font-normal leading-[1.1] mb-6"
-              style={{
-                fontSize: "clamp(2.5rem, 4.5vw, 4rem)",
-                color: "#200041",
-                letterSpacing: "-0.03em",
-              }}
-            >
-              {feature.title}
-            </h3>
-
-            {/* Description */}
-            <p
-              style={{
-                color: "rgba(32,0,65,0.55)",
-                fontSize: "1rem",
-                lineHeight: "1.75",
-                maxWidth: "45ch",
-              }}
-            >
-              {feature.description}
-            </p>
-          </div>
-        );
-
-        const imageBlock = (
-          <div
-            ref={(el) => {
-              imageRefs.current[i] = el;
-            }}
-            className="w-full overflow-hidden"
-            style={{
-              borderRadius: "1.5rem",
-              willChange: "transform, opacity",
-            }}
+            Funcionalidades
+          </p>
+          <h2
+            className="font-display font-normal leading-[1.08]"
+            style={{ fontSize: "clamp(2rem, 8vw, 3rem)", color: "#200041", letterSpacing: "-0.03em" }}
           >
-            <div
-              ref={(el) => {
-                imageInnerRefs.current[i] = el;
-              }}
-              className="w-full flex items-center justify-center"
-              style={{
-                aspectRatio: "4/3",
-                background:
-                  "linear-gradient(135deg, #DADAC9 0%, #EDE9DA 100%)",
-                // scale: 1.15 creates the parallax bleed so inner content
-                // can shift y without showing gaps at the edges
-                transform: "scale(1.15)",
-              }}
-            >
-              <span
-                className="font-display italic select-none"
-                style={{
-                  fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)",
-                  color: "rgba(32,0,65,0.3)",
-                  letterSpacing: "-0.01em",
-                  // counteract parent scale so text reads at normal size
-                  transform: "scale(0.87)",
-                  display: "block",
-                }}
-              >
-                {feature.title}
-              </span>
+            {sectionTitle}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 px-5 max-w-2xl mx-auto">
+          {Array.from({ length: N_CARDS }).map((_, i) => (
+            <div key={i} ref={(el) => { mobileCardRefs.current[i] = el; }}>
+              <FeatureCard />
             </div>
-          </div>
-        );
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
 
-        return (
-          <div key={i}>
-            {/* Feature block */}
-            <div
-              ref={(el) => {
-                blockRefs.current[i] = el;
-              }}
-              className="max-w-6xl mx-auto px-8 lg:px-16"
-              style={{
-                paddingTop: "clamp(100px, 15vh, 180px)",
-                paddingBottom: "clamp(100px, 15vh, 180px)",
-              }}
-            >
-              {/* Desktop: two-column grid with alternating order */}
-              <div className="hidden lg:grid grid-cols-2 gap-20 items-center">
-                {textIsLeft ? (
-                  <>
-                    <div>{textBlock}</div>
-                    <div>{imageBlock}</div>
-                  </>
-                ) : (
-                  <>
-                    <div>{imageBlock}</div>
-                    <div>{textBlock}</div>
-                  </>
-                )}
-              </div>
+// ─── FeatureCard ──────────────────────────────────────────────────────────────
 
-              {/* Mobile: always image-top, text-bottom */}
-              <div className="flex flex-col gap-10 lg:hidden">
-                <div>{imageBlock}</div>
-                <div>{textBlock}</div>
-              </div>
-            </div>
-
-            {/* Divider between blocks, not after the last */}
-            {!isLast && (
-              <div
-                className="max-w-6xl mx-auto px-8 lg:px-16"
-                aria-hidden="true"
-              >
-                <div
-                  className="w-full h-px"
-                  style={{ background: "rgba(32,0,65,0.06)" }}
-                />
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </section>
+function FeatureCard() {
+  return (
+    <article
+      style={{
+        backgroundColor: "#ffffff",
+        border: "1px solid rgba(32,0,65,0.07)",
+        borderRadius: "1.5rem",
+        height: "100%",
+        width: "100%",
+        boxShadow: "0 8px 32px rgba(32,0,65,0.08), 0 1px 0 rgba(255,255,255,0.9) inset",
+      }}
+    />
   );
 }

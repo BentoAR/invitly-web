@@ -22,10 +22,13 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScroll();
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
       setHasScrolled(latest > 50);
+      // Ocultar navbar después de la primera sección (aprox 100vh)
+      setIsHidden(latest > window.innerHeight * 0.8);
     });
     return () => unsubscribe();
   }, [scrollY]);
@@ -35,6 +38,8 @@ export const Navbar = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-border/20 ${
         hasScrolled ? "shadow-md bg-background/95 backdrop-blur-md" : ""
       }`}
+      animate={{ y: isHidden ? -100 : 0 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <Container>
         <div className="flex h-16 items-center justify-between">

@@ -1,0 +1,1 @@
+- [project_features_scatter.md](./project_features_scatter.md) — Pin + scatter pattern for FeaturesScrollSequence: title shrinks via scale, cards scatter to absolute positions
