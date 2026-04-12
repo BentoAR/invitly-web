@@ -1,9 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/shared/Container";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import ContactForm from "@/components/features/contact/ContactForm";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,6 +20,7 @@ gsap.registerPlugin(ScrollTrigger);
 const APP_URL = "https://app.bento.com.ar";
 
 export default function CtaSplit() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const leftColRef = useRef<HTMLDivElement>(null);
   const rightColRef = useRef<HTMLDivElement>(null);
@@ -84,18 +92,9 @@ export default function CtaSplit() {
               </p>
             </div>
             <Link href={`${APP_URL}/register`} target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="w-full group relative overflow-hidden">
+              <Button variant="outline" size="lg" className="w-full group">
                 Crear mi invitación gratis
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                <span
-                  ref={shimmerRef}
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%)",
-                    willChange: "transform",
-                  }}
-                  aria-hidden="true"
-                />
               </Button>
             </Link>
             <p className="text-xs text-muted-foreground">
@@ -103,7 +102,6 @@ export default function CtaSplit() {
             </p>
           </div>
 
-          {/* Contact info */}
           <div
             ref={rightColRef}
             className="flex flex-col justify-center gap-4 rounded-2xl border border-border/60 bg-background/50 p-8"
@@ -118,12 +116,46 @@ export default function CtaSplit() {
             >
               Hablá con nosotros
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground mb-2">
               Por WhatsApp, email o Instagram. Te respondemos rápido.
+            </p>
+            <Button
+              size="lg"
+              className="w-full group relative overflow-hidden"
+              onClick={() => setIsContactOpen(true)}
+            >
+              <Mail className="mr-2 h-4 w-4" />
+              Contactanos
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <span
+                ref={shimmerRef}
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%)",
+                  willChange: "transform",
+                }}
+                aria-hidden="true"
+              />
+            </Button>
+            <p className="text-xs text-muted-foreground">
+              WhatsApp · Email · Instagram · Respuesta en menos de 24hs
             </p>
           </div>
         </div>
       </Container>
+
+      <Dialog open={isContactOpen} onOpenChange={setIsContactOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl" style={{ color: "#200041" }}>
+              Contactanos
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-4">
+            <ContactForm />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

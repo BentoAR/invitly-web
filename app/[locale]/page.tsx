@@ -9,7 +9,6 @@ const Testimonials = lazy(() => import("@/components/features/home/Testimonials"
 const Pricing = lazy(() => import("@/components/features/home/Pricing"));
 const FAQ = lazy(() => import("@/components/features/home/FAQ"));
 const CtaSplit = lazy(() => import("@/components/features/home/CtaSplit"));
-const ContactSection = lazy(() => import("@/components/features/home/ContactSection"));
 
 import { FeaturesSkeleton } from "@/components/shared/skeletons/FeaturesSkeleton";
 
@@ -40,9 +39,6 @@ export default async function Home() {
       </Suspense>
       <Suspense fallback={<div className="py-16" />}>
         <CtaSplit />
-      </Suspense>
-      <Suspense fallback={<div className="py-20" />}>
-        <ContactSection />
       </Suspense>
     </div>
   );
