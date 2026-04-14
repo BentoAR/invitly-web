@@ -1,13 +1,13 @@
 {
   "Hero": {
     "badge": "Unique and personalized invitations",
-    "title": "Your entire event, in one place.",
-    "subtitle": "Design, send, and manage your guest confirmations — all from your phone, in under 5 minutes.",
+    "title": "Professional designer digital invitations",
+    "subtitle": "Create, send and manage your guest confirmations from your phone. Ready in 5 minutes, no design skills needed.",
     "button": {
       "primary": "Create my invitation for free",
       "secondary": "See a real example"
     },
-    "trust": "No credit card · Ready in minutes · +10,000 events across Argentina",
+    "trust": "No credit card · +10,000 events in Argentina · Cancel anytime",
     "stats": {
       "designs": "Templates available",
       "clients": "Events organized",
@@ -29,41 +29,49 @@
     "steps": [
       {
         "number": "01",
-        "title": "Choose your design",
-        "description": "Pick from over 200 designer-made templates. Rustic wedding, modern quinceañera, kids birthday — there's something for every style."
+        "title": "Choose your favorite design",
+        "description": "Over 200 professional-grade templates. Elegant weddings, modern celebrations, corporate events — premium designs for any occasion."
       },
       {
         "number": "02",
-        "title": "Customize the details",
-        "description": "Edit the text, photos, music and colors — no design or tech knowledge needed. If you can use WhatsApp, you can use Bento."
+        "title": "Customize in minutes",
+        "description": "Change the text, upload your photos, choose colors and add your music. If you use WhatsApp, you can use Bento. No design, no complications."
       },
       {
         "number": "03",
-        "title": "Share with your guests",
-        "description": "Send the link via WhatsApp or Instagram. Each guest confirms with a tap and you see confirmations in real time, without calling anyone."
+        "title": "Share and done",
+        "description": "Send the link via WhatsApp, Instagram or email. Your guests confirm with a tap and you see responses in real time. No calls, no spreadsheets, no headaches."
       }
     ]
   },
   "Features": {
-    "badge": "All included",
-    "title": "What does your invitation include?",
+    "badge": "No apps, no complications",
+    "title": "Everything you need in one place",
     "description": "Each invitation comes with all the tools you need to create a memorable experience for your guests",
     "features": [
       {
-        "title": "Invitations that impress",
-        "description": "Your guests won't believe a digital invitation can look this good. Animations, premium typography and unique designs for every event type."
+        "title": "Premium designs that impress",
+        "description": "Professional quality digital invitations that surpass any printed card. Smooth animations, elegant typography and superior-level designs created by expert designers."
       },
       {
-        "title": "Real-time confirmations",
-        "description": "Know exactly who's coming and who isn't, without calling anyone. Your guest list updated instantly, from any phone."
+        "title": "Automatic confirmations (no chasing anyone)",
+        "description": "Forget calling one by one asking \"are you coming?\". Your guests confirm with a tap and you see the updated list instantly from your phone. That simple."
       },
       {
-        "title": "Share anywhere",
-        "description": "One link that works on WhatsApp, Instagram, email or wherever. No apps, no downloads, no friction for your guests."
+        "title": "Share anywhere you want",
+        "description": "One link that works on WhatsApp, Instagram, email or wherever you want. No apps to download, no registration, nothing weird for your guests. They open and that's it."
       },
       {
-        "title": "Collaborative playlist",
-        "description": "Let your guests add the songs they want to hear. The event DJ, chosen by everyone."
+        "title": "Everyone chooses the music",
+        "description": "Let your guests add the songs they want to hear on your Spotify playlist. The event DJ is collaborative. And you ensure that what everyone likes is played."
+      },
+      {
+        "title": "Everything in one place",
+        "description": "Date, location with map, photo gallery, suggested gift list, playlist and attendance confirmation. Everything on one page that your guests save and can reopen when needed."
+      },
+      {
+        "title": "Change whatever you want, whenever you want",
+        "description": "Did the date change? The place? Want to add something? You edit from your panel and everyone with the link sees the updated version. No resending, no confusion."
       }
     ],
     "benefitsTitle": "And much more included",
@@ -78,5 +86,154 @@
     ],
     "experienceTitle": "Complete Experience",
     "experienceDescription": "Everything you need to create unforgettable moments"
+  },
+  "Testimonials": {
+    "badge": "Testimonials",
+    "title": "What our users say",
+    "subtitle": "Over 10,000 events organized in Argentina. These are some who trusted Bento.",
+    "testimonials": [
+      {
+        "name": "Florencia Sandez",
+        "location": "Buenos Aires",
+        "eventType": "Wedding",
+        "eventDate": "October 2025",
+        "quote": "I wasn't sure how it would turn out. But when my friends started writing to me asking how we made the invitation, I understood it was worth it. I had the confirmed list in real time, without calling anyone."
+      },
+      {
+        "name": "Valeria Méndez",
+        "location": "Córdoba",
+        "eventType": "Quinceañera",
+        "eventDate": "March 2026",
+        "quote": "My daughter wanted something special and Bento exceeded it. In 10 minutes we had the invitation ready and all guests confirmed on their own. Never going back to paper invitations."
+      },
+      {
+        "name": "Santiago Ríos",
+        "location": "Rosario",
+        "eventType": "Birthday",
+        "eventDate": "January 2026",
+        "quote": "Used it for my dad's 50th and it was a total success. I sent the link via WhatsApp and in two days I already had 60 confirmations. Simple, fast and looked amazing."
+      }
+    ]
+  },
+  "Pricing": {
+    "badge": "Pricing",
+    "title": "Simple and transparent",
+    "subtitle": "Start free. Upgrade when you need it.",
+    "plans": [
+      {
+        "name": "Basic",
+        "price": "Free",
+        "priceNote": "Forever",
+        "description": "To try Bento and see how it works",
+        "cta": "Start free",
+        "featured": false,
+        "features": [
+          { "label": "1 active event", "included": true },
+          { "label": "Up to 50 guests", "included": true },
+          { "label": "Basic templates", "included": true },
+          { "label": "Automatic RSVP", "included": true },
+          { "label": "Collaborative playlist", "included": false },
+          { "label": "No Bento branding", "included": false },
+          { "label": "Detailed statistics", "included": false },
+          { "label": "Priority support", "included": false }
+        ]
+      },
+      {
+        "name": "Celebration",
+        "price": "Inquire",
+        "priceNote": "per event",
+        "description": "For special events that deserve the best",
+        "cta": "Choose Celebration",
+        "featured": true,
+        "features": [
+          { "label": "Unlimited events", "included": true },
+          { "label": "Up to 500 guests", "included": true },
+          { "label": "All templates", "included": true },
+          { "label": "Automatic RSVP", "included": true },
+          { "label": "Collaborative playlist", "included": true },
+          { "label": "No Bento branding", "included": true },
+          { "label": "Detailed statistics", "included": true },
+          { "label": "Priority support", "included": false }
+        ]
+      },
+      {
+        "name": "Premium",
+        "price": "Inquire",
+        "priceNote": "per month",
+        "description": "For organizers and professional planners",
+        "cta": "Contact",
+        "featured": false,
+        "features": [
+          { "label": "Unlimited events", "included": true },
+          { "label": "Unlimited guests", "included": true },
+          { "label": "Exclusive templates", "included": true },
+          { "label": "Automatic RSVP", "included": true },
+          { "label": "Collaborative playlist", "included": true },
+          { "label": "No Bento branding", "included": true },
+          { "label": "Detailed statistics", "included": true },
+          { "label": "Priority support", "included": true }
+        ]
+      }
+    ],
+    "featuredBadge": "Most popular",
+    "footer": {
+      "line1": "No credit card for free plan",
+      "line2": "Cancel anytime",
+      "line3": "Have a venue or are you an organizer?",
+      "line3Link": "Let's talk",
+      "priceNote": "Less than printing 20 cards. And no envelope or postage costs."
+    }
+  },
+  "FAQ": {
+    "badge": "Frequently asked questions",
+    "title": "Have questions?",
+    "faqs": [
+      {
+        "question": "Do guests need to download anything?",
+        "answer": "No. The link opens directly in the phone browser — no app, no login, nothing. Anyone who receives the link can see the invitation instantly."
+      },
+      {
+        "question": "Can I edit the invitation after sending it?",
+        "answer": "Yes. If the date, place changed, or you want to add something, you edit from your panel and those who already have the link see the updated version automatically. No resending."
+      },
+      {
+        "question": "How do my guests confirm?",
+        "answer": "With one tap. They open the link, tap 'Confirm attendance' and done. You see who confirmed in real time from your dashboard, without having to call or ask each one."
+      },
+      {
+        "question": "Is it complicated to set up?",
+        "answer": "Not at all. Most of our users have their invitation ready in less than 10 minutes. If you can write a WhatsApp message, you can create your invitation in Bento."
+      },
+      {
+        "question": "Is it worth it if I send everything via WhatsApp anyway?",
+        "answer": "Yes, you share it via WhatsApp the same. The difference is that instead of an image that gets lost in the scroll, you send a link that opens as a premium experience. And you know who confirmed without asking each one."
+      },
+      {
+        "question": "Does it work for corporate events?",
+        "answer": "Yes. We have plans for companies with specific functionalities for corporate events, launches and meetings. Contact us to create something custom."
+      }
+    ]
+  },
+  "CtaSplit": {
+    "left": {
+      "badge": "Start now",
+      "title": "Your event deserves the best invitation",
+      "description": "Create your first invitation free in less than 5 minutes.",
+      "cta": "Create my invitation for free",
+      "footer": "No credit card · Cancel anytime · Support in Spanish"
+    },
+    "right": {
+      "badge": "Have questions?",
+      "title": "Talk to us",
+      "description": "Via WhatsApp, email or Instagram. We respond quickly.",
+      "cta": "Contact us",
+      "footer": "WhatsApp · Email · Instagram · Response in less than 24hrs"
+    },
+    "contactDialogTitle": "Contact us"
+  },
+  "TemplatesSection": {
+    "badge": "Unique designs",
+    "title": "+200 designs for your event",
+    "subtitle": "Choose your favorite and customize it in minutes. Each template includes RSVP, map, gallery and playlist."
   }
 }

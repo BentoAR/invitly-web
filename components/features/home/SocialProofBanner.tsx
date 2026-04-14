@@ -13,6 +13,12 @@ const ITEMS = [
   { text: "Cumpleaños", highlight: false },
   { text: "Eventos corporativos", highlight: false },
   { text: "Egresados", highlight: false },
+  { text: "Baby showers", highlight: false },
+  { text: "Bautismos", highlight: false },
+  { text: "Aniversarios", highlight: false },
+  { text: "98% de satisfacción", highlight: true },
+  { text: "Respuesta en <24hs", highlight: true },
+  { text: "Soporte en español", highlight: true },
 ];
 
 // Triple para ticker seamless
@@ -103,7 +109,7 @@ export default function SocialProofBanner() {
         ))}
       </div>
       <p className="sr-only">
-        Más de 10.000 eventos organizados en Argentina: casamientos, quinceañeros, cumpleaños, eventos corporativos y egresados.
+        Más de 10.000 eventos organizados en Argentina: casamientos, quinceañeros, cumpleaños, eventos corporativos, egresados, baby showers, bautismos y aniversarios. 98% de satisfacción, respuesta en menos de 24 horas y soporte en español.
       </p>
     </div>
   );
