@@ -235,5 +235,32 @@
     "badge": "Diseños únicos",
     "title": "+200 diseños para tu evento",
     "subtitle": "Elegí tu favorito y personalizalo en minutos. Cada plantilla incluye RSVP, mapa, galería y playlist."
+  },
+  "B2BAwarenessBanner": {
+    "badge": "Para salones y empresas",
+    "title": "¿Gestionás eventos como parte de tu negocio?",
+    "subtitle": "Si tenés un salón, sos wedding planner o organizás eventos profesionalmente, Bento tiene un plan diseñado para vos. Ofrecé invitaciones premium a tus clientes y generá un ingreso recurrente sin trabajo extra.",
+    "benefits": [
+      {
+        "icon": "💰",
+        "title": "Modelo de negocio simple",
+        "description": "Cuota mensual fija según tu volumen, sin comisiones ni sorpresas"
+      },
+      {
+        "icon": "🎯",
+        "title": "ROI inmediato",
+        "description": "Lo incluís en tu paquete de servicios y recuperás la inversión rápidamente"
+      },
+      {
+        "icon": "✨",
+        "title": "Prueba sin compromiso",
+        "description": "Primer mes gratis para que lo pruebes con tus clientes"
+      }
+    ],
+    "cta": {
+      "primary": "Ver planes para empresas",
+      "secondary": "Hablar con ventas"
+    },
+    "trustLine": "+50 salones en Argentina · Planes flexibles según volumen · Primer mes sin costo"
   }
 }

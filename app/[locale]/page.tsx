@@ -7,6 +7,7 @@ const TemplatesSection = lazy(() => import("@/components/features/home/Templates
 const Features = lazy(() => import("@/components/features/home/Features"));
 const Testimonials = lazy(() => import("@/components/features/home/Testimonials"));
 const Pricing = lazy(() => import("@/components/features/home/Pricing"));
+const B2BAwarenessBanner = lazy(() => import("@/components/features/home/B2BAwarenessBanner"));
 const FAQ = lazy(() => import("@/components/features/home/FAQ"));
 const CtaSplit = lazy(() => import("@/components/features/home/CtaSplit"));
 
@@ -33,6 +34,9 @@ export default async function Home() {
       </Suspense>
       <Suspense fallback={<div className="py-20" />}>
         <Pricing />
+      </Suspense>
+      <Suspense fallback={<div className="py-20" />}>
+        <B2BAwarenessBanner />
       </Suspense>
       <Suspense fallback={<div className="py-20" />}>
         <FAQ />

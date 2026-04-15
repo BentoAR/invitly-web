@@ -235,5 +235,32 @@
     "badge": "Unique designs",
     "title": "+200 designs for your event",
     "subtitle": "Choose your favorite and customize it in minutes. Each template includes RSVP, map, gallery and playlist."
+  },
+  "B2BAwarenessBanner": {
+    "badge": "For venues and businesses",
+    "title": "Do you manage events as part of your business?",
+    "subtitle": "If you have a venue, are a wedding planner or organize events professionally, Bento has a plan designed for you. Offer premium invitations to your clients and generate recurring income with no extra work.",
+    "benefits": [
+      {
+        "icon": "💰",
+        "title": "Simple business model",
+        "description": "Fixed monthly fee based on your volume, no commissions or surprises"
+      },
+      {
+        "icon": "🎯",
+        "title": "Immediate ROI",
+        "description": "Include it in your service package and recover your investment quickly"
+      },
+      {
+        "icon": "✨",
+        "title": "Try without commitment",
+        "description": "First month free to test with your clients"
+      }
+    ],
+    "cta": {
+      "primary": "See business plans",
+      "secondary": "Talk to sales"
+    },
+    "trustLine": "+50 venues in Argentina · Flexible plans by volume · First month free"
   }
 }
