@@ -1,5 +1,5 @@
 {
-  "Hero": {
+  "HeroB2B": {
     "badge": "Para salones de eventos",
     "title": "Sumá Bento a tu servicio y convertilo en un ingreso nuevo",
     "subtitle": "Ofrecé invitaciones digitales premium a todos tus clientes. Cobrás una cuota mensual fija, sin comisiones, sin intervenir en nada. El salón decide cómo venderlo y Bento se encarga de la tecnología.",
@@ -13,10 +13,10 @@
     "ctaSecondary": "Ver cómo funciona",
     "trustLine": "+50 salones en Argentina ya confían en Bento · Prueba gratis el primer mes"
   },
-  "LogoWall": {
+  "LogoWallB2B": {
     "title": "Salones que ya usan Bento"
   },
-  "ValueProps": {
+  "ValuePropsB2B": {
     "title": "Por qué los salones eligen Bento",
     "prop1Title": "ROI inmediato",
     "prop1Description": "Un evento en Argentina vale $10.000.000 o más. Bento cuesta desde $250.000/mes. Lo incluís en tu paquete premium y con el primer cliente del mes ya cubriste la cuota completa. Todo lo que vendas después es ganancia pura.",
@@ -25,7 +25,7 @@
     "prop3Title": "Diferenciación competitiva",
     "prop3Description": "Mientras otros salones siguen con invitaciones de papel o PDFs de WhatsApp, vos ofrecés una plataforma completa: RSVP automático, asignación de mesas, restricciones alimentarias, playlist colaborativa, galería de fotos. Eso cierra ventas."
   },
-  "HowItWorks": {
+  "HowItWorksB2B": {
     "title": "Tres pasos para integrar Bento en tu negocio",
     "step1Title": "1. Elegís tu plan y recibís tu link único",
     "step1Description": "Te asignamos un link personalizado (ej: app.bento.com.ar/nuevo?salon=tusalon). Este link es el que vas a compartir con cada cliente cuando confirme fecha.",
@@ -34,7 +34,7 @@
     "step3Title": "3. El cliente organiza todo desde Bento",
     "step3Description": "Crea su invitación, gestiona confirmaciones, sube fotos, arma la playlist. Todo desde el celular. Nosotros nos ahorramos horas de coordinación y sumamos valor al servicio sin trabajo extra."
   },
-  "Pricing": {
+  "PricingB2B": {
     "title": "Planes diseñados para tu volumen de eventos",
     "subtitle": "Elegí el tier que mejor se adapte a cuántos eventos hacés por mes. Sin comisiones, sin sorpresas.",
     "trustLine": "Todos los planes incluyen: Primer mes sin costo · Sin contrato largo · Soporte en español",
@@ -82,7 +82,7 @@
       ]
     }
   },
-  "OtherChannels": {
+  "OtherChannelsB2B": {
     "title": "Bento también es para...",
     "subtitle": "No solo salones. Cualquier negocio que gestione eventos puede beneficiarse del modelo B2B de Bento.",
     "weddingPlanners": {
@@ -106,7 +106,7 @@
       "cta": "Contactanos"
     }
   },
-  "Testimonials": {
+  "TestimonialsB2B": {
     "title": "Lo que dicen nuestros partners",
     "testimonial1": {
       "quote": "Integrar Bento fue la mejor decisión del año. Le ofrecemos el servicio a todos nuestros clientes y prácticamente el 100% lo acepta. Se organizan todo desde el celular. Nosotros nos ahorramos horas de coordinación y sumamos valor al servicio sin trabajo extra. Ya llevamos 30+ eventos y todos quedaron encantados.",
@@ -124,7 +124,7 @@
       "role": "Fotógrafo de bodas · Mendoza · Plan Básico"
     }
   },
-  "FAQ": {
+  "FAQB2B": {
     "title": "Preguntas frecuentes",
     "badge": "FAQ B2B",
     "faqs": [
@@ -162,7 +162,7 @@
       }
     ]
   },
-  "FinalCTA": {
+  "FinalCTAB2B": {
     "title": "¿Querés ofrecer Bento en tu salón?",
     "subtitle": "Hablemos de cómo integrarlo en tu negocio. Sin compromiso, sin vueltas.",
     "ctaPrimary": "Agendar reunión",

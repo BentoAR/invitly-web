@@ -1,6 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X, Sparkles } from "lucide-react";
 import { motion, useScroll } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -12,11 +13,14 @@ const APP_URL = "https://app.bento.com.ar";
 
 export const Navbar = () => {
   const t = useTranslations("Navbar");
+  const pathname = usePathname();
+
   const navLinks = [
-    { name: t("inicio"), id: "inicio" },
-    { name: t("invitaciones"), id: "invitaciones" },
-    { name: t("precios"), id: "precios" },
-    { name: t("contacto"), id: "contacto" },
+    { name: t("inicio"), id: "inicio", href: "/" },
+    { name: t("invitaciones"), id: "invitaciones", href: "/#invitaciones" },
+    { name: t("empresas"), id: "empresas", href: "/empresas" },
+    { name: t("precios"), id: "precios", href: "/#precios" },
+    { name: t("contacto"), id: "contacto", href: "/#contacto" },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -49,15 +53,23 @@ export const Navbar = () => {
           </a>
 
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                className="text-sm font-medium transition-colors hover:text-primary relative text-foreground"
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname?.includes(`/${link.id}`) || (link.id === "inicio" && pathname === "/");
+              return (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors hover:text-primary relative ${
+                    isActive ? "text-primary" : "text-foreground"
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                  )}
+                </a>
+              );
+            })}
           </div>
 
           <div className="hidden md:flex items-center gap-3">
@@ -88,16 +100,21 @@ export const Navbar = () => {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <div className="flex flex-col gap-6 mt-8 ml-4">
-                  {navLinks.map((link) => (
-                    <a
-                      key={link.id}
-                      href={`#${link.id}`}
-                      className="text-lg font-medium transition-colors hover:text-primary text-left text-foreground"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {link.name}
-                    </a>
-                  ))}
+                  {navLinks.map((link) => {
+                    const isActive = pathname?.includes(`/${link.id}`) || (link.id === "inicio" && pathname === "/");
+                    return (
+                      <a
+                        key={link.id}
+                        href={link.href}
+                        className={`text-lg font-medium transition-colors hover:text-primary text-left ${
+                          isActive ? "text-primary" : "text-foreground"
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {link.name}
+                      </a>
+                    );
+                  })}
                   <div className="flex flex-col gap-3 pt-4 border-t border-border">
                     <a href={`${APP_URL}/login`} target="_blank" rel="noopener noreferrer">
                       <Button variant="outline" className="w-full">
