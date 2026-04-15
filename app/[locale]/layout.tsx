@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/src/i18n/routing";
 import { Toaster } from "@/components/ui/sonner";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
+import MicrosoftClarity from "@/components/analytics/MicrosoftClarity";
 
 export const metadata = {
   title: "Bento",
@@ -37,6 +38,7 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className="antialiased">
         <GoogleAnalytics />
+        <MicrosoftClarity />
         <NextIntlClientProvider messages={messages}>
           <ReactQueryProvider>
             <Toaster />
