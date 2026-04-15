@@ -1,8 +1,13 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const APP_URL = "https://app.bento.com.ar";
 
@@ -44,16 +49,227 @@ export default function PricingClient({
   featuredBadge,
   footer,
 }: PricingClientProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const leftOverlayRef = useRef<HTMLDivElement>(null);
+  const rightOverlayRef = useRef<HTMLDivElement>(null);
+  const cardsGridRef = useRef<HTMLDivElement>(null);
+  const leftTextRef = useRef<HTMLDivElement>(null);
+  const rightTextRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+
   const getCtaHref = (planName: string, cta: string) => {
     if (cta === "Contactar") return "#contacto";
     if (planName === "Celebración") return `${APP_URL}/register?plan=pro`;
     return `${APP_URL}/register`;
   };
 
+  useLayoutEffect(() => {
+    if (window.innerWidth < 1024) return; // Solo desktop
+
+    const section = sectionRef.current;
+    const leftOverlay = leftOverlayRef.current;
+    const rightOverlay = rightOverlayRef.current;
+    const cardsGrid = cardsGridRef.current;
+    const leftText = leftTextRef.current;
+    const rightText = rightTextRef.current;
+    const header = headerRef.current;
+
+    if (!section || !leftOverlay || !rightOverlay || !cardsGrid || !leftText || !rightText || !header) return;
+
+    const ctx = gsap.context(() => {
+      // Estado inicial: paredes anchas + cards pequeñas + textos visibles + header oculto
+      gsap.set([leftOverlay, rightOverlay], {
+        width: "42%",
+      });
+
+      gsap.set(cardsGrid, {
+        scale: 0.75,
+      });
+
+      gsap.set([leftText, rightText], {
+        opacity: 1,
+      });
+
+      gsap.set(header, {
+        opacity: 0,
+        filter: "blur(10px)",
+      });
+
+      // Timeline con pin y scrub
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=150%",
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          refreshPriority: -200,
+          id: "pricing-reveal",
+        },
+      });
+
+      // Animaciones:
+      // 1. Textos laterales fade out (se mueven con las paredes)
+      tl.to([leftText, rightText], {
+        opacity: 0,
+        ease: "none",
+        duration: 0.35,
+      }, 0)
+      // 2. Header entra (fade in + unblur) - empieza temprano
+      .to(header, {
+        opacity: 1,
+        filter: "blur(0px)",
+        ease: "none",
+        duration: 0.45,
+      }, 0.15) // Empieza más temprano
+      // 3. Paredes se abren
+      .to([leftOverlay, rightOverlay], {
+        width: "0%",
+        ease: "none",
+      }, 0)
+      // 4. Cards crecen
+      .to(cardsGrid, {
+        scale: 1,
+        ease: "none",
+      }, 0)
+      // Hold
+      .to({}, { duration: 0.3 });
+
+    }, section);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
+
   return (
-    <section id="precios" className="py-12 md:py-24 bg-secondary/10">
-      <div className="max-w-6xl mx-auto px-6 lg:px-16">
-        <div className="text-center mb-16">
+    <section
+      ref={sectionRef}
+      id="precios"
+      className="relative lg:h-screen flex items-center bg-background overflow-hidden py-12 lg:py-0"
+    >
+      {/* Círculos naranjas decorativos de fondo - más intensos */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {/* Círculo superior izquierda */}
+        <div
+          className="absolute -top-48 -left-48 w-96 h-96 rounded-full blur-3xl"
+          style={{
+            background: "radial-gradient(circle, rgba(255,164,89,0.25) 0%, transparent 70%)",
+          }}
+        />
+        {/* Círculo superior derecha */}
+        <div
+          className="absolute -top-32 -right-32 w-80 h-80 rounded-full blur-3xl"
+          style={{
+            background: "radial-gradient(circle, rgba(188,129,41,0.22) 0%, transparent 70%)",
+          }}
+        />
+        {/* Círculo centro */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32rem] h-[32rem] rounded-full blur-3xl"
+          style={{
+            background: "radial-gradient(ellipse, rgba(255,164,89,0.15) 0%, transparent 60%)",
+          }}
+        />
+        {/* Círculo inferior izquierda */}
+        <div
+          className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-3xl"
+          style={{
+            background: "radial-gradient(circle, rgba(188,129,41,0.18) 0%, transparent 70%)",
+          }}
+        />
+        {/* Círculo inferior derecha */}
+        <div
+          className="absolute -bottom-32 -right-24 w-72 h-72 rounded-full blur-3xl"
+          style={{
+            background: "radial-gradient(circle, rgba(255,164,89,0.2) 0%, transparent 70%)",
+          }}
+        />
+        {/* Círculo extra izquierda medio */}
+        <div
+          className="absolute top-1/3 -left-24 w-64 h-64 rounded-full blur-3xl"
+          style={{
+            background: "radial-gradient(circle, rgba(255,164,89,0.18) 0%, transparent 70%)",
+          }}
+        />
+        {/* Círculo extra derecha medio */}
+        <div
+          className="absolute top-2/3 -right-32 w-80 h-80 rounded-full blur-3xl"
+          style={{
+            background: "radial-gradient(circle, rgba(188,129,41,0.16) 0%, transparent 70%)",
+          }}
+        />
+      </div>
+
+      {/* Patrón de dots para más textura */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, rgba(188,129,41,0.1) 1.5px, transparent 1.5px)",
+          backgroundSize: "32px 32px",
+          maskImage: "radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 90%)",
+          WebkitMaskImage: "radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 90%)",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Overlay izquierdo con blur + texto - solo desktop */}
+      <div
+        ref={leftOverlayRef}
+        className="hidden lg:flex absolute top-0 left-0 h-full items-center justify-end pr-12 pointer-events-none z-20"
+        style={{
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          background: "linear-gradient(to right, rgba(255,255,255,0.3), transparent)",
+        }}
+        aria-hidden="true"
+      >
+        <div ref={leftTextRef}>
+          <p
+            className="font-display text-2xl font-normal leading-tight text-right"
+            style={{
+              color: "#200041",
+              maxWidth: "280px",
+              letterSpacing: "-0.02em",
+              lineHeight: "1.3",
+            }}
+          >
+            Planes que se adaptan<br />
+            a tu visión
+          </p>
+        </div>
+      </div>
+
+      {/* Overlay derecho con blur + texto - solo desktop */}
+      <div
+        ref={rightOverlayRef}
+        className="hidden lg:flex absolute top-0 right-0 h-full items-center justify-start pl-12 pointer-events-none z-20"
+        style={{
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          background: "linear-gradient(to left, rgba(255,255,255,0.3), transparent)",
+        }}
+        aria-hidden="true"
+      >
+        <div ref={rightTextRef}>
+          <p
+            className="font-display text-2xl font-normal leading-tight"
+            style={{
+              color: "#200041",
+              maxWidth: "280px",
+              letterSpacing: "-0.02em",
+              lineHeight: "1.3",
+            }}
+          >
+            Desde bodas íntimas<br />
+            hasta grandes fiestas
+          </p>
+        </div>
+      </div>
+
+      <div className="relative max-w-6xl mx-auto px-6 lg:px-16 z-10 w-full">
+        <div ref={headerRef} className="text-center mb-16">
           <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#bc8129" }}>
             {badge}
           </p>
@@ -66,7 +282,7 @@ export default function PricingClient({
           <p className="text-muted-foreground max-w-md mx-auto">{subtitle}</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 items-start">
+        <div ref={cardsGridRef} className="grid md:grid-cols-3 gap-6 items-start">
           {plans.map((plan) => (
             <div
               key={plan.name}
