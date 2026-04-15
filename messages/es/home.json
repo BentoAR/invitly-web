@@ -50,28 +50,34 @@
     "description": "Cada invitación viene con todas las herramientas que necesitas para crear una experiencia memorable para tus invitados",
     "features": [
       {
-        "title": "Diseños premium que impresionan",
-        "description": "Invitaciones digitales de calidad profesional que superan cualquier tarjeta impresa. Animaciones suaves, tipografías elegantes y diseños de nivel superior creados por diseñadores expertos."
+        "title": "Lista de asistentes (RSVP)",
+        "description": "Tus invitados podrán confirmar su presencia para ayudarte en la lista de invitados final. Incluye gestión de acompañantes y restricciones alimentarias.",
+        "icon": "✅"
       },
       {
-        "title": "Confirmaciones automáticas (sin perseguir a nadie)",
-        "description": "Olvidate de llamar uno por uno preguntando \"¿venís o no?\". Tus invitados confirman con un toque y vos ves la lista actualizada al instante desde tu celular. Así de simple."
+        "title": "Álbum de fotos",
+        "description": "Una historia única en un hermoso recuerdo fotográfico. Los organizadores suben fotos con drag-and-drop y reordenamiento visual.",
+        "icon": "🖼️"
       },
       {
-        "title": "Compartí por donde quieras",
-        "description": "Un solo link que funciona en WhatsApp, Instagram, mail o donde se te ocurra. Sin apps para descargar, sin registros, sin nada raro para tus invitados. Abren y listo."
+        "title": "Lista de canciones",
+        "description": "Tus invitados podrán crear la lista de canciones que no pueden faltar en tu fiesta. Sistema colaborativo con moderación.",
+        "icon": "🎵"
       },
       {
-        "title": "La música la eligen todos",
-        "description": "Dejá que tus invitados agreguen las canciones que quieren escuchar en tu playlist de Spotify. El DJ del evento es colaborativo. Y vos te asegurás de que suene lo que a todos les gusta."
+        "title": "Regalos",
+        "description": "Tus invitados tendrán la posibilidad de hacerte llegar sus regalos. Incluye cuentas bancarias, CBU, Alias y Mercado Pago.",
+        "icon": "🎁"
       },
       {
-        "title": "Todo en un solo lugar",
-        "description": "Fecha, ubicación con mapa, galería de fotos, lista de regalos sugeridos, playlist y confirmación de asistencia. Todo en una sola página que tus invitados guardan y pueden volver a abrir cuando necesiten."
+        "title": "Ubicación e indicaciones",
+        "description": "Mapa interactivo con la ubicación del evento, tus invitados llegarán sin complicaciones. Integración con Google Maps.",
+        "icon": "📍"
       },
       {
-        "title": "Cambiá lo que quieras, cuando quieras",
-        "description": "¿Cambió la fecha? ¿El lugar? ¿Querés agregar algo? Editás desde tu panel y todos los que tienen el link ven la versión actualizada. Sin reenviar, sin confusiones."
+        "title": "Dashboard completo",
+        "description": "Configura funciones de tu invitación, visualiza lista de invitados y de canciones sugeridas. Métricas en tiempo real.",
+        "icon": "🎨"
       }
     ],
     "benefitsTitle": "Y mucho más incluido",

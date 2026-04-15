@@ -26,11 +26,13 @@ export default function HowItWorksClient({
   sectionTitle,
   subtitle,
   templateImages = [],
+  demoVideoUrl,
 }: {
   steps: Step[];
   sectionTitle: string;
   subtitle: string;
   templateImages?: string[];
+  demoVideoUrl?: string;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -243,17 +245,20 @@ export default function HowItWorksClient({
                       ))}
                     </div>
                   )}
-                  {i === 1 && (
-                    <div className="relative w-full overflow-hidden" style={{ borderRadius: 16, aspectRatio: "4/3", boxShadow: "0 8px 32px rgba(32,0,65,0.12)" }}>
-                      <Image
-                        src="https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/backgrounds/optimized.webp"
-                        alt=""
-                        fill
-                        className="object-cover"
-                        unoptimized
-                        aria-hidden="true"
-                      />
-                      <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.25)" }} />
+                  {i === 1 && demoVideoUrl && (
+                    <div className="flex justify-center">
+                      <div className="relative w-full max-w-[200px] overflow-hidden" style={{ borderRadius: 12, boxShadow: "0 8px 24px rgba(32,0,65,0.15)" }}>
+                        <video
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="w-full h-auto"
+                          style={{ display: "block" }}
+                        >
+                          <source src={demoVideoUrl} type="video/mp4" />
+                        </video>
+                      </div>
                     </div>
                   )}
                   {i === 2 && templateImages.length > 0 && (
@@ -345,17 +350,21 @@ export default function HowItWorksClient({
               className="absolute inset-0 flex items-center justify-center"
               style={{ backgroundColor: "#DADAC9" }}
             >
-              {si === 1 && (
-                <>
-                  <Image
-                    src="https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/backgrounds/optimized.webp"
-                    alt=""
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                  <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.35)" }} />
-                </>
+              {si === 1 && demoVideoUrl && (
+                <div className="relative w-full max-w-xs mx-auto">
+                  <div className="relative w-full overflow-hidden" style={{ borderRadius: 20, boxShadow: "0 12px 40px rgba(0,0,0,0.2)" }}>
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-auto"
+                      style={{ display: "block" }}
+                    >
+                      <source src={demoVideoUrl} type="video/mp4" />
+                    </video>
+                  </div>
+                </div>
               )}
               {si === 0 && templateImages.length > 0 && (
                 <div className="absolute inset-0 flex gap-6 overflow-hidden px-6">

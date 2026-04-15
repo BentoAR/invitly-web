@@ -20,12 +20,15 @@ export default async function HowItWorksSection() {
     "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/templates-preview/hero-flowers.webp",
   ];
 
+  const demoVideoUrl = "https://d14sb9d2krfjkl.cloudfront.net/media/videos/export-1776219247535.mp4";
+
   return (
     <HowItWorksClient
       steps={steps}
       sectionTitle={t("title")}
       subtitle={t("badge")}
       templateImages={templateImages}
+      demoVideoUrl={demoVideoUrl}
     />
   );
 }

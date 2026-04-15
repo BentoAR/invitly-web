@@ -50,28 +50,34 @@
     "description": "Each invitation comes with all the tools you need to create a memorable experience for your guests",
     "features": [
       {
-        "title": "Premium designs that impress",
-        "description": "Professional quality digital invitations that surpass any printed card. Smooth animations, elegant typography and superior-level designs created by expert designers."
+        "title": "Guest list (RSVP)",
+        "description": "Your guests can confirm their attendance to help you with the final guest list. Includes companion management and dietary restrictions.",
+        "icon": "✅"
       },
       {
-        "title": "Automatic confirmations (no chasing anyone)",
-        "description": "Forget calling one by one asking \"are you coming?\". Your guests confirm with a tap and you see the updated list instantly from your phone. That simple."
+        "title": "Photo album",
+        "description": "A unique story in a beautiful photographic memory. Organizers upload photos with drag-and-drop and visual reordering.",
+        "icon": "🖼️"
       },
       {
-        "title": "Share anywhere you want",
-        "description": "One link that works on WhatsApp, Instagram, email or wherever you want. No apps to download, no registration, nothing weird for your guests. They open and that's it."
+        "title": "Song list",
+        "description": "Your guests can create the list of songs that can't be missing from your party. Collaborative system with moderation.",
+        "icon": "🎵"
       },
       {
-        "title": "Everyone chooses the music",
-        "description": "Let your guests add the songs they want to hear on your Spotify playlist. The event DJ is collaborative. And you ensure that what everyone likes is played."
+        "title": "Gifts",
+        "description": "Your guests will have the possibility to send you their gifts. Includes bank accounts, CBU, Alias and Mercado Pago.",
+        "icon": "🎁"
       },
       {
-        "title": "Everything in one place",
-        "description": "Date, location with map, photo gallery, suggested gift list, playlist and attendance confirmation. Everything on one page that your guests save and can reopen when needed."
+        "title": "Location and directions",
+        "description": "Interactive map with the event location, your guests will arrive without complications. Google Maps integration.",
+        "icon": "📍"
       },
       {
-        "title": "Change whatever you want, whenever you want",
-        "description": "Did the date change? The place? Want to add something? You edit from your panel and everyone with the link sees the updated version. No resending, no confusion."
+        "title": "Complete dashboard",
+        "description": "Configure your invitation functions, view guest list and suggested songs. Real-time metrics.",
+        "icon": "🎨"
       }
     ],
     "benefitsTitle": "And much more included",

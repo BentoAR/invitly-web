@@ -25,12 +25,12 @@ const CARD_SLOTS: Array<{
   left?: string;
   xPercent?: number;
 }> = [
-  { top: "20%",  right: "15%" },   // 0 – top-right
-  { top: "12%",  left: "50%", xPercent: -50 },  // 1 – top-center (centered with xPercent)
-  { top: "20%",  left: "15%" },    // 2 – top-left
-  { bottom: "20%", left: "15%" },  // 3 – bottom-left
-  { bottom: "12%", left: "50%", xPercent: -50 }, // 4 – bottom-center (centered with xPercent)
-  { bottom: "20%", right: "15%" }, // 5 – bottom-right
+  { top: "8%",  right: "2%" },   // 0 – top-right (pegado al borde)
+  { top: "2%",  left: "50%", xPercent: -50 },  // 1 – top-center (arriba arriba)
+  { top: "8%",  left: "2%" },    // 2 – top-left (pegado al borde)
+  { bottom: "8%", left: "2%" },  // 3 – bottom-left (pegado al borde)
+  { bottom: "2%", left: "50%", xPercent: -50 }, // 4 – bottom-center (abajo abajo)
+  { bottom: "8%", right: "2%" }, // 5 – bottom-right (pegado al borde)
 ];
 
 // Final resting rotation per slot
@@ -57,18 +57,18 @@ export default function FeaturesScrollSequence({
 }) {
   const desktopSectionRef = useRef<HTMLDivElement>(null);
   const titleWrapRef      = useRef<HTMLDivElement>(null);
+  const titleTextRef      = useRef<HTMLHeadingElement>(null);
   const eyebrowRef        = useRef<HTMLParagraphElement>(null);
   const cardRefs          = useRef<(HTMLDivElement | null)[]>([]);
   const indicatorsRef     = useRef<HTMLDivElement>(null);
-  const overlayRef        = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [isStacked, setIsStacked] = useState(false);
 
   useLayoutEffect(() => {
     const desktopSection = desktopSectionRef.current;
     const titleWrap      = titleWrapRef.current;
     const eyebrow        = eyebrowRef.current;
     const indicators     = indicatorsRef.current;
-    const overlay        = overlayRef.current;
     if (!desktopSection || !titleWrap) return;
 
     const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
@@ -78,7 +78,6 @@ export default function FeaturesScrollSequence({
     gsap.set(titleWrap, { scale: 1, yPercent: 0, transformOrigin: "50% 50%" });
     if (eyebrow)    gsap.set(eyebrow,    { autoAlpha: 1, yPercent: 0 });
     if (indicators) gsap.set(indicators, { autoAlpha: 0, y: 20 });
-    if (overlay)    gsap.set(overlay,    { autoAlpha: 0 });
 
     cards.forEach((card, i) => {
       const slot = CARD_SLOTS[i];
@@ -109,8 +108,8 @@ export default function FeaturesScrollSequence({
       gsap.matchMedia().add("(min-width: 1024px)", () => {
         const phase1 = window.innerHeight * 1;
         const phase2 = window.innerHeight * n * 0.3;
-        const phase3 = window.innerHeight * n * 1.5;
-        const phase4 = window.innerHeight * 0.3;
+        const phase3 = window.innerHeight * n * 0.6; // Space for stacked carousel (6 cards × 2.5 units each = 15, scaled down)
+        const phase4 = window.innerHeight * 0.8; // Hold at end with all cards stacked
         const scrollDist = phase1 + phase2 + phase3 + phase4;
 
         ScrollTrigger.create({
@@ -153,6 +152,32 @@ export default function FeaturesScrollSequence({
         const cardStart = 0.2;
         const cardStep  = 0.4;
 
+        // Transition to dark mode while cards enter
+        tl.to(desktopSection, {
+          backgroundColor: "#0a0a0a",
+          duration: 1.5,
+          ease: "power2.inOut"
+        }, cardStart);
+
+        // Change title color to white
+        const titleText = titleTextRef.current;
+        if (titleText) {
+          tl.to(titleText, {
+            color: "#ffffff",
+            duration: 1.5,
+            ease: "power2.inOut"
+          }, cardStart);
+        }
+
+        // Change eyebrow color to orange
+        if (eyebrow) {
+          tl.to(eyebrow, {
+            color: "#FFA459",
+            duration: 1.5,
+            ease: "power2.inOut"
+          }, cardStart);
+        }
+
         cards.forEach((card, i) => {
           const slot = CARD_SLOTS[i];
           tl.to(card, {
@@ -167,83 +192,115 @@ export default function FeaturesScrollSequence({
           }, cardStart + i * cardStep);
         });
 
-        // ── Phase 3: Show indicators then focus cards one by one ──
-        const focusPhaseStart = cardStart + n * cardStep + 0.5;
+        // ── Phase 3: Stacked Vertical Carousel ──
+        const stackPhaseStart = cardStart + n * cardStep + 0.5;
 
+        // Move title almost to the top
+        tl.to(titleWrap, {
+          yPercent: -330,
+          scale: 0.75,
+          ease: "power2.inOut",
+          duration: 0.8,
+        }, stackPhaseStart);
+
+        // Stack positions HORIZONTAL: 6 slots (card at index 2 is centered)
+        const stackPositions = [
+          { x: -500, y: 0, scale: 0.75, opacity: 0,   zIndex: 30 }, // izq izq (oculta)
+          { x: -240, y: 0, scale: 0.85, opacity: 0.5, zIndex: 31 }, // izquierda
+          { x: 0,    y: 0, scale: 1.15, opacity: 1,   zIndex: 33 }, // CENTRO (activa, más grande)
+          { x: 240,  y: 0, scale: 0.85, opacity: 0.5, zIndex: 31 }, // derecha
+          { x: 500,  y: 0, scale: 0.75, opacity: 0,   zIndex: 30 }, // der der (oculta)
+          { x: 750,  y: 0, scale: 0.7,  opacity: 0,   zIndex: 29 }  // fuera
+        ];
+
+        // Show indicators first
         if (indicators) {
           tl.to(indicators, {
             autoAlpha: 1,
             y: 0,
             duration: 0.4,
             ease: "power2.out",
-          }, focusPhaseStart);
+          }, stackPhaseStart);
         }
 
-        const focusStep = 3;
+        // ── Step 1: Cards fly to center ONE BY ONE (staggered arrival) ──
+        const moveToStackStart = stackPhaseStart + 0.4;
+        const arrivalStagger = 0.15; // Time between each card arrival
+
+        // Marcar como apiladas cuando comienzan a moverse al centro
+        tl.call(() => setIsStacked(true), [], moveToStackStart);
 
         cards.forEach((card, i) => {
-          const startTime = focusPhaseStart + 0.3 + i * focusStep;
+          const arrivalTime = moveToStackStart + i * arrivalStagger;
+          const targetPos = stackPositions[i] || stackPositions[stackPositions.length - 1];
 
-          // Show overlay
-          if (overlay) {
-            tl.to(overlay, {
-              autoAlpha: 1,
-              duration: focusStep * 0.2,
-              ease: "power2.out",
-            }, startTime);
-          }
-
-          // Focus this card - move to center using absolute positioning
+          // Each card flies from its circular position to the center stack (horizontal)
           tl.to(card, {
             left: "50%",
             top: "50%",
             xPercent: -50,
             yPercent: -50,
-            x: 0,
-            y: 0,
-            width: "70vh",
-            height: "70vh",
-            scale: 1,
-            zIndex: 100,
-            opacity: 1,
             rotation: 0,
-            duration: focusStep * 0.25,
-            ease: "power2.out",
-            onStart: () => setActiveIndex(i),
-          }, startTime);
+            x: targetPos.x,
+            y: targetPos.y,
+            scale: targetPos.scale,
+            opacity: targetPos.opacity,
+            zIndex: targetPos.zIndex,
+            duration: 0.8,
+            ease: "back.out(1.2)", // Dramatic bounce on arrival
+          }, arrivalTime);
 
-          // Return to position
-          const returnTime = startTime + focusStep * 0.65;
-          const slot = CARD_SLOTS[i];
-
-          // Hide overlay
-          if (overlay) {
-            tl.to(overlay, {
-              autoAlpha: 0,
-              duration: focusStep * 0.15,
-              ease: "power2.in",
-            }, returnTime);
+          // Animar background a sólido cuando llega al centro
+          const cardBg = card.querySelector('.card-background');
+          if (cardBg) {
+            tl.to(cardBg, {
+              background: "rgba(15, 15, 15, 0.95)",
+              backdropFilter: "blur(20px)",
+              duration: 0.6,
+              ease: "power2.out",
+            }, arrivalTime + 0.2);
           }
-
-          tl.to(card, {
-            left: slot.left || "auto",
-            right: slot.right || "auto", 
-            top: slot.top || "auto",
-            bottom: slot.bottom || "auto",
-            width: "clamp(220px, 18vw, 280px)",
-            height: "clamp(220px, 18vw, 280px)",
-            xPercent: slot.xPercent ?? 0,
-            yPercent: 0,
-            x: 0,
-            y: 0,
-            scale: 1,
-            rotation: CARD_ROTATIONS[i] ?? 0,
-            zIndex: 20,
-            duration: focusStep * 0.25,
-            ease: "power2.inOut",
-            onComplete: i === n - 1 ? () => setActiveIndex(null) : undefined,
-          }, returnTime);
         });
+
+        // Set initial active index (card 2 is centered) after all cards have arrived
+        const allCardsArrivedAt = moveToStackStart + (cards.length - 1) * arrivalStagger + 0.8;
+        tl.call(() => setActiveIndex(2), [], allCardsArrivedAt);
+
+        // ── Step 3: Carousel rotation (each card rotates to center) ──
+        const carouselStart = allCardsArrivedAt + 0.7; // Start after all cards have stacked
+        const rotationStep = 2.5;
+
+        // We want all 6 cards to rotate through the center
+        // Order: card 2 (already centered), then 3, 4, 5, 0, 1
+        const rotationSequence = [2, 3, 4, 5, 0, 1];
+
+        rotationSequence.forEach((activeCardIndex, iteration) => {
+          const startTime = carouselStart + iteration * rotationStep;
+
+          // Rotate all cards to new positions (horizontal carousel)
+          cards.forEach((card, cardIndex) => {
+            // Calculate offset from the active card
+            const offset = (cardIndex - activeCardIndex + n) % n;
+            const newPos = stackPositions[offset] || stackPositions[stackPositions.length - 1];
+
+            tl.to(card, {
+              x: newPos.x,
+              y: newPos.y,
+              scale: newPos.scale,
+              opacity: newPos.opacity,
+              zIndex: newPos.zIndex,
+              duration: 1.2,
+              ease: "power2.inOut"
+            }, startTime);
+          });
+
+          // Update active index when card reaches center
+          tl.call(() => setActiveIndex(activeCardIndex), [], startTime + 0.6);
+        });
+
+        // Clear active index at the end
+        const stackPhaseEnd = carouselStart + rotationSequence.length * rotationStep;
+        tl.call(() => setActiveIndex(null), [], stackPhaseEnd);
 
         // Final hold
         tl.to({}, { duration: 0.6 });
@@ -274,34 +331,23 @@ export default function FeaturesScrollSequence({
         className="hidden lg:block relative"
         style={{ height: "100vh", backgroundColor: "#FAFAF9", overflow: "hidden" }}
       >
-        {/* Gradient background */}
+        {/* Gradient background - modo oscuro */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(188,129,41,0.04) 0%, transparent 60%)",
+            background: "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(188,129,41,0.15) 0%, transparent 60%)",
           }}
           aria-hidden="true"
         />
 
-        {/* Dot pattern */}
+        {/* Dot pattern - modo oscuro */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: "radial-gradient(circle, rgba(32,0,65,0.03) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)",
             backgroundSize: "40px 40px",
             maskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%)",
             WebkitMaskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%)",
-          }}
-          aria-hidden="true"
-        />
-
-        {/* Overlay for focus effect */}
-        <div
-          ref={overlayRef}
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundColor: "rgba(0,0,0,0.75)",
-            zIndex: 50,
           }}
           aria-hidden="true"
         />
@@ -320,6 +366,7 @@ export default function FeaturesScrollSequence({
           </p>
           <div ref={titleWrapRef} style={{ willChange: "transform" }}>
             <h2
+              ref={titleTextRef}
               className="font-display font-normal text-center leading-[1.06]"
               style={{
                 fontSize: "clamp(3.5rem, 8vw, 7.5rem)",
@@ -340,13 +387,17 @@ export default function FeaturesScrollSequence({
             ref={(el) => { cardRefs.current[i] = el; }}
             className="absolute"
             style={{
-              width: "clamp(220px, 18vw, 280px)",
-              height: "clamp(220px, 18vw, 280px)",
+              width: "clamp(300px, 24vw, 380px)",
+              height: "clamp(420px, 32vw, 520px)",
               zIndex: activeIndex === i ? 100 : 20,
               visibility: "hidden",
             }}
           >
-            <FeatureCard feature={features[i % features.length]} />
+            <FeatureCard
+              feature={features[i % features.length]}
+              index={i}
+              isStacked={isStacked}
+            />
           </div>
         ))}
 
@@ -418,7 +469,11 @@ export default function FeaturesScrollSequence({
           {Array.from({ length: N_CARDS }).map((_, i) => (
             <SwiperSlide key={i}>
               <div style={{ height: "280px" }}>
-                <FeatureCard feature={features[i % features.length]} />
+                <FeatureCard
+                  feature={features[i % features.length]}
+                  index={i}
+                  isStacked={true}
+                />
               </div>
             </SwiperSlide>
           ))}
@@ -430,41 +485,110 @@ export default function FeaturesScrollSequence({
 
 // ─── FeatureCard ──────────────────────────────────────────────────────────────
 
-function FeatureCard({ feature }: { feature?: { title: string; description: string } }) {
+// Placeholder images (diferentes para cada feature)
+const FEATURE_IMAGES = [
+  "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&h=600&fit=crop", // RSVP - personas/grupo
+  "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&h=600&fit=crop", // Álbum - fotos/momentos
+  "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&h=600&fit=crop", // Música - auriculares/audio
+  "https://images.unsplash.com/photo-1607863680198-23d4b2565df0?w=800&h=600&fit=crop", // Regalos - gift/presente
+  "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&h=600&fit=crop", // Ubicación - mapa/ciudad
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop", // Dashboard - gráficos/analytics
+];
+
+function FeatureCard({
+  feature,
+  index,
+  isStacked
+}: {
+  feature?: { title: string; description: string; icon?: string },
+  index?: number,
+  isStacked?: boolean
+}) {
   if (!feature) return null;
-  
+
+  const idx = index || 0;
+  const imageUrl = FEATURE_IMAGES[idx];
+  const showDescription = isStacked === true;
+
+  // Diseño premium: imagen flotante + contenido abajo
   return (
     <article
-      className="p-6 flex flex-col justify-center"
+      className="feature-card relative flex flex-col"
       style={{
-        backgroundColor: "#ffffff",
-        border: "1px solid rgba(32,0,65,0.07)",
-        borderRadius: "1.5rem",
         height: "100%",
         width: "100%",
-        boxShadow: "0 8px 32px rgba(32,0,65,0.08), 0 1px 0 rgba(255,255,255,0.9) inset",
+        padding: "1.5rem",
       }}
     >
-      <h3 
-        className="font-semibold mb-3"
-        style={{ 
-          fontSize: "clamp(1.1rem, 1.5vw, 1.35rem)", 
-          color: "#200041",
-          lineHeight: 1.3
-        }}
-      >
-        {feature.title}
-      </h3>
-      <p 
-        className="leading-relaxed"
+      {/* Background animado (transparente → sólido cuando se apila) */}
+      <div
+        className="card-background absolute inset-0 pointer-events-none"
         style={{
-          fontSize: "clamp(0.9rem, 1.1vw, 1rem)",
-          color: "rgba(32,0,65,0.7)",
-          lineHeight: 1.6
+          background: "rgba(10, 10, 10, 0)",
+          backdropFilter: "blur(0px)",
+          WebkitBackdropFilter: "blur(0px)",
+          borderRadius: "1.5rem",
+          zIndex: -1,
+          transition: "all 0.8s ease",
+        }}
+      />
+
+      {/* Imagen flotante con sombra difusa */}
+      <div
+        className="relative mb-6 flex-shrink-0"
+        style={{
+          height: "65%",
+          filter: "drop-shadow(0 20px 60px rgba(0, 0, 0, 0.4))",
         }}
       >
-        {feature.description}
-      </p>
+        <div
+          className="relative overflow-hidden h-full"
+          style={{
+            borderRadius: "1.25rem",
+          }}
+        >
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105"
+            style={{
+              backgroundImage: `url(${imageUrl})`,
+            }}
+          />
+          {/* Overlay gradiente sutil */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.2) 100%)",
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Contenido */}
+      <div className="flex-1 flex flex-col">
+        <h3
+          className="font-bold text-white"
+          style={{
+            fontSize: showDescription ? "clamp(1.15rem, 1.5vw, 1.4rem)" : "clamp(1rem, 1.3vw, 1.2rem)",
+            lineHeight: 1.25,
+            letterSpacing: "-0.01em",
+            marginBottom: showDescription ? "0.625rem" : "0",
+          }}
+        >
+          {feature.title}
+        </h3>
+        {showDescription && (
+          <p
+            className="leading-relaxed"
+            style={{
+              fontSize: "clamp(0.875rem, 1.05vw, 1rem)",
+              color: "rgba(255, 255, 255, 0.65)",
+              lineHeight: 1.6,
+            }}
+          >
+            {feature.description}
+          </p>
+        )}
+      </div>
     </article>
   );
 }
