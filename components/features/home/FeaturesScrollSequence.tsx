@@ -302,6 +302,31 @@ export default function FeaturesScrollSequence({
         const stackPhaseEnd = carouselStart + rotationSequence.length * rotationStep;
         tl.call(() => setActiveIndex(null), [], stackPhaseEnd);
 
+        // Transition back to white background
+        tl.to(desktopSection, {
+          backgroundColor: "#FAFAF9",
+          duration: 1.5,
+          ease: "power2.inOut"
+        }, stackPhaseEnd);
+
+        // Change title color back to original
+        if (titleTextRef.current) {
+          tl.to(titleTextRef.current, {
+            color: "#200041",
+            duration: 1.5,
+            ease: "power2.inOut"
+          }, stackPhaseEnd);
+        }
+
+        // Change eyebrow color back to original
+        if (eyebrow) {
+          tl.to(eyebrow, {
+            color: "#bc8129",
+            duration: 1.5,
+            ease: "power2.inOut"
+          }, stackPhaseEnd);
+        }
+
         // Final hold
         tl.to({}, { duration: 0.6 });
 
