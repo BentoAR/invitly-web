@@ -46,38 +46,32 @@
   },
   "Features": {
     "badge": "No apps, no complications",
-    "title": "Everything you need in one place",
+    "title": "More than a digital invitation",
     "description": "Each invitation comes with all the tools you need to create a memorable experience for your guests",
     "features": [
       {
-        "title": "Guest list (RSVP)",
-        "description": "Your guests can confirm their attendance to help you with the final guest list. Includes companion management and dietary restrictions.",
-        "icon": "✅"
+        "title": "Designer digital invitation",
+        "description": "Professional-level designs with automatic RSVP, live countdown, custom dress code and direct links. Everything you need to impress from the first moment."
       },
       {
-        "title": "Photo album",
-        "description": "A unique story in a beautiful photographic memory. Organizers upload photos with drag-and-drop and visual reordering.",
-        "icon": "🖼️"
+        "title": "Real-time photo album",
+        "description": "Upload your photos from your phone and your guests see them instantly. Create a visual gallery that updates live while you organize your event. Shared magic."
       },
       {
-        "title": "Song list",
-        "description": "Your guests can create the list of songs that can't be missing from your party. Collaborative system with moderation.",
-        "icon": "🎵"
+        "title": "Collaborative playlist",
+        "description": "Let your guests create the perfect soundtrack for your event. Moderate, approve and create the definitive list that will play at your party. Zero improvisation."
       },
       {
-        "title": "Gifts",
-        "description": "Your guests will have the possibility to send you their gifts. Includes bank accounts, CBU, Alias and Mercado Pago.",
-        "icon": "🎁"
+        "title": "Total control dashboard",
+        "description": "Live confirmations, playlist management, edit images, activate/deactivate features, change template whenever you want. Your entire event from one screen. Stress-free."
       },
       {
-        "title": "Location and directions",
-        "description": "Interactive map with the event location, your guests will arrive without complications. Google Maps integration.",
-        "icon": "📍"
+        "title": "Professional event management",
+        "description": "Organize tables, manage guests by groups, control gifts, export everything to Excel and deliver it ready to your event planner or venue. Professional coordinator level."
       },
       {
-        "title": "Complete dashboard",
-        "description": "Configure your invitation functions, view guest list and suggested songs. Real-time metrics.",
-        "icon": "🎨"
+        "title": "Support when you need it",
+        "description": "Real assistance according to your plan. We don't leave you alone: we respond quickly, solve problems and help you make your event perfect. Guaranteed backup."
       }
     ],
     "benefitsTitle": "And much more included",

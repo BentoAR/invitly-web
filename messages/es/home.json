@@ -46,38 +46,32 @@
   },
   "Features": {
     "badge": "Sin apps, sin complicaciones",
-    "title": "Explorá nuestras funcionalidades",
+    "title": "Más que una invitación digital",
     "description": "Cada invitación viene con todas las herramientas que necesitas para crear una experiencia memorable para tus invitados",
     "features": [
       {
-        "title": "Lista de asistentes (RSVP)",
-        "description": "Tus invitados podrán confirmar su presencia para ayudarte en la lista de invitados final. Incluye gestión de acompañantes y restricciones alimentarias.",
-        "icon": "✅"
+        "title": "Invitación digital de diseñador",
+        "description": "Diseños de nivel profesional con RSVP automático, cuenta regresiva en vivo, dress code personalizado y links directos. Todo lo que necesitás para impresionar desde el primer momento."
       },
       {
-        "title": "Álbum de fotos",
-        "description": "Una historia única en un hermoso recuerdo fotográfico. Los organizadores suben fotos con drag-and-drop y reordenamiento visual.",
-        "icon": "🖼️"
+        "title": "Álbum de fotos en tiempo real",
+        "description": "Subí tus fotos desde el celular y tus invitados las ven al instante. Creá una galería visual que se actualiza en vivo mientras organizás tu evento. Magia compartida."
       },
       {
-        "title": "Lista de canciones",
-        "description": "Tus invitados podrán crear la lista de canciones que no pueden faltar en tu fiesta. Sistema colaborativo con moderación.",
-        "icon": "🎵"
+        "title": "Playlist colaborativa",
+        "description": "Dejá que tus invitados armen la banda sonora perfecta de tu evento. Moderá, aprobá y creá la lista definitiva que va a sonar en tu fiesta. Cero improvisación."
       },
       {
-        "title": "Regalos",
-        "description": "Tus invitados tendrán la posibilidad de hacerte llegar sus regalos. Incluye cuentas bancarias, CBU, Alias y Mercado Pago.",
-        "icon": "🎁"
+        "title": "Dashboard de control total",
+        "description": "Confirmaciones en vivo, gestión de playlist, modificá imágenes, activá/desactivá funciones, cambiá template cuando quieras. Todo tu evento desde una sola pantalla. Sin estrés."
       },
       {
-        "title": "Ubicación e indicaciones",
-        "description": "Mapa interactivo con la ubicación del evento, tus invitados llegarán sin complicaciones. Integración con Google Maps.",
-        "icon": "📍"
+        "title": "Gestión profesional del evento",
+        "description": "Organizá mesas, gestioná invitados por grupos, controlá regalos, exportá todo a Excel y entregáselo listo a tu event planner o salón. Nivel coordinador profesional."
       },
       {
-        "title": "Dashboard completo",
-        "description": "Configura funciones de tu invitación, visualiza lista de invitados y de canciones sugeridas. Métricas en tiempo real.",
-        "icon": "🎨"
+        "title": "Soporte cuando lo necesités",
+        "description": "Asistencia real según tu plan. No te dejamos solo: respondemos rápido, resolvemos problemas y te ayudamos a que tu evento salga perfecto. Respaldo garantizado."
       }
     ],
     "benefitsTitle": "Y mucho más incluido",

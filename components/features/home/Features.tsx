@@ -8,6 +8,7 @@ export default async function Features() {
   const features = t.raw("features") as Array<{
     title: string;
     description: string;
+    icon?: string;
   }>;
 
   return (
