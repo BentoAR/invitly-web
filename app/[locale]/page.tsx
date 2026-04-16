@@ -26,12 +26,49 @@ export default async function Home() {
       <Suspense fallback={<div className="py-20" />}>
         <TemplatesSection />
       </Suspense>
-      <Suspense fallback={<FeaturesSkeleton />}>
-        <Features />
-      </Suspense>
-      <Suspense fallback={<div className="py-20" />}>
-        <Testimonials />
-      </Suspense>
+      {/* Wrapper con fondo continuo para Features + Testimonials */}
+      <div className="relative" style={{ backgroundColor: "#fff8f0" }}>
+        {/* Nubes naranjas difuminadas sobre fondo claro */}
+        <div
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+            backgroundImage: `
+              radial-gradient(ellipse 900px 500px at 20% 65%,
+                rgba(255, 164, 89, 0.45) 0%,
+                rgba(255, 180, 120, 0.35) 18%,
+                rgba(255, 200, 150, 0.25) 35%,
+                rgba(255, 220, 180, 0.15) 50%,
+                transparent 68%),
+              radial-gradient(ellipse 750px 420px at 80% 30%,
+                rgba(255, 140, 70, 0.5) 0%,
+                rgba(255, 164, 89, 0.38) 20%,
+                rgba(255, 190, 130, 0.25) 40%,
+                rgba(255, 210, 170, 0.12) 55%,
+                transparent 70%),
+              radial-gradient(ellipse 650px 380px at 45% 50%,
+                rgba(255, 180, 100, 0.42) 0%,
+                rgba(255, 200, 140, 0.3) 22%,
+                rgba(255, 220, 180, 0.18) 45%,
+                transparent 65%),
+              radial-gradient(ellipse 550px 320px at 70% 75%,
+                rgba(255, 150, 80, 0.48) 0%,
+                rgba(255, 175, 110, 0.32) 20%,
+                rgba(255, 200, 150, 0.2) 42%,
+                transparent 62%),
+              radial-gradient(ellipse 800px 450px at 10% 25%,
+                rgba(255, 164, 89, 0.4) 0%,
+                rgba(255, 185, 125, 0.28) 22%,
+                rgba(255, 210, 165, 0.15) 45%,
+                transparent 68%)`,
+          }}
+        />
+        <Suspense fallback={<FeaturesSkeleton />}>
+          <Features />
+        </Suspense>
+        <Suspense fallback={<div className="py-20" />}>
+          <Testimonials />
+        </Suspense>
+      </div>
       <Suspense fallback={<div className="py-20" />}>
         <Pricing />
       </Suspense>

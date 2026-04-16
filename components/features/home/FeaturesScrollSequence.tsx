@@ -195,7 +195,7 @@ export default function FeaturesScrollSequence({
         ref={desktopSectionRef}
         aria-label={sectionTitle}
         className="hidden lg:block relative"
-        style={{ height: "100vh", backgroundColor: "#0a0a0a", overflow: "hidden" }}
+        style={{ height: "100vh", overflow: "hidden" }}
       >
         {/* Título fijo centrado */}
         <div
@@ -207,7 +207,7 @@ export default function FeaturesScrollSequence({
             className="font-display font-normal text-center leading-tight"
             style={{
               fontSize: "clamp(3rem, 6vw, 5.5rem)",
-              color: "#ffffff",
+              color: "#200041",
               letterSpacing: "-0.03em",
             }}
           >
@@ -238,23 +238,22 @@ export default function FeaturesScrollSequence({
       <section
         id="caracteristicas-mobile"
         aria-label={sectionTitle}
-        className="lg:hidden py-12 md:py-20"
-        style={{ backgroundColor: "#0a0a0a" }}
+        className="lg:hidden py-12 md:py-20 relative"
       >
-        <div className="text-center px-6 mb-12">
+        <div className="text-center px-6 mb-12 relative z-10">
           <h2
             className="font-display font-normal leading-tight"
             style={{
               fontSize: "clamp(2rem, 8vw, 3rem)",
-              color: "#ffffff",
+              color: "#200041",
               letterSpacing: "-0.03em",
             }}
           >
-            {sectionTitle}
+            {formatTitle(sectionTitle)}
           </h2>
         </div>
 
-        <div className="space-y-6 px-6 max-w-2xl mx-auto">
+        <div className="space-y-6 px-6 max-w-2xl mx-auto relative z-10">
           {features.map((feature, i) => (
             <div key={i}>
               <MinimalFeatureCard feature={feature} index={i} />
@@ -276,11 +275,12 @@ function MinimalFeatureCard({ feature, index }: { feature: Feature; index: numbe
     <div
       className="flex items-start gap-6 px-8 py-7"
       style={{
-        border: "1px solid rgba(255, 255, 255, 0.12)",
+        border: "1px solid rgba(32, 0, 65, 0.08)",
         borderRadius: "1.75rem",
-        backgroundColor: "#0a0a0a", // Fondo sólido negro para tapar el título
+        backgroundColor: "#ffffff",
         maxWidth: "820px",
         minHeight: "120px",
+        boxShadow: "0 4px 24px rgba(32, 0, 65, 0.06)",
       }}
     >
       {/* Ícono Lucide outline */}
@@ -289,8 +289,7 @@ function MinimalFeatureCard({ feature, index }: { feature: Feature; index: numbe
           <IconComponent
             size={34}
             strokeWidth={1.5}
-            className="text-white"
-            style={{ opacity: 0.95 }}
+            style={{ color: "#200041", opacity: 0.9 }}
           />
         ) : (
           <div style={{ width: 34, height: 34 }} />
@@ -300,24 +299,24 @@ function MinimalFeatureCard({ feature, index }: { feature: Feature; index: numbe
       {/* Texto */}
       <div className="flex-1">
         <h3
-          className="text-white mb-2"
+          className="mb-2"
           style={{
             fontSize: "1.3rem",
             lineHeight: 1.25,
             fontWeight: 600,
             letterSpacing: "-0.01em",
+            color: "#200041",
           }}
         >
           {feature.title}
         </h3>
         <p
-          className="text-white"
           style={{
             fontSize: "0.9375rem",
             lineHeight: 1.6,
-            opacity: 0.7,
             fontWeight: 400,
             maxWidth: "55ch",
+            color: "rgba(32, 0, 65, 0.6)",
           }}
         >
           {feature.description}

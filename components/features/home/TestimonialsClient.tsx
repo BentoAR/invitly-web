@@ -46,10 +46,11 @@ export default function TestimonialsClient({
     }, 1000);
 
     const ctx = gsap.context(() => {
-      // Estado inicial del wrapper: más pequeño en el centro con border-radius
+      // Estado inicial del wrapper: más pequeño en el centro con border-radius y sombra
       gsap.set(contentWrapper, {
         scale: 0.75,
         borderRadius: "32px",
+        boxShadow: "0 20px 60px rgba(32, 0, 65, 0.12)",
       });
 
       // Pin de la sección con animación scrub de expansión
@@ -71,6 +72,7 @@ export default function TestimonialsClient({
       tl.to(contentWrapper, {
         scale: 1,
         borderRadius: "0px",
+        boxShadow: "0 0px 0px rgba(32, 0, 65, 0)",
         ease: "none",
         duration: 0.6, // 60% del timeline - se expande rápido
       })
@@ -116,36 +118,17 @@ export default function TestimonialsClient({
         zIndex: 40,
         position: "relative",
         isolation: "isolate",
-        backgroundColor: "#0a0a0a"
       }}
     >
-      {/* Gradient background - mismo que Features */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(188,129,41,0.15) 0%, transparent 60%)",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Dot pattern - mismo que Features */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-          maskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%)",
-        }}
-        aria-hidden="true"
-      />
 
       <div
         ref={contentWrapperRef}
-        className="w-full h-full bg-background overflow-hidden relative"
+        className="w-full h-full overflow-hidden relative"
         style={{
-          willChange: "transform, border-radius",
-          zIndex: 1
+          willChange: "transform, border-radius, box-shadow",
+          zIndex: 10,
+          backgroundColor: "#ffffff",
+          boxShadow: "0 20px 60px rgba(32, 0, 65, 0.12)"
         }}
       >
         <div className="h-full flex flex-col justify-center py-12 md:py-24">
