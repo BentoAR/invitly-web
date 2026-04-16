@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { generatePageMetadata } from "@/src/utils/metadata";
 import StructuredData from "@/components/shared/StructuredData";
 import { getOrganizationSchema, getBreadcrumbSchema } from "@/src/utils/structuredData";
+import { Suspense } from "react";
 
 export const revalidate = 3600;
 
@@ -85,8 +86,12 @@ export default async function Templates({
           title={t("featuredInvitations")}
           description={t("featuredDescription")}
         />
-        <CategorySelect />
-        <InvitationsList />
+        <Suspense fallback={<div className="h-12 bg-muted/50 rounded-lg animate-pulse w-60" />}>
+          <CategorySelect />
+        </Suspense>
+        <Suspense fallback={<div className="mt-8 h-96 bg-muted/50 rounded-lg animate-pulse" />}>
+          <InvitationsList />
+        </Suspense>
       </Container>
     </section>
   );
