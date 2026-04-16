@@ -72,7 +72,7 @@ export function getWebSiteSchema(locale: string): WithContext<WebSite> {
         urlTemplate: "https://app.bento.com.ar/{locale}/templates?q={search_term_string}",
       },
       "query-input": "required name=search_term_string",
-    },
+    } as any,
   };
 }
 
