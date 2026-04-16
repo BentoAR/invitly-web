@@ -73,6 +73,7 @@ export function generatePageMetadata({
 }: GenerateMetadataParams): Metadata {
   const fullTitle = `${title} | Bento`;
   const url = `${siteConfig.url}/${locale}${path}`;
+  const canonicalPath = `/${locale}${path}`;
 
   const allKeywords = [
     ...keywords,
@@ -93,10 +94,10 @@ export function generatePageMetadata({
     },
     metadataBase: new URL(siteConfig.url),
     alternates: {
-      canonical: url,
+      canonical: canonicalPath,
       languages: {
-        es: `${siteConfig.url}/es${path}`,
-        en: `${siteConfig.url}/en${path}`,
+        es: `/es${path}`,
+        en: `/en${path}`,
       },
     },
     openGraph: {
