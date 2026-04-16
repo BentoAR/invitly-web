@@ -33,6 +33,9 @@ export const metadata = {
   title: "Bento",
   description:
     "Crea invitaciones digitales personalizadas para cualquier evento. Elige tu categoría y sorprende a tus invitados con diseños exclusivos.",
+  icons: {
+    icon: "https://d14sb9d2krfjkl.cloudfront.net/media/LogoFavicon.svg",
+  },
 };
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
