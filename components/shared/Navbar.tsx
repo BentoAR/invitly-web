@@ -29,11 +29,14 @@ export const Navbar = () => {
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = scrollY.on("change", (latest) => {
+    // Memoizar el handler para evitar recrearlo en cada render
+    const handleScrollChange = (latest: number) => {
       setHasScrolled(latest > 50);
       // Ocultar navbar después de la primera sección (aprox 100vh)
       setIsHidden(latest > window.innerHeight * 0.8);
-    });
+    };
+
+    const unsubscribe = scrollY.on("change", handleScrollChange);
     return () => unsubscribe();
   }, [scrollY]);
 

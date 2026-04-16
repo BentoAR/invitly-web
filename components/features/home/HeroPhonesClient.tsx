@@ -24,7 +24,10 @@ export default function HeroPhonesClient({
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.matchMedia().add("(min-width: 1024px)", () => {
+      // Cachear el resultado de matchMedia para evitar reevaluaciones
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 1024px)", () => {
         const top = topRef.current;
         const bottom = bottomRef.current;
         if (!top || !bottom) return;
@@ -103,6 +106,33 @@ export default function HeroPhonesClient({
           floatTweensRef.current = [floatTop, floatBottom];
         });
 
+        // Definir callbacks fuera del objeto config para evitar recrearlos
+        const handleEnter = () => {
+          floatTweensRef.current.forEach((tw) => tw.kill());
+          gsap.set(top, { y: 0 });
+          gsap.set(bottom, { y: 0 });
+        };
+
+        const handleLeaveBack = () => {
+          gsap.set(top, { y: 0 });
+          gsap.set(bottom, { y: 0 });
+          const floatTop = gsap.to(top, {
+            y: -12,
+            duration: 1.7,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+          });
+          const floatBottom = gsap.to(bottom, {
+            y: 16,
+            duration: 3.1,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+          });
+          floatTweensRef.current = [floatTop, floatBottom];
+        };
+
         const scrollOut = gsap.timeline({
           scrollTrigger: {
             trigger: "#inicio",
@@ -112,30 +142,8 @@ export default function HeroPhonesClient({
             pin: true,
             pinSpacing: false,
             anticipatePin: 1,
-            onEnter: () => {
-              floatTweensRef.current.forEach((tw) => tw.kill());
-              gsap.set(top, { y: 0 });
-              gsap.set(bottom, { y: 0 });
-            },
-            onLeaveBack: () => {
-              gsap.set(top, { y: 0 });
-              gsap.set(bottom, { y: 0 });
-              const floatTop = gsap.to(top, {
-                y: -12,
-                duration: 1.7,
-                ease: "sine.inOut",
-                repeat: -1,
-                yoyo: true,
-              });
-              const floatBottom = gsap.to(bottom, {
-                y: 16,
-                duration: 3.1,
-                ease: "sine.inOut",
-                repeat: -1,
-                yoyo: true,
-              });
-              floatTweensRef.current = [floatTop, floatBottom];
-            },
+            onEnter: handleEnter,
+            onLeaveBack: handleLeaveBack,
           },
         });
 

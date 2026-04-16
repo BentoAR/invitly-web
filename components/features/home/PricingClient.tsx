@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Check, X } from "lucide-react";
@@ -57,11 +57,15 @@ export default function PricingClient({
   const rightTextRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  const getCtaHref = (planName: string, cta: string) => {
-    if (cta === "Contactar") return "#contacto";
-    if (planName === "Celebración") return `${APP_URL}/register?plan=pro`;
-    return `${APP_URL}/register`;
-  };
+  // Memoizar la función para evitar recrearla en cada render
+  const getCtaHref = useMemo(
+    () => (planName: string, cta: string) => {
+      if (cta === "Contactar") return "#contacto";
+      if (planName === "Celebración") return `${APP_URL}/register?plan=pro`;
+      return `${APP_URL}/register`;
+    },
+    []
+  );
 
   useLayoutEffect(() => {
     if (window.innerWidth < 1024) return; // Solo desktop
@@ -77,6 +81,7 @@ export default function PricingClient({
     if (!section || !leftOverlay || !rightOverlay || !cardsGrid || !leftText || !rightText || !header) return;
 
     const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
       // Estado inicial: paredes anchas + cards pequeñas + textos visibles + header oculto
       gsap.set([leftOverlay, rightOverlay], {
         width: "42%",

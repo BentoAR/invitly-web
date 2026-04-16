@@ -48,7 +48,8 @@ export default function CtaSplitClient({ left, right, contactDialogTitle }: CtaS
 
     const ctx = gsap.context(() => {
       // Only animate on desktop
-      gsap.matchMedia().add("(min-width: 1024px)", () => {
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px)", () => {
         gsap.set(leftEl, { autoAlpha: 0, x: -60 });
         gsap.set(rightEl, { autoAlpha: 0, x: 60 });
 

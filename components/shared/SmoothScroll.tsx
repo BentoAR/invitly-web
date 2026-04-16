@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,6 +8,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
+  const rafHandlerRef = useRef<((time: number) => void) | null>(null);
+
   useEffect(() => {
     if (window.innerWidth < 768) return;
 
@@ -19,15 +21,19 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    // Mantener referencia estable del handler para el cleanup correcto
+    rafHandlerRef.current = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
 
+    gsap.ticker.add(rafHandlerRef.current);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      if (rafHandlerRef.current) {
+        gsap.ticker.remove(rafHandlerRef.current);
+      }
       lenis.destroy();
-      gsap.ticker.remove((time) => lenis.raf(time * 1000));
     };
   }, []);
 

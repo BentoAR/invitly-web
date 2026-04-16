@@ -10,6 +10,24 @@ import { routing } from "@/src/i18n/routing";
 import { Toaster } from "@/components/ui/sonner";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
 import MicrosoftClarity from "@/components/analytics/MicrosoftClarity";
+import { Playfair_Display, Inter } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-playfair",
+  preload: true,
+  adjustFontFallback: true,
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+  preload: true,
+  adjustFontFallback: true,
+});
 
 export const metadata = {
   title: "Bento",
@@ -35,8 +53,8 @@ export default async function RootLayout({
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale}>
-      <body className="antialiased">
+    <html lang={locale} className={`${playfair.variable} ${inter.variable}`}>
+      <body className="antialiased font-sans">
         <GoogleAnalytics />
         <MicrosoftClarity />
         <NextIntlClientProvider messages={messages}>

@@ -1,7 +1,7 @@
 "use client";
 
 import { InvitationsList } from "@/components/features/templates/InvitationsList";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -17,6 +17,15 @@ export default function TemplatesSectionClient({ badge, title }: TemplatesSectio
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
 
+  // Memoizar las curvas SVG para evitar recrearlas
+  const curves = useMemo(
+    () => ({
+      start: "M 0 600 Q 50 -50, 100 600 L 100 700 L 0 700 Z",
+      end: "M 0 600 Q 50 500, 100 600 L 100 700 L 0 700 Z",
+    }),
+    []
+  );
+
   useLayoutEffect(() => {
     if (window.innerWidth < 768) return;
 
@@ -25,13 +34,11 @@ export default function TemplatesSectionClient({ badge, title }: TemplatesSectio
     if (!section || !path) return;
 
     const ctx = gsap.context(() => {
-      const startCurve = "M 0 600 Q 50 -50, 100 600 L 100 700 L 0 700 Z";
-      const endCurve = "M 0 600 Q 50 500, 100 600 L 100 700 L 0 700 Z";
 
-      gsap.set(path, { attr: { d: startCurve }, visibility: "visible" });
+      gsap.set(path, { attr: { d: curves.start }, visibility: "visible" });
 
       gsap.to(path, {
-        attr: { d: endCurve },
+        attr: { d: curves.end },
         ease: "none",
         scrollTrigger: {
           trigger: section,
@@ -44,7 +51,7 @@ export default function TemplatesSectionClient({ badge, title }: TemplatesSectio
     }, section);
 
     return () => ctx.revert();
-  }, []);
+  }, [curves]);
 
   return (
     <section

@@ -1,13 +1,9 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
 import { ClipboardCheck, Image, Music, LayoutDashboard, Users, Headphones, type LucideIcon } from "lucide-react";
-import "swiper/css";
-import "swiper/css/pagination";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,6 +60,12 @@ export default function FeaturesScrollSequence({
   const titleWrapRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Memoizar las posiciones iniciales para evitar recalcularlas
+  const initialPositions = useMemo(
+    () => features.map((_, i) => ({ x: getInitialX(i), y: 400 })),
+    [features.length]
+  );
+
   useLayoutEffect(() => {
     const desktopSection = desktopSectionRef.current;
     const titleWrap = titleWrapRef.current;
@@ -75,15 +77,15 @@ export default function FeaturesScrollSequence({
     // Estado inicial: cards abajo del viewport con blur, alternando izquierda/derecha
     cards.forEach((card, i) => {
       gsap.set(card, {
-        x: getInitialX(i),
-        y: 400, // Más abajo del viewport
+        ...initialPositions[i],
         opacity: 0,
         filter: "blur(10px)",
       });
     });
 
     const ctx = gsap.context(() => {
-      gsap.matchMedia().add("(min-width: 1024px)", () => {
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px)", () => {
         // Duración total del scroll: 1 viewport por card + hold inicial
         const scrollDist = window.innerHeight * (n + 1);
 
@@ -131,7 +133,7 @@ export default function FeaturesScrollSequence({
         // Cada card sube en línea recta desde bottom hasta top (sin moverse en X)
         cards.forEach((card, i) => {
           const startTime = 1 + i * 1.5;
-          const lateralX = getInitialX(i); // Posición fija en X (izq o der)
+          const lateralX = initialPositions[i].x; // Posición fija en X (izq o der)
 
           // Movimiento Y: bottom → top (lineal, constante)
           tl.fromTo(
@@ -185,7 +187,7 @@ export default function FeaturesScrollSequence({
     }, desktopSection);
 
     return () => ctx.revert();
-  }, [features.length]);
+  }, [features.length, initialPositions]);
 
   return (
     <>

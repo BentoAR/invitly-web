@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -31,6 +31,25 @@ export default function TestimonialsClient({
   const contentWrapperRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Memoizar handlers para evitar recrearlos y facilitar cleanup
+  const handleMouseEnter = useCallback((card: HTMLDivElement) => () => {
+    gsap.to(card, {
+      y: -6,
+      boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback((card: HTMLDivElement) => () => {
+    gsap.to(card, {
+      y: 0,
+      boxShadow: "0 0px 0px rgba(0,0,0,0)",
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }, []);
+
   useLayoutEffect(() => {
     if (window.innerWidth < 768) return;
 
@@ -46,6 +65,8 @@ export default function TestimonialsClient({
     }, 1000);
 
     const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
       // Estado inicial del wrapper: más pequeño en el centro con border-radius y sombra
       gsap.set(contentWrapper, {
         scale: 0.75,
@@ -79,35 +100,35 @@ export default function TestimonialsClient({
       // Hold (el resto del tiempo se queda fijo)
       .to({}, { duration: 0.4 }); // 40% restante - aguanta en pantalla completa
 
-      // Hover animations para las cards
+      // Hover animations para las cards con cleanup correcto
+      const cardHandlers: Array<{ card: HTMLDivElement; enter: () => void; leave: () => void }> = [];
+
       cards.forEach((card) => {
         if (!card) return;
 
-        card.addEventListener("mouseenter", () => {
-          gsap.to(card, {
-            y: -6,
-            boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        });
+        const enterHandler = handleMouseEnter(card);
+        const leaveHandler = handleMouseLeave(card);
 
-        card.addEventListener("mouseleave", () => {
-          gsap.to(card, {
-            y: 0,
-            boxShadow: "0 0px 0px rgba(0,0,0,0)",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        });
+        card.addEventListener("mouseenter", enterHandler);
+        card.addEventListener("mouseleave", leaveHandler);
+
+        cardHandlers.push({ card, enter: enterHandler, leave: leaveHandler });
       });
+
+      // Cleanup de event listeners
+      return () => {
+        cardHandlers.forEach(({ card, enter, leave }) => {
+          card.removeEventListener("mouseenter", enter);
+          card.removeEventListener("mouseleave", leave);
+        });
+      };
     }, section);
 
     return () => {
       clearTimeout(timeoutId);
       ctx.revert();
     };
-  }, []);
+  }, [handleMouseEnter, handleMouseLeave]);
 
   return (
     <section

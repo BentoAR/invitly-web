@@ -4,11 +4,10 @@ import { getCategories } from "@/services/categories";
 export function useCategories() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["categories"],
-    queryFn: () => {
-      return getCategories();
-    },
-    retry: 2,
-    staleTime: 1 * 60 * 1000,
+    queryFn: getCategories,
+    // Categorías son datos casi estáticos — staleTime muy alto
+    staleTime: 60 * 60 * 1000, // 1 hora
+    gcTime: 2 * 60 * 60 * 1000, // 2 horas
   });
   return { data, isLoading, error };
 }

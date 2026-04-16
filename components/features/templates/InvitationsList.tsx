@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 import { ErrorState } from "@/components/shared/states/ErrorState";
 import { EmptyState } from "@/components/shared/states/EmptyState";
 import { openWhatsApp } from "@/utils/openWhatsapp";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -23,6 +23,19 @@ export function InvitationsList() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Memoizar el parallax handler para evitar recrearlo
+  const handleParallaxUpdate = useCallback((strip: HTMLDivElement, CARD_W: number, GAP: number) => {
+    return () => {
+      const currentX = gsap.getProperty(strip, "x") as number;
+      imageRefs.current.forEach((img, i) => {
+        if (!img) return;
+        const cardCenter = i * (CARD_W + GAP) + currentX + CARD_W / 2;
+        const distFromCenter = cardCenter - window.innerWidth / 2;
+        gsap.set(img, { x: -(distFromCenter * 0.06), force3D: true });
+      });
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (!invitations.length) return;
@@ -51,15 +64,7 @@ export function InvitationsList() {
             end: `+=${totalScroll}`,
             scrub: 1.2,
             anticipatePin: 1,
-            onUpdate: () => {
-              const currentX = gsap.getProperty(strip, "x") as number;
-              imageRefs.current.forEach((img, i) => {
-                if (!img) return;
-                const cardCenter = i * (CARD_W + GAP) + currentX + CARD_W / 2;
-                const distFromCenter = cardCenter - window.innerWidth / 2;
-                gsap.set(img, { x: -(distFromCenter * 0.06), force3D: true });
-              });
-            },
+            onUpdate: handleParallaxUpdate(strip, CARD_W, GAP),
           },
         });
         tl.to(strip, { x: -totalScroll, ease: "none" });
@@ -89,7 +94,7 @@ export function InvitationsList() {
       cancelAnimationFrame(raf);
       ctx?.revert();
     };
-  }, [invitations.length]);
+  }, [invitations.length, handleParallaxUpdate]);
 
   if (isLoading) return <InvitationsListSkeleton />;
   if (error) return <ErrorState message={t("error")} onRetry={() => refetch()} retryLabel={t("retry")} />;

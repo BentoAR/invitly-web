@@ -1,19 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { getTemplates } from "@/services/templates";
 import { Category } from "@/utils/types";
 
 export function useTemplates(categories: Category[]) {
+  // Estabilizar query key para evitar refetches innecesarios
+  const categoryIds = useMemo(
+    () => categories.map((cat) => cat.id).sort(),
+    [categories]
+  );
+
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["templates", categories],
+    queryKey: ["templates", categoryIds],
     queryFn: () => {
       return getTemplates(
-        categories.length
-          ? { categories: categories.map((cat) => cat.id) }
-          : undefined
+        categoryIds.length ? { categories: categoryIds } : undefined
       );
     },
-    retry: 2,
-    staleTime: 5 * 60 * 1000,
+    // Datos estáticos del CMS — staleTime alto
+    staleTime: 30 * 60 * 1000, // 30 minutos
+    gcTime: 60 * 60 * 1000, // 1 hora
   });
   return { data, isLoading, error, refetch };
 }

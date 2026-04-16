@@ -12,6 +12,15 @@ const FAQ = lazy(() => import("@/components/features/home/FAQ"));
 const CtaSplit = lazy(() => import("@/components/features/home/CtaSplit"));
 
 import { FeaturesSkeleton } from "@/components/shared/skeletons/FeaturesSkeleton";
+import {
+  HowItWorksSkeleton,
+  TemplatesSectionSkeleton,
+  TestimonialsSkeleton,
+  PricingSkeleton,
+  BannerSkeleton,
+  FAQSkeleton,
+  CtaSkeleton,
+} from "@/components/shared/skeletons/HomeSectionSkeletons";
 
 export const revalidate = 3600;
 
@@ -20,10 +29,10 @@ export default async function Home() {
     <div className="min-h-screen">
       <Hero />
       <SocialProofBanner />
-      <Suspense fallback={<div className="h-screen bg-[#0a0a0f]" />}>
+      <Suspense fallback={<HowItWorksSkeleton />}>
         <HowItWorksSection />
       </Suspense>
-      <Suspense fallback={<div className="py-20" />}>
+      <Suspense fallback={<TemplatesSectionSkeleton />}>
         <TemplatesSection />
       </Suspense>
       {/* Wrapper con fondo continuo para Features + Testimonials */}
@@ -65,20 +74,20 @@ export default async function Home() {
         <Suspense fallback={<FeaturesSkeleton />}>
           <Features />
         </Suspense>
-        <Suspense fallback={<div className="py-20" />}>
+        <Suspense fallback={<TestimonialsSkeleton />}>
           <Testimonials />
         </Suspense>
       </div>
-      <Suspense fallback={<div className="py-20" />}>
+      <Suspense fallback={<PricingSkeleton />}>
         <Pricing />
       </Suspense>
-      <Suspense fallback={<div className="py-20" />}>
+      <Suspense fallback={<BannerSkeleton />}>
         <B2BAwarenessBanner />
       </Suspense>
-      <Suspense fallback={<div className="py-20" />}>
+      <Suspense fallback={<FAQSkeleton />}>
         <FAQ />
       </Suspense>
-      <Suspense fallback={<div className="py-16" />}>
+      <Suspense fallback={<CtaSkeleton />}>
         <CtaSplit />
       </Suspense>
     </div>

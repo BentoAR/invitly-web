@@ -56,7 +56,8 @@ export default function HowItWorksClient({
       // Todo el código GSAP corre exclusivamente en desktop (≥1024px).
       // En mobile, los gsap.set iniciales NO se aplican, por lo que
       // los elementos permanecen visibles sin intervención de GSAP.
-      gsap.matchMedia().add("(min-width: 1024px)", () => {
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px)", () => {
         const heights = descRefs.current.map((el) => (el ? el.offsetHeight : 0));
 
         // Estado inicial de los paneles del lado derecho
