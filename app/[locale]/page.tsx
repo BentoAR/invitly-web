@@ -1,6 +1,16 @@
 import { Suspense, lazy } from "react";
+import type { Metadata } from "next";
 import Hero from "@/components/features/home/Hero";
 import SocialProofBanner from "@/components/features/home/SocialProofBanner";
+import StructuredData from "@/components/shared/StructuredData";
+import { generatePageMetadata } from "@/src/utils/metadata";
+import {
+  getOrganizationSchema,
+  getWebSiteSchema,
+  getServiceSchema,
+  getEventSchema,
+} from "@/src/utils/structuredData";
+import { getTranslations } from "next-intl/server";
 
 const HowItWorksSection = lazy(() => import("@/components/features/home/HowItWorksSection"));
 const TemplatesSection = lazy(() => import("@/components/features/home/TemplatesSection"));
@@ -10,6 +20,7 @@ const Pricing = lazy(() => import("@/components/features/home/Pricing"));
 const B2BAwarenessBanner = lazy(() => import("@/components/features/home/B2BAwarenessBanner"));
 const FAQ = lazy(() => import("@/components/features/home/FAQ"));
 const CtaSplit = lazy(() => import("@/components/features/home/CtaSplit"));
+const SEOContent = lazy(() => import("@/components/features/home/SEOContent"));
 
 import { FeaturesSkeleton } from "@/components/shared/skeletons/FeaturesSkeleton";
 import {
@@ -24,9 +35,74 @@ import {
 
 export const revalidate = 3600;
 
-export default async function Home() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Hero" });
+
+  const title =
+    locale === "es"
+      ? "Invitaciones Digitales Profesionales para Eventos"
+      : "Professional Digital Event Invitations";
+
+  const description =
+    locale === "es"
+      ? "Crea invitaciones digitales profesionales para bodas, cumpleaños, eventos corporativos y más. Más de 200 plantillas premium, RSVP automático, playlist colaborativa y gestión completa de invitados. La plataforma #1 de invitaciones digitales en Argentina con más de 10,000 eventos organizados."
+      : "Create professional digital invitations for weddings, birthdays, corporate events and more. Over 200 premium templates, automatic RSVP, collaborative playlist and complete guest management. The #1 digital invitation platform in Argentina with over 10,000 events organized.";
+
+  const keywords =
+    locale === "es"
+      ? [
+          "invitaciones digitales argentina",
+          "crear invitaciones online",
+          "invitaciones para bodas",
+          "invitaciones para cumpleaños",
+          "rsvp automático",
+          "plantillas de invitaciones",
+          "alternativa a invitaciones impresas",
+          "confirmación de asistencia online",
+        ]
+      : [
+          "digital invitations argentina",
+          "create online invitations",
+          "wedding invitations",
+          "birthday invitations",
+          "automatic rsvp",
+          "invitation templates",
+          "alternative to printed invitations",
+          "online rsvp",
+        ];
+
+  return generatePageMetadata({
+    title,
+    description,
+    path: "",
+    locale,
+    keywords,
+  });
+}
+
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  // Generate structured data for SEO and AI discoverability
+  const structuredData = [
+    getOrganizationSchema(locale),
+    getWebSiteSchema(locale),
+    getServiceSchema(locale),
+    getEventSchema(locale),
+  ];
+
   return (
     <div className="min-h-screen">
+      <StructuredData data={structuredData} />
       <Hero />
       <SocialProofBanner />
       <Suspense fallback={<HowItWorksSkeleton />}>
@@ -89,6 +165,9 @@ export default async function Home() {
       </Suspense>
       <Suspense fallback={<CtaSkeleton />}>
         <CtaSplit />
+      </Suspense>
+      <Suspense fallback={null}>
+        <SEOContent />
       </Suspense>
     </div>
   );

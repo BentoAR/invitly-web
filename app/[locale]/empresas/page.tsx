@@ -12,17 +12,64 @@ import FinalCTAB2B from "@/components/features/empresas/FinalCTAB2B";
 
 export const revalidate = 3600;
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  const title =
+    locale === "es"
+      ? "Planes B2B para Salones y Wedding Planners | Bento Empresas"
+      : "B2B Plans for Event Venues and Wedding Planners | Bento Business";
+
+  const description =
+    locale === "es"
+      ? "Ofrecé invitaciones digitales premium a tus clientes. Más de 50 salones confían en Bento. Planes B2B desde $250k/mes para salones de eventos, wedding planners y organizadores profesionales en Argentina. Primer mes gratis, ROI inmediato, soporte prioritario."
+      : "Offer premium digital invitations to your clients. Over 50 venues trust Bento. B2B plans from $250k/month for event venues, wedding planners and professional organizers in Argentina. First month free, immediate ROI, priority support.";
+
+  const keywords =
+    locale === "es"
+      ? [
+          "salones de eventos argentina",
+          "wedding planner software",
+          "invitaciones digitales b2b",
+          "plataforma eventos corporativos",
+          "software para wedding planners",
+          "gestión de eventos b2b",
+          "invitaciones premium para salones",
+        ]
+      : [
+          "event venues argentina",
+          "wedding planner software",
+          "b2b digital invitations",
+          "corporate event platform",
+          "wedding planner software",
+          "b2b event management",
+          "premium invitations for venues",
+        ];
+
   return {
-    title: "Bento para Salones de Eventos y Wedding Planners | Planes B2B",
-    description:
-      "Ofrecé invitaciones digitales premium a tus clientes. Planes desde $250k/mes para salones, wedding planners y organizadores profesionales. Primer mes gratis.",
-    keywords:
-      "salones de eventos argentina, wedding planner software, invitaciones digitales b2b, plataforma eventos corporativos",
+    title,
+    description,
+    keywords: keywords.join(", "),
     openGraph: {
-      title: "Bento para Salones y Empresas",
-      description: "Recuperá la inversión con el primer cliente. Planes B2B desde $250k/mes.",
+      title,
+      description,
       type: "website",
+      images: [
+        {
+          url: "https://d14sb9d2krfjkl.cloudfront.net/media/og-image.jpg",
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }

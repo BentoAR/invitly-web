@@ -1,0 +1,23 @@
+{
+  "name": "Bento - Invitaciones Digitales Profesionales",
+  "short_name": "Bento",
+  "description": "Crea invitaciones digitales profesionales para bodas, cumpleaños y eventos. Más de 200 plantillas premium.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FFA459",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://d14sb9d2krfjkl.cloudfront.net/media/LogoFavicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "productivity", "social"],
+  "lang": "es-AR",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
