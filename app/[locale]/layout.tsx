@@ -44,7 +44,7 @@ export async function generateMetadata({
 
   return {
     title: {
-      default: "Bento - Invitaciones Digitales Profesionales | Argentina",
+      default: "Bento",
       template: "%s | Bento",
     },
     description,
@@ -114,11 +114,6 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className={`${playfair.variable} ${inter.variable}`}>
-      <head>
-        <link rel="alternate" hrefLang="es" href={`${siteConfig.url}/es`} />
-        <link rel="alternate" hrefLang="en" href={`${siteConfig.url}/en`} />
-        <link rel="alternate" hrefLang="x-default" href={`${siteConfig.url}/es`} />
-      </head>
       <body className="antialiased font-sans">
         <GoogleAnalytics />
         <MicrosoftClarity />

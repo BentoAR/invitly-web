@@ -71,7 +71,7 @@ export function generatePageMetadata({
   ogImage = siteConfig.ogImage,
   noIndex = false,
 }: GenerateMetadataParams): Metadata {
-  const fullTitle = `${title} | Bento`;
+  const fullTitle = title ? `${title} | Bento` : "Bento";
   const url = `${siteConfig.url}/${locale}${path}`;
   const canonicalPath = `/${locale}${path}`;
 
@@ -94,10 +94,10 @@ export function generatePageMetadata({
     },
     metadataBase: new URL(siteConfig.url),
     alternates: {
-      canonical: canonicalPath,
       languages: {
         es: `/es${path}`,
         en: `/en${path}`,
+        'x-default': `/es${path}`,
       },
     },
     openGraph: {

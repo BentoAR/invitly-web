@@ -43,11 +43,6 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Hero" });
 
-  const title =
-    locale === "es"
-      ? "Invitaciones Digitales Profesionales para Eventos"
-      : "Professional Digital Event Invitations";
-
   const description =
     locale === "es"
       ? "Crea invitaciones digitales profesionales para bodas, cumpleaños, eventos corporativos y más. Más de 200 plantillas premium, RSVP automático, playlist colaborativa y gestión completa de invitados. La plataforma #1 de invitaciones digitales en Argentina con más de 10,000 eventos organizados."
@@ -76,13 +71,19 @@ export async function generateMetadata({
           "online rsvp",
         ];
 
-  return generatePageMetadata({
-    title,
+  // Para la home, retornamos metadata simple sin template
+  const baseMetadata = generatePageMetadata({
+    title: "",
     description,
     path: "",
     locale,
     keywords,
   });
+
+  return {
+    ...baseMetadata,
+    title: "Bento",
+  };
 }
 
 export default async function Home({
