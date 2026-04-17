@@ -2,7 +2,8 @@
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import { motion, useScroll } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -51,8 +52,14 @@ export const Navbar = () => {
       <Container>
         <div className="flex h-16 items-center justify-between">
           <a href="#inicio" className="flex items-center gap-2 group">
-            <Sparkles className="h-6 w-6 text-primary transition-transform group-hover:rotate-12" />
-            <span className="text-xl font-semibold">{t("brand")}</span>
+            <Image 
+              src="https://d14sb9d2krfjkl.cloudfront.net/media/Frame+14+(1).svg"
+              alt="Bento Logo"
+              width={120}
+              height={32}
+              className="transition-transform group-hover:scale-105"
+              priority
+            />
           </a>
 
           <div className="hidden md:flex items-center gap-8">
