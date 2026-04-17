@@ -6,15 +6,15 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
+        protocol: "https" as const,
         hostname: "res.cloudinary.com",
       },
       {
-        protocol: "https",
+        protocol: "https" as const,
         hostname: "invitation-bucket-aws.s3.us-east-2.amazonaws.com",
       },
       {
-        protocol: "https",
+        protocol: "https" as const,
         hostname: "d14sb9d2krfjkl.cloudfront.net",
       },
     ],
