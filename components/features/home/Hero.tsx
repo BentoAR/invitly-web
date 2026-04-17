@@ -10,8 +10,7 @@ import HeroPhonesClient from "@/components/features/home/HeroPhonesClient";
 import HeroTypewriter from "@/components/features/home/HeroTypewriter";
 
 const APP_URL = "https://app.bento.com.ar";
-// TODO: reemplazar con el link de una invitación pública de demo (sin login)
-const DEMO_INVITATION_URL = "#";
+const DEMO_INVITATION_URL = "https://inv.bento.com.ar/evento/4d50d8/lautaroydafne";
 
 export default async function Hero() {
   const t = await getTranslations("Hero");
@@ -61,7 +60,7 @@ export default async function Hero() {
                 data-hero="cta"
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
-                <Link href={`${APP_URL}/register`} target="_blank" rel="noopener noreferrer">
+                <a href="#precios">
                   <Button
                     size="lg"
                     className="shadow-elegant group w-full sm:w-auto"
@@ -70,7 +69,7 @@ export default async function Hero() {
                     {t("button.primary")}
                     <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                   </Button>
-                </Link>
+                </a>
                 <Link
                   href={DEMO_INVITATION_URL}
                   target="_blank"

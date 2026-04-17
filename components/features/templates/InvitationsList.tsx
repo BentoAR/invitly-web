@@ -231,7 +231,7 @@ export function InvitationsList() {
 
           {/* Card CTA — Explorar más */}
           <div
-            className="carousel-card shrink-0 rounded-2xl flex flex-col items-center justify-center gap-6 cursor-pointer group"
+            className="carousel-card shrink-0 rounded-2xl flex flex-col items-center justify-center gap-6"
             style={{
               width: "clamp(340px, 42vw, 560px)",
               height: "clamp(500px, 82vh, 720px)",
@@ -243,7 +243,7 @@ export function InvitationsList() {
               className="font-mono uppercase text-center"
               style={{ fontSize: "0.6rem", letterSpacing: "0.3em", color: "rgba(32,0,65,0.35)" }}
             >
-              ¿No encontraste lo que buscás?
+              MÁS PLANTILLAS
             </p>
             <h3
               className="font-display font-normal text-center leading-tight"
@@ -253,17 +253,16 @@ export function InvitationsList() {
                 color: "#200041",
               }}
             >
-              Ver todas las
+              Estamos trabajando
               <br />
-              <em style={{ color: "#bc8129" }}>plantillas.</em>
+              en <em style={{ color: "#bc8129" }}>nuevas plantillas</em>
             </h3>
-            <Button
-              variant="outline"
-              onClick={() => openWhatsApp(t("getMessage", { name: "una invitación" }))}
-              className="mt-2 transition-transform duration-300 group-hover:scale-105"
+            <p
+              className="text-center mt-2 text-sm"
+              style={{ color: "rgba(32,0,65,0.6)" }}
             >
-              Explorar catálogo
-            </Button>
+              Pronto tendrás más opciones
+            </p>
           </div>
         </div>
       </div>
@@ -312,31 +311,33 @@ export function InvitationsList() {
 
         {/* Card CTA mobile */}
         <div
-          className="relative overflow-hidden rounded-xl flex flex-col items-center justify-center gap-3 cursor-pointer"
+          className="relative overflow-hidden rounded-xl flex flex-col items-center justify-center gap-3"
           style={{
             aspectRatio: "3/4",
             backgroundColor: "#ffffff",
             boxShadow: "0 8px 24px rgba(32,0,65,0.14)",
           }}
-          onClick={() => openWhatsApp(t("getMessage", { name: "una invitación" }))}
         >
           <p
             className="font-mono uppercase text-center px-4"
             style={{ fontSize: "0.5rem", letterSpacing: "0.2em", color: "rgba(32,0,65,0.35)" }}
           >
-            ¿No encontraste lo que buscás?
+            MÁS PLANTILLAS
           </p>
           <h3
             className="font-display font-normal text-center leading-tight px-4"
             style={{ fontSize: "1.1rem", letterSpacing: "-0.02em", color: "#200041" }}
           >
-            Ver todas las
+            Estamos trabajando
             <br />
-            <em style={{ color: "#bc8129" }}>plantillas.</em>
+            en <em style={{ color: "#bc8129" }}>nuevas plantillas</em>
           </h3>
-          <Button variant="outline" size="sm" className="mt-1 pointer-events-none">
-            Explorar
-          </Button>
+          <p
+            className="text-center mt-1 text-xs px-4"
+            style={{ color: "rgba(32,0,65,0.6)" }}
+          >
+            Pronto más opciones
+          </p>
         </div>
       </div>
     </>

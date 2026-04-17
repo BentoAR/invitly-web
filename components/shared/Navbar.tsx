@@ -89,11 +89,6 @@ export const Navbar = () => {
                 {t("login")}
               </Button>
             </a>
-            <a href={`${APP_URL}/register`} target="_blank" rel="noopener noreferrer">
-              <Button size="sm">
-                {t("cta")}
-              </Button>
-            </a>
           </div>
 
           <div className="flex md:hidden items-center gap-2">
@@ -129,11 +124,6 @@ export const Navbar = () => {
                     <a href={`${APP_URL}/login`} target="_blank" rel="noopener noreferrer">
                       <Button variant="outline" className="w-full">
                         {t("login")}
-                      </Button>
-                    </a>
-                    <a href={`${APP_URL}/register`} target="_blank" rel="noopener noreferrer">
-                      <Button className="w-full">
-                        {t("cta")}
                       </Button>
                     </a>
                   </div>
