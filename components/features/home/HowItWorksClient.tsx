@@ -46,6 +46,7 @@ export default function HowItWorksClient({
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const rightPanelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const colRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const step2BgRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
     const n = steps.length;
@@ -72,6 +73,11 @@ export default function HowItWorksClient({
         titleRefs.current.forEach((el, i) => gsap.set(el, { opacity: i === 0 ? 1 : 0.35 }));
         bgNumRefs.current.forEach((el, i) => gsap.set(el, { autoAlpha: i === 0 ? 1 : 0 }));
         dotRefs.current.forEach((el, i) => gsap.set(el, { scale: i === 0 ? 1 : 0.5, opacity: i === 0 ? 1 : 0.3 }));
+
+        // Estado inicial del background parallax del step 2 (oculto)
+        if (step2BgRef.current) {
+          gsap.set(step2BgRef.current, { autoAlpha: 0 });
+        }
 
         // Animación de entrada en desktop
         gsap.set(headerRef.current, { autoAlpha: 0, y: 16 });
@@ -113,6 +119,24 @@ export default function HowItWorksClient({
           );
         });
 
+        // Parallax del background del step 2
+        if (step2BgRef.current) {
+          gsap.fromTo(step2BgRef.current,
+            { y: -200, scale: 1.3 },
+            { 
+              y: 200, 
+              scale: 1.1,
+              ease: "none", 
+              scrollTrigger: { 
+                trigger: section, 
+                start: "top top", 
+                end: `+=${scrollLength}`, 
+                scrub: 0.5 
+              } 
+            }
+          );
+        }
+
         // Timeline principal de transición entre steps
         const stepTl = gsap.timeline({
           scrollTrigger: { trigger: section, start: "top top", end: `+=${scrollLength}`, scrub: 1.6 },
@@ -126,7 +150,17 @@ export default function HowItWorksClient({
           stepTl.to(bgNumRefs.current[i], { autoAlpha: 0, duration: 0.5 }, "<");
           stepTl.to(dotRefs.current[i], { scale: 0.5, opacity: 0.3, duration: 0.4 }, "<");
 
+          // Ocultar background del step 2 cuando se desactiva (desaparece rápido)
+          if (i === 1 && step2BgRef.current) {
+            stepTl.to(step2BgRef.current, { autoAlpha: 0, duration: 0.3, ease: "power1.inOut" }, "<");
+          }
+
           stepTl.to(rightPanelRefs.current[i + 1], { y: "0%", duration: 0.9, ease: "power3.out" }, "<0.05");
+
+          // Mostrar background del step 2 cuando se activa (aparece completo)
+          if (i + 1 === 1 && step2BgRef.current) {
+            stepTl.to(step2BgRef.current, { autoAlpha: 1, duration: 0.3, ease: "power1.inOut" }, "<");
+          }
 
           stepTl.to(descRefs.current[i + 1], { height: heights[i + 1], autoAlpha: 1, duration: 0.7, ease: "power2.out" });
           stepTl.to(titleRefs.current[i + 1], { opacity: 1, duration: 0.6 }, "<");
@@ -352,20 +386,38 @@ export default function HowItWorksClient({
               style={{ backgroundColor: "#DADAC9" }}
             >
               {si === 1 && demoVideoUrl && (
-                <div className="relative w-full max-w-xs mx-auto">
-                  <div className="relative w-full overflow-hidden" style={{ borderRadius: 20, boxShadow: "0 12px 40px rgba(0,0,0,0.2)" }}>
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-auto"
-                      style={{ display: "block" }}
-                    >
-                      <source src={demoVideoUrl} type="video/mp4" />
-                    </video>
+                <>
+                  {/* Background parallax */}
+                  <div 
+                    ref={step2BgRef}
+                    className="absolute inset-0"
+                    style={{ 
+                      backgroundImage: "url('https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/backgrounds/optimized.webp')",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      opacity: 0.6,
+                      filter: "blur(3px) brightness(0.95)",
+                      willChange: "transform"
+                    }}
+                    aria-hidden="true"
+                  />
+                  
+                  {/* Video en primer plano */}
+                  <div className="relative w-full max-w-lg mx-auto z-10 px-8">
+                    <div className="relative w-full overflow-hidden" style={{ borderRadius: 20, boxShadow: "0 12px 40px rgba(0,0,0,0.2)" }}>
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-auto"
+                        style={{ display: "block" }}
+                      >
+                        <source src={demoVideoUrl} type="video/mp4" />
+                      </video>
+                    </div>
                   </div>
-                </div>
+                </>
               )}
               {si === 0 && templateImages.length > 0 && (
                 <div className="absolute inset-0 flex gap-6 overflow-hidden px-6">

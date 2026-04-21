@@ -117,71 +117,71 @@
   },
   "Pricing": {
     "badge": "Pricing",
-    "title": "Simple and transparent",
-    "subtitle": "Start free. Upgrade when you need it.",
+    "title": "Choose the plan that fits your event",
+    "subtitle": "From functional digital invitations to fully customized designs. No fine print, no hidden costs.",
     "plans": [
       {
-        "name": "Basic",
-        "price": "Free",
-        "priceNote": "Forever",
-        "description": "To try Bento and see how it works",
-        "cta": "Start free",
+        "name": "Digital",
+        "price": "$30,000",
+        "priceNote": "per event",
+        "description": "For events where sharing and confirming matter most",
+        "cta": "Start with Digital",
         "featured": false,
         "features": [
-          { "label": "1 active event", "included": true },
-          { "label": "Up to 50 guests", "included": true },
-          { "label": "Basic templates", "included": true },
+          { "label": "Customizable digital invitation", "included": true },
           { "label": "Automatic RSVP", "included": true },
-          { "label": "Collaborative playlist", "included": false },
-          { "label": "No Bento branding", "included": false },
-          { "label": "Detailed statistics", "included": false },
-          { "label": "Priority support", "included": false }
+          { "label": "Up to 100 guests", "included": true },
+          { "label": "Collaborative playlist (up to 30 songs)", "included": true },
+          { "label": "Photo gallery", "included": true },
+          { "label": "Table organization", "included": false },
+          { "label": "Personalized links per guest", "included": false },
+          { "label": "Priority WhatsApp support", "included": false }
         ]
       },
       {
         "name": "Celebration",
-        "price": "Inquire",
+        "price": "$60,000",
         "priceNote": "per event",
-        "description": "For special events that deserve the best",
+        "description": "For events that deserve professional organization",
         "cta": "Choose Celebration",
         "featured": true,
         "features": [
-          { "label": "Unlimited events", "included": true },
-          { "label": "Up to 500 guests", "included": true },
-          { "label": "All templates", "included": true },
-          { "label": "Automatic RSVP", "included": true },
-          { "label": "Collaborative playlist", "included": true },
-          { "label": "No Bento branding", "included": true },
-          { "label": "Detailed statistics", "included": true },
-          { "label": "Priority support", "included": false }
+          { "label": "All of the above +", "included": true },
+          { "label": "Unlimited guests", "included": true },
+          { "label": "Unlimited playlist", "included": true },
+          { "label": "Table organization", "included": true },
+          { "label": "Personalized links per guest", "included": true },
+          { "label": "Export guest list to Excel", "included": true },
+          { "label": "Priority WhatsApp support", "included": true },
+          { "label": "12-24 hour response time", "included": true }
         ]
       },
       {
-        "name": "Premium",
-        "price": "Inquire",
-        "priceNote": "per month",
-        "description": "For organizers and professional planners",
-        "cta": "Contact",
+        "name": "Custom Made",
+        "price": "$120,000",
+        "priceNote": "per event",
+        "description": "Your event deserves a unique visual identity",
+        "cta": "Schedule design call",
         "featured": false,
         "features": [
-          { "label": "Unlimited events", "included": true },
-          { "label": "Unlimited guests", "included": true },
-          { "label": "Exclusive templates", "included": true },
-          { "label": "Automatic RSVP", "included": true },
-          { "label": "Collaborative playlist", "included": true },
-          { "label": "No Bento branding", "included": true },
-          { "label": "Detailed statistics", "included": true },
-          { "label": "Priority support", "included": true }
+          { "label": "All of the above +", "included": true },
+          { "label": "100% custom design", "included": true },
+          { "label": "Theme chosen by you", "included": true },
+          { "label": "Video in hero", "included": true },
+          { "label": "Special animations (GSAP, parallax)", "included": true },
+          { "label": "2 rounds of adjustments included", "included": true },
+          { "label": "100% personalized domain", "included": true },
+          { "label": "Real-time chat (< 6 hour response)", "included": true }
         ]
       }
     ],
     "featuredBadge": "Most popular",
     "footer": {
-      "line1": "No credit card for free plan",
-      "line2": "Cancel anytime",
+      "line1": "Save over $300,000 vs. printed invitations + coordinator",
+      "line2": "Cancel anytime, no penalty",
       "line3": "Have a venue or are you an organizer?",
-      "line3Link": "Let's talk",
-      "priceNote": "Less than printing 20 cards. And no envelope or postage costs."
+      "line3Link": "View business plans",
+      "priceNote": "Less than 1% of a wedding budget. Includes everything you need to manage your event."
     }
   },
   "FAQ": {

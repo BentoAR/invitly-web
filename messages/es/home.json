@@ -117,71 +117,71 @@
   },
   "Pricing": {
     "badge": "Precios",
-    "title": "Simple y transparente",
-    "subtitle": "Empezá gratis. Upgrades cuando los necesités.",
+    "title": "Elegí el plan que se adapta a tu evento",
+    "subtitle": "Desde invitaciones digitales funcionales hasta diseños completamente personalizados. Sin letra chica, sin costos ocultos.",
     "plans": [
       {
-        "name": "Básico",
-        "price": "Gratis",
-        "priceNote": "Para siempre",
-        "description": "Para probar Bento y ver cómo funciona",
-        "cta": "Empezar gratis",
+        "name": "Digital",
+        "price": "$30.000",
+        "priceNote": "por evento",
+        "description": "Para eventos donde lo que importa es compartir y confirmar",
+        "cta": "Empezar con Digital",
         "featured": false,
         "features": [
-          { "label": "1 evento activo", "included": true },
-          { "label": "Hasta 50 invitados", "included": true },
-          { "label": "Templates básicas", "included": true },
+          { "label": "Invitación digital personalizable", "included": true },
           { "label": "RSVP automático", "included": true },
-          { "label": "Playlist colaborativa", "included": false },
-          { "label": "Sin branding de Bento", "included": false },
-          { "label": "Estadísticas detalladas", "included": false },
-          { "label": "Soporte prioritario", "included": false }
+          { "label": "Hasta 100 invitados", "included": true },
+          { "label": "Playlist colaborativa (hasta 30 canciones)", "included": true },
+          { "label": "Galería de fotos", "included": true },
+          { "label": "Organización de mesas", "included": false },
+          { "label": "Links personalizados por invitado", "included": false },
+          { "label": "Soporte prioritario por WhatsApp", "included": false }
         ]
       },
       {
         "name": "Celebración",
-        "price": "Consultar",
+        "price": "$60.000",
         "priceNote": "por evento",
-        "description": "Para eventos especiales que se merecen lo mejor",
+        "description": "Para eventos que se merecen organización profesional",
         "cta": "Elegir Celebración",
         "featured": true,
         "features": [
-          { "label": "Eventos ilimitados", "included": true },
-          { "label": "Hasta 500 invitados", "included": true },
-          { "label": "Todas las templates", "included": true },
-          { "label": "RSVP automático", "included": true },
-          { "label": "Playlist colaborativa", "included": true },
-          { "label": "Sin branding de Bento", "included": true },
-          { "label": "Estadísticas detalladas", "included": true },
-          { "label": "Soporte prioritario", "included": false }
+          { "label": "Todo lo anterior +", "included": true },
+          { "label": "Invitados ilimitados", "included": true },
+          { "label": "Playlist ilimitada", "included": true },
+          { "label": "Organización de mesas", "included": true },
+          { "label": "Links personalizados por invitado", "included": true },
+          { "label": "Exportar lista a Excel", "included": true },
+          { "label": "Soporte prioritario por WhatsApp", "included": true },
+          { "label": "Respuesta en 12-24 horas", "included": true }
         ]
       },
       {
-        "name": "Premium",
-        "price": "Consultar",
-        "priceNote": "por mes",
-        "description": "Para organizadores y planners profesionales",
-        "cta": "Contactar",
+        "name": "A Medida",
+        "price": "$120.000",
+        "priceNote": "por evento",
+        "description": "Tu evento merece una identidad visual única",
+        "cta": "Agendar llamada de diseño",
         "featured": false,
         "features": [
-          { "label": "Eventos ilimitados", "included": true },
-          { "label": "Invitados ilimitados", "included": true },
-          { "label": "Templates exclusivas", "included": true },
-          { "label": "RSVP automático", "included": true },
-          { "label": "Playlist colaborativa", "included": true },
-          { "label": "Sin branding de Bento", "included": true },
-          { "label": "Estadísticas detalladas", "included": true },
-          { "label": "Soporte prioritario", "included": true }
+          { "label": "Todo lo anterior +", "included": true },
+          { "label": "Diseño 100% personalizado", "included": true },
+          { "label": "Temática elegida por vos", "included": true },
+          { "label": "Video en el hero", "included": true },
+          { "label": "Animaciones especiales (GSAP, parallax)", "included": true },
+          { "label": "2 rondas de ajustes incluidas", "included": true },
+          { "label": "Dominio 100% personalizado", "included": true },
+          { "label": "Chat en tiempo real (respuesta < 6 horas)", "included": true }
         ]
       }
     ],
     "featuredBadge": "Más elegido",
     "footer": {
-      "line1": "Sin tarjeta de crédito para el plan gratuito",
-      "line2": "Cancelás cuando querés",
+      "line1": "Ahorrás más de $300.000 vs. invitaciones impresas + coordinador",
+      "line2": "Cancelás cuando querés, sin penalización",
       "line3": "¿Tenés un salón o sos organizador?",
-      "line3Link": "Hablemos",
-      "priceNote": "Menos que imprimir 20 tarjetas. Y sin gastar en sobre ni en correo."
+      "line3Link": "Ver planes para empresas",
+      "priceNote": "Menos del 1% del presupuesto de una boda. Incluye todo lo que necesitás para gestionar tu evento."
     }
   },
   "FAQ": {
