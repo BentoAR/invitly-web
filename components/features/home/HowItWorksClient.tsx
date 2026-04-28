@@ -1,14 +1,19 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, type Ref } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lottie from "lottie-react";
+import { Mic, Plus, Smile } from "lucide-react";
+import messageAnimation from "@/assets/lotties/ContactUs.json";
 
 gsap.registerPlugin(ScrollTrigger);
 
 type Step = { number: string; title: string; description: string };
+type WhatsappReply = { id: string; text: string };
+type WhatsappChatMessage = WhatsappReply & { direction: "incoming" | "outgoing" };
 
 const GRID_COLS: [number, number, number][][] = [
   [[0, 0, 100], [3, 0, 78], [5, 0,  90]],
@@ -20,6 +25,90 @@ const STEP_FADE_UP = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
 };
+
+export const HOW_IT_WORKS_WHATSAPP_MESSAGE = "Hola! Te quiero invitar a mi fiesta";
+
+export const HOW_IT_WORKS_WHATSAPP_REPLIES: WhatsappReply[] = [
+  { id: "confirmed", text: "¡Ya confirmé! ✓✓" },
+  { id: "vegan-menu", text: "¿Hay menú vegano?" },
+  { id: "plus-two", text: "Voy con +2 ✓" },
+  { id: "family-share", text: "Compartí con la flia 👨‍👩‍👧" },
+  { id: "see-you", text: "Nos vemos ahí 🎉" },
+];
+
+export const HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE: WhatsappChatMessage[] = [
+  {
+    id: "sent-invitation",
+    direction: "outgoing",
+    text: HOW_IT_WORKS_WHATSAPP_MESSAGE,
+  },
+  ...HOW_IT_WORKS_WHATSAPP_REPLIES.map((reply) => ({
+    ...reply,
+    direction: "incoming" as const,
+  })),
+];
+
+function WhatsAppInputPreview({
+  compact = false,
+  staticText,
+  typedTextRef,
+  typedCursorRef,
+}: {
+  compact?: boolean;
+  staticText?: string;
+  typedTextRef?: Ref<HTMLSpanElement>;
+  typedCursorRef?: Ref<HTMLSpanElement>;
+}) {
+  const iconSize = compact ? 18 : 24;
+  const inputTextSize = compact ? "text-xs" : "text-[0.9375rem]";
+  const iconClassName = compact ? "h-8 w-8" : "h-10 w-10";
+
+  return (
+    <div className={`flex items-center ${compact ? "gap-2" : "gap-4"} w-full ${compact ? "max-w-[310px]" : "max-w-xl"}`}>
+      <span
+        aria-label="Agregar adjunto"
+        role="img"
+        className={`${iconClassName} flex shrink-0 items-center justify-center text-[#54656F]`}
+      >
+        <Plus size={iconSize} strokeWidth={2.15} aria-hidden="true" />
+      </span>
+
+      <div
+        className={`flex min-w-0 flex-1 items-center ${compact ? "gap-2 px-3 py-2" : "gap-3 px-4 py-3"}`}
+        style={{
+          backgroundColor: "#FFFFFF",
+          borderRadius: compact ? "22px" : "28px",
+          border: "1px solid rgba(17,27,33,0.16)",
+          boxShadow: "0 4px 18px rgba(17,27,33,0.08), 0 1px 4px rgba(17,27,33,0.06)",
+        }}
+      >
+        <div className={`min-w-0 flex-1 truncate ${inputTextSize} leading-[1.4] text-[#111B21]`}>
+          {typedTextRef ? <span ref={typedTextRef}></span> : staticText}
+          <span
+            ref={typedCursorRef}
+            className={`${compact ? "h-4" : "h-5"} ml-0.5 inline-block w-[2px] align-[-3px] animate-pulse rounded-full bg-[#00A884]`}
+          />
+        </div>
+
+        <span
+          aria-label="Insertar emoji"
+          role="img"
+          className="flex shrink-0 items-center justify-center text-[#54656F]"
+        >
+          <Smile size={iconSize} strokeWidth={2.1} aria-hidden="true" />
+        </span>
+      </div>
+
+      <span
+        aria-label="Grabar audio"
+        role="img"
+        className={`${iconClassName} flex shrink-0 items-center justify-center text-[#54656F]`}
+      >
+        <Mic size={iconSize} strokeWidth={2.15} aria-hidden="true" />
+      </span>
+    </div>
+  );
+}
 
 export default function HowItWorksClient({
   steps,
@@ -46,7 +135,11 @@ export default function HowItWorksClient({
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const rightPanelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const colRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const step2BgRef = useRef<HTMLDivElement | null>(null);
+  const chatMessageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lottieContainerRef = useRef<HTMLDivElement>(null);
+  const whatsappInputRef = useRef<HTMLDivElement>(null);
+  const typedTextRef = useRef<HTMLSpanElement>(null);
+  const typedCursorRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
     const n = steps.length;
@@ -57,8 +150,7 @@ export default function HowItWorksClient({
       // Todo el código GSAP corre exclusivamente en desktop (≥1024px).
       // En mobile, los gsap.set iniciales NO se aplican, por lo que
       // los elementos permanecen visibles sin intervención de GSAP.
-      const mm = gsap.matchMedia();
-      mm.add("(min-width: 1024px)", () => {
+      gsap.matchMedia().add("(min-width: 1024px)", () => {
         const heights = descRefs.current.map((el) => (el ? el.offsetHeight : 0));
 
         // Estado inicial de los paneles del lado derecho
@@ -74,10 +166,27 @@ export default function HowItWorksClient({
         bgNumRefs.current.forEach((el, i) => gsap.set(el, { autoAlpha: i === 0 ? 1 : 0 }));
         dotRefs.current.forEach((el, i) => gsap.set(el, { scale: i === 0 ? 1 : 0.5, opacity: i === 0 ? 1 : 0.3 }));
 
-        // Estado inicial del background parallax del step 2 (oculto)
-        if (step2BgRef.current) {
-          gsap.set(step2BgRef.current, { autoAlpha: 0 });
+        // Estado inicial del input de WhatsApp
+        gsap.set(whatsappInputRef.current, { y: 60, autoAlpha: 0, scale: 0.95 });
+        gsap.set(typedCursorRef.current, { autoAlpha: 1 });
+        gsap.set(lottieContainerRef.current, { scale: 1, rotation: 0, opacity: 1, filter: "blur(0px)" });
+        if (typedTextRef.current) {
+          typedTextRef.current.textContent = "";
         }
+
+        // Estado inicial del chat: todos los mensajes esperan arriba del input.
+        chatMessageRefs.current.forEach((el, i) => {
+          if (!el) return;
+
+          const direction = HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE[i]?.direction;
+
+          gsap.set(el, {
+            autoAlpha: 0,
+            x: direction === "outgoing" ? 28 : -28,
+            y: 18,
+            scale: 0.95
+          });
+        });
 
         // Animación de entrada en desktop
         gsap.set(headerRef.current, { autoAlpha: 0, y: 16 });
@@ -119,24 +228,6 @@ export default function HowItWorksClient({
           );
         });
 
-        // Parallax del background del step 2
-        if (step2BgRef.current) {
-          gsap.fromTo(step2BgRef.current,
-            { y: -200, scale: 1.3 },
-            { 
-              y: 200, 
-              scale: 1.1,
-              ease: "none", 
-              scrollTrigger: { 
-                trigger: section, 
-                start: "top top", 
-                end: `+=${scrollLength}`, 
-                scrub: 0.5 
-              } 
-            }
-          );
-        }
-
         // Timeline principal de transición entre steps
         const stepTl = gsap.timeline({
           scrollTrigger: { trigger: section, start: "top top", end: `+=${scrollLength}`, scrub: 1.6 },
@@ -150,22 +241,98 @@ export default function HowItWorksClient({
           stepTl.to(bgNumRefs.current[i], { autoAlpha: 0, duration: 0.5 }, "<");
           stepTl.to(dotRefs.current[i], { scale: 0.5, opacity: 0.3, duration: 0.4 }, "<");
 
-          // Ocultar background del step 2 cuando se desactiva (desaparece rápido)
-          if (i === 1 && step2BgRef.current) {
-            stepTl.to(step2BgRef.current, { autoAlpha: 0, duration: 0.3, ease: "power1.inOut" }, "<");
-          }
-
           stepTl.to(rightPanelRefs.current[i + 1], { y: "0%", duration: 0.9, ease: "power3.out" }, "<0.05");
-
-          // Mostrar background del step 2 cuando se activa (aparece completo)
-          if (i + 1 === 1 && step2BgRef.current) {
-            stepTl.to(step2BgRef.current, { autoAlpha: 1, duration: 0.3, ease: "power1.inOut" }, "<");
-          }
 
           stepTl.to(descRefs.current[i + 1], { height: heights[i + 1], autoAlpha: 1, duration: 0.7, ease: "power2.out" });
           stepTl.to(titleRefs.current[i + 1], { opacity: 1, duration: 0.6 }, "<");
           stepTl.to(bgNumRefs.current[i + 1], { autoAlpha: 1, duration: 0.6 }, "<");
           stepTl.to(dotRefs.current[i + 1], { scale: 1, opacity: 1, duration: 0.4 }, "<");
+
+          // Secuencia de animación del paso 3: Input → Typewriter → Burbujas
+          if (i + 1 === 2) {
+            const typedMessage = { chars: 0 };
+            const typewriterDuration = HOW_IT_WORKS_WHATSAPP_MESSAGE.length * 0.08; // 80ms por letra
+
+            // 1. El Lottie desaparece con efecto dramático (rotate + scale + blur)
+            stepTl.to(lottieContainerRef.current, {
+              scale: 0.3,
+              rotation: -8,
+              opacity: 0,
+              filter: "blur(8px)",
+              duration: 1.0,
+              ease: "power3.inOut"
+            });
+
+            // 2. El input de WhatsApp aparece con efecto "pop" dramático
+            stepTl.fromTo(whatsappInputRef.current,
+              {
+                y: 80,
+                autoAlpha: 0,
+                scale: 0.85,
+                filter: "blur(4px)"
+              },
+              {
+                y: 0,
+                autoAlpha: 1,
+                scale: 1,
+                filter: "blur(0px)",
+                duration: 0.8,
+                ease: "elastic.out(1, 0.6)"
+              },
+              "<0.4"
+            );
+
+            // 3. Typewriter controlado por GSAP. No usamos setTimeout porque rompe el scrub.
+            stepTl.to(typedMessage, {
+              chars: HOW_IT_WORKS_WHATSAPP_MESSAGE.length,
+              duration: typewriterDuration,
+              ease: "none",
+              onStart: () => {
+                typedMessage.chars = 0;
+                if (typedTextRef.current) {
+                  typedTextRef.current.textContent = "";
+                }
+              },
+              onUpdate: () => {
+                if (!typedTextRef.current) return;
+                typedTextRef.current.textContent = HOW_IT_WORKS_WHATSAPP_MESSAGE.slice(
+                  0,
+                  Math.round(typedMessage.chars)
+                );
+              },
+              onReverseComplete: () => {
+                if (typedTextRef.current) {
+                  typedTextRef.current.textContent = "";
+                }
+              },
+            }, "+=0.3");
+
+            // 4. Cuando termina de escribir, se envía: desaparece el input.
+            stepTl.to(typedCursorRef.current, {
+              autoAlpha: 0,
+              duration: 0.15,
+              ease: "power1.out",
+            });
+            stepTl.to(whatsappInputRef.current, {
+              y: 90,
+              autoAlpha: 0,
+              scale: 0.92,
+              duration: 0.45,
+              ease: "power2.in"
+            }, "<0.05");
+
+            // 5. A partir de ahí aparecen arriba como conversación de WhatsApp.
+            chatMessageRefs.current.forEach((bubble, bi) => {
+              stepTl.to(bubble, {
+                autoAlpha: 1,
+                x: 0,
+                y: 0,
+                scale: 1,
+                duration: 0.42,
+                ease: "back.out(1.5)"
+              }, bi === 0 ? "<0.18" : "+=0.16");
+            });
+          }
 
           stepTl.to({}, { duration: 1.5 });
         }
@@ -296,9 +463,72 @@ export default function HowItWorksClient({
                       </div>
                     </div>
                   )}
-                  {i === 2 && templateImages.length > 0 && (
-                    <div className="relative w-full overflow-hidden" style={{ borderRadius: 16, aspectRatio: "4/3", boxShadow: "0 8px 32px rgba(32,0,65,0.12)" }}>
-                      <Image src={templateImages[4 % templateImages.length]} alt="" fill className="object-cover" unoptimized aria-hidden="true" />
+                  {i === 2 && (
+                    <div className="flex justify-center relative px-4">
+                      {/* Lottie central - midground - se desvanece elegantemente */}
+                      <motion.div
+                        className="w-full max-w-[220px] relative"
+                        style={{ zIndex: 5 }}
+                        initial={{ scale: 1, opacity: 1, rotate: 0, filter: "blur(0px)" }}
+                        whileInView={{ scale: 0.3, opacity: 0, rotate: -8, filter: "blur(8px)" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.05, ease: [0.45, 0, 0.55, 1] }}
+                      >
+                        <Lottie animationData={messageAnimation} loop autoplay />
+                      </motion.div>
+
+                      {/* Input de WhatsApp - mobile - aparece y luego se oculta */}
+                      <motion.div
+                        className="absolute inset-0 flex items-center justify-center px-4"
+                        initial={{ opacity: 0, y: 60, scale: 0.85 }}
+                        whileInView={{
+                          opacity: [0, 1, 1, 0],
+                          y: [60, 0, 0, 42],
+                          scale: [0.85, 1, 1, 0.94],
+                        }}
+                        viewport={{ once: true }}
+                        transition={{
+                          delay: 0.5,
+                          duration: 1.05,
+                          times: [0, 0.28, 0.72, 1],
+                        }}
+                        style={{ zIndex: 15, pointerEvents: "none" }}
+                      >
+                        <WhatsAppInputPreview compact staticText={HOW_IT_WORKS_WHATSAPP_MESSAGE} />
+                      </motion.div>
+
+                      {/* Chat de WhatsApp - mobile: primero aparece el enviado, después respuestas */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center px-6" style={{ zIndex: 20 }}>
+                        <div className="w-full space-y-2.5">
+                          {HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE.map((message, mi) => {
+                            const isOutgoing = message.direction === "outgoing";
+
+                            return (
+                              <motion.div
+                                key={message.id}
+                                className={`flex ${isOutgoing ? "justify-end" : "justify-start"}`}
+                                initial={{ opacity: 0, x: isOutgoing ? 18 : -18, y: 14, scale: 0.96 }}
+                                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 1.35 + mi * 0.2, duration: 0.4 }}
+                              >
+                                <div
+                                  className="text-xs font-medium leading-[1.4]"
+                                  style={{
+                                    backgroundColor: isOutgoing ? "#25D366" : "#FFFFFF",
+                                    padding: "8px 12px",
+                                    borderRadius: isOutgoing ? "10px 10px 2px 10px" : "10px 10px 10px 2px",
+                                    maxWidth: isOutgoing ? "220px" : "180px",
+                                    boxShadow: isOutgoing ? "0 2px 6px rgba(37,211,102,0.15)" : "0 2px 6px rgba(0,0,0,0.08)"
+                                  }}
+                                >
+                                  <p className={isOutgoing ? "text-white" : "text-gray-900"}>{message.text}</p>
+                                </div>
+                              </motion.div>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -386,38 +616,70 @@ export default function HowItWorksClient({
               style={{ backgroundColor: "#DADAC9" }}
             >
               {si === 1 && demoVideoUrl && (
-                <>
-                  {/* Background parallax */}
-                  <div 
-                    ref={step2BgRef}
-                    className="absolute inset-0"
-                    style={{ 
-                      backgroundImage: "url('https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/backgrounds/optimized.webp')",
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      opacity: 0.6,
-                      filter: "blur(3px) brightness(0.95)",
-                      willChange: "transform"
-                    }}
-                    aria-hidden="true"
-                  />
-                  
-                  {/* Video en primer plano */}
-                  <div className="relative w-full max-w-lg mx-auto z-10 px-8">
-                    <div className="relative w-full overflow-hidden" style={{ borderRadius: 20, boxShadow: "0 12px 40px rgba(0,0,0,0.2)" }}>
-                      <video
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-auto"
-                        style={{ display: "block" }}
-                      >
-                        <source src={demoVideoUrl} type="video/mp4" />
-                      </video>
+                <div className="relative w-full max-w-xs mx-auto">
+                  <div className="relative w-full overflow-hidden" style={{ borderRadius: 20, boxShadow: "0 12px 40px rgba(0,0,0,0.2)" }}>
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-auto"
+                      style={{ display: "block" }}
+                    >
+                      <source src={demoVideoUrl} type="video/mp4" />
+                    </video>
+                  </div>
+                </div>
+              )}
+              {si === 2 && (
+                <div className="flex items-center justify-center relative px-12">
+                  {/* Lottie central - midground z-index */}
+                  <div ref={lottieContainerRef} className="w-full max-w-[380px] relative" style={{ zIndex: 5 }}>
+                    <Lottie animationData={messageAnimation} loop autoplay />
+                  </div>
+
+                  {/* Input de WhatsApp - aparece después del Lottie */}
+                  <div
+                    ref={whatsappInputRef}
+                    className="absolute inset-0 flex items-center justify-center"
+                    style={{ zIndex: 15 }}
+                  >
+                    <WhatsAppInputPreview
+                      typedTextRef={typedTextRef}
+                      typedCursorRef={typedCursorRef}
+                    />
+                  </div>
+
+                  {/* Chat de WhatsApp - aparece arriba después de enviar */}
+                  <div className="absolute inset-x-0 top-[10%] flex flex-col items-center px-16" style={{ zIndex: 20 }}>
+                    <div className="w-full max-w-md space-y-3">
+                      {HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE.map((message, mi) => {
+                        const isOutgoing = message.direction === "outgoing";
+
+                        return (
+                          <div
+                            key={message.id}
+                            ref={(el) => { chatMessageRefs.current[mi] = el; }}
+                            className={`flex ${isOutgoing ? "justify-end" : "justify-start"}`}
+                          >
+                            <div
+                              className="text-[0.9375rem] font-medium leading-[1.4]"
+                              style={{
+                                backgroundColor: isOutgoing ? "#25D366" : "#FFFFFF",
+                                padding: "10px 14px",
+                                borderRadius: isOutgoing ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
+                                maxWidth: isOutgoing ? "280px" : "240px",
+                                boxShadow: isOutgoing ? "0 2px 8px rgba(37,211,102,0.15)" : "0 2px 8px rgba(0,0,0,0.08)"
+                              }}
+                            >
+                              <p className={isOutgoing ? "text-white" : "text-gray-900"}>{message.text}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
-                </>
+                </div>
               )}
               {si === 0 && templateImages.length > 0 && (
                 <div className="absolute inset-0 flex gap-6 overflow-hidden px-6">

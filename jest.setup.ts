@@ -72,6 +72,11 @@ jest.mock("gsap", () => {
   gsap.fromTo = jest.fn(() => mockTween);
   gsap.set = jest.fn();
   gsap.registerPlugin = jest.fn();
+  gsap.matchMedia = jest.fn(() => ({
+    add: jest.fn().mockReturnThis(),
+    revert: jest.fn(),
+    kill: jest.fn(),
+  }));
   gsap.context = jest.fn((fn) => {
     fn();
     return { revert: jest.fn() };
