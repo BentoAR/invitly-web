@@ -6,7 +6,23 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lottie from "lottie-react";
-import { Mic, Plus, Smile } from "lucide-react";
+import {
+  Bell,
+  Check,
+  CheckCheck,
+  ChevronDown,
+  Grid2x2,
+  Link2,
+  List,
+  Mic,
+  Plus,
+  Search,
+  SendHorizonal,
+  Smile,
+  UserRound,
+  UserRoundCheck,
+  XCircle,
+} from "lucide-react";
 import messageAnimation from "@/assets/lotties/ContactUs.json";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -26,14 +42,11 @@ const STEP_FADE_UP = {
   visible: { opacity: 1, y: 0 },
 };
 
-export const HOW_IT_WORKS_WHATSAPP_MESSAGE = "Hola! Te quiero invitar a mi fiesta";
+export const HOW_IT_WORKS_WHATSAPP_MESSAGE = "¡Quiero invitarte a mi boda! 💍 Confirmá acá: bento.com/miboda";
 
 export const HOW_IT_WORKS_WHATSAPP_REPLIES: WhatsappReply[] = [
-  { id: "confirmed", text: "¡Ya confirmé! ✓✓" },
-  { id: "vegan-menu", text: "¿Hay menú vegano?" },
-  { id: "plus-two", text: "Voy con +2 ✓" },
-  { id: "family-share", text: "Compartí con la flia 👨‍👩‍👧" },
-  { id: "see-you", text: "Nos vemos ahí 🎉" },
+  { id: "loved-it", text: "¡Qué copado esto! 🥹" },
+  { id: "confirmed", text: "Ya confirmé, gracias por invitarme 🙌" },
 ];
 
 export const HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE: WhatsappChatMessage[] = [
@@ -48,16 +61,31 @@ export const HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE: WhatsappChatMessage[] = [
   })),
 ];
 
+// Pausas: "¡Quiero invitarte" → "a mi boda! 💍 " → "Confirmá acá: bento.com/miboda"
+const HOW_IT_WORKS_TYPE_SEGMENTS = [
+  { chars: 17, duration: 0.28, pauseAfter: 0.14 },
+  { chars: 31, duration: 0.30, pauseAfter: 0.18 },
+  { chars: HOW_IT_WORKS_WHATSAPP_MESSAGE.length, duration: 0.52, pauseAfter: 0 },
+];
+
+const HOW_IT_WORKS_REPLY_DELAYS = [0.52, 0.38];
+
 function WhatsAppInputPreview({
   compact = false,
   staticText,
   typedTextRef,
   typedCursorRef,
+  sendButtonRef,
+  micIconRef,
+  sendIconRef,
 }: {
   compact?: boolean;
   staticText?: string;
   typedTextRef?: Ref<HTMLSpanElement>;
   typedCursorRef?: Ref<HTMLSpanElement>;
+  sendButtonRef?: Ref<HTMLSpanElement>;
+  micIconRef?: Ref<HTMLSpanElement>;
+  sendIconRef?: Ref<HTMLSpanElement>;
 }) {
   const iconSize = compact ? 18 : 24;
   const inputTextSize = compact ? "text-xs" : "text-[0.9375rem]";
@@ -82,7 +110,7 @@ function WhatsAppInputPreview({
           boxShadow: "0 4px 18px rgba(17,27,33,0.08), 0 1px 4px rgba(17,27,33,0.06)",
         }}
       >
-        <div className={`min-w-0 flex-1 truncate ${inputTextSize} leading-[1.4] text-[#111B21]`}>
+        <div className={`min-w-0 flex-1 ${inputTextSize} leading-[1.4] text-[#111B21]`} style={{ wordBreak: "break-word" }}>
           {typedTextRef ? <span ref={typedTextRef}></span> : staticText}
           <span
             ref={typedCursorRef}
@@ -102,9 +130,16 @@ function WhatsAppInputPreview({
       <span
         aria-label="Grabar audio"
         role="img"
+        ref={sendButtonRef}
         className={`${iconClassName} flex shrink-0 items-center justify-center text-[#54656F]`}
+        style={{ borderRadius: "999px", backgroundColor: "transparent" }}
       >
-        <Mic size={iconSize} strokeWidth={2.15} aria-hidden="true" />
+        <span ref={micIconRef} className="absolute flex items-center justify-center">
+          <Mic size={iconSize} strokeWidth={2.15} aria-hidden="true" />
+        </span>
+        <span ref={sendIconRef} className="absolute flex items-center justify-center opacity-0">
+          <SendHorizonal size={compact ? 16 : 20} strokeWidth={2.4} aria-hidden="true" />
+        </span>
       </span>
     </div>
   );
@@ -140,6 +175,23 @@ export default function HowItWorksClient({
   const whatsappInputRef = useRef<HTMLDivElement>(null);
   const typedTextRef = useRef<HTMLSpanElement>(null);
   const typedCursorRef = useRef<HTMLSpanElement>(null);
+  const sendButtonRef = useRef<HTMLSpanElement>(null);
+  const micIconRef = useRef<HTMLSpanElement>(null);
+  const sendIconRef = useRef<HTMLSpanElement>(null);
+  const sentSingleCheckRef = useRef<HTMLSpanElement>(null);
+  const sentDoubleCheckRef = useRef<HTMLSpanElement>(null);
+  const typingIndicatorRef = useRef<HTMLDivElement>(null);
+  const typingDotRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const chatStageRef = useRef<HTMLDivElement>(null);
+  const dashboardStageRef = useRef<HTMLDivElement>(null);
+  const rsvpBadgeRef = useRef<HTMLDivElement>(null);
+  const dashboardCardRef = useRef<HTMLDivElement>(null);
+  const confirmedCountRef = useRef<HTMLSpanElement>(null);
+  const confirmedNextRef = useRef<HTMLSpanElement>(null);
+  const pendingCountRef = useRef<HTMLSpanElement>(null);
+  const plusOneBadgeRef = useRef<HTMLDivElement>(null);
+  const dashboardBellRef = useRef<HTMLSpanElement>(null);
+  const newGuestRowRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const n = steps.length;
@@ -169,10 +221,26 @@ export default function HowItWorksClient({
         // Estado inicial del input de WhatsApp
         gsap.set(whatsappInputRef.current, { y: 60, autoAlpha: 0, scale: 0.95 });
         gsap.set(typedCursorRef.current, { autoAlpha: 1 });
-        gsap.set(lottieContainerRef.current, { scale: 1, rotation: 0, opacity: 1, filter: "blur(0px)" });
+        gsap.set(lottieContainerRef.current, { x: 0, scale: 1, rotation: 0, opacity: 1, filter: "blur(0px)" });
+        gsap.set(sendButtonRef.current, { backgroundColor: "transparent", color: "#54656F", scale: 1 });
+        gsap.set(micIconRef.current, { autoAlpha: 1, scale: 1, rotation: 0 });
+        gsap.set(sendIconRef.current, { autoAlpha: 0, scale: 0.7, rotation: -12 });
+        gsap.set(sentSingleCheckRef.current, { autoAlpha: 1, x: 0 });
+        gsap.set(sentDoubleCheckRef.current, { autoAlpha: 0, scale: 0.85 });
+        gsap.set(typingIndicatorRef.current, { autoAlpha: 0, y: 12, scale: 0.94 });
+        typingDotRefs.current.forEach((dot) => gsap.set(dot, { autoAlpha: 0.45, scale: 0.82 }));
+        gsap.set(chatStageRef.current, { x: 0, scale: 1, autoAlpha: 1 });
+        gsap.set(dashboardStageRef.current, { x: 120, autoAlpha: 0 });
+        gsap.set(rsvpBadgeRef.current, { autoAlpha: 0, y: 22, scale: 0.92 });
+        gsap.set(dashboardCardRef.current, { autoAlpha: 0, y: 26, scale: 0.94 });
+        gsap.set(plusOneBadgeRef.current, { autoAlpha: 0, y: 10, scale: 0.8 });
+        gsap.set(dashboardBellRef.current, { rotation: 0, scale: 1 });
+        gsap.set(newGuestRowRef.current, { autoAlpha: 0, y: 18, scale: 0.96 });
         if (typedTextRef.current) {
           typedTextRef.current.textContent = "";
         }
+        gsap.set(confirmedCountRef.current, { y: "0%" });
+        gsap.set(confirmedNextRef.current, { y: "100%" });
 
         // Estado inicial del chat: todos los mensajes esperan arriba del input.
         chatMessageRefs.current.forEach((el, i) => {
@@ -182,8 +250,8 @@ export default function HowItWorksClient({
 
           gsap.set(el, {
             autoAlpha: 0,
-            x: direction === "outgoing" ? 28 : -28,
-            y: 18,
+            x: direction === "outgoing" ? 16 : -28,
+            y: direction === "outgoing" ? 96 : 18,
             scale: 0.95
           });
         });
@@ -211,6 +279,22 @@ export default function HowItWorksClient({
           start: "top top",
           end: `+=${scrollLength}`,
           anticipatePin: 1,
+          onLeave: () => {
+            step3Triggered = false;
+            resetStep3Animation();
+          },
+          onLeaveBack: () => {
+            step3Triggered = false;
+            resetStep3Animation();
+          },
+          onEnter: () => {
+            step3Triggered = false;
+            resetStep3Animation();
+          },
+          onEnterBack: () => {
+            step3Triggered = false;
+            resetStep3Animation();
+          },
         });
 
         // Parallax de columnas del panel derecho
@@ -228,10 +312,346 @@ export default function HowItWorksClient({
           );
         });
 
+        const resetStep3Animation = () => {
+          step3AutoTl.pause(0);
+          if (typedTextRef.current) {
+            typedTextRef.current.textContent = "";
+          }
+          gsap.set(lottieContainerRef.current, { x: 0, scale: 1, rotation: 0, opacity: 1, filter: "blur(0px)" });
+          gsap.set(whatsappInputRef.current, { y: 60, autoAlpha: 0, scale: 0.95 });
+          gsap.set(typedCursorRef.current, { autoAlpha: 1 });
+          gsap.set(sendButtonRef.current, { backgroundColor: "transparent", color: "#54656F", scale: 1 });
+          gsap.set(micIconRef.current, { autoAlpha: 1, scale: 1, rotation: 0 });
+          gsap.set(sendIconRef.current, { autoAlpha: 0, scale: 0.7, rotation: -12 });
+          gsap.set(sentSingleCheckRef.current, { autoAlpha: 1, x: 0 });
+          gsap.set(sentDoubleCheckRef.current, { autoAlpha: 0, scale: 0.85 });
+          gsap.set(typingIndicatorRef.current, { autoAlpha: 0, y: 12, scale: 0.94 });
+          typingDotRefs.current.forEach((dot) => gsap.set(dot, { autoAlpha: 0.45, scale: 0.82 }));
+          gsap.set(chatStageRef.current, { x: 0, scale: 1, autoAlpha: 1 });
+          gsap.set(dashboardStageRef.current, { x: 120, autoAlpha: 0 });
+          gsap.set(rsvpBadgeRef.current, { autoAlpha: 0, y: 22, scale: 0.92 });
+          gsap.set(dashboardCardRef.current, { autoAlpha: 0, y: 26, scale: 0.94 });
+          gsap.set(plusOneBadgeRef.current, { autoAlpha: 0, y: 10, scale: 0.8 });
+          gsap.set(dashboardBellRef.current, { rotation: 0, scale: 1 });
+          gsap.set(newGuestRowRef.current, { autoAlpha: 0, y: 18, scale: 0.96 });
+          gsap.set(confirmedCountRef.current, { y: "0%" });
+          gsap.set(confirmedNextRef.current, { y: "100%" });
+          if (pendingCountRef.current) {
+            pendingCountRef.current.textContent = "12";
+          }
+          chatMessageRefs.current.forEach((el, i) => {
+            if (!el) return;
+            const direction = HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE[i]?.direction;
+            gsap.set(el, {
+              autoAlpha: 0,
+              x: direction === "outgoing" ? 16 : -28,
+              y: direction === "outgoing" ? 96 : 18,
+              scale: 0.95
+            });
+          });
+        };
+
+        const getPanelTranslateY = (panel: HTMLDivElement | null) => {
+          if (!panel) return Number.POSITIVE_INFINITY;
+          const value = gsap.getProperty(panel, "y");
+
+          if (typeof value === "number") return value;
+
+          if (typeof value === "string") {
+            // Si es porcentaje, convertir a píxeles
+            if (value.endsWith("%")) {
+              const percentage = Number.parseFloat(value);
+              const parentHeight = panel.parentElement?.offsetHeight || window.innerHeight;
+              return (percentage / 100) * parentHeight;
+            }
+            // Si es "100px" u otro valor con unidades
+            const parsed = Number.parseFloat(value);
+            return Number.isFinite(parsed) ? parsed : Number.POSITIVE_INFINITY;
+          }
+
+          return Number.POSITIVE_INFINITY;
+        };
+
+        // Timeline automático para el paso 3 (NO anclado al scroll) - se crea ANTES del timeline principal
+        const step3AutoTl = gsap.timeline({ paused: true });
+        const typedMessage = { chars: 0 };
+        const typingDotsTl = gsap.timeline({ paused: true, repeat: -1 });
+
+        typingDotRefs.current.forEach((dot, i) => {
+          if (!dot) return;
+          typingDotsTl.to(dot, {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.18,
+            ease: "power1.inOut",
+            yoyo: true,
+            repeat: 1,
+          }, i * 0.12);
+        });
+        typingDotsTl.to({}, { duration: 0.26 });
+
+        // 1. El Lottie desaparece con efecto dramático
+        step3AutoTl.to(lottieContainerRef.current, {
+          scale: 0.3,
+          rotation: -8,
+          opacity: 0,
+          filter: "blur(8px)",
+          duration: 2,
+          ease: "expo.in"
+        });
+
+        // 2. El input de WhatsApp aparece con efecto "pop"
+        step3AutoTl.fromTo(whatsappInputRef.current,
+          {
+            y: 80,
+            autoAlpha: 0,
+            scale: 0.85,
+            filter: "blur(4px)"
+          },
+          {
+            y: 0,
+            autoAlpha: 1,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 0.5,
+            ease: "elastic.out(1, 0.6)"
+          },
+          "-=0.2"
+        );
+
+        // 3. Typewriter escribe el mensaje
+        HOW_IT_WORKS_TYPE_SEGMENTS.forEach((segment, index) => {
+          step3AutoTl.to(typedMessage, {
+            chars: segment.chars,
+            duration: segment.duration,
+            ease: index === 1 ? "power1.inOut" : "none",
+            onStart: () => {
+              if (index === 0) {
+                typedMessage.chars = 0;
+                if (typedTextRef.current) {
+                  typedTextRef.current.textContent = "";
+                }
+              }
+            },
+            onUpdate: () => {
+              if (!typedTextRef.current) return;
+              typedTextRef.current.textContent = HOW_IT_WORKS_WHATSAPP_MESSAGE.slice(
+                0,
+                Math.round(typedMessage.chars)
+              );
+            }
+          }, index === 0 ? "+=0.2" : `+=${HOW_IT_WORKS_TYPE_SEGMENTS[index - 1]?.pauseAfter ?? 0}`);
+        });
+
+        // 4. Cursor desaparece y el input se envía
+        step3AutoTl.to(typedCursorRef.current, {
+          autoAlpha: 0,
+          duration: 0.1,
+          ease: "power1.out"
+        }, "+=0.1");
+
+        step3AutoTl.to(sendButtonRef.current, {
+          backgroundColor: "#25D366",
+          color: "#FFFFFF",
+          duration: 0.18,
+          ease: "power2.out"
+        });
+
+        step3AutoTl.to(micIconRef.current, {
+          autoAlpha: 0,
+          scale: 0.7,
+          rotation: 10,
+          duration: 0.14,
+          ease: "power2.out"
+        }, "<");
+
+        step3AutoTl.to(sendIconRef.current, {
+          autoAlpha: 1,
+          scale: 1,
+          rotation: 0,
+          duration: 0.16,
+          ease: "back.out(1.8)"
+        }, "<0.04");
+
+        step3AutoTl.to(sendButtonRef.current, {
+          scale: 0.88,
+          duration: 0.08,
+          ease: "power2.in"
+        }, "+=0.08");
+
+        step3AutoTl.to(sendButtonRef.current, {
+          scale: 1,
+          duration: 0.12,
+          ease: "power2.out"
+        });
+
+        step3AutoTl.to(whatsappInputRef.current, {
+          y: 90,
+          autoAlpha: 0,
+          scale: 0.92,
+          duration: 0.32,
+          ease: "power2.in"
+        }, "<0.02");
+
+        const [outgoingBubble, ...incomingBubbles] = chatMessageRefs.current;
+
+        step3AutoTl.to(outgoingBubble, {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration: 0.42,
+          ease: "power2.out"
+        }, "<0.04");
+
+        step3AutoTl.to(sentSingleCheckRef.current, {
+          x: -2,
+          autoAlpha: 0,
+          duration: 0.18,
+          ease: "power1.out"
+        }, "+=0.18");
+
+        step3AutoTl.to(sentDoubleCheckRef.current, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.22,
+          ease: "back.out(1.8)"
+        }, "<0.02");
+
+        step3AutoTl.to(typingIndicatorRef.current, {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.24,
+          ease: "power2.out",
+          onStart: () => {
+            typingDotsTl.restart(true);
+          }
+        }, "+=0.26");
+
+        step3AutoTl.to({}, { duration: 0.68 });
+
+        step3AutoTl.to(typingIndicatorRef.current, {
+          autoAlpha: 0,
+          y: -6,
+          scale: 0.98,
+          duration: 0.18,
+          ease: "power1.in",
+          onComplete: () => {
+            typingDotsTl.pause(0);
+            typingDotRefs.current.forEach((dot) => gsap.set(dot, { autoAlpha: 0.45, scale: 0.82 }));
+          }
+        });
+
+        incomingBubbles.forEach((bubble, bi) => {
+          step3AutoTl.to(bubble, {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            duration: 0.4,
+            ease: "back.out(1.5)"
+          }, `+=${HOW_IT_WORKS_REPLY_DELAYS[bi] ?? 0.26}`);
+        });
+
+        const dashboardCounts = { confirmed: 24 };
+
+        step3AutoTl.to(chatStageRef.current, {
+          x: -82,
+          scale: 0.94,
+          autoAlpha: 0,
+          duration: 0.38,
+          ease: "power2.in"
+        }, "+=1.4");
+
+        step3AutoTl.to(dashboardStageRef.current, {
+          x: 0,
+          autoAlpha: 1,
+          duration: 0.44,
+          ease: "power2.out"
+        }, "<0.08");
+
+        step3AutoTl.to(dashboardCardRef.current, {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.34,
+          ease: "power2.out"
+        }, "<0.02");
+
+        // 1. Suena la campana
+        step3AutoTl.to(dashboardBellRef.current, {
+          rotation: -18,
+          duration: 0.08,
+          ease: "power1.inOut"
+        }, "+=0.5");
+
+        step3AutoTl.to(dashboardBellRef.current, {
+          rotation: 16,
+          duration: 0.1,
+          ease: "power1.inOut"
+        });
+
+        step3AutoTl.to(dashboardBellRef.current, {
+          rotation: -10,
+          scale: 1.08,
+          duration: 0.08,
+          ease: "power1.inOut"
+        });
+
+        step3AutoTl.to(dashboardBellRef.current, {
+          rotation: 0,
+          scale: 1,
+          duration: 0.14,
+          ease: "back.out(1.8)"
+        });
+
+        // 2. Se suma +1 al contador — slide up del 25, slide in del 26 desde abajo
+        step3AutoTl.to(confirmedCountRef.current, {
+          y: "-100%",
+          duration: 0.35,
+          ease: "power2.in"
+        }, "+=0.4");
+        step3AutoTl.fromTo(confirmedNextRef.current,
+          { y: "100%" },
+          { y: "0%", duration: 0.35, ease: "power2.out" },
+          "<"
+        );
+
+        // 3. Aparece el nuevo guest
+        step3AutoTl.to(newGuestRowRef.current, {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.32,
+          ease: "back.out(1.6)"
+        }, "+=0.5");
+
+        // 4. Dashboard sale a la derecha, Lottie vuelve desde la izquierda
+        step3AutoTl.to(dashboardStageRef.current, {
+          x: 160,
+          autoAlpha: 0,
+          duration: 0.5,
+          ease: "power2.in"
+        }, "+=1.2");
+
+        // set solo posiciona X — en este punto el lottie ya está en opacity:0 por la primera animación
+        step3AutoTl.set(lottieContainerRef.current, { x: -120, scale: 0.85, rotation: 0, filter: "blur(6px)" });
+
+        step3AutoTl.to(lottieContainerRef.current, {
+          x: 0,
+          scale: 1,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 0.6,
+          ease: "power2.out"
+        }, "<0.1");
+
         // Timeline principal de transición entre steps
         const stepTl = gsap.timeline({
           scrollTrigger: { trigger: section, start: "top top", end: `+=${scrollLength}`, scrub: 1.6 },
         });
+        let step3Triggered = false;
 
         stepTl.to({}, { duration: 1.5 });
 
@@ -248,90 +668,9 @@ export default function HowItWorksClient({
           stepTl.to(bgNumRefs.current[i + 1], { autoAlpha: 1, duration: 0.6 }, "<");
           stepTl.to(dotRefs.current[i + 1], { scale: 1, opacity: 1, duration: 0.4 }, "<");
 
-          // Secuencia de animación del paso 3: Input → Typewriter → Burbujas
+          // Paso 3: solo reservamos espacio en el timeline
           if (i + 1 === 2) {
-            const typedMessage = { chars: 0 };
-            const typewriterDuration = HOW_IT_WORKS_WHATSAPP_MESSAGE.length * 0.08; // 80ms por letra
-
-            // 1. El Lottie desaparece con efecto dramático (rotate + scale + blur)
-            stepTl.to(lottieContainerRef.current, {
-              scale: 0.3,
-              rotation: -8,
-              opacity: 0,
-              filter: "blur(8px)",
-              duration: 1.0,
-              ease: "power3.inOut"
-            });
-
-            // 2. El input de WhatsApp aparece con efecto "pop" dramático
-            stepTl.fromTo(whatsappInputRef.current,
-              {
-                y: 80,
-                autoAlpha: 0,
-                scale: 0.85,
-                filter: "blur(4px)"
-              },
-              {
-                y: 0,
-                autoAlpha: 1,
-                scale: 1,
-                filter: "blur(0px)",
-                duration: 0.8,
-                ease: "elastic.out(1, 0.6)"
-              },
-              "<0.4"
-            );
-
-            // 3. Typewriter controlado por GSAP. No usamos setTimeout porque rompe el scrub.
-            stepTl.to(typedMessage, {
-              chars: HOW_IT_WORKS_WHATSAPP_MESSAGE.length,
-              duration: typewriterDuration,
-              ease: "none",
-              onStart: () => {
-                typedMessage.chars = 0;
-                if (typedTextRef.current) {
-                  typedTextRef.current.textContent = "";
-                }
-              },
-              onUpdate: () => {
-                if (!typedTextRef.current) return;
-                typedTextRef.current.textContent = HOW_IT_WORKS_WHATSAPP_MESSAGE.slice(
-                  0,
-                  Math.round(typedMessage.chars)
-                );
-              },
-              onReverseComplete: () => {
-                if (typedTextRef.current) {
-                  typedTextRef.current.textContent = "";
-                }
-              },
-            }, "+=0.3");
-
-            // 4. Cuando termina de escribir, se envía: desaparece el input.
-            stepTl.to(typedCursorRef.current, {
-              autoAlpha: 0,
-              duration: 0.15,
-              ease: "power1.out",
-            });
-            stepTl.to(whatsappInputRef.current, {
-              y: 90,
-              autoAlpha: 0,
-              scale: 0.92,
-              duration: 0.45,
-              ease: "power2.in"
-            }, "<0.05");
-
-            // 5. A partir de ahí aparecen arriba como conversación de WhatsApp.
-            chatMessageRefs.current.forEach((bubble, bi) => {
-              stepTl.to(bubble, {
-                autoAlpha: 1,
-                x: 0,
-                y: 0,
-                scale: 1,
-                duration: 0.42,
-                ease: "back.out(1.5)"
-              }, bi === 0 ? "<0.18" : "+=0.16");
-            });
+            stepTl.to({}, { duration: 7.0 }); // Duración para la animación automática
           }
 
           stepTl.to({}, { duration: 1.5 });
@@ -339,6 +678,26 @@ export default function HowItWorksClient({
 
         // Oscurecer al final del timeline, cuando TemplatesSection entra
         stepTl.to(overlayRef.current, { opacity: 1, duration: 1.5, ease: "none" });
+
+        // Monitor para activar/resetear la animación del paso 3
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: `+=${scrollLength}`,
+          onUpdate: () => {
+            const step3PanelY = getPanelTranslateY(rightPanelRefs.current[2]);
+
+            if (step3PanelY <= 8 && !step3Triggered) {
+              step3Triggered = true;
+              step3AutoTl.restart();
+            }
+
+            if (step3PanelY > 24 && step3Triggered) {
+              step3Triggered = false;
+              resetStep3Animation();
+            }
+          }
+        });
 
         // Cleanup automático cuando matchMedia deja de aplicar
         return () => {};
@@ -647,36 +1006,285 @@ export default function HowItWorksClient({
                     <WhatsAppInputPreview
                       typedTextRef={typedTextRef}
                       typedCursorRef={typedCursorRef}
+                      sendButtonRef={sendButtonRef}
+                      micIconRef={micIconRef}
+                      sendIconRef={sendIconRef}
                     />
                   </div>
 
                   {/* Chat de WhatsApp - aparece arriba después de enviar */}
-                  <div className="absolute inset-x-0 top-[10%] flex flex-col items-center px-16" style={{ zIndex: 20 }}>
-                    <div className="w-full max-w-md space-y-3">
+                  <div className="absolute inset-0 flex items-center justify-center px-10" style={{ zIndex: 20 }}>
+                    <div className="relative w-full max-w-[660px] min-h-[520px]">
+                    <div ref={chatStageRef} className="w-full max-w-md space-y-3">
                       {HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE.map((message, mi) => {
                         const isOutgoing = message.direction === "outgoing";
 
                         return (
-                          <div
-                            key={message.id}
-                            ref={(el) => { chatMessageRefs.current[mi] = el; }}
-                            className={`flex ${isOutgoing ? "justify-end" : "justify-start"}`}
-                          >
+                          <div key={message.id}>
                             <div
-                              className="text-[0.9375rem] font-medium leading-[1.4]"
-                              style={{
-                                backgroundColor: isOutgoing ? "#25D366" : "#FFFFFF",
-                                padding: "10px 14px",
-                                borderRadius: isOutgoing ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
-                                maxWidth: isOutgoing ? "280px" : "240px",
-                                boxShadow: isOutgoing ? "0 2px 8px rgba(37,211,102,0.15)" : "0 2px 8px rgba(0,0,0,0.08)"
-                              }}
+                              ref={(el) => { chatMessageRefs.current[mi] = el; }}
+                              className={`flex ${isOutgoing ? "justify-end" : "justify-start"}`}
                             >
-                              <p className={isOutgoing ? "text-white" : "text-gray-900"}>{message.text}</p>
+                              <div
+                                className="text-[0.9375rem] font-medium leading-[1.4]"
+                                style={{
+                                  backgroundColor: isOutgoing ? "#25D366" : "#FFFFFF",
+                                  padding: "10px 14px",
+                                  borderRadius: isOutgoing ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
+                                  maxWidth: isOutgoing ? "280px" : "240px",
+                                  boxShadow: isOutgoing ? "0 2px 8px rgba(37,211,102,0.15)" : "0 2px 8px rgba(0,0,0,0.08)"
+                                }}
+                              >
+                                <p className={isOutgoing ? "text-white" : "text-gray-900"}>{message.text}</p>
+                                {isOutgoing && (
+                                  <div className="mt-1 flex items-center justify-end gap-0.5 text-white/85">
+                                    <span ref={sentSingleCheckRef} className="flex items-center justify-center">
+                                      <Check size={13} strokeWidth={2.4} aria-hidden="true" />
+                                    </span>
+                                    <span ref={sentDoubleCheckRef} className="flex items-center justify-center text-[#D7F6FF] opacity-0">
+                                      <CheckCheck size={13} strokeWidth={2.4} aria-hidden="true" />
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
                             </div>
+
+                            {isOutgoing && (
+                              <div
+                                ref={typingIndicatorRef}
+                                className="mt-2 flex justify-start"
+                              >
+                                <div
+                                  className="flex items-center gap-1.5"
+                                  style={{
+                                    backgroundColor: "rgba(255,255,255,0.94)",
+                                    padding: "10px 14px",
+                                    borderRadius: "12px 12px 12px 2px",
+                                    boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
+                                  }}
+                                >
+                                  {[0, 1, 2].map((dotIndex) => (
+                                    <span
+                                      key={dotIndex}
+                                      ref={(el) => { typingDotRefs.current[dotIndex] = el; }}
+                                      className="block h-2 w-2 rounded-full"
+                                      style={{ backgroundColor: "rgba(84,101,111,0.82)" }}
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                            )}
                           </div>
                         );
                       })}
+                    </div>
+
+                    <div ref={dashboardStageRef} className="absolute left-1/2 top-1/2 w-[360px] -translate-x-1/2 -translate-y-1/2">
+                      <div
+                        ref={dashboardCardRef}
+                        className="relative overflow-hidden rounded-[30px]"
+                        style={{
+                          background: "#f8f5f0",
+                          border: "1px solid rgba(224,214,201,0.86)",
+                          boxShadow: "0 18px 44px rgba(32,0,65,0.10)"
+                        }}
+                      >
+                        <div
+                          ref={plusOneBadgeRef}
+                          className="absolute right-[108px] top-[160px] rounded-full px-2.5 py-1 text-[0.72rem] font-semibold"
+                          style={{ backgroundColor: "#25D366", color: "#FFFFFF", boxShadow: "0 10px 24px rgba(37,211,102,0.24)" }}
+                        >
+                          +1
+                        </div>
+
+                        <div className="border-b px-5 py-4" style={{ borderColor: "rgba(32,0,65,0.06)" }}>
+                          <div className="flex items-center gap-3">
+                            <span
+                              className="flex h-9 w-9 items-center justify-center rounded-xl"
+                              style={{ border: "1px solid rgba(32,0,65,0.10)", color: "#200041" }}
+                            >
+                              <Grid2x2 size={18} strokeWidth={2.1} aria-hidden="true" />
+                            </span>
+                            <span
+                              className="flex h-11 w-11 items-center justify-center rounded-full text-[1.1rem] font-semibold"
+                              style={{ backgroundColor: "rgba(255,161,79,0.18)", color: "#ff9d4d" }}
+                            >
+                              D
+                            </span>
+                            <div
+                              className="flex min-w-0 flex-1 items-center justify-between rounded-[18px] px-4 py-3"
+                              style={{
+                                backgroundColor: "#ffffff",
+                                border: "1px solid rgba(32,0,65,0.10)",
+                                boxShadow: "0 6px 16px rgba(32,0,65,0.08)"
+                              }}
+                            >
+                              <span className="truncate text-[1.05rem] font-semibold" style={{ color: "#241d1a" }}>
+                                Dafne · 28/11/26
+                              </span>
+                              <ChevronDown size={18} strokeWidth={2.2} style={{ color: "rgba(36,29,26,0.52)" }} aria-hidden="true" />
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-[0.95rem] font-semibold" style={{ color: "rgba(36,29,26,0.70)" }}>
+                                Activo
+                              </span>
+                              <span
+                                className="flex h-11 w-[54px] items-center rounded-full px-1"
+                                style={{ backgroundColor: "#ff9d4d" }}
+                              >
+                                <span className="ml-auto block h-9 w-9 rounded-full bg-white shadow-sm" />
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="px-5 py-6">
+                          <div className="flex items-start justify-between gap-4">
+                            <div>
+                              <p className="text-[2.15rem] font-semibold leading-none" style={{ color: "#241d1a" }}>
+                                Invitados
+                              </p>
+                              <p className="mt-3 max-w-[150px] text-[1rem] leading-[1.45]" style={{ color: "rgba(36,29,26,0.62)" }}>
+                                Gestiona la lista de invitados y RSVP
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2 pt-1">
+                              <span
+                                ref={dashboardBellRef}
+                                className="flex h-10 w-10 items-center justify-center rounded-full"
+                                style={{ backgroundColor: "rgba(255,255,255,0.88)", color: "#241d1a", border: "1px solid rgba(32,0,65,0.08)", transformOrigin: "top center" }}
+                              >
+                                <Bell size={17} strokeWidth={2.2} aria-hidden="true" />
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="mt-5 flex gap-2 overflow-hidden">
+                            <div
+                              className="min-w-0 flex-1 rounded-full px-4 py-3 text-[0.95rem] font-medium"
+                              style={{ backgroundColor: "#f7f3ec", border: "1px solid rgba(32,0,65,0.08)", color: "rgba(36,29,26,0.55)" }}
+                            >
+                              Generar todos los links
+                            </div>
+                            <div
+                              className="min-w-[128px] rounded-full px-4 py-3 text-[0.95rem] font-medium"
+                              style={{ backgroundColor: "#f7f3ec", border: "1px solid rgba(32,0,65,0.08)", color: "rgba(36,29,26,0.55)" }}
+                            >
+                              Descargar Excel
+                            </div>
+                          </div>
+
+                          <div className="mt-5 grid grid-cols-2 gap-3">
+                            <div className="rounded-[22px] px-4 py-4" style={{ backgroundColor: "rgba(255,161,79,0.10)", border: "1px solid rgba(255,161,79,0.22)" }}>
+                              <div className="flex items-center gap-3">
+                                <span className="flex h-14 w-14 items-center justify-center rounded-[20px]" style={{ backgroundColor: "rgba(255,161,79,0.16)", color: "#ff9d4d" }}>
+                                  <UserRoundCheck size={22} strokeWidth={2.1} aria-hidden="true" />
+                                </span>
+                                <div>
+                                  <div className="relative overflow-hidden" style={{ height: "1.65rem" }}>
+                                    <span ref={confirmedCountRef} className="absolute inset-x-0 top-0 text-[1.65rem] font-semibold leading-none" style={{ color: "#241d1a" }}>25</span>
+                                    <span ref={confirmedNextRef} className="absolute inset-x-0 top-0 text-[1.65rem] font-semibold leading-none translate-y-full" style={{ color: "#241d1a" }}>26</span>
+                                  </div>
+                                  <p className="mt-1 text-[0.85rem] font-medium" style={{ color: "rgba(36,29,26,0.68)" }}>
+                                    Confirmados
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="rounded-[22px] px-4 py-4" style={{ backgroundColor: "rgba(243,113,113,0.08)", border: "1px solid rgba(243,113,113,0.20)" }}>
+                              <div className="flex items-center gap-3">
+                                <span className="flex h-14 w-14 items-center justify-center rounded-[20px]" style={{ backgroundColor: "rgba(243,113,113,0.16)", color: "#ee5f5f" }}>
+                                  <XCircle size={22} strokeWidth={2.1} aria-hidden="true" />
+                                </span>
+                                <div>
+                                  <p className="text-[1.65rem] font-semibold leading-none" style={{ color: "#241d1a" }}>0</p>
+                                  <p className="mt-1 text-[0.85rem] font-medium" style={{ color: "rgba(36,29,26,0.68)" }}>
+                                    No asisten
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="rounded-[22px] px-4 py-4" style={{ backgroundColor: "rgba(255,210,120,0.12)", border: "1px solid rgba(238,171,55,0.20)" }}>
+                              <div className="flex items-center gap-3">
+                                <span className="flex h-14 w-14 items-center justify-center rounded-[20px]" style={{ backgroundColor: "rgba(255,210,120,0.18)", color: "#e48b16" }}>
+                                  <Link2 size={22} strokeWidth={2.1} aria-hidden="true" />
+                                </span>
+                                <div>
+                                  <p className="text-[1.65rem] font-semibold leading-none" style={{ color: "#241d1a" }}>30</p>
+                                  <p className="mt-1 text-[0.85rem] font-medium" style={{ color: "rgba(36,29,26,0.68)" }}>
+                                    Links generados
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="rounded-[22px] px-4 py-4" style={{ backgroundColor: "rgba(120,208,170,0.12)", border: "1px solid rgba(120,208,170,0.24)" }}>
+                              <div className="flex items-center gap-3">
+                                <span className="flex h-14 w-14 items-center justify-center rounded-[20px]" style={{ backgroundColor: "rgba(120,208,170,0.20)", color: "#0a9968" }}>
+                                  <Check size={22} strokeWidth={2.3} aria-hidden="true" />
+                                </span>
+                                <div>
+                                  <p className="text-[1.65rem] font-semibold leading-none" style={{ color: "#241d1a" }}>19</p>
+                                  <p className="mt-1 text-[0.85rem] font-medium" style={{ color: "rgba(36,29,26,0.68)" }}>
+                                    Links abiertos
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-5 flex items-center gap-2">
+                            <div
+                              className="flex min-w-0 flex-1 items-center gap-3 rounded-full px-4 py-3"
+                              style={{ backgroundColor: "#ffffff", border: "1px solid rgba(32,0,65,0.08)", boxShadow: "0 6px 16px rgba(32,0,65,0.06)" }}
+                            >
+                              <Search size={18} strokeWidth={2.1} style={{ color: "rgba(36,29,26,0.45)" }} aria-hidden="true" />
+                              <span className="truncate text-[0.98rem]" style={{ color: "rgba(36,29,26,0.52)" }}>
+                                Buscar por nombre o email...
+                              </span>
+                            </div>
+                            <div
+                              className="flex items-center gap-1 rounded-full px-2 py-2"
+                              style={{ backgroundColor: "#f7f3ec", border: "1px solid rgba(32,0,65,0.08)" }}
+                            >
+                              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#241d1a] shadow-sm">
+                                <Grid2x2 size={16} strokeWidth={2.1} aria-hidden="true" />
+                              </span>
+                              <span className="flex h-9 w-9 items-center justify-center rounded-full text-[#241d1a]">
+                                <List size={16} strokeWidth={2.1} aria-hidden="true" />
+                              </span>
+                            </div>
+                          </div>
+
+                          <div
+                            ref={newGuestRowRef}
+                            className="mt-5 rounded-[20px] px-4 py-4"
+                            style={{ backgroundColor: "#ffffff", border: "1px solid rgba(32,0,65,0.08)", boxShadow: "0 6px 16px rgba(32,0,65,0.06)" }}
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <div className="flex items-center gap-3">
+                                <span className="flex h-11 w-11 items-center justify-center rounded-full" style={{ backgroundColor: "rgba(37,211,102,0.12)", color: "#128C7E" }}>
+                                  <UserRound size={20} strokeWidth={2.1} aria-hidden="true" />
+                                </span>
+                                <div>
+                                  <p className="text-[0.98rem] font-semibold" style={{ color: "#241d1a" }}>
+                                    Florencia Sandez
+                                  </p>
+                                  <p className="mt-0.5 text-[0.82rem]" style={{ color: "rgba(36,29,26,0.52)" }}>
+                                    Confirmó desde WhatsApp
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="rounded-full px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em]" style={{ backgroundColor: "rgba(37,211,102,0.12)", color: "#128C7E" }}>
+                                Nuevo
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     </div>
                   </div>
                 </div>
