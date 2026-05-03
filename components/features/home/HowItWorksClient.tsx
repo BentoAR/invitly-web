@@ -63,9 +63,9 @@ export const HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE: WhatsappChatMessage[] = [
 
 // Pausas: "¡Quiero invitarte" → "a mi boda! 💍 " → "Confirmá acá: bento.com/miboda"
 const HOW_IT_WORKS_TYPE_SEGMENTS = [
-  { chars: 17, duration: 0.28, pauseAfter: 0.14 },
-  { chars: 31, duration: 0.30, pauseAfter: 0.18 },
-  { chars: HOW_IT_WORKS_WHATSAPP_MESSAGE.length, duration: 0.52, pauseAfter: 0 },
+  { chars: 17, duration: 0.55, pauseAfter: 0.2 },
+  { chars: 31, duration: 0.60, pauseAfter: 0.25 },
+  { chars: HOW_IT_WORKS_WHATSAPP_MESSAGE.length, duration: 0.95, pauseAfter: 0 },
 ];
 
 const HOW_IT_WORKS_REPLY_DELAYS = [0.52, 0.38];
@@ -823,70 +823,9 @@ export default function HowItWorksClient({
                     </div>
                   )}
                   {i === 2 && (
-                    <div className="flex justify-center relative px-4">
-                      {/* Lottie central - midground - se desvanece elegantemente */}
-                      <motion.div
-                        className="w-full max-w-[220px] relative"
-                        style={{ zIndex: 5 }}
-                        initial={{ scale: 1, opacity: 1, rotate: 0, filter: "blur(0px)" }}
-                        whileInView={{ scale: 0.3, opacity: 0, rotate: -8, filter: "blur(8px)" }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.05, ease: [0.45, 0, 0.55, 1] }}
-                      >
+                    <div className="flex justify-center px-4">
+                      <div className="w-full max-w-[220px]">
                         <Lottie animationData={messageAnimation} loop autoplay />
-                      </motion.div>
-
-                      {/* Input de WhatsApp - mobile - aparece y luego se oculta */}
-                      <motion.div
-                        className="absolute inset-0 flex items-center justify-center px-4"
-                        initial={{ opacity: 0, y: 60, scale: 0.85 }}
-                        whileInView={{
-                          opacity: [0, 1, 1, 0],
-                          y: [60, 0, 0, 42],
-                          scale: [0.85, 1, 1, 0.94],
-                        }}
-                        viewport={{ once: true }}
-                        transition={{
-                          delay: 0.5,
-                          duration: 1.05,
-                          times: [0, 0.28, 0.72, 1],
-                        }}
-                        style={{ zIndex: 15, pointerEvents: "none" }}
-                      >
-                        <WhatsAppInputPreview compact staticText={HOW_IT_WORKS_WHATSAPP_MESSAGE} />
-                      </motion.div>
-
-                      {/* Chat de WhatsApp - mobile: primero aparece el enviado, después respuestas */}
-                      <div className="absolute inset-0 flex flex-col items-center justify-center px-6" style={{ zIndex: 20 }}>
-                        <div className="w-full space-y-2.5">
-                          {HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE.map((message, mi) => {
-                            const isOutgoing = message.direction === "outgoing";
-
-                            return (
-                              <motion.div
-                                key={message.id}
-                                className={`flex ${isOutgoing ? "justify-end" : "justify-start"}`}
-                                initial={{ opacity: 0, x: isOutgoing ? 18 : -18, y: 14, scale: 0.96 }}
-                                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 1.35 + mi * 0.2, duration: 0.4 }}
-                              >
-                                <div
-                                  className="text-xs font-medium leading-[1.4]"
-                                  style={{
-                                    backgroundColor: isOutgoing ? "#25D366" : "#FFFFFF",
-                                    padding: "8px 12px",
-                                    borderRadius: isOutgoing ? "10px 10px 2px 10px" : "10px 10px 10px 2px",
-                                    maxWidth: isOutgoing ? "220px" : "180px",
-                                    boxShadow: isOutgoing ? "0 2px 6px rgba(37,211,102,0.15)" : "0 2px 6px rgba(0,0,0,0.08)"
-                                  }}
-                                >
-                                  <p className={isOutgoing ? "text-white" : "text-gray-900"}>{message.text}</p>
-                                </div>
-                              </motion.div>
-                            );
-                          })}
-                        </div>
                       </div>
                     </div>
                   )}
