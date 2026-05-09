@@ -208,7 +208,7 @@ export function InvitationsList() {
                 style={{ backdropFilter: "blur(4px)", background: "rgba(0,0,0,0.25)" }}
               >
                 <a
-                  href="https://invitation-front-chi.vercel.app/"
+                  href={`https://inv.bento.com.ar/demo/${invitation.name}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
