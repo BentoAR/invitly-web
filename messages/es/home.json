@@ -42,6 +42,11 @@
         "title": "Compartí y listo",
         "description": "Mandá el link por WhatsApp, Instagram o mail. Tus invitados confirman con un toque y vos ves las respuestas en tiempo real. Sin llamadas, sin planillas, sin dolores de cabeza."
       }
+    ],
+    "whatsappMessage": "¡Quiero invitarte a mi boda! 💍 Confirmá acá: bento.com/miboda",
+    "whatsappReplies": [
+      "¡Qué copado esto! 🥹",
+      "Ya confirmé, gracias por invitarme 🙌"
     ]
   },
   "Features": {

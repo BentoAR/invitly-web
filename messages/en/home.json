@@ -42,6 +42,11 @@
         "title": "Share and done",
         "description": "Send the link via WhatsApp, Instagram or email. Your guests confirm with a tap and you see responses in real time. No calls, no spreadsheets, no headaches."
       }
+    ],
+    "whatsappMessage": "I want to invite you to my wedding! 💍 Confirm here: bento.com/mywedding",
+    "whatsappReplies": [
+      "This is so cool! 🥹",
+      "Confirmed, thanks for the invite 🙌"
     ]
   },
   "Features": {

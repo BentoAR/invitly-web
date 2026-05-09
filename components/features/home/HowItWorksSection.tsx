@@ -10,6 +10,8 @@ export default async function HowItWorksSection() {
     title: string;
     description: string;
   }>;
+  const whatsappMessage = t("whatsappMessage");
+  const whatsappReplies = t.raw("whatsappReplies") as string[];
 
   const templateImages = [
     "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/templates-preview/countdown-resplandor.webp",
@@ -29,6 +31,8 @@ export default async function HowItWorksSection() {
       subtitle={t("badge")}
       templateImages={templateImages}
       demoVideoUrl={demoVideoUrl}
+      whatsappMessage={whatsappMessage}
+      whatsappReplies={whatsappReplies}
     />
   );
 }

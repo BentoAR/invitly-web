@@ -151,13 +151,30 @@ export default function HowItWorksClient({
   subtitle,
   templateImages = [],
   demoVideoUrl,
+  whatsappMessage,
+  whatsappReplies,
 }: {
   steps: Step[];
   sectionTitle: string;
   subtitle: string;
   templateImages?: string[];
   demoVideoUrl?: string;
+  whatsappMessage?: string;
+  whatsappReplies?: string[];
 }) {
+  const message = whatsappMessage ?? HOW_IT_WORKS_WHATSAPP_MESSAGE;
+  const replies: WhatsappReply[] = whatsappReplies
+    ? whatsappReplies.map((text, i) => ({ id: `reply-${i}`, text }))
+    : HOW_IT_WORKS_WHATSAPP_REPLIES;
+  const chatSequence: WhatsappChatMessage[] = [
+    { id: "sent-invitation", direction: "outgoing", text: message },
+    ...replies.map((r) => ({ ...r, direction: "incoming" as const })),
+  ];
+  const typeSegments = [
+    { chars: Math.floor(message.length * 0.27), duration: 0.55, pauseAfter: 0.2 },
+    { chars: Math.floor(message.length * 0.50), duration: 0.60, pauseAfter: 0.25 },
+    { chars: message.length, duration: 0.95, pauseAfter: 0 },
+  ];
   const sectionRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -246,7 +263,7 @@ export default function HowItWorksClient({
         chatMessageRefs.current.forEach((el, i) => {
           if (!el) return;
 
-          const direction = HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE[i]?.direction;
+          const direction = chatSequence[i]?.direction;
 
           gsap.set(el, {
             autoAlpha: 0,
@@ -341,7 +358,7 @@ export default function HowItWorksClient({
           }
           chatMessageRefs.current.forEach((el, i) => {
             if (!el) return;
-            const direction = HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE[i]?.direction;
+            const direction = chatSequence[i]?.direction;
             gsap.set(el, {
               autoAlpha: 0,
               x: direction === "outgoing" ? 16 : -28,
@@ -420,7 +437,7 @@ export default function HowItWorksClient({
         );
 
         // 3. Typewriter escribe el mensaje
-        HOW_IT_WORKS_TYPE_SEGMENTS.forEach((segment, index) => {
+        typeSegments.forEach((segment, index) => {
           step3AutoTl.to(typedMessage, {
             chars: segment.chars,
             duration: segment.duration,
@@ -435,12 +452,12 @@ export default function HowItWorksClient({
             },
             onUpdate: () => {
               if (!typedTextRef.current) return;
-              typedTextRef.current.textContent = HOW_IT_WORKS_WHATSAPP_MESSAGE.slice(
+              typedTextRef.current.textContent = message.slice(
                 0,
                 Math.round(typedMessage.chars)
               );
             }
-          }, index === 0 ? "+=0.2" : `+=${HOW_IT_WORKS_TYPE_SEGMENTS[index - 1]?.pauseAfter ?? 0}`);
+          }, index === 0 ? "+=0.2" : `+=${typeSegments[index - 1]?.pauseAfter ?? 0}`);
         });
 
         // 4. Cursor desaparece y el input se envía
@@ -824,7 +841,7 @@ export default function HowItWorksClient({
                   )}
                   {i === 2 && (
                     <div className="flex justify-center px-4">
-                      <div className="w-full max-w-[220px]">
+                      <div className="w-full max-w-[280px]">
                         <Lottie animationData={messageAnimation} loop autoplay />
                       </div>
                     </div>
@@ -932,7 +949,7 @@ export default function HowItWorksClient({
               {si === 2 && (
                 <div className="flex items-center justify-center relative px-12">
                   {/* Lottie central - midground z-index */}
-                  <div ref={lottieContainerRef} className="w-full max-w-[380px] relative" style={{ zIndex: 5 }}>
+                  <div ref={lottieContainerRef} className="w-full max-w-[480px] relative" style={{ zIndex: 5 }}>
                     <Lottie animationData={messageAnimation} loop autoplay />
                   </div>
 
@@ -955,11 +972,11 @@ export default function HowItWorksClient({
                   <div className="absolute inset-0 flex items-center justify-center px-10" style={{ zIndex: 20 }}>
                     <div className="relative w-full max-w-[660px] min-h-[520px]">
                     <div ref={chatStageRef} className="w-full max-w-md space-y-3">
-                      {HOW_IT_WORKS_WHATSAPP_CHAT_SEQUENCE.map((message, mi) => {
-                        const isOutgoing = message.direction === "outgoing";
+                      {chatSequence.map((msg, mi) => {
+                        const isOutgoing = msg.direction === "outgoing";
 
                         return (
-                          <div key={message.id}>
+                          <div key={msg.id}>
                             <div
                               ref={(el) => { chatMessageRefs.current[mi] = el; }}
                               className={`flex ${isOutgoing ? "justify-end" : "justify-start"}`}
@@ -974,7 +991,7 @@ export default function HowItWorksClient({
                                   boxShadow: isOutgoing ? "0 2px 8px rgba(37,211,102,0.15)" : "0 2px 8px rgba(0,0,0,0.08)"
                                 }}
                               >
-                                <p className={isOutgoing ? "text-white" : "text-gray-900"}>{message.text}</p>
+                                <p className={isOutgoing ? "text-white" : "text-gray-900"}>{msg.text}</p>
                                 {isOutgoing && (
                                   <div className="mt-1 flex items-center justify-end gap-0.5 text-white/85">
                                     <span ref={sentSingleCheckRef} className="flex items-center justify-center">
