@@ -39,13 +39,6 @@ export function getOrganizationSchema(locale: string): WithContext<Organization>
       "https://www.facebook.com/bento.invitaciones",
       // Add other social profiles
     ],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "500",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 }
 
@@ -168,15 +161,9 @@ export function getServiceSchema(locale: string): WithContext<Service> {
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "ARS",
-      lowPrice: "0",
+      lowPrice: "30000",
       highPrice: "250000",
       offerCount: "3",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "500",
-      bestRating: "5",
     },
   };
 }
@@ -212,11 +199,6 @@ export function getEventSchema(locale: string): WithContext<any> {
       "@type": "Offer",
       price: "0",
       priceCurrency: "ARS",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "500",
     },
   };
 }

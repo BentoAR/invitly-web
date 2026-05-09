@@ -95,24 +95,24 @@
   "Testimonials": {
     "badge": "Testimonios",
     "title": "Lo que dicen los que ya lo usaron",
-    "subtitle": "Más de 10.000 eventos organizados en Argentina. Estos son algunos de los que confiaron en Bento.",
+    "subtitle": "Estos son algunos de los que ya confiaron en Bento.",
     "testimonials": [
       {
-        "name": "Florencia Sandez",
+        "name": "Carolina Herrera",
         "location": "Buenos Aires",
         "eventType": "Casamiento",
         "eventDate": "octubre 2025",
         "quote": "No sabía bien cómo iba a quedar. Pero cuando mis amigas empezaron a escribirme preguntando cómo habíamos hecho la invitación, entendí que había valido la pena. La lista de confirmados la tuve en tiempo real, sin llamar a nadie."
       },
       {
-        "name": "Valeria Méndez",
+        "name": "Gabriela Torres",
         "location": "Córdoba",
         "eventType": "XV años",
         "eventDate": "marzo 2026",
         "quote": "Mi hija quería algo especial y Bento lo superó. En 10 minutos teníamos la invitación lista y todos los invitados confirmaron solos. Nunca más vuelvo a hacer invitaciones de papel."
       },
       {
-        "name": "Santiago Ríos",
+        "name": "Martín Alvarez",
         "location": "Rosario",
         "eventType": "Cumpleaños",
         "eventDate": "enero 2026",

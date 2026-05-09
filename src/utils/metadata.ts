@@ -3,8 +3,8 @@ import { Metadata } from "next";
 export const siteConfig = {
   name: "Bento",
   description: {
-    es: "Crea invitaciones digitales profesionales para bodas, cumpleaños, eventos corporativos y más. Más de 200 plantillas premium, RSVP automático, playlist colaborativa y gestión completa de invitados. La plataforma #1 de invitaciones digitales en Argentina.",
-    en: "Create professional digital invitations for weddings, birthdays, corporate events and more. Over 200 premium templates, automatic RSVP, collaborative playlist and complete guest management. The #1 digital invitation platform in Argentina.",
+    es: "Crea invitaciones digitales profesionales para bodas, cumpleaños, eventos corporativos y más. RSVP automático, playlist colaborativa y gestión completa de invitados. Pagás por evento, sin suscripción mensual.",
+    en: "Create professional digital invitations for weddings, birthdays, corporate events and more. Automatic RSVP, collaborative playlist and complete guest management. Pay per event, no monthly subscription.",
   },
   url: "https://app.bento.com.ar",
   ogImage: "https://d14sb9d2krfjkl.cloudfront.net/media/og-image.jpg",
