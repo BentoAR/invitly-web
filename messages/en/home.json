@@ -1,8 +1,8 @@
 {
   "Hero": {
-    "badge": "Unique and personalized invitations",
-    "title": "Professional designer digital invitations",
-    "subtitle": "Create, send and manage your guest confirmations from your phone. Ready in 5 minutes, no design skills needed.",
+    "badge": "More than an invitation",
+    "title": "your event from your phone",
+    "subtitle": "Automatic confirmations, real-time guest list and everything ready to export. No paper, no spreadsheets, no stress.",
     "button": {
       "primary": "Create my invitation",
       "secondary": "See a real example"
@@ -13,7 +13,7 @@
       "guests": "Unlimited guests",
       "support": "Average response time"
     },
-    "words": ["special", "unique"],
+    "words": ["Organize", "Share", "Manage"],
     "imageAlt": "Elegant event decoration, example of personalized digital invitation",
     "whatsappMessage": "Hi! 👋 Can you help me make my digital invitation?"
   },

@@ -1,8 +1,8 @@
 {
   "Hero": {
-    "badge": "Invitaciones únicas y personalizadas",
-    "title": "Invitaciones digitales de diseñador profesional",
-    "subtitle": "Creá, enviá y gestioná confirmaciones de tus invitados desde el celular. Listo en 5 minutos, sin saber de diseño.",
+    "badge": "Más que una invitación",
+    "title": "tu evento desde el celular",
+    "subtitle": "Confirmaciones automáticas, lista de invitados en tiempo real y todo listo para exportar. Sin papel, sin planillas, sin estrés.",
     "button": {
       "primary": "Crear mi invitación",
       "secondary": "Ver un ejemplo real"
@@ -13,7 +13,7 @@
       "guests": "Invitados ilimitados",
       "support": "Tiempo de respuesta promedio"
     },
-    "words": ["especiales", "únicos"],
+    "words": ["Organizá", "Compartí", "Gestioná"],
     "imageAlt": "Decoración elegante de evento, ejemplo de invitación digital personalizada",
     "whatsappMessage": "Hola! 👋 Me das una mano para hacer mi invitacion digital?"
   },

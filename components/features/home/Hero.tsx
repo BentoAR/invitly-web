@@ -46,8 +46,8 @@ export default async function Hero() {
                 data-hero="title"
                 className="font-display text-5xl sm:text-6xl lg:text-7xl font-normal mb-6 leading-tight"
               >
-                {t("title")}{" "}
-                <HeroTypewriter words={words} />
+                <HeroTypewriter words={words} />{" "}
+                {t("title")}
               </h1>
 
               <p
