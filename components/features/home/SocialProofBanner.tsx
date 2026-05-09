@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const ITEMS = [
-  { text: "+10.000 eventos en Argentina", highlight: true },
+  { text: "Pagás por evento", highlight: true },
   { text: "Casamientos", highlight: false },
   { text: "Quinceañeros", highlight: false },
   { text: "Cumpleaños", highlight: false },
@@ -16,8 +16,8 @@ const ITEMS = [
   { text: "Baby showers", highlight: false },
   { text: "Bautismos", highlight: false },
   { text: "Aniversarios", highlight: false },
-  { text: "98% de satisfacción", highlight: true },
-  { text: "Respuesta en <24hs", highlight: true },
+  { text: "Sin suscripción mensual", highlight: true },
+  { text: "Respuesta en menos de 1hs", highlight: true },
   { text: "Soporte en español", highlight: true },
 ];
 
@@ -109,7 +109,7 @@ export default function SocialProofBanner() {
         ))}
       </div>
       <p className="sr-only">
-        Más de 10.000 eventos organizados en Argentina: casamientos, quinceañeros, cumpleaños, eventos corporativos, egresados, baby showers, bautismos y aniversarios. 98% de satisfacción, respuesta en menos de 24 horas y soporte en español.
+        Casamientos, quinceañeros, cumpleaños, eventos corporativos, egresados, baby showers, bautismos y aniversarios. Pagás por evento, sin suscripción mensual. Soporte en español con respuesta en menos de una hora.
       </p>
     </div>
   );
