@@ -18,9 +18,9 @@ export default async function Hero() {
   const words = t.raw("words") as string[];
 
   const stats = [
-    { value: "500+", label: t("stats.designs") },
-    { value: "10K+", label: t("stats.clients") },
-    { value: "98%", label: t("stats.satisfaction") },
+    { value: "RSVP", label: t("stats.rsvp") },
+    { value: "∞", label: t("stats.guests") },
+    { value: "<1hs", label: t("stats.support") },
   ];
 
   return (
