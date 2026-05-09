@@ -1,13 +1,14 @@
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/shared/Container";
-import phoneTopImage from "@/assets/imgi_28_1771333296-compressor-png-image.png";
-import phoneBottomImage from "@/assets/imgi_30_1770851752-bottom-png-image.png";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
 import HeroPhonesClient from "@/components/features/home/HeroPhonesClient";
 import HeroTypewriter from "@/components/features/home/HeroTypewriter";
+
+const PHONE_FRONT_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+costado.png";
+const PHONE_LATERAL_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+lateral.png";
 
 const APP_URL = "https://app.bento.com.ar";
 const DEMO_INVITATION_URL = "https://inv.bento.com.ar/evento/4d50d8/lautaroydafne";
@@ -107,18 +108,22 @@ export default async function Hero() {
             {/* Right column: phones in mobile flow (lg:hidden) — desktop uses fixed overlay */}
             <div className="order-2 lg:order-2" aria-hidden="true">
               <div className="lg:hidden relative h-[340px] mt-4">
-                <div className="absolute inset-x-0 mx-auto top-0 w-[72%] animate-float-slow drop-shadow-[0_24px_48px_rgba(0,0,0,0.22)]">
+                <div className="absolute left-[5%] top-0 w-[58%] animate-float-slow drop-shadow-[0_24px_48px_rgba(0,0,0,0.22)]">
                   <Image
-                    src={phoneTopImage}
+                    src={PHONE_FRONT_URL}
                     alt={t("imageAlt")}
+                    width={400}
+                    height={820}
                     className="w-full h-auto"
                     priority
                   />
                 </div>
-                <div className="absolute inset-x-0 mx-auto top-16 w-[64%] animate-float-medium drop-shadow-[0_20px_40px_rgba(0,0,0,0.20)]">
+                <div className="absolute right-[2%] top-12 w-[46%] animate-float-medium drop-shadow-[0_20px_40px_rgba(0,0,0,0.20)]" style={{ opacity: 0.92 }}>
                   <Image
-                    src={phoneBottomImage}
+                    src={PHONE_LATERAL_URL}
                     alt={t("imageAlt")}
+                    width={340}
+                    height={820}
                     className="w-full h-auto"
                     priority
                   />
@@ -132,8 +137,8 @@ export default async function Hero() {
       {/* Phones outside the hero section so they have their own stacking context (z:20),
           floating above HowItWorks (z:10) as it slides over the hero */}
       <HeroPhonesClient
-        topImage={phoneTopImage}
-        bottomImage={phoneBottomImage}
+        frontImage={PHONE_FRONT_URL}
+        lateralImage={PHONE_LATERAL_URL}
         imageAlt={t("imageAlt")}
       />
     </>

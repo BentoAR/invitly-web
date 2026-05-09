@@ -2,20 +2,20 @@
 
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 type HeroPhonesClientProps = {
-  topImage: StaticImageData;
-  bottomImage: StaticImageData;
+  frontImage: string;
+  lateralImage: string;
   imageAlt: string;
 };
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroPhonesClient({
-  topImage,
-  bottomImage,
+  frontImage,
+  lateralImage,
   imageAlt,
 }: HeroPhonesClientProps) {
   const topRef = useRef<HTMLDivElement>(null);
@@ -24,7 +24,6 @@ export default function HeroPhonesClient({
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Cachear el resultado de matchMedia para evitar reevaluaciones
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 1024px)", () => {
@@ -182,27 +181,35 @@ export default function HeroPhonesClient({
       aria-hidden="true"
     >
       <div className="absolute right-0 top-0 w-1/2 h-full flex items-center">
-        <div className="relative w-[85%] mx-auto h-[640px]">
+        <div className="relative w-[85%] mx-auto h-[680px]">
+          {/* Teléfono costado — derecha, rotado hacia afuera, detrás */}
           <div
-            ref={topRef}
-            className="absolute left-1/2 -translate-x-1/2 top-8 w-[78%]"
+            ref={bottomRef}
+            className="absolute w-[45%]"
+            style={{ right: "10%", zIndex: 1, transform: "rotate(5deg)", opacity: 0.9 }}
           >
             <Image
-              src={topImage}
+              src={frontImage}
               alt={imageAlt}
-              className="w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.25)]"
+              width={280}
+              height={480}
+              className="w-full h-auto drop-shadow-[0_20px_44px_rgba(0,0,0,0.18)]"
               priority
               role="img"
             />
           </div>
+          {/* Teléfono lateral — izquierda, protagonista */}
           <div
-            ref={bottomRef}
-            className="absolute left-1/2 -translate-x-1/2 top-28 w-[70%]"
+            ref={topRef}
+            className="absolute top-6 w-[72%]"
+            style={{ left: "-8%", zIndex: 2 }}
           >
             <Image
-              src={bottomImage}
+              src={lateralImage}
               alt={imageAlt}
-              className="w-full h-auto drop-shadow-[0_24px_50px_rgba(0,0,0,0.25)]"
+              width={900}
+              height={1380}
+              className="w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.28)]"
               priority
               role="img"
             />
