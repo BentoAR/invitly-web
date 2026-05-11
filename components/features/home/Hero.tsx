@@ -11,7 +11,7 @@ const PHONE_FRONT_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.co
 const PHONE_LATERAL_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+lateral.png";
 
 const APP_URL = "https://app.bento.com.ar";
-const DEMO_INVITATION_URL = "https://inv.bento.com.ar/evento/4d50d8/lautaroydafne";
+const DEMO_INVITATION_URL = "https://inv.bento.com.ar/demo/sakura";
 
 export default async function Hero() {
   const t = await getTranslations("Hero");

@@ -19,7 +19,6 @@ export const Navbar = () => {
   const navLinks = [
     { name: t("inicio"), id: "inicio", href: "/" },
     { name: t("invitaciones"), id: "invitaciones", href: "/#invitaciones" },
-    { name: t("empresas"), id: "empresas", href: "/empresas" },
     { name: t("precios"), id: "precios", href: "/#precios" },
     { name: t("contacto"), id: "contacto", href: "/#contacto" },
   ];

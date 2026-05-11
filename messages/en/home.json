@@ -130,7 +130,7 @@
         "price": "$30,000",
         "priceNote": "per event",
         "description": "For events where sharing and confirming matter most",
-        "cta": "Start with Digital",
+        "cta": "Inquire",
         "featured": false,
         "features": [
           { "label": "Customizable digital invitation", "included": true },
@@ -148,7 +148,7 @@
         "price": "$60,000",
         "priceNote": "per event",
         "description": "For events that deserve professional organization",
-        "cta": "Choose Celebration",
+        "cta": "Inquire",
         "featured": true,
         "features": [
           { "label": "All of the above +", "included": true },
@@ -166,7 +166,7 @@
         "price": "$120,000",
         "priceNote": "per event",
         "description": "Your event deserves a unique visual identity",
-        "cta": "Schedule design call",
+        "cta": "Inquire",
         "featured": false,
         "features": [
           { "label": "All of the above +", "included": true },

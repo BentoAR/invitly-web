@@ -68,7 +68,11 @@ export default function PricingClient({
   );
 
   useLayoutEffect(() => {
-    if (window.innerWidth < 1024) return; // Solo desktop
+    if (window.innerWidth < 1024) {
+      if (headerRef.current) gsap.set(headerRef.current, { opacity: 1, filter: "blur(0px)" });
+      if (cardsGridRef.current) gsap.set(cardsGridRef.current, { scale: 1 });
+      return;
+    }
 
     const section = sectionRef.current;
     const leftOverlay = leftOverlayRef.current;

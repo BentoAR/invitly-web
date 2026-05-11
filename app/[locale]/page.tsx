@@ -17,7 +17,7 @@ const TemplatesSection = lazy(() => import("@/components/features/home/Templates
 const Features = lazy(() => import("@/components/features/home/Features"));
 const Testimonials = lazy(() => import("@/components/features/home/Testimonials"));
 const Pricing = lazy(() => import("@/components/features/home/Pricing"));
-const B2BAwarenessBanner = lazy(() => import("@/components/features/home/B2BAwarenessBanner"));
+// const B2BAwarenessBanner = lazy(() => import("@/components/features/home/B2BAwarenessBanner"));
 const FAQ = lazy(() => import("@/components/features/home/FAQ"));
 const CtaSplit = lazy(() => import("@/components/features/home/CtaSplit"));
 const SEOContent = lazy(() => import("@/components/features/home/SEOContent"));
@@ -158,9 +158,7 @@ export default async function Home({
       <Suspense fallback={<PricingSkeleton />}>
         <Pricing />
       </Suspense>
-      <Suspense fallback={<BannerSkeleton />}>
-        <B2BAwarenessBanner />
-      </Suspense>
+
       <Suspense fallback={<FAQSkeleton />}>
         <FAQ />
       </Suspense>
