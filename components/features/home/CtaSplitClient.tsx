@@ -85,7 +85,7 @@ export default function CtaSplitClient({ right, contactDialogTitle }: CtaSplitCl
         <div className="w-full max-w-2xl mx-auto">
           <div
             ref={rightColRef}
-            className="flex flex-col justify-center gap-4 p-5 sm:p-8 rounded-2xl border border-border/60 bg-background/50"
+            className="flex flex-col justify-center gap-4 px-2 py-6 sm:p-8 sm:rounded-2xl sm:border sm:border-border/60 sm:bg-background/50"
             style={{ willChange: "transform, opacity" }}
           >
             <p className="font-mono text-xs tracking-[0.35em] uppercase" style={{ color: "#bc8129" }}>

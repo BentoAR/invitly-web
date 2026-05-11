@@ -268,7 +268,7 @@ export function InvitationsList() {
       </div>
 
       {/* Mobile: grid 2 columnas */}
-      <div className="md:hidden grid grid-cols-2 gap-3 mt-4 px-4">
+      <div className="md:hidden grid grid-cols-2 gap-3 mt-4 px-4 pb-16">
         {invitations.slice(0, 5).map((invitation: Template) => (
           <div
             key={invitation.id}

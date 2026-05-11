@@ -240,8 +240,18 @@ export default function FeaturesScrollSequence({
       <section
         id="caracteristicas-mobile"
         aria-label={sectionTitle}
-        className="lg:hidden py-12 md:py-20 relative"
+        className="lg:hidden py-12 md:py-20 relative overflow-hidden"
       >
+        {/* Fade top */}
+        <div
+          className="absolute top-0 left-0 right-0 h-24 pointer-events-none z-20"
+          style={{ background: "linear-gradient(to bottom, var(--background) 0%, transparent 100%)" }}
+        />
+        {/* Fade bottom */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-20"
+          style={{ background: "linear-gradient(to top, var(--background) 0%, transparent 100%)" }}
+        />
         <div className="text-center px-6 mb-12 relative z-10">
           <h2
             className="font-display font-normal leading-tight"
@@ -303,7 +313,7 @@ function MinimalFeatureCard({ feature, index }: { feature: Feature; index: numbe
         <h3
           className="mb-2"
           style={{
-            fontSize: "1.3rem",
+            fontSize: "1.1rem",
             lineHeight: 1.25,
             fontWeight: 600,
             letterSpacing: "-0.01em",

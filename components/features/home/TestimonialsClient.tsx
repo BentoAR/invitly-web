@@ -134,7 +134,7 @@ export default function TestimonialsClient({
     <section
       ref={sectionRef}
       id="testimonios"
-      className="relative h-screen flex items-center justify-center overflow-hidden"
+      className="relative h-auto lg:h-screen flex items-center justify-center overflow-hidden"
       style={{
         zIndex: 40,
         position: "relative",
@@ -144,7 +144,7 @@ export default function TestimonialsClient({
 
       <div
         ref={contentWrapperRef}
-        className="w-full h-full overflow-hidden relative"
+        className="w-full lg:h-full overflow-hidden relative"
         style={{
           willChange: "transform, border-radius, box-shadow",
           zIndex: 10,
@@ -152,7 +152,7 @@ export default function TestimonialsClient({
           boxShadow: "0 20px 60px rgba(32, 0, 65, 0.12)"
         }}
       >
-        <div className="h-full flex flex-col justify-center py-12 md:py-24">
+        <div className="lg:h-full flex flex-col justify-center py-12 md:py-24">
           <div className="max-w-6xl mx-auto px-6 lg:px-16 w-full">
             <div className="text-center mb-16">
               <p

@@ -158,6 +158,16 @@ export default function PricingClient({
       id="precios"
       className="relative lg:h-screen flex items-center bg-background overflow-hidden py-12 lg:py-0"
     >
+      {/* Fade top/bottom — mobile only */}
+      <div
+        className="lg:hidden absolute top-0 left-0 right-0 h-24 pointer-events-none z-20"
+        style={{ background: "linear-gradient(to bottom, var(--background) 0%, transparent 100%)" }}
+      />
+      <div
+        className="lg:hidden absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-20"
+        style={{ background: "linear-gradient(to top, var(--background) 0%, transparent 100%)" }}
+      />
+
       {/* Círculos naranjas decorativos de fondo - más intensos */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {/* Círculo superior izquierda */}

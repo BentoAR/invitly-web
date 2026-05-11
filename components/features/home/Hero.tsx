@@ -37,10 +37,36 @@ export default async function Hero() {
         />
 
         <Container className="relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[600px]">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:items-center min-h-[600px]">
+            {/* Phones: first on mobile (top), second column on desktop (right) */}
+            <div aria-hidden="true" className="lg:order-2">
+              <div className="lg:hidden relative h-[380px]">
+                <div className="absolute right-[4%] top-8 w-[50%] md:w-[72%] drop-shadow-[0_24px_48px_rgba(0,0,0,0.22)]">
+                  <Image
+                    src={PHONE_FRONT_URL}
+                    alt={t("imageAlt")}
+                    width={400}
+                    height={820}
+                    className="w-full h-auto"
+                    priority
+                  />
+                </div>
+                <div className="absolute left-[-5%] top-16 w-[82%] md:top-0 md:left-[2%] md:w-[42%] drop-shadow-[0_20px_40px_rgba(0,0,0,0.20)] opacity-100 md:opacity-[0.88]">
+                  <Image
+                    src={PHONE_LATERAL_URL}
+                    alt={t("imageAlt")}
+                    width={340}
+                    height={820}
+                    className="w-full h-auto"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
+            {/* Content: second on mobile (below phones), first column on desktop (left) */}
             <div
               data-hero="content"
-              className="order-1 lg:order-1 text-center lg:text-left"
+              className="text-center lg:text-left lg:order-1"
             >
               <h1
                 data-hero="title"
@@ -52,7 +78,7 @@ export default async function Hero() {
 
               <p
                 data-hero="subtitle"
-                className="text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0"
+                className="text-base lg:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0"
               >
                 {t("subtitle")}
               </p>
@@ -103,31 +129,6 @@ export default async function Hero() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-            {/* Right column: phones in mobile flow (lg:hidden) — desktop uses fixed overlay */}
-            <div className="order-2 lg:order-2" aria-hidden="true">
-              <div className="lg:hidden relative h-[340px] mt-4">
-                <div className="absolute left-[5%] top-0 w-[58%] animate-float-slow drop-shadow-[0_24px_48px_rgba(0,0,0,0.22)]">
-                  <Image
-                    src={PHONE_FRONT_URL}
-                    alt={t("imageAlt")}
-                    width={400}
-                    height={820}
-                    className="w-full h-auto"
-                    priority
-                  />
-                </div>
-                <div className="absolute right-[2%] top-12 w-[46%] animate-float-medium drop-shadow-[0_20px_40px_rgba(0,0,0,0.20)]" style={{ opacity: 0.92 }}>
-                  <Image
-                    src={PHONE_LATERAL_URL}
-                    alt={t("imageAlt")}
-                    width={340}
-                    height={820}
-                    className="w-full h-auto"
-                    priority
-                  />
-                </div>
               </div>
             </div>
           </div>

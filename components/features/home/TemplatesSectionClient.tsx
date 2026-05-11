@@ -7,12 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface TemplatesSectionClientProps {
-  badge: string;
-  title: string;
-}
-
-export default function TemplatesSectionClient({ badge, title }: TemplatesSectionClientProps) {
+export default function TemplatesSectionClient() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
@@ -89,13 +84,13 @@ export default function TemplatesSectionClient({ badge, title }: TemplatesSectio
             className="font-mono uppercase mb-3"
             style={{ fontSize: "0.65rem", letterSpacing: "0.3em", color: "#bc8129" }}
           >
-            {badge}
+            +15 plantillas
           </p>
           <h2
             className="font-display font-normal leading-tight"
             style={{ fontSize: "clamp(2rem, 8vw, 2.8rem)", color: "#200041", letterSpacing: "-0.03em" }}
           >
-            {title}
+            Invitaciones
           </h2>
         </div>
 
