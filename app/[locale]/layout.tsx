@@ -124,13 +124,6 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://d14sb9d2krfjkl.cloudfront.net" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.clarity.ms" />
-        {/* Preload LCP candidates: imágenes del hero en mobile */}
-        <link
-          rel="preload"
-          as="image"
-          href="https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+costado.png"
-          fetchPriority="high"
-        />
       </head>
       <body className="antialiased font-sans">
         <GoogleAnalytics />
