@@ -21,7 +21,7 @@ export function ErrorState({
           <AlertCircle className="h-8 w-8 text-red-500" />
         </div>
         <div className="flex flex-col items-center gap-2">
-          <p className="text-red-500 font-medium">{message}</p>
+          <p className="text-red-700 font-medium">{message}</p>
           {onRetry && (
             <Button
               onClick={onRetry}

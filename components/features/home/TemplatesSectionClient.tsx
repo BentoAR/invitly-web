@@ -82,7 +82,7 @@ export default function TemplatesSectionClient() {
         <div className="md:hidden px-4 pt-12 pb-6">
           <p
             className="font-mono uppercase mb-3"
-            style={{ fontSize: "0.65rem", letterSpacing: "0.3em", color: "#bc8129" }}
+            style={{ fontSize: "0.65rem", letterSpacing: "0.3em", color: "#9B5A00" }}
           >
             +15 plantillas
           </p>

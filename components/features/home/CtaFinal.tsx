@@ -70,7 +70,7 @@ export default function CtaFinal() {
             style={{ willChange: "transform, opacity" }}
           >
             <div>
-              <p className="font-mono text-xs tracking-[0.35em] uppercase mb-3" style={{ color: "#bc8129" }}>
+              <p className="font-mono text-xs tracking-[0.35em] uppercase mb-3" style={{ color: "#9B5A00" }}>
                 ¿Tenés preguntas?
               </p>
               <h3

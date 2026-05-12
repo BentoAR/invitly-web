@@ -157,7 +157,7 @@ export default function TestimonialsClient({
             <div className="text-center mb-16">
               <p
                 className="font-mono text-xs tracking-[0.35em] uppercase mb-5"
-                style={{ color: "#bc8129" }}
+                style={{ color: "#9B5A00" }}
               >
                 {badge}
               </p>
@@ -196,7 +196,7 @@ export default function TestimonialsClient({
                     &ldquo;{t.quote}&rdquo;
                   </blockquote>
                   <div className="flex flex-col gap-1">
-                    <div className="flex gap-0.5" aria-label="5 estrellas">
+                    <div className="flex gap-0.5" role="img" aria-label="5 estrellas">
                       {Array.from({ length: 5 }).map((_, si) => (
                         <span key={si} className="inline-block" aria-hidden="true">
                           <svg className="h-4 w-4 fill-primary text-primary" viewBox="0 0 20 20">

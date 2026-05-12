@@ -87,7 +87,7 @@ export default function CtaSplitClient({ right }: CtaSplitClientProps) {
             className="flex flex-col justify-center gap-4 px-2 py-6 sm:p-8 sm:rounded-2xl sm:border sm:border-border/60 sm:bg-background/50"
             style={{ willChange: "transform, opacity" }}
           >
-            <p className="font-mono text-xs tracking-[0.35em] uppercase" style={{ color: "#bc8129" }}>
+            <p className="font-mono text-xs tracking-[0.35em] uppercase" style={{ color: "#9B5A00" }}>
               {right.badge}
             </p>
             <h3

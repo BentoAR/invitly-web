@@ -288,7 +288,7 @@ export default function PricingClient({
 
       <div className="relative max-w-6xl mx-auto px-6 lg:px-16 z-10 w-full">
         <div ref={headerRef} className="text-center mb-16">
-          <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#bc8129" }}>
+          <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#9B5A00" }}>
             {badge}
           </p>
           <h2
@@ -312,7 +312,7 @@ export default function PricingClient({
             >
               {plan.featured && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
+                  <span className="bg-primary text-foreground text-xs font-semibold px-3 py-1 rounded-full">
                     {featuredBadge}
                   </span>
                 </div>

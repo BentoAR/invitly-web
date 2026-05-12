@@ -40,7 +40,7 @@ export default function B2BAwarenessBannerClient({
       <section className="py-12 md:py-20 bg-gradient-to-br from-secondary/20 to-secondary/5">
         <div className="max-w-6xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-10">
-            <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#bc8129" }}>
+            <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#9B5A00" }}>
               {badge}
             </p>
             <h2

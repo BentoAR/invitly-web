@@ -91,7 +91,7 @@ export const Navbar = () => {
             <LanguageToggle />
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}>
                   {isOpen ? (
                     <X className="h-5 w-5" />
                   ) : (

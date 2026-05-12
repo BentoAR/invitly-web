@@ -54,7 +54,7 @@ export default function FAQClient({ badge, title, faqs }: FAQClientProps) {
     <section className="py-12 md:py-24 bg-background">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-14">
-          <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#bc8129" }}>
+          <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#9B5A00" }}>
             {badge}
           </p>
           <h2
