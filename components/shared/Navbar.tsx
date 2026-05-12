@@ -16,10 +16,10 @@ export const Navbar = () => {
   const pathname = usePathname();
 
   const navLinks = [
-    { name: t("inicio"), id: "inicio", href: "/" },
-    { name: t("invitaciones"), id: "invitaciones", href: "/#invitaciones" },
-    { name: t("precios"), id: "precios", href: "/#precios" },
-    { name: t("contacto"), id: "contacto", href: "/#contacto" },
+    { name: t("inicio"), id: "inicio", href: "#inicio" },
+    { name: t("invitaciones"), id: "invitaciones", href: "#invitaciones" },
+    { name: t("precios"), id: "precios", href: "#precios" },
+    { name: t("contacto"), id: "contacto", href: "#contacto" },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
