@@ -209,8 +209,8 @@ export default function HeroPhonesClient({
             <Image
               src={lateralImage}
               alt={imageAlt}
-              width={900}
-              height={1380}
+              width={1080}
+              height={1132}
               className="w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.28)]"
               priority
               fetchPriority="high"

@@ -30,7 +30,7 @@ export default function TemplatesSectionClient() {
 
     const ctx = gsap.context(() => {
 
-      gsap.set(path, { attr: { d: curves.start }, visibility: "visible" });
+      gsap.set(path, { attr: { d: curves.start }, opacity: 1 });
 
       gsap.to(path, {
         attr: { d: curves.end },
@@ -73,7 +73,7 @@ export default function TemplatesSectionClient() {
           ref={pathRef}
           fill="#EDE9DA"
           d="M 0 600 Q 50 -50, 100 600 L 100 700 L 0 700 Z"
-          style={{ visibility: "hidden" }}
+          style={{ opacity: 0 }}
         />
       </svg>
 

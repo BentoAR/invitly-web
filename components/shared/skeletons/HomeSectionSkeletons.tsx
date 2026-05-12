@@ -3,7 +3,7 @@ export function HowItWorksSkeleton() {
 }
 
 export function TemplatesSectionSkeleton() {
-  return <div className="min-h-[600px] bg-background" />;
+  return <div className="min-h-[1600px] bg-background" />;
 }
 
 export function TestimonialsSkeleton() {

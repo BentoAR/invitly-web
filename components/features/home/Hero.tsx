@@ -44,8 +44,8 @@ export default async function Hero() {
                   <Image
                     src={PHONE_FRONT_URL}
                     alt={t("imageAlt")}
-                    width={400}
-                    height={820}
+                    width={1080}
+                    height={1132}
                     className="w-full h-auto"
                     priority
                     fetchPriority="high"
@@ -56,8 +56,8 @@ export default async function Hero() {
                   <Image
                     src={PHONE_LATERAL_URL}
                     alt={t("imageAlt")}
-                    width={340}
-                    height={820}
+                    width={1080}
+                    height={1132}
                     className="w-full h-auto"
                     priority
                     fetchPriority="high"
