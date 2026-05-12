@@ -127,7 +127,7 @@
     "plans": [
       {
         "name": "Digital",
-        "price": "$30,000",
+        "price": "$20",
         "priceNote": "per event",
         "description": "For events where sharing and confirming matter most",
         "cta": "Inquire",
@@ -145,7 +145,7 @@
       },
       {
         "name": "Celebration",
-        "price": "$60,000",
+        "price": "$45",
         "priceNote": "per event",
         "description": "For events that deserve professional organization",
         "cta": "Inquire",
@@ -163,7 +163,7 @@
       },
       {
         "name": "Custom Made",
-        "price": "$120,000",
+        "price": "$100",
         "priceNote": "per event",
         "description": "Your event deserves a unique visual identity",
         "cta": "Inquire",
