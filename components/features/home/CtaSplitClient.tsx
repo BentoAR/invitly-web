@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/shared/Container";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import ContactForm from "@/components/features/contact/ContactForm";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,11 +25,11 @@ interface CtaSplitClientProps {
     cta: string;
     footer: string;
   };
-  contactDialogTitle: string;
 }
 
-export default function CtaSplitClient({ right, contactDialogTitle }: CtaSplitClientProps) {
-  const [isContactOpen, setIsContactOpen] = useState(false);
+const WA_URL = "https://wa.me/541162183918?text=" + encodeURIComponent("Hola! Quiero consultar sobre Bento 👋");
+
+export default function CtaSplitClient({ right }: CtaSplitClientProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const rightColRef = useRef<HTMLDivElement>(null);
   const shimmerRef = useRef<HTMLSpanElement>(null);
@@ -98,37 +97,27 @@ export default function CtaSplitClient({ right, contactDialogTitle }: CtaSplitCl
               {right.title}
             </h3>
             <p className="text-sm text-muted-foreground mb-2">{right.description}</p>
-            <Button size="lg" className="w-full group relative overflow-hidden" onClick={() => setIsContactOpen(true)}>
-              <Mail className="mr-2 h-4 w-4" />
-              {right.cta}
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              <span
-                ref={shimmerRef}
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%)",
-                  willChange: "transform",
-                }}
-                aria-hidden="true"
-              />
-            </Button>
+            <Link href={WA_URL} target="_blank" rel="noopener noreferrer" className="w-full">
+              <Button size="lg" className="w-full group relative overflow-hidden">
+                <Mail className="mr-2 h-4 w-4" />
+                {right.cta}
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <span
+                  ref={shimmerRef}
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%)",
+                    willChange: "transform",
+                  }}
+                  aria-hidden="true"
+                />
+              </Button>
+            </Link>
             <p className="text-xs text-muted-foreground">{right.footer}</p>
           </div>
         </div>
       </Container>
 
-      <Dialog open={isContactOpen} onOpenChange={setIsContactOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="font-display text-2xl" style={{ color: "#200041" }}>
-              {contactDialogTitle}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="mt-4">
-            <ContactForm />
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

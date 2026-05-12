@@ -59,10 +59,9 @@ export default function PricingClient({
 
   // Memoizar la función para evitar recrearla en cada render
   const getCtaHref = useMemo(
-    () => (planName: string, cta: string) => {
-      if (cta === "Contactar") return "#contacto";
-      if (planName === "Celebración") return `${APP_URL}/register?plan=pro`;
-      return `${APP_URL}/register`;
+    () => (planName: string) => {
+      const msg = encodeURIComponent(`Hola! Me interesa el plan ${planName} de Bento 👋`);
+      return `https://wa.me/541162183918?text=${msg}`;
     },
     []
   );
@@ -341,9 +340,9 @@ export default function PricingClient({
                 ))}
               </ul>
               <Link
-                href={getCtaHref(plan.name, plan.cta)}
-                target={getCtaHref(plan.name, plan.cta).startsWith("http") ? "_blank" : undefined}
-                rel={getCtaHref(plan.name, plan.cta).startsWith("http") ? "noopener noreferrer" : undefined}
+                href={getCtaHref(plan.name)}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Button className="w-full" variant={plan.featured ? "default" : "outline"}>
                   {plan.cta}

@@ -21,6 +21,6 @@ export default async function CtaSplit() {
   };
 
   return (
-    <CtaSplitClient left={left} right={right} contactDialogTitle={t("contactDialogTitle")} />
+    <CtaSplitClient left={left} right={right} />
   );
 }
