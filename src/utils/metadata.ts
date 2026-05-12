@@ -6,7 +6,7 @@ export const siteConfig = {
     es: "Crea invitaciones digitales profesionales para bodas, cumpleaños, eventos corporativos y más. RSVP automático, playlist colaborativa y gestión completa de invitados. Pagás por evento, sin suscripción mensual.",
     en: "Create professional digital invitations for weddings, birthdays, corporate events and more. Automatic RSVP, collaborative playlist and complete guest management. Pay per event, no monthly subscription.",
   },
-  url: "https://app.bento.com.ar",
+  url: "https://bento.com.ar",
   ogImage: "https://d14sb9d2krfjkl.cloudfront.net/media/og-image.jpg",
   keywords: {
     es: [

@@ -44,7 +44,7 @@ export async function generateMetadata({
 
   return {
     title: {
-      default: "Bento",
+      default: "Bento — Invitaciones Digitales para Eventos | Argentina",
       template: "%s | Bento",
     },
     description,
