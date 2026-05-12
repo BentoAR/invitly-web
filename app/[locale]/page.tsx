@@ -1,7 +1,9 @@
 import { Suspense, lazy } from "react";
 import type { Metadata } from "next";
 import Hero from "@/components/features/home/Hero";
-import SocialProofBanner from "@/components/features/home/SocialProofBanner";
+
+// SocialProofBanner usa GSAP — lazy para sacar GSAP del bundle principal
+const SocialProofBanner = lazy(() => import("@/components/features/home/SocialProofBanner"));
 import StructuredData from "@/components/shared/StructuredData";
 import { generatePageMetadata } from "@/src/utils/metadata";
 import {
@@ -105,7 +107,9 @@ export default async function Home({
     <div className="min-h-screen">
       <StructuredData data={structuredData} />
       <Hero />
-      <SocialProofBanner />
+      <Suspense fallback={<BannerSkeleton />}>
+        <SocialProofBanner />
+      </Suspense>
       <Suspense fallback={<HowItWorksSkeleton />}>
         <HowItWorksSection />
       </Suspense>

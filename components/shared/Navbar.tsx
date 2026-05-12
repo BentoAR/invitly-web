@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
-import { motion, useScroll } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { LanguageToggle } from "@/components/ui/language-toggle";
@@ -24,29 +23,27 @@ export const Navbar = () => {
   ];
 
   const [isOpen, setIsOpen] = useState(false);
-  const { scrollY } = useScroll();
   const [hasScrolled, setHasScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
-    // Memoizar el handler para evitar recrearlo en cada render
-    const handleScrollChange = (latest: number) => {
-      setHasScrolled(latest > 50);
-      // Ocultar navbar después de la primera sección (aprox 100vh)
-      setIsHidden(latest > window.innerHeight * 0.8);
+    // Scroll listener nativo: evita importar framer-motion en el critical path
+    const handleScroll = () => {
+      const y = window.scrollY;
+      setHasScrolled(y > 50);
+      setIsHidden(y > window.innerHeight * 0.8);
     };
 
-    const unsubscribe = scrollY.on("change", handleScrollChange);
-    return () => unsubscribe();
-  }, [scrollY]);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-border/20 ${
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-border/20 transition-all duration-300 ${
         hasScrolled ? "shadow-md bg-background/95 backdrop-blur-md" : ""
-      }`}
-      animate={{ y: isHidden ? -100 : 0 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      } ${isHidden ? "-translate-y-full" : "translate-y-0"}`}
+      style={{ transitionProperty: "transform, background-color, box-shadow" }}
     >
       <Container>
         <div className="flex h-16 items-center justify-between">
@@ -132,6 +129,6 @@ export const Navbar = () => {
           </div>
         </div>
       </Container>
-    </motion.nav>
+    </nav>
   );
 };

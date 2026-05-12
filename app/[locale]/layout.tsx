@@ -14,6 +14,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 import { siteConfig } from "@/src/utils/metadata";
 import type { Metadata } from "next";
 
+// Playfair: solo pesos que se usan (400 para body display, 700 para headings)
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -23,12 +24,15 @@ const playfair = Playfair_Display({
   adjustFontFallback: true,
 });
 
+// Inter: cargamos solo el subset latin con los axes necesarios
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
   preload: true,
   adjustFontFallback: true,
+  // Limitar a los pesos que Tailwind usa realmente
+  weight: ["400", "500", "600", "700"],
 });
 
 export async function generateMetadata({
@@ -114,6 +118,20 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className={`${playfair.variable} ${inter.variable}`}>
+      <head>
+        {/* Preconnect a orígenes de imágenes críticas para reducir latencia de conexión */}
+        <link rel="preconnect" href="https://invitation-bucket-aws.s3.us-east-2.amazonaws.com" />
+        <link rel="preconnect" href="https://d14sb9d2krfjkl.cloudfront.net" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.clarity.ms" />
+        {/* Preload LCP candidates: imágenes del hero en mobile */}
+        <link
+          rel="preload"
+          as="image"
+          href="https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+costado.png"
+          fetchPriority="high"
+        />
+      </head>
       <body className="antialiased font-sans">
         <GoogleAnalytics />
         <MicrosoftClarity />

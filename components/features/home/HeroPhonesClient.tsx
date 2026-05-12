@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -22,7 +22,7 @@ export default function HeroPhonesClient({
   const bottomRef = useRef<HTMLDivElement>(null);
   const floatTweensRef = useRef<gsap.core.Tween[]>([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
@@ -195,6 +195,8 @@ export default function HeroPhonesClient({
               height={480}
               className="w-full h-auto drop-shadow-[0_20px_44px_rgba(0,0,0,0.18)]"
               priority
+              fetchPriority="high"
+              sizes="(min-width: 1024px) 20vw"
               role="img"
             />
           </div>
@@ -211,6 +213,8 @@ export default function HeroPhonesClient({
               height={1380}
               className="w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.28)]"
               priority
+              fetchPriority="high"
+              sizes="(min-width: 1024px) 36vw"
               role="img"
             />
           </div>

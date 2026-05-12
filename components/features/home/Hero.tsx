@@ -4,13 +4,12 @@ import { Container } from "@/components/shared/Container";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
-import HeroPhonesClient from "@/components/features/home/HeroPhonesClient";
 import HeroTypewriter from "@/components/features/home/HeroTypewriter";
+import HeroPhonesWrapper from "@/components/features/home/HeroPhonesWrapper";
 
 const PHONE_FRONT_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+costado.png";
 const PHONE_LATERAL_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+lateral.png";
 
-const APP_URL = "https://app.bento.com.ar";
 const DEMO_INVITATION_URL = "https://inv.bento.com.ar/demo/sakura";
 
 export default async function Hero() {
@@ -27,7 +26,7 @@ export default async function Hero() {
     <>
       <section
         id="inicio"
-        className="relative z-[1] min-h-screen flex items-center pt-16 grain overflow-hidden"
+        className="relative z-1 min-h-screen flex items-center pt-16 grain overflow-hidden"
         role="main"
         aria-label={t("title") + " " + t("subtitle")}
       >
@@ -49,6 +48,8 @@ export default async function Hero() {
                     height={820}
                     className="w-full h-auto"
                     priority
+                    fetchPriority="high"
+                    sizes="(max-width: 768px) 50vw, 72vw"
                   />
                 </div>
                 <div className="absolute left-[-5%] top-16 w-[82%] md:top-0 md:left-[2%] md:w-[42%] drop-shadow-[0_20px_40px_rgba(0,0,0,0.20)] opacity-100 md:opacity-[0.88]">
@@ -59,6 +60,8 @@ export default async function Hero() {
                     height={820}
                     className="w-full h-auto"
                     priority
+                    fetchPriority="high"
+                    sizes="(max-width: 768px) 82vw, 42vw"
                   />
                 </div>
               </div>
@@ -137,7 +140,7 @@ export default async function Hero() {
 
       {/* Phones outside the hero section so they have their own stacking context (z:20),
           floating above HowItWorks (z:10) as it slides over the hero */}
-      <HeroPhonesClient
+      <HeroPhonesWrapper
         frontImage={PHONE_FRONT_URL}
         lateralImage={PHONE_LATERAL_URL}
         imageAlt={t("imageAlt")}
