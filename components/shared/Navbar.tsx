@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { LanguageToggle } from "@/components/ui/language-toggle";
 import { Container } from "@/components/shared/Container";
+import { analytics } from "@/utils/analytics";
 
 const APP_URL = "https://app.bento.com.ar";
 
@@ -80,7 +81,7 @@ export const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-3">
             <LanguageToggle />
-            <a href={`${APP_URL}/login`} target="_blank" rel="noopener noreferrer">
+            <a href={`${APP_URL}/login`} target="_blank" rel="noopener noreferrer" onClick={() => analytics.loginClick()}>
               <Button variant="outline" size="sm">
                 {t("login")}
               </Button>
@@ -117,7 +118,7 @@ export const Navbar = () => {
                     );
                   })}
                   <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                    <a href={`${APP_URL}/login`} target="_blank" rel="noopener noreferrer">
+                    <a href={`${APP_URL}/login`} target="_blank" rel="noopener noreferrer" onClick={() => analytics.loginClick()}>
                       <Button variant="outline" className="w-full">
                         {t("login")}
                       </Button>

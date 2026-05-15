@@ -24,6 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { contactFormSchema, type ContactFormValues } from "@/utils/validations";
 import { postNewInquiry } from "@/services/contact";
+import { analytics } from "@/utils/analytics";
 
 export default function ContactForm() {
   const t = useTranslations("Contact");
@@ -40,12 +41,14 @@ export default function ContactForm() {
   const onSubmit = async (data: ContactFormValues) => {
     try {
       await postNewInquiry(data);
+      analytics.contactFormSuccess(data.eventType)
       toast.success(t("form.success"), {
         description: t("form.successDescription"),
         position: "top-right",
       });
       form.reset();
     } catch {
+      analytics.contactFormError()
       toast.error(t("form.error"), {
         description: t("form.errorDescription"),
         position: "top-right",

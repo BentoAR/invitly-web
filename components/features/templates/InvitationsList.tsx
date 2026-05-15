@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { ErrorState } from "@/components/shared/states/ErrorState";
 import { EmptyState } from "@/components/shared/states/EmptyState";
 import { openWhatsApp } from "@/utils/openWhatsapp";
+import { analytics } from "@/utils/analytics";
 import { Play, ArrowRight } from "lucide-react";
 import { useLayoutEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
@@ -212,6 +213,7 @@ export function InvitationsList() {
                   href={`https://inv.bento.com.ar/demo/${invitation.name}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => analytics.templateDemoClick(invitation.name, invitation.category?.display_name)}
                 >
                   <Button variant="secondary" size="sm">
                     {t("viewDemo")}
@@ -220,9 +222,10 @@ export function InvitationsList() {
                 <Button
                   variant="default"
                   size="sm"
-                  onClick={() =>
+                  onClick={() => {
+                    analytics.templateGetClick(invitation.name, invitation.category?.display_name)
                     openWhatsApp(t("getMessage", { name: invitation.display_name }))
-                  }
+                  }}
                 >
                   {t("get")}
                 </Button>
@@ -311,6 +314,7 @@ export function InvitationsList() {
                   href={`https://inv.bento.com.ar/demo/${invitation.name}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => analytics.templateDemoClick(invitation.name, invitation.category?.display_name)}
                   className="flex-1 flex items-center justify-center gap-1 rounded-full border border-white/40 bg-black/30 backdrop-blur-sm py-1.5 text-white/90 font-medium"
                   style={{ fontSize: "0.6rem", letterSpacing: "0.02em" }}
                 >
@@ -318,7 +322,10 @@ export function InvitationsList() {
                   {t("viewDemo")}
                 </a>
                 <button
-                  onClick={() => openWhatsApp(t("getMessage", { name: invitation.display_name }))}
+                  onClick={() => {
+                    analytics.templateGetClick(invitation.name, invitation.category?.display_name)
+                    openWhatsApp(t("getMessage", { name: invitation.display_name }))
+                  }}
                   className="flex-1 flex items-center justify-center gap-1 rounded-full bg-white py-1.5 text-neutral-900 font-semibold"
                   style={{ fontSize: "0.6rem", letterSpacing: "0.02em" }}
                 >

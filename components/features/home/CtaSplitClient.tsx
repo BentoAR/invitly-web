@@ -7,6 +7,7 @@ import { Container } from "@/components/shared/Container";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
+import { analytics } from "@/utils/analytics";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,7 +98,7 @@ export default function CtaSplitClient({ right }: CtaSplitClientProps) {
               {right.title}
             </h3>
             <p className="text-sm text-muted-foreground mb-2">{right.description}</p>
-            <Link href={WA_URL} target="_blank" rel="noopener noreferrer" className="w-full">
+            <Link href={WA_URL} target="_blank" rel="noopener noreferrer" className="w-full" onClick={() => analytics.ctaWhatsappClick()}>
               <Button size="lg" className="w-full group relative overflow-hidden">
                 <Mail className="mr-2 h-4 w-4" />
                 {right.cta}

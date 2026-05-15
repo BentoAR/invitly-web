@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { analytics } from "@/utils/analytics";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -343,6 +344,7 @@ export default function PricingClient({
                 href={getCtaHref(plan.name)}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => analytics.planCtaClick(plan.name)}
               >
                 <Button className="w-full" variant={plan.featured ? "default" : "outline"}>
                   {plan.cta}

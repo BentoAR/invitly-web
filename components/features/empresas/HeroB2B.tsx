@@ -1,9 +1,8 @@
 import { getTranslations } from "next-intl/server";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/shared/Container";
-
-const APP_URL = "https://app.bento.com.ar";
+import { HeroB2BCta } from "@/components/features/empresas/HeroB2BCta";
 
 export default async function HeroB2B() {
   const t = await getTranslations("HeroB2B");
@@ -61,12 +60,7 @@ export default async function HeroB2B() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <a href={`${APP_URL}/contact`} target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="w-full sm:w-auto font-semibold">
-                  {t("ctaPrimary")}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </a>
+              <HeroB2BCta label={t("ctaPrimary")} />
               <a href="#como-funciona">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto font-semibold">
                   {t("ctaSecondary")}
