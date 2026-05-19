@@ -36,7 +36,7 @@ export default async function Hero() {
         />
 
         <Container className="relative z-10">
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:items-center min-h-[600px]">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:items-center" style={{ minHeight: "min(600px, 80vh)" }}>
             {/* Phones: first on mobile (top), second column on desktop (right) */}
             <div aria-hidden="true" className="lg:order-2">
               <div className="lg:hidden relative h-[380px]">
@@ -73,7 +73,8 @@ export default async function Hero() {
             >
               <h1
                 data-hero="title"
-                className="font-display text-5xl sm:text-6xl lg:text-7xl font-normal mb-6 leading-tight"
+                className="font-display font-normal mb-4 leading-tight"
+                style={{ fontSize: "clamp(3rem, 7.5vh, 4.5rem)" }}
               >
                 <HeroTypewriter words={words} />{" "}
                 {t("title")}
@@ -81,7 +82,8 @@ export default async function Hero() {
 
               <p
                 data-hero="subtitle"
-                className="text-base lg:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0"
+                className="text-muted-foreground mb-5 max-w-xl mx-auto lg:mx-0"
+                style={{ fontSize: "clamp(0.9rem, 2vh, 1.25rem)" }}
               >
                 {t("subtitle")}
               </p>
@@ -121,10 +123,10 @@ export default async function Hero() {
                 {t("trust")}
               </p>
 
-              <div className="mt-10 grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
+              <div className="mt-6 grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
                 {stats.map((stat, index) => (
                   <div key={index}>
-                    <div className="font-display text-3xl font-bold text-primary">
+                    <div className="font-display font-bold text-primary" style={{ fontSize: "clamp(1.1rem, 3vh, 1.875rem)" }}>
                       {stat.value}
                     </div>
                     <div className="text-sm text-muted-foreground">

@@ -201,6 +201,7 @@ export default function HowItWorksClient({
   const typingDotRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const chatStageRef = useRef<HTMLDivElement>(null);
   const dashboardStageRef = useRef<HTMLDivElement>(null);
+  const step3ContentRef = useRef<HTMLDivElement>(null);
   const rsvpBadgeRef = useRef<HTMLDivElement>(null);
   const dashboardCardRef = useRef<HTMLDivElement>(null);
   const confirmedCountRef = useRef<HTMLSpanElement>(null);
@@ -258,6 +259,10 @@ export default function HowItWorksClient({
         }
         gsap.set(confirmedCountRef.current, { y: "0%" });
         gsap.set(confirmedNextRef.current, { y: "100%" });
+
+        // Scale del paso 3 para viewports cortos (< 840px de alto)
+        const step3Scale = Math.min(1, window.innerHeight / 840);
+        gsap.set(step3ContentRef.current, { scale: step3Scale, transformOrigin: "center center" });
 
         // Estado inicial del chat: todos los mensajes esperan arriba del input.
         chatMessageRefs.current.forEach((el, i) => {
@@ -931,23 +936,24 @@ export default function HowItWorksClient({
               style={{ backgroundColor: "#DADAC9" }}
             >
               {si === 1 && demoVideoUrl && (
-                <div className="relative w-full max-w-xs mx-auto">
-                  <div className="relative w-full overflow-hidden" style={{ borderRadius: 20, boxShadow: "0 12px 40px rgba(0,0,0,0.2)" }}>
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-auto"
-                      style={{ display: "block" }}
-                    >
-                      <source src={demoVideoUrl} type="video/mp4" />
-                    </video>
-                  </div>
+                <div
+                  className="relative mx-auto overflow-hidden"
+                  style={{ maxWidth: "320px", maxHeight: "72vh", borderRadius: 20, boxShadow: "0 12px 40px rgba(0,0,0,0.2)" }}
+                >
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-auto"
+                    style={{ display: "block" }}
+                  >
+                    <source src={demoVideoUrl} type="video/mp4" />
+                  </video>
                 </div>
               )}
               {si === 2 && (
-                <div className="flex items-center justify-center relative px-12">
+                <div ref={step3ContentRef} className="flex items-center justify-center relative px-12">
                   {/* Lottie central - midground z-index */}
                   <div ref={lottieContainerRef} className="w-full max-w-[480px] relative" style={{ zIndex: 5 }}>
                     <Lottie animationData={messageAnimation} loop autoplay />

@@ -288,7 +288,7 @@ export default function PricingClient({
       </div>
 
       <div className="relative max-w-6xl mx-auto px-6 lg:px-16 z-10 w-full">
-        <div ref={headerRef} className="text-center mb-16">
+        <div ref={headerRef} className="text-center mb-8">
           <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#9B5A00" }}>
             {badge}
           </p>
@@ -305,7 +305,7 @@ export default function PricingClient({
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative flex flex-col rounded-2xl border p-7 ${
+              className={`relative flex flex-col rounded-2xl border p-5 ${
                 plan.featured
                   ? "border-primary shadow-lg bg-background"
                   : "border-border/60 bg-background/50"
@@ -318,15 +318,15 @@ export default function PricingClient({
                   </span>
                 </div>
               )}
-              <div className="mb-6">
+              <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-1">{plan.name}</h3>
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-3xl font-bold font-display">{plan.price}</span>
+                  <span className="text-2xl font-bold font-display">{plan.price}</span>
                   <span className="text-sm text-muted-foreground">{plan.priceNote}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">{plan.description}</p>
               </div>
-              <ul className="flex flex-col gap-3 mb-8 flex-1">
+              <ul className="flex flex-col gap-2 mb-6 flex-1">
                 {plan.features.map((f) => (
                   <li key={f.label} className="flex items-center gap-2 text-sm">
                     {f.included ? (
@@ -354,7 +354,7 @@ export default function PricingClient({
           ))}
         </div>
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-muted-foreground text-center">
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-muted-foreground text-center">
           <span>{footer.line1}</span>
           <span className="hidden sm:block">·</span>
           <span>{footer.line2}</span>

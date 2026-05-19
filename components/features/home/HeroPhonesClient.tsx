@@ -181,7 +181,7 @@ export default function HeroPhonesClient({
       aria-hidden="true"
     >
       <div className="absolute right-0 top-0 w-1/2 h-full flex items-center">
-        <div className="relative w-[85%] mx-auto h-[680px]">
+        <div className="relative w-[85%] mx-auto" style={{ height: "min(680px, 82vh)", transform: "scale(min(1, calc(100vh / 820px)))", transformOrigin: "center center" }}>
           {/* Teléfono costado — derecha, rotado hacia afuera, detrás */}
           <div
             ref={bottomRef}

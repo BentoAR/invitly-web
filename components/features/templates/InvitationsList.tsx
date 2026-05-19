@@ -152,8 +152,8 @@ export function InvitationsList() {
               key={invitation.id}
               className="carousel-card group relative shrink-0 overflow-hidden rounded-2xl cursor-pointer"
               style={{
-                width: "clamp(340px, 42vw, 560px)",
-                height: "clamp(500px, 82vh, 720px)",
+                width: "clamp(300px, 36vw, 500px)",
+                height: "clamp(460px, 60vh, 720px)",
                 boxShadow: "0 20px 60px rgba(32,0,65,0.18)",
               }}
             >
@@ -237,8 +237,8 @@ export function InvitationsList() {
           <div
             className="carousel-card shrink-0 rounded-2xl flex flex-col items-center justify-center gap-6"
             style={{
-              width: "clamp(340px, 42vw, 560px)",
-              height: "clamp(500px, 82vh, 720px)",
+              width: "clamp(300px, 36vw, 500px)",
+              height: "clamp(460px, 60vh, 720px)",
               backgroundColor: "#ffffff",
               boxShadow: "0 20px 60px rgba(32,0,65,0.18)",
             }}
