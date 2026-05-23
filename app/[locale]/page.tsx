@@ -2,7 +2,6 @@ import { Suspense, lazy } from "react";
 import type { Metadata } from "next";
 import Hero from "@/components/features/home/Hero";
 
-// SocialProofBanner usa GSAP — lazy para sacar GSAP del bundle principal
 const SocialProofBanner = lazy(() => import("@/components/features/home/SocialProofBanner"));
 import StructuredData from "@/components/shared/StructuredData";
 import { generatePageMetadata } from "@/src/utils/metadata";
@@ -18,21 +17,15 @@ const HowItWorksSection = lazy(() => import("@/components/features/home/HowItWor
 const TemplatesSection = lazy(() => import("@/components/features/home/TemplatesSection"));
 const Features = lazy(() => import("@/components/features/home/Features"));
 const Testimonials = lazy(() => import("@/components/features/home/Testimonials"));
-const Pricing = lazy(() => import("@/components/features/home/Pricing"));
-// const B2BAwarenessBanner = lazy(() => import("@/components/features/home/B2BAwarenessBanner"));
 const FAQ = lazy(() => import("@/components/features/home/FAQ"));
-const CtaSplit = lazy(() => import("@/components/features/home/CtaSplit"));
-const SEOContent = lazy(() => import("@/components/features/home/SEOContent"));
 
 import { FeaturesSkeleton } from "@/components/shared/skeletons/FeaturesSkeleton";
 import {
   HowItWorksSkeleton,
   TemplatesSectionSkeleton,
   TestimonialsSkeleton,
-  PricingSkeleton,
   BannerSkeleton,
   FAQSkeleton,
-  CtaSkeleton,
 } from "@/components/shared/skeletons/HomeSectionSkeletons";
 
 export const revalidate = 3600;
@@ -73,7 +66,6 @@ export async function generateMetadata({
           "online rsvp",
         ];
 
-  // Para la home, retornamos metadata simple sin template
   const baseMetadata = generatePageMetadata({
     title: "",
     description,
@@ -95,7 +87,6 @@ export default async function Home({
 }) {
   const { locale } = await params;
 
-  // Generate structured data for SEO and AI discoverability
   const structuredData = [
     getOrganizationSchema(locale),
     getWebSiteSchema(locale),
@@ -116,9 +107,7 @@ export default async function Home({
       <Suspense fallback={<TemplatesSectionSkeleton />}>
         <TemplatesSection />
       </Suspense>
-      {/* Wrapper con fondo continuo para Features + Testimonials */}
       <div className="relative" style={{ backgroundColor: "#fff8f0" }}>
-        {/* Nubes naranjas difuminadas sobre fondo claro */}
         <div
           className="absolute inset-0 z-0 pointer-events-none"
           style={{
@@ -159,18 +148,8 @@ export default async function Home({
           <Testimonials />
         </Suspense>
       </div>
-      <Suspense fallback={<PricingSkeleton />}>
-        <Pricing />
-      </Suspense>
-
       <Suspense fallback={<FAQSkeleton />}>
         <FAQ />
-      </Suspense>
-      <Suspense fallback={<CtaSkeleton />}>
-        <CtaSplit />
-      </Suspense>
-      <Suspense fallback={null}>
-        <SEOContent />
       </Suspense>
     </div>
   );
