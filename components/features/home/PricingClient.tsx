@@ -2,13 +2,10 @@
 
 import { useLayoutEffect, useRef, useMemo } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { analytics } from "@/utils/analytics";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const APP_URL = "https://app.bento.com.ar";
 
@@ -68,95 +65,19 @@ export default function PricingClient({
   );
 
   useLayoutEffect(() => {
-    if (window.innerWidth < 1024) {
-      if (headerRef.current) gsap.set(headerRef.current, { opacity: 1, filter: "blur(0px)" });
-      if (cardsGridRef.current) gsap.set(cardsGridRef.current, { scale: 1 });
-      return;
-    }
-
-    const section = sectionRef.current;
-    const leftOverlay = leftOverlayRef.current;
-    const rightOverlay = rightOverlayRef.current;
-    const cardsGrid = cardsGridRef.current;
-    const leftText = leftTextRef.current;
-    const rightText = rightTextRef.current;
-    const header = headerRef.current;
-
-    if (!section || !leftOverlay || !rightOverlay || !cardsGrid || !leftText || !rightText || !header) return;
-
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-      // Estado inicial: paredes anchas + cards pequeñas + textos visibles + header oculto
-      gsap.set([leftOverlay, rightOverlay], {
-        width: "42%",
-      });
-
-      gsap.set(cardsGrid, {
-        scale: 0.75,
-      });
-
-      gsap.set([leftText, rightText], {
-        opacity: 1,
-      });
-
-      gsap.set(header, {
-        opacity: 0,
-        filter: "blur(10px)",
-      });
-
-      // Timeline con pin y scrub
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=150%",
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-          refreshPriority: -200,
-          id: "pricing-reveal",
-        },
-      });
-
-      // Animaciones:
-      // 1. Textos laterales fade out (se mueven con las paredes)
-      tl.to([leftText, rightText], {
-        opacity: 0,
-        ease: "none",
-        duration: 0.35,
-      }, 0)
-      // 2. Header entra (fade in + unblur) - empieza temprano
-      .to(header, {
-        opacity: 1,
-        filter: "blur(0px)",
-        ease: "none",
-        duration: 0.45,
-      }, 0.15) // Empieza más temprano
-      // 3. Paredes se abren
-      .to([leftOverlay, rightOverlay], {
-        width: "0%",
-        ease: "none",
-      }, 0)
-      // 4. Cards crecen
-      .to(cardsGrid, {
-        scale: 1,
-        ease: "none",
-      }, 0)
-      // Hold
-      .to({}, { duration: 0.3 });
-
-    }, section);
-
-    return () => {
-      ctx.revert();
-    };
+    if (headerRef.current) gsap.set(headerRef.current, { opacity: 1, filter: "blur(0px)" });
+    if (cardsGridRef.current) gsap.set(cardsGridRef.current, { scale: 1 });
+    if (leftOverlayRef.current) gsap.set(leftOverlayRef.current, { width: "0%" });
+    if (rightOverlayRef.current) gsap.set(rightOverlayRef.current, { width: "0%" });
+    if (leftTextRef.current) gsap.set(leftTextRef.current, { opacity: 0 });
+    if (rightTextRef.current) gsap.set(rightTextRef.current, { opacity: 0 });
   }, []);
 
   return (
     <section
       ref={sectionRef}
       id="precios"
-      className="relative lg:h-screen flex items-center bg-background overflow-hidden py-12 lg:py-0"
+      className="relative flex items-center bg-background overflow-hidden py-16 lg:py-24"
     >
       {/* Fade top/bottom — mobile only */}
       <div
@@ -288,18 +209,7 @@ export default function PricingClient({
       </div>
 
       <div className="relative max-w-6xl mx-auto px-6 lg:px-16 z-10 w-full">
-        <div ref={headerRef} className="text-center mb-8">
-          <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#9B5A00" }}>
-            {badge}
-          </p>
-          <h2
-            className="font-display font-normal leading-[1.08] mb-4"
-            style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#200041", letterSpacing: "-0.03em" }}
-          >
-            {title}
-          </h2>
-          <p className="text-muted-foreground max-w-md mx-auto">{subtitle}</p>
-        </div>
+        <div ref={headerRef} />
 
         <div ref={cardsGridRef} className="grid md:grid-cols-3 gap-6 items-start">
           {plans.map((plan) => (
