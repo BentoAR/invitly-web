@@ -1,6 +1,6 @@
 import { Container } from "@/components/shared/Container";
 import { TemplatesHeader } from "@/components/features/templates/TemplatesHeader";
-import { InvitationsList } from "@/components/features/templates/InvitationsList";
+import { TemplatesGrid } from "@/components/features/templates/TemplatesGrid";
 import { CategorySelect } from "@/components/features/templates/CategorySelect";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
@@ -90,7 +90,7 @@ export default async function Templates({
           <CategorySelect />
         </Suspense>
         <Suspense fallback={<div className="mt-8 h-96 bg-muted/50 rounded-lg animate-pulse" />}>
-          <InvitationsList />
+          <TemplatesGrid />
         </Suspense>
       </Container>
     </section>
