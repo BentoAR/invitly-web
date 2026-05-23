@@ -1,9 +1,10 @@
 type TemplatesHeaderProps = {
   title: string;
   description: string;
+  eyebrow?: string;
 };
 
-export function TemplatesHeader({ title, description }: TemplatesHeaderProps) {
+export function TemplatesHeader({ title, description, eyebrow = "Catálogo · 2025" }: TemplatesHeaderProps) {
   return (
     <div className="mb-12 md:mb-16">
       <p
@@ -14,7 +15,7 @@ export function TemplatesHeader({ title, description }: TemplatesHeaderProps) {
           color: "#bc8129",
         }}
       >
-        Catálogo · 2025
+        {eyebrow}
       </p>
       <h2
         className="font-display font-normal leading-[1.1]"
