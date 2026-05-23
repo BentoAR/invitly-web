@@ -14,13 +14,19 @@ import { Play, ArrowRight } from "lucide-react";
 import { useLayoutEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function InvitationsList() {
   const t = useTranslations("Templates");
+  const locale = useLocale();
   const selectedCategories = useCategoriesStore((s) => s.selectedCategories);
   const { data: invitations = [], isLoading, error, refetch } = useTemplates(selectedCategories);
+
+  const desktopList = invitations.slice(0, 6);
+  const mobileList = invitations.slice(0, 5);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
@@ -147,7 +153,7 @@ export function InvitationsList() {
           className="absolute top-0 left-0 h-full flex items-center gap-10"
           style={{ paddingLeft: "12vw", paddingRight: "20vw", willChange: "transform" }}
         >
-          {invitations.slice(0, 6).map((invitation: Template, index: number) => (
+          {desktopList.map((invitation: Template, index: number) => (
             <div
               key={invitation.id}
               className="carousel-card group relative shrink-0 overflow-hidden rounded-2xl cursor-pointer"
@@ -233,47 +239,54 @@ export function InvitationsList() {
             </div>
           ))}
 
-          {/* Card CTA — Explorar más */}
-          <div
-            className="carousel-card shrink-0 rounded-2xl flex flex-col items-center justify-center gap-6"
-            style={{
-              width: "clamp(300px, 36vw, 500px)",
-              height: "clamp(460px, 60vh, 720px)",
-              backgroundColor: "#ffffff",
-              boxShadow: "0 20px 60px rgba(32,0,65,0.18)",
-            }}
-          >
-            <p
-              className="font-mono uppercase text-center"
-              style={{ fontSize: "0.6rem", letterSpacing: "0.3em", color: "rgba(32,0,65,0.35)" }}
-            >
-              MÁS PLANTILLAS
-            </p>
-            <h3
-              className="font-display font-normal text-center leading-tight"
+          {/* Card CTA — Ver todas */}
+          <Link
+              href={`/${locale}/templates`}
+              className="carousel-card shrink-0 rounded-2xl flex flex-col items-center justify-center gap-6 group"
               style={{
-                fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)",
-                letterSpacing: "-0.02em",
-                color: "#200041",
+                width: "clamp(300px, 36vw, 500px)",
+                height: "clamp(460px, 60vh, 720px)",
+                backgroundColor: "#ffffff",
+                boxShadow: "0 20px 60px rgba(32,0,65,0.18)",
+                textDecoration: "none",
               }}
             >
-              Estamos trabajando
-              <br />
-              en <em style={{ color: "#bc8129" }}>nuevas plantillas</em>
-            </h3>
-            <p
-              className="text-center mt-2 text-sm"
-              style={{ color: "rgba(32,0,65,0.6)" }}
-            >
-              Pronto tendrás más opciones
-            </p>
-          </div>
+              <p
+                className="font-mono uppercase text-center"
+                style={{ fontSize: "0.6rem", letterSpacing: "0.3em", color: "#FFA459" }}
+              >
+                +15 plantillas disponibles
+              </p>
+              <h3
+                className="font-display font-normal text-center leading-tight"
+                style={{
+                  fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)",
+                  letterSpacing: "-0.02em",
+                  color: "#200041",
+                }}
+              >
+                ¿Querés ver
+                <br />
+                <em style={{ color: "#FFA459" }}>todas las plantillas?</em>
+              </h3>
+              <div
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 group-hover:gap-4"
+                style={{
+                  backgroundColor: "#FFA459",
+                  color: "#ffffff",
+                  fontSize: "0.85rem",
+                }}
+              >
+                Ver catálogo completo
+                <ArrowRight size={16} strokeWidth={2.5} />
+              </div>
+            </Link>
         </div>
       </div>
 
       {/* Mobile: grid 2 columnas */}
       <div className="md:hidden grid grid-cols-2 gap-3 mt-4 px-4 pb-16">
-        {invitations.slice(0, 5).map((invitation: Template) => (
+        {mobileList.map((invitation: Template) => (
           <div
             key={invitation.id}
             className="group relative overflow-hidden rounded-xl cursor-pointer"
@@ -338,35 +351,38 @@ export function InvitationsList() {
         ))}
 
         {/* Card CTA mobile */}
-        <div
-          className="relative overflow-hidden rounded-xl flex flex-col items-center justify-center gap-3"
-          style={{
-            aspectRatio: "3/4",
-            backgroundColor: "#ffffff",
-            boxShadow: "0 8px 24px rgba(32,0,65,0.14)",
-          }}
-        >
-          <p
-            className="font-mono uppercase text-center px-4"
-            style={{ fontSize: "0.5rem", letterSpacing: "0.2em", color: "rgba(32,0,65,0.35)" }}
+        <Link
+            href={`/${locale}/templates`}
+            className="relative overflow-hidden rounded-xl flex flex-col items-center justify-center gap-3"
+            style={{
+              aspectRatio: "3/4",
+              backgroundColor: "#ffffff",
+              boxShadow: "0 8px 24px rgba(32,0,65,0.14)",
+              textDecoration: "none",
+            }}
           >
-            MÁS PLANTILLAS
-          </p>
-          <h3
-            className="font-display font-normal text-center leading-tight px-4"
-            style={{ fontSize: "1.1rem", letterSpacing: "-0.02em", color: "#200041" }}
-          >
-            Estamos trabajando
-            <br />
-            en <em style={{ color: "#bc8129" }}>nuevas plantillas</em>
-          </h3>
-          <p
-            className="text-center mt-1 text-xs px-4"
-            style={{ color: "rgba(32,0,65,0.6)" }}
-          >
-            Pronto más opciones
-          </p>
-        </div>
+            <p
+              className="font-mono uppercase text-center px-4"
+              style={{ fontSize: "0.5rem", letterSpacing: "0.2em", color: "#FFA459" }}
+            >
+              +15 plantillas
+            </p>
+            <h3
+              className="font-display font-normal text-center leading-tight px-4"
+              style={{ fontSize: "1.1rem", letterSpacing: "-0.02em", color: "#200041" }}
+            >
+              ¿Querés ver
+              <br />
+              <em style={{ color: "#FFA459" }}>todas?</em>
+            </h3>
+            <div
+              className="flex items-center gap-1.5 px-4 py-2 rounded-full font-medium mt-1"
+              style={{ backgroundColor: "#FFA459", color: "#fff", fontSize: "0.6rem" }}
+            >
+              Ver catálogo
+              <ArrowRight size={10} strokeWidth={2.5} />
+            </div>
+          </Link>
       </div>
     </>
   );
