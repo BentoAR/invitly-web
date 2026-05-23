@@ -1,7 +1,8 @@
 import { Container } from "@/components/shared/Container";
-import ContactTitle from "@/components/features/contact/ContactTitle";
+import { TemplatesHeader } from "@/components/features/templates/TemplatesHeader";
 import ContactInfo from "@/components/features/contact/ContactInfo";
 import ContactForm from "@/components/features/contact/ContactForm";
+import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { generatePageMetadata } from "@/src/utils/metadata";
 import StructuredData from "@/components/shared/StructuredData";
@@ -54,11 +55,17 @@ export default async function Contact({
 
   const structuredData = [getOrganizationSchema(locale), breadcrumbSchema];
 
+  const t = await getTranslations({ locale, namespace: "Contact" });
+
   return (
     <section className="py-20 bg-secondary/20" role="main">
       <StructuredData data={structuredData} />
       <Container>
-        <ContactTitle />
+        <TemplatesHeader
+          eyebrow={locale === "es" ? "Contacto · Bento" : "Contact · Bento"}
+          title={t("title")}
+          description={t("subtitle")}
+        />
         <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
           <ContactInfo />
           <ContactForm />
