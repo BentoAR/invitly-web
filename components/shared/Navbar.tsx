@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -14,13 +14,16 @@ const APP_URL = "https://app.bento.com.ar";
 
 export const Navbar = () => {
   const t = useTranslations("Navbar");
+  const locale = useLocale();
   const pathname = usePathname();
 
+  const isHome = pathname === `/${locale}` || pathname === "/";
+
   const navLinks = [
-    { name: t("inicio"), id: "inicio", href: "#inicio" },
-    { name: t("invitaciones"), id: "invitaciones", href: "#invitaciones" },
-    { name: t("precios"), id: "precios", href: "#precios" },
-    { name: t("contacto"), id: "contacto", href: "#contacto" },
+    { name: t("inicio"), id: "inicio", href: `/${locale}` },
+    { name: t("invitaciones"), id: "templates", href: `/${locale}/templates` },
+    { name: t("precios"), id: "pricing", href: `/${locale}/pricing` },
+    { name: t("contacto"), id: "contact", href: `/${locale}/contact` },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +31,6 @@ export const Navbar = () => {
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
-    // Scroll listener nativo: evita importar framer-motion en el critical path
     const handleScroll = () => {
       const y = window.scrollY;
       setHasScrolled(y > 50);
@@ -48,7 +50,7 @@ export const Navbar = () => {
     >
       <Container>
         <div className="flex h-16 items-center justify-between">
-          <a href="#inicio" className="flex items-center gap-2 group">
+          <a href={`/${locale}`} className="flex items-center gap-2 group">
             <Image 
               src="https://d14sb9d2krfjkl.cloudfront.net/media/Frame+14+(1).svg"
               alt="Bento Logo"
@@ -61,7 +63,7 @@ export const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
-              const isActive = pathname?.includes(`/${link.id}`) || (link.id === "inicio" && pathname === "/");
+              const isActive = link.id === "inicio" ? isHome : pathname === `/${locale}/${link.id}`;
               return (
                 <a
                   key={link.id}
@@ -103,7 +105,7 @@ export const Navbar = () => {
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <div className="flex flex-col gap-6 mt-8 ml-4">
                   {navLinks.map((link) => {
-                    const isActive = pathname?.includes(`/${link.id}`) || (link.id === "inicio" && pathname === "/");
+                    const isActive = link.id === "inicio" ? isHome : pathname === `/${locale}/${link.id}`;
                     return (
                       <a
                         key={link.id}

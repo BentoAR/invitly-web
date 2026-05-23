@@ -1,16 +1,24 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import Image from "next/image";
 import { Container } from "./Container";
 
 export default async function Footer() {
-  const t = await getTranslations("Footer");
+  const [t, locale] = await Promise.all([getTranslations("Footer"), getLocale()]);
+
+  const links = [
+    { label: t("home"), href: `/${locale}` },
+    { label: t("invitations"), href: `/${locale}/templates` },
+    { label: t("pricing"), href: `/${locale}/pricing` },
+    { label: t("contact"), href: `/${locale}/contact` },
+  ];
+
   return (
     <footer className="border-t bg-secondary/30 mt-20">
       <Container>
         <div className="py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-1 md:col-span-2">
             <a
-              href="#inicio"
+              href={`/${locale}`}
               className="flex items-center mb-4 hover:opacity-80 transition-opacity"
             >
               <Image
@@ -29,21 +37,13 @@ export default async function Footer() {
           <div>
             <h4 className="font-semibold mb-4">{t("navigation")}</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#inicio" className="text-muted-foreground hover:text-primary transition-colors">
-                  {t("home")}
-                </a>
-              </li>
-              <li>
-                <a href="#invitaciones" className="text-muted-foreground hover:text-primary transition-colors">
-                  {t("invitations")}
-                </a>
-              </li>
-              <li>
-                <a href="#precios" className="text-muted-foreground hover:text-primary transition-colors">
-                  {t("pricing")}
-                </a>
-              </li>
+              {links.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href} className="text-muted-foreground hover:text-primary transition-colors">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
