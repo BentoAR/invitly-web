@@ -1,7 +1,7 @@
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/shared/Container";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
 import HeroTypewriter from "@/components/features/home/HeroTypewriter";
@@ -13,7 +13,7 @@ const PHONE_LATERAL_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.
 const DEMO_INVITATION_URL = "https://inv.bento.com.ar/demo/autumn";
 
 export default async function Hero() {
-  const t = await getTranslations("Hero");
+  const [t, locale] = await Promise.all([getTranslations("Hero"), getLocale()]);
   const words = t.raw("words") as string[];
 
   const stats = [
@@ -92,7 +92,7 @@ export default async function Hero() {
                 data-hero="cta"
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
-                <Link href="/pricing">
+                <Link href={`/${locale}/pricing`}>
                   <Button
                     size="lg"
                     className="shadow-elegant group w-full sm:w-auto"
