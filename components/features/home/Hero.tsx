@@ -10,7 +10,7 @@ import HeroPhonesWrapper from "@/components/features/home/HeroPhonesWrapper";
 const PHONE_FRONT_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+costado.png";
 const PHONE_LATERAL_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+lateral.png";
 
-const DEMO_INVITATION_URL = "https://inv.bento.com.ar/demo/sakura";
+const DEMO_INVITATION_URL = "https://inv.bento.com.ar/demo/autumn";
 
 export default async function Hero() {
   const t = await getTranslations("Hero");
@@ -92,7 +92,7 @@ export default async function Hero() {
                 data-hero="cta"
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
-                <a href="#precios">
+                <Link href="/pricing">
                   <Button
                     size="lg"
                     className="shadow-elegant group w-full sm:w-auto"
@@ -101,7 +101,7 @@ export default async function Hero() {
                     {t("button.primary")}
                     <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                   </Button>
-                </a>
+                </Link>
                 <Link
                   href={DEMO_INVITATION_URL}
                   target="_blank"
