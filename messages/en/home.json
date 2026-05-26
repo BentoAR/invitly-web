@@ -137,10 +137,7 @@
           { "label": "Automatic RSVP", "included": true },
           { "label": "Up to 100 guests", "included": true },
           { "label": "Collaborative playlist (up to 30 songs)", "included": true },
-          { "label": "Photo gallery", "included": true },
-          { "label": "Table organization", "included": false },
-          { "label": "Personalized links per guest", "included": false },
-          { "label": "Priority WhatsApp support", "included": false }
+          { "label": "Photo gallery up to 6 photos", "included": true }
         ]
       },
       {
@@ -151,14 +148,13 @@
         "cta": "Inquire",
         "featured": true,
         "features": [
-          { "label": "All of the above +", "included": true },
-          { "label": "Unlimited guests", "included": true },
+          { "label": "All of Digital +", "included": true },
+          { "label": "Up to 150 guests", "included": true },
           { "label": "Unlimited playlist", "included": true },
+          { "label": "Unlimited photo gallery", "included": true },
           { "label": "Table organization", "included": true },
           { "label": "Personalized links per guest", "included": true },
-          { "label": "Export guest list to Excel", "included": true },
-          { "label": "Priority WhatsApp support", "included": true },
-          { "label": "12-24 hour response time", "included": true }
+          { "label": "Priority support", "included": true }
         ]
       },
       {
@@ -169,14 +165,14 @@
         "cta": "Inquire",
         "featured": false,
         "features": [
-          { "label": "All of the above +", "included": true },
+          { "label": "All of Digital and Celebration +", "included": true },
           { "label": "100% custom design", "included": true },
           { "label": "Theme chosen by you", "included": true },
-          { "label": "Video in hero", "included": true },
-          { "label": "Special animations (GSAP, parallax)", "included": true },
-          { "label": "2 rounds of adjustments included", "included": true },
-          { "label": "100% personalized domain", "included": true },
-          { "label": "Real-time chat (< 6 hour response)", "included": true }
+          { "label": "Cover video", "included": true },
+          { "label": "Special animations in the invitation", "included": true },
+          { "label": "Virtual consultation with a planner", "included": true },
+          { "label": "Collaborative post-event album via QR", "included": true },
+          { "label": "Real-time support", "included": true }
         ]
       }
     ],

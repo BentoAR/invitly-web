@@ -137,10 +137,7 @@
           { "label": "RSVP automático", "included": true },
           { "label": "Hasta 100 invitados", "included": true },
           { "label": "Playlist colaborativa (hasta 30 canciones)", "included": true },
-          { "label": "Galería de fotos", "included": true },
-          { "label": "Organización de mesas", "included": false },
-          { "label": "Links personalizados por invitado", "included": false },
-          { "label": "Soporte prioritario por WhatsApp", "included": false }
+          { "label": "Galería de fotos hasta 6 fotos", "included": true }
         ]
       },
       {
@@ -151,14 +148,13 @@
         "cta": "Consultar",
         "featured": true,
         "features": [
-          { "label": "Todo lo anterior +", "included": true },
-          { "label": "Invitados ilimitados", "included": true },
+          { "label": "Todo lo de Digital +", "included": true },
+          { "label": "Hasta 150 invitados", "included": true },
           { "label": "Playlist ilimitada", "included": true },
+          { "label": "Galería de fotos ilimitada", "included": true },
           { "label": "Organización de mesas", "included": true },
           { "label": "Links personalizados por invitado", "included": true },
-          { "label": "Exportar lista a Excel", "included": true },
-          { "label": "Soporte prioritario por WhatsApp", "included": true },
-          { "label": "Respuesta en 12-24 horas", "included": true }
+          { "label": "Soporte prioritario", "included": true }
         ]
       },
       {
@@ -169,14 +165,14 @@
         "cta": "Consultar",
         "featured": false,
         "features": [
-          { "label": "Todo lo anterior +", "included": true },
+          { "label": "Todo lo de Digital y Celebración +", "included": true },
           { "label": "Diseño 100% personalizado", "included": true },
           { "label": "Temática elegida por vos", "included": true },
-          { "label": "Video en el hero", "included": true },
-          { "label": "Animaciones especiales (GSAP, parallax)", "included": true },
-          { "label": "2 rondas de ajustes incluidas", "included": true },
-          { "label": "Dominio 100% personalizado", "included": true },
-          { "label": "Chat en tiempo real (respuesta < 6 horas)", "included": true }
+          { "label": "Video de portada", "included": true },
+          { "label": "Animaciones especiales en la invitación", "included": true },
+          { "label": "Asesoramiento virtual con una planner", "included": true },
+          { "label": "Álbum colaborativo post-evento mediante QR", "included": true },
+          { "label": "Soporte en tiempo real", "included": true }
         ]
       }
     ],
