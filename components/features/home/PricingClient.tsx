@@ -55,12 +55,8 @@ export default function PricingClient({
   const rightTextRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  // Memoizar la función para evitar recrearla en cada render
   const getCtaHref = useMemo(
-    () => (planName: string) => {
-      const msg = encodeURIComponent(`Hola! Me interesa el plan ${planName} de Bento 👋`);
-      return `https://wa.me/541162183918?text=${msg}`;
-    },
+    () => (_planName: string) => `${APP_URL}/billing/upgrade?reason=purchase`,
     []
   );
 
@@ -252,8 +248,6 @@ export default function PricingClient({
               </ul>
               <Link
                 href={getCtaHref(plan.name)}
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={() => analytics.planCtaClick(plan.name)}
               >
                 <Button className="w-full" variant={plan.featured ? "default" : "outline"}>
