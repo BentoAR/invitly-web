@@ -130,7 +130,7 @@
         "price": "$30.000",
         "priceNote": "por evento",
         "description": "Para eventos donde lo que importa es compartir y confirmar",
-        "cta": "Consultar",
+        "cta": "Obtener",
         "featured": false,
         "features": [
           { "label": "Invitación digital personalizable", "included": true },
@@ -145,7 +145,7 @@
         "price": "$60.000",
         "priceNote": "por evento",
         "description": "Para eventos que se merecen organización profesional",
-        "cta": "Consultar",
+        "cta": "Empezar ahora",
         "featured": true,
         "features": [
           { "label": "Todo lo de Digital +", "included": true },
@@ -162,7 +162,7 @@
         "price": "$120.000",
         "priceNote": "por evento",
         "description": "Tu evento merece una identidad visual única",
-        "cta": "Consultar",
+        "cta": "Obtener",
         "featured": false,
         "features": [
           { "label": "Todo lo de Digital y Celebración +", "included": true },
