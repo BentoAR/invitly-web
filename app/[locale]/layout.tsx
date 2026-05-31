@@ -3,6 +3,7 @@ import { SmoothScroll } from "@/components/shared/SmoothScroll";
 import "./globals.css";
 import { Navbar } from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import { WhatsAppButton } from "@/components/shared/whatsappButton";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -136,6 +137,7 @@ export default async function RootLayout({
               <main>{children}</main>
             </SmoothScroll>
             <Footer />
+            <WhatsAppButton />
           </ReactQueryProvider>
         </NextIntlClientProvider>
       </body>
