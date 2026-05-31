@@ -24,10 +24,10 @@ export default function ContactInfo() {
               <p className="font-medium">{t("phone")}</p>
               <p className="text-sm text-muted-foreground">
                 <a
-                  href="tel:+5491112345678"
-                  aria-label={t("phone") + " +54 9 11 1234-5678"}
+                  href="tel:+541157572713"
+                  aria-label={t("phone") + " +54 11 5757-2713"}
                 >
-                  +54 9 11 1234-5678
+                  +54 11 5757-2713
                 </a>
               </p>
             </div>
