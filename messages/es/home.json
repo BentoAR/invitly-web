@@ -170,7 +170,6 @@
           { "label": "Temática elegida por vos", "included": true },
           { "label": "Video de portada", "included": true },
           { "label": "Animaciones especiales en la invitación", "included": true },
-          { "label": "Asesoramiento virtual con una planner", "included": true },
           { "label": "Álbum colaborativo post-evento mediante QR", "included": true },
           { "label": "Soporte en tiempo real", "included": true }
         ]

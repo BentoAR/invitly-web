@@ -170,7 +170,6 @@
           { "label": "Theme chosen by you", "included": true },
           { "label": "Cover video", "included": true },
           { "label": "Special animations in the invitation", "included": true },
-          { "label": "Virtual consultation with a planner", "included": true },
           { "label": "Collaborative post-event album via QR", "included": true },
           { "label": "Real-time support", "included": true }
         ]
