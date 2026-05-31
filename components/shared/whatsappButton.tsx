@@ -11,7 +11,7 @@ interface WhatsAppButtonProps {
 }
 
 export const WhatsAppButton = ({
-  message = "Hola! 👋 Me das una mano para hacer mi invitacion digital?",
+  message = "Hola! quiero ser parte de la experiencia Bento",
   className = "",
 }: WhatsAppButtonProps) => {
   const t = useTranslations("WhatsappHelp");
