@@ -177,7 +177,6 @@ export function InvitationsList() {
                     className="object-cover"
                     sizes="(max-width: 1200px) 40vw, 30vw"
                     unoptimized
-                    crossOrigin="anonymous"
                   />
                 )}
               </div>
@@ -304,7 +303,6 @@ export function InvitationsList() {
                 className="object-cover"
                 sizes="50vw"
                 unoptimized
-                crossOrigin="anonymous"
               />
             )}
             <div

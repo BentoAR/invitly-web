@@ -64,9 +64,9 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
           </span>
         </div>
 
-        {/* Hover overlay with CTAs */}
+        {/* Desktop: hover overlay with CTAs */}
         <div
-          className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute inset-0 hidden md:flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           style={{ backdropFilter: "blur(2px)", background: "rgba(255,164,89,0.2)" }}
         >
           <a
@@ -92,10 +92,47 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
             <ArrowRight size={11} strokeWidth={2.5} />
           </Button>
         </div>
+
+        {/* Mobile: always-visible gradient + CTAs */}
+        <div className="md:hidden absolute inset-0 pointer-events-none"
+          style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)" }}
+        />
+        <div className="md:hidden absolute bottom-0 left-0 right-0 p-3 z-10">
+          <h3
+            className="font-display font-normal text-white leading-tight mb-2"
+            style={{ fontSize: "0.95rem", letterSpacing: "-0.01em" }}
+          >
+            {template.display_name}
+          </h3>
+          <div className="flex gap-1.5">
+            <a
+              href={`https://inv.bento.com.ar/demo/${template.name}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => analytics.templateDemoClick(template.name, template.category?.display_name)}
+              className="flex-1 flex items-center justify-center gap-1 rounded-full border border-white/40 bg-black/30 backdrop-blur-sm py-1.5 text-white/90 font-medium"
+              style={{ fontSize: "0.6rem", letterSpacing: "0.02em" }}
+            >
+              <Play size={9} fill="currentColor" />
+              {t("viewDemo")}
+            </a>
+            <button
+              onClick={() => {
+                analytics.templateGetClick(template.name, template.category?.display_name);
+                openWhatsApp(t("getMessage", { name: template.display_name }));
+              }}
+              className="flex-1 flex items-center justify-center gap-1 rounded-full bg-white py-1.5 text-neutral-900 font-semibold"
+              style={{ fontSize: "0.6rem", letterSpacing: "0.02em" }}
+            >
+              {t("get")}
+              <ArrowRight size={9} strokeWidth={2.5} />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Footer */}
-      <div className="p-3 md:p-4">
+      {/* Footer — desktop only */}
+      <div className="hidden md:block p-3 md:p-4">
         <h3
           className="font-display font-normal leading-tight"
           style={{ fontSize: "0.95rem", color: "#200041", letterSpacing: "-0.01em" }}
