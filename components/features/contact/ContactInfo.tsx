@@ -55,13 +55,13 @@ export default function ContactInfo() {
             <div>
               <p className="font-medium">{t("instagram")}</p>
               <a
-                href="https://instagram.com"
+                href="https://instagram.com/bentoinvitaciones"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:underline"
                 aria-label="Instagram Bento (abre en nueva pestaña)"
               >
-                @Bento
+                @bentoinvitaciones
               </a>
             </div>
           </div>
