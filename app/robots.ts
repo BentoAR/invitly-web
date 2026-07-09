@@ -43,6 +43,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/private/", "/api/", "/admin/"],
       },
     ],
-    sitemap: "https://app.bento.com.ar/sitemap.xml",
+    sitemap: "https://bento.com.ar/sitemap.xml",
   };
 }

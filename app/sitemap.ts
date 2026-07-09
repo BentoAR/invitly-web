@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://app.bento.com.ar";
+  const baseUrl = "https://bento.com.ar";
   const locales = ["es", "en"];
 
   const staticPages = [
