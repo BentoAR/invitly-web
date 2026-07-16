@@ -1,4 +1,10 @@
-import { WithContext, Organization, WebSite, FAQPage, Question, Service } from "schema-dts";
+import { WithContext, Organization, WebSite, FAQPage, Question, Service, BreadcrumbList, SoftwareApplication } from "schema-dts";
+
+interface SearchActionWithQueryInput {
+  "@type": "SearchAction";
+  target: { "@type": "EntryPoint"; urlTemplate: string };
+  "query-input": string;
+}
 
 export function getOrganizationSchema(locale: string): WithContext<Organization> {
   return {
@@ -65,7 +71,7 @@ export function getWebSiteSchema(locale: string): WithContext<WebSite> {
         urlTemplate: "https://app.bento.com.ar/{locale}/templates?q={search_term_string}",
       },
       "query-input": "required name=search_term_string",
-    } as any,
+    } as SearchActionWithQueryInput,
   };
 }
 
@@ -170,8 +176,8 @@ export function getServiceSchema(locale: string): WithContext<Service> {
 
 export function getBreadcrumbSchema(
   items: Array<{ name: string; url: string }>,
-  locale: string
-): WithContext<any> {
+  _locale?: string
+): WithContext<BreadcrumbList> {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -184,7 +190,7 @@ export function getBreadcrumbSchema(
   };
 }
 
-export function getEventSchema(locale: string): WithContext<any> {
+export function getEventSchema(locale: string): WithContext<SoftwareApplication> {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
