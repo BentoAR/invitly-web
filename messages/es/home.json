@@ -127,7 +127,7 @@
     "plans": [
       {
         "name": "Digital",
-        "price": "$30.000",
+        "price": "$60.000",
         "priceNote": "por evento",
         "description": "Para eventos donde lo que importa es compartir y confirmar",
         "cta": "Obtener",
@@ -142,7 +142,7 @@
       },
       {
         "name": "Celebración",
-        "price": "$60.000",
+        "price": "$90.000",
         "priceNote": "por evento",
         "description": "Para eventos que se merecen organización profesional",
         "cta": "Empezar ahora",
@@ -159,7 +159,7 @@
       },
       {
         "name": "A Medida",
-        "price": "$120.000",
+        "price": "$160.000",
         "priceNote": "por evento",
         "description": "Tu evento merece una identidad visual única",
         "cta": "Obtener",

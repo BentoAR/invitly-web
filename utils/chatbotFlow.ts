@@ -42,7 +42,7 @@ export const chatbotSteps: Record<string, ChatStep> = {
   pricing: {
     id: "pricing",
     message:
-      "Tenemos un único plan:\n\n💎 Plan Bento\n• Valor: $20.000 (pago único por invitación)\n• Acceso a todas las plantillas premium\n• Entrega de la invitación lista hasta 3 meses antes del evento\n• Soporte prioritario por WhatsApp y email\n• Sin marca de agua\n\n¿Te gustaría saber cómo funciona la entrega o el proceso de compra?",
+      "Tenemos 3 planes por evento:\n\n📱 Digital — $60.000\n• Invitación personalizable + RSVP + hasta 100 invitados\n\n🎉 Celebración — $90.000 (más elegido)\n• Todo lo anterior + mesas + playlist ilimitada + soporte prioritario\n\n✨ A Medida — $160.000\n• Diseño 100% personalizado + animaciones + álbum QR post-evento\n\n¿Te gustaría más info sobre algún plan o querés empezar?",
     options: [
       {
         id: "whatsapp",
