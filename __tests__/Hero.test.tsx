@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Hero from "@/components/features/home/Hero";
 
 jest.mock("next-intl/server", () => ({
+  getLocale: jest.fn(async () => "es"),
   getTranslations: jest.fn(async () => {
     const translations: Record<string, string | string[]> = {
       badge: "Invitaciones únicas y personalizadas",
@@ -49,7 +50,7 @@ describe("Componente Hero", () => {
 
     const primaryButton = screen.getByLabelText(/crear mi invitación/i);
     const link = primaryButton.closest("a");
-    expect(link).toHaveAttribute("href", "#precios");
+    expect(link).toHaveAttribute("href", "/es/pricing");
   });
 
   it("debería tener un botón secundario que abra la demo real", async () => {
@@ -61,7 +62,7 @@ describe("Componente Hero", () => {
 
     expect(link).toHaveAttribute(
       "href",
-      "https://inv.bento.com.ar/evento/4d50d8/lautaroydafne"
+      "https://inv.bento.com.ar/demo/autumn"
     );
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
@@ -71,8 +72,8 @@ describe("Componente Hero", () => {
     const HeroComponent = await Hero();
     render(HeroComponent);
 
-    expect(screen.getByText("500+")).toBeInTheDocument();
-    expect(screen.getByText("10K+")).toBeInTheDocument();
-    expect(screen.getByText("98%")).toBeInTheDocument();
+    expect(screen.getByText("RSVP")).toBeInTheDocument();
+    expect(screen.getByText("∞")).toBeInTheDocument();
+    expect(screen.getByText("<1hs")).toBeInTheDocument();
   });
 });

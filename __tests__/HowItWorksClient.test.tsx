@@ -73,9 +73,9 @@ describe("HowItWorksClient WhatsApp input UI", () => {
       />
     );
 
-    expect(screen.getAllByLabelText("Agregar adjunto")).toHaveLength(2);
-    expect(screen.getAllByLabelText("Insertar emoji")).toHaveLength(2);
-    expect(screen.getAllByLabelText("Grabar audio")).toHaveLength(2);
+    expect(screen.getAllByLabelText("Agregar adjunto")).toHaveLength(1);
+    expect(screen.getAllByLabelText("Insertar emoji")).toHaveLength(1);
+    expect(screen.getAllByLabelText("Grabar audio")).toHaveLength(1);
     expect(screen.queryByText("😊")).not.toBeInTheDocument();
     expect(screen.queryByText("🎤")).not.toBeInTheDocument();
   });
