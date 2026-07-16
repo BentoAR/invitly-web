@@ -1,19 +1,35 @@
+import React from "react";
+
 jest.mock("lottie-react", () => ({ __esModule: true, default: () => null }));
 jest.mock("framer-motion", () => {
-  const React = require("react");
+  interface MotionProps {
+    children?: React.ReactNode;
+    initial?: unknown;
+    whileInView?: unknown;
+    viewport?: unknown;
+    transition?: unknown;
+    variants?: unknown;
+    [key: string]: unknown;
+  }
+
+  const MotionDiv = React.forwardRef<HTMLDivElement, MotionProps>(
+    ({ children, initial: _i, whileInView: _w, viewport: _vp, transition: _t, variants: _v, ...props }, ref) => (
+      <div ref={ref} {...(props as React.HTMLAttributes<HTMLDivElement>)}>{children}</div>
+    )
+  );
+  MotionDiv.displayName = "MotionDiv";
+
+  const MotionLi = React.forwardRef<HTMLLIElement, MotionProps>(
+    ({ children, initial: _i, whileInView: _w, viewport: _vp, transition: _t, variants: _v, ...props }, ref) => (
+      <li ref={ref} {...(props as React.HTMLAttributes<HTMLLIElement>)}>{children}</li>
+    )
+  );
+  MotionLi.displayName = "MotionLi";
 
   return {
     motion: {
-      div: React.forwardRef(({ children, initial, whileInView, viewport, transition, variants, ...props }: any, ref: any) => (
-        <div ref={ref} {...props}>
-          {children}
-        </div>
-      )),
-      li: React.forwardRef(({ children, initial, whileInView, viewport, transition, variants, ...props }: any, ref: any) => (
-        <li ref={ref} {...props}>
-          {children}
-        </li>
-      )),
+      div: MotionDiv,
+      li: MotionLi,
     },
   };
 });

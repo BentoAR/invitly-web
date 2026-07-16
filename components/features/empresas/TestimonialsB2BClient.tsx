@@ -52,7 +52,7 @@ export default function TestimonialsB2BClient() {
 
         {/* Quote */}
         <blockquote className="text-xl md:text-2xl text-foreground leading-relaxed mb-8 font-medium">
-          "{currentTestimonial.quote}"
+          &ldquo;{currentTestimonial.quote}&rdquo;
         </blockquote>
 
         {/* Autor */}

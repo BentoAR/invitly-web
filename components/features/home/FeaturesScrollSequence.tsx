@@ -63,7 +63,7 @@ export default function FeaturesScrollSequence({
   // Memoizar las posiciones iniciales para evitar recalcularlas
   const initialPositions = useMemo(
     () => features.map((_, i) => ({ x: getInitialX(i), y: 400 })),
-    [features.length]
+    [features]
   );
 
   useLayoutEffect(() => {
