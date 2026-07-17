@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import type { Metadata } from "next";
 import Hero from "@/components/features/home/Hero";
+import SEOContent from "@/components/features/home/SEOContent";
 
 const SocialProofBanner = lazy(() => import("@/components/features/home/SocialProofBanner"));
 import StructuredData from "@/components/shared/StructuredData";
@@ -76,7 +77,9 @@ export async function generateMetadata({
 
   return {
     ...baseMetadata,
-    title: "Bento",
+    title: {
+      absolute: "Invitaciones Digitales y Gestión de Eventos | Bento",
+    },
   };
 }
 
@@ -97,6 +100,7 @@ export default async function Home({
   return (
     <div className="min-h-screen">
       <StructuredData data={structuredData} />
+      <SEOContent />
       <Hero />
       <Suspense fallback={<BannerSkeleton />}>
         <SocialProofBanner />

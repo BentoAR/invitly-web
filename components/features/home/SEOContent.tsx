@@ -6,7 +6,7 @@ export default async function SEOContent() {
   const t = await getTranslations("SEO");
 
   return (
-    <article className="sr-only" aria-hidden="true">
+    <article className="sr-only">
       {/*
         This content is hidden from users but visible to search engines and AI crawlers.
         It provides clear, factual information optimized for AI discoverability.

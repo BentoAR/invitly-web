@@ -10,10 +10,10 @@ export function getOrganizationSchema(locale: string): WithContext<Organization>
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://app.bento.com.ar/#organization",
+    "@id": "https://bento.com.ar/#organization",
     name: "Bento",
     legalName: "Bento - Invitaciones Digitales",
-    url: "https://app.bento.com.ar",
+    url: "https://bento.com.ar",
     logo: {
       "@type": "ImageObject",
       url: "https://d14sb9d2krfjkl.cloudfront.net/media/LogoFavicon.svg",
@@ -52,8 +52,8 @@ export function getWebSiteSchema(locale: string): WithContext<WebSite> {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://app.bento.com.ar/#website",
-    url: "https://app.bento.com.ar",
+    "@id": "https://bento.com.ar/#website",
+    url: "https://bento.com.ar",
     name: "Bento",
     description:
       locale === "es"
@@ -62,13 +62,13 @@ export function getWebSiteSchema(locale: string): WithContext<WebSite> {
     inLanguage: locale === "es" ? "es-AR" : "en-US",
     publisher: {
       "@type": "Organization",
-      "@id": "https://app.bento.com.ar/#organization",
+      "@id": "https://bento.com.ar/#organization",
     },
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://app.bento.com.ar/{locale}/templates?q={search_term_string}",
+        urlTemplate: "https://bento.com.ar/{locale}/templates?q={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     } as SearchActionWithQueryInput,
@@ -100,7 +100,7 @@ export function getServiceSchema(locale: string): WithContext<Service> {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    "@id": "https://app.bento.com.ar/#service",
+    "@id": "https://bento.com.ar/#service",
     name: locale === "es" ? "Invitaciones Digitales Bento" : "Bento Digital Invitations",
     description:
       locale === "es"
@@ -108,7 +108,7 @@ export function getServiceSchema(locale: string): WithContext<Service> {
         : "Professional digital invitation creation service for weddings, birthdays, corporate events and celebrations. Includes automatic RSVP, collaborative playlist, real-time photo album and complete guest management.",
     provider: {
       "@type": "Organization",
-      "@id": "https://app.bento.com.ar/#organization",
+      "@id": "https://bento.com.ar/#organization",
     },
     serviceType:
       locale === "es"
