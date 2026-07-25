@@ -1,14 +1,13 @@
 "use client";
 
-import { Check, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Check, ArrowRight, Sparkles, MessageCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { RevealOnScroll, StaggerItem } from "@/components/features/empresas/RevealOnScroll";
 
 const APP_URL = "https://app.bento.com.ar";
 
 interface PricingTier {
   name: string;
-  price: string;
   description: string;
   features: string[];
   cta: string;
@@ -22,7 +21,6 @@ export default function PricingB2BClient() {
   const tiers: PricingTier[] = [
     {
       name: t("basico.name"),
-      price: "$250.000",
       description: t("basico.description"),
       features: t.raw("basico.features") as string[],
       cta: t("basico.cta"),
@@ -30,7 +28,6 @@ export default function PricingB2BClient() {
     },
     {
       name: t("medio.name"),
-      price: "$500.000",
       description: t("medio.description"),
       features: t.raw("medio.features") as string[],
       cta: t("medio.cta"),
@@ -39,7 +36,6 @@ export default function PricingB2BClient() {
     },
     {
       name: t("full.name"),
-      price: "$800.000",
       description: t("full.description"),
       features: t.raw("full.features") as string[],
       cta: t("full.cta"),
@@ -49,65 +45,122 @@ export default function PricingB2BClient() {
 
   return (
     <div className="space-y-12">
-      {/* Grid de tiers */}
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-5">
         {tiers.map((tier, idx) => (
-          <div
-            key={idx}
-            className={`relative rounded-2xl p-8 border-2 transition-all duration-300 hover:-translate-y-2 ${
+          <StaggerItem
+            key={tier.name}
+            index={idx}
+            staggerDelay={0.1}
+            className={`group relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-2 ${
               tier.highlighted
-                ? "border-primary bg-gradient-to-b from-primary/5 to-white shadow-xl shadow-primary/10"
-                : "border-[var(--border-b2b)] bg-white hover:border-primary/50 hover:shadow-lg"
+                ? "border-2 border-[#FFA459] bg-gradient-to-b from-[#FFA459]/10 to-neutral-900 shadow-2xl shadow-[#FFA459]/20"
+                : "border border-neutral-800 bg-neutral-900/60 hover:border-neutral-700 hover:shadow-xl hover:shadow-black/40"
             }`}
           >
-            {/* Badge (si existe) */}
+            {tier.highlighted && (
+              <div
+                className="absolute -inset-px rounded-2xl opacity-60 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,164,89,0.4) 0%, transparent 50%, rgba(124,58,237,0.2) 100%)",
+                }}
+                aria-hidden="true"
+              />
+            )}
+
             {tier.badge && (
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-primary text-white text-sm font-semibold rounded-full whitespace-nowrap shadow-lg">
+              <div
+                className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 text-xs font-semibold rounded-full whitespace-nowrap shadow-lg flex items-center gap-1.5 text-neutral-950 z-10"
+                style={{
+                  background: "linear-gradient(135deg, #FFA459 0%, #FF8A3D 100%)",
+                }}
+              >
+                <Sparkles className="w-3 h-3" strokeWidth={2.5} />
                 {tier.badge}
               </div>
             )}
 
-            {/* Header */}
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-foreground mb-2">{tier.name}</h3>
-              <div className="mb-3">
-                <span className="text-4xl font-bold text-foreground">{tier.price}</span>
-                <span className="text-muted-foreground ml-2">/mes</span>
+            <div className="relative z-10 mb-6">
+              <h3 className="text-base font-semibold text-neutral-400 mb-4 tracking-wide uppercase">
+                {tier.name}
+              </h3>
+              <div className="flex items-center gap-2 mb-2 min-h-[2.25rem]">
+                <MessageCircle
+                  className="w-4 h-4 text-[#FFA459]"
+                  strokeWidth={2}
+                />
+                <span className="text-lg font-semibold text-[#FFA459] tracking-tight">
+                  Plan a medida
+                </span>
               </div>
-              <p className="text-sm text-muted-foreground">{tier.description}</p>
+              <p className="text-sm text-neutral-400">{tier.description}</p>
             </div>
 
-            {/* Features */}
-            <ul className="space-y-3 mb-8">
+            <div
+              className={`relative z-10 h-px mb-6 ${
+                tier.highlighted ? "bg-[#FFA459]/20" : "bg-neutral-800"
+              }`}
+            />
+
+            <ul className="relative z-10 space-y-3 mb-8">
               {tier.features.map((feature, featureIdx) => (
                 <li key={featureIdx} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" strokeWidth={2} />
-                  <span className="text-sm text-muted-foreground">{feature}</span>
+                  <div
+                    className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                      tier.highlighted
+                        ? "bg-[#FFA459]/20"
+                        : "bg-neutral-800 group-hover:bg-neutral-700 transition-colors"
+                    }`}
+                  >
+                    <Check
+                      className={`w-3 h-3 ${
+                        tier.highlighted
+                          ? "text-[#FFA459]"
+                          : "text-neutral-400"
+                      }`}
+                      strokeWidth={3}
+                    />
+                  </div>
+                  <span className="text-sm text-neutral-300 leading-relaxed">
+                    {feature}
+                  </span>
                 </li>
               ))}
             </ul>
 
-            {/* CTA */}
-            <a href={`${APP_URL}/contact`} target="_blank" rel="noopener noreferrer">
-              <Button
-                className="w-full font-semibold group"
-                variant={tier.highlighted ? "default" : "outline"}
-                size="lg"
-              >
-                {tier.cta}
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
+            <a
+              href={`${APP_URL}/contact`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`relative z-10 flex items-center justify-center gap-2 w-full h-12 rounded-xl font-semibold text-sm transition-all duration-300 group/btn ${
+                tier.highlighted
+                  ? "text-neutral-950 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#FFA459]/30 hover:shadow-xl hover:shadow-[#FFA459]/40"
+                  : "border-2 border-neutral-700 bg-transparent text-white hover:bg-neutral-800 hover:border-neutral-600"
+              }`}
+              style={
+                tier.highlighted
+                  ? {
+                      background:
+                        "linear-gradient(135deg, #FFA459 0%, #FF8A3D 100%)",
+                    }
+                  : undefined
+              }
+            >
+              {tier.cta}
+              <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
             </a>
-          </div>
+          </StaggerItem>
         ))}
       </div>
 
-      {/* Trust line */}
-      <div className="text-center">
-        <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-          {t("trustLine")}
-        </p>
-      </div>
+      <RevealOnScroll className="text-center" delay={0.3}>
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900/60 border border-neutral-800">
+          <Check className="w-4 h-4 text-[#FFA459]" strokeWidth={2.5} />
+          <p className="text-xs md:text-sm text-neutral-300">
+            {t("trustLine")}
+          </p>
+        </div>
+      </RevealOnScroll>
     </div>
   );
 }

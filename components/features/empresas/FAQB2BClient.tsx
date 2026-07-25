@@ -20,35 +20,52 @@ export default function FAQB2BClient() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-4">
+    <div className="max-w-3xl mx-auto space-y-3">
       {faqs.map((faq, idx) => {
         const isOpen = openIndex === idx;
         return (
           <div
             key={idx}
-            className="bg-white rounded-xl border border-[var(--border-b2b)] overflow-hidden transition-all hover:border-primary/50"
+            className={`rounded-xl border transition-all duration-300 overflow-hidden ${
+              isOpen
+                ? "border-[#FFA459]/40 bg-neutral-900/80 shadow-lg shadow-[#FFA459]/5"
+                : "border-neutral-800 bg-neutral-900/40 hover:border-neutral-700 hover:bg-neutral-900/60"
+            }`}
           >
             <button
               onClick={() => toggleFAQ(idx)}
-              className="w-full px-6 py-5 flex items-center justify-between text-left transition-colors hover:bg-primary/5"
+              className="group w-full px-6 py-5 flex items-center justify-between text-left transition-colors"
+              aria-expanded={isOpen}
             >
-              <span className="font-semibold text-foreground pr-4">
+              <span className="font-semibold text-white pr-4 text-base group-hover:text-[#FFA459] transition-colors">
                 {faq.question}
               </span>
-              <ChevronDown
-                className={`w-5 h-5 text-primary flex-shrink-0 transition-transform ${
-                  isOpen ? "rotate-180" : ""
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
+                  isOpen
+                    ? "bg-[#FFA459]/20 border border-[#FFA459]/40 rotate-180"
+                    : "bg-neutral-800 border border-neutral-700 group-hover:border-[#FFA459]/30"
                 }`}
-              />
+              >
+                <ChevronDown
+                  className={`w-4 h-4 transition-colors ${
+                    isOpen ? "text-[#FFA459]" : "text-neutral-400"
+                  }`}
+                />
+              </div>
             </button>
 
-            {isOpen && (
-              <div className="px-6 pb-5">
-                <p className="text-muted-foreground leading-relaxed">
+            <div
+              className={`grid transition-all duration-300 ease-in-out ${
+                isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+              }`}
+            >
+              <div className="overflow-hidden">
+                <p className="px-6 pb-5 text-sm text-neutral-400 leading-relaxed">
                   {faq.answer}
                 </p>
               </div>
-            )}
+            </div>
           </div>
         );
       })}

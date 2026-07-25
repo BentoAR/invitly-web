@@ -13,11 +13,11 @@ type Feature = { title: string; description: string; icon?: string };
 
 // Iconos de Lucide por índice (orden en el array de features)
 const FEATURE_ICONS_BY_INDEX: LucideIcon[] = [
-  ClipboardCheck,  // 0: Invitación digital completa
-  Image,           // 1: Álbum de fotos colaborativo
-  Music,           // 2: Playlist de la fiesta
-  LayoutDashboard, // 3: Dashboard en vivo
-  Users,           // 4: Gestión completa del evento
+  Image,           // 0: Álbum de fotos en tiempo real
+  Music,           // 1: Playlist colaborativa
+  Users,           // 2: Gestión profesional del evento
+  LayoutDashboard, // 3: Dashboard de control total
+  ClipboardCheck,  // 4: Invitación digital de diseñador
   Headphones,      // 5: Soporte dedicado
 ];
 

@@ -3,16 +3,23 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function HeroTypewriter({ words }: { words: string[] }) {
+export default function HeroTypewriter({
+  words,
+  durations,
+}: {
+  words: string[];
+  durations?: number[];
+}) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     if (words.length <= 1) return;
-    const id = setInterval(() => {
+    const delay = durations?.[index] ?? 2800;
+    const id = setTimeout(() => {
       setIndex((prev) => (prev + 1) % words.length);
-    }, 2800);
-    return () => clearInterval(id);
-  }, [words.length]);
+    }, delay);
+    return () => clearTimeout(id);
+  }, [index, words.length, durations]);
 
   return (
     <span className="relative inline-block">

@@ -9,7 +9,11 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-export function LanguageToggle() {
+interface LanguageToggleProps {
+  className?: string;
+}
+
+export function LanguageToggle({ className }: LanguageToggleProps) {
   const pathname = usePathname();
   const router = useRouter();
   const currentLocale = useLocale();
@@ -20,7 +24,10 @@ export function LanguageToggle() {
 
   return (
     <Select value={currentLocale} onValueChange={handleLocaleChange}>
-      <SelectTrigger className="w-24" aria-label="Cambiar idioma">
+      <SelectTrigger
+        className={`w-24 ${className || ""}`}
+        aria-label="Cambiar idioma"
+      >
         <SelectValue placeholder="Idioma" />
       </SelectTrigger>
       <SelectContent>
