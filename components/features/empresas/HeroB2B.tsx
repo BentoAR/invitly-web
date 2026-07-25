@@ -42,7 +42,7 @@ export default function HeroB2B() {
   }));
 
   return (
-    <section className="relative overflow-hidden bg-neutral-950 pt-20 pb-20 md:pt-28 md:pb-28 lg:pt-32 lg:pb-32">
+    <section id="inicio" className="relative overflow-hidden bg-neutral-950 pt-20 pb-20 md:pt-28 md:pb-28 lg:pt-32 lg:pb-32">
       <FloatingOrbs />
       <MeshGradient className="opacity-80" />
       <DotGrid className="opacity-60" />

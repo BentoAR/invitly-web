@@ -25,6 +25,7 @@ export const Navbar = () => {
     { name: t("invitaciones"), id: "templates", href: `/${locale}/templates` },
     { name: t("precios"), id: "pricing", href: `/${locale}/pricing` },
     { name: t("contacto"), id: "contact", href: `/${locale}/contact` },
+    { name: t("empresas"), id: "empresas", href: `/${locale}/empresas` },
   ];
 
   const [isOpen, setIsOpen] = useState(false);

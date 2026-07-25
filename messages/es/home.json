@@ -237,30 +237,30 @@
     "subtitle": "Elegí tu favorito y personalizalo en minutos. Cada plantilla incluye RSVP, mapa, galería y playlist."
   },
   "B2BAwarenessBanner": {
-    "badge": "Para salones y empresas",
-    "title": "¿Gestionás eventos como parte de tu negocio?",
-    "subtitle": "Si tenés un salón, sos wedding planner o organizás eventos profesionalmente, Bento tiene un plan diseñado para vos. Ofrecé invitaciones premium a tus clientes y generá un ingreso recurrente sin trabajo extra.",
+    "badge": "Bento para empresas",
+    "title": "Una solución para quienes organizan eventos todo el año",
+    "subtitle": "Si tenés un salón, sos wedding planner o gestionás eventos profesionalmente, Bento Empresas te permite ofrecer invitaciones digitales premium a tus clientes con planes pensados para volumen.",
     "benefits": [
       {
         "icon": "💰",
-        "title": "Modelo de negocio simple",
-        "description": "Cuota mensual fija según tu volumen, sin comisiones ni sorpresas"
+        "title": "Dashboard para planners",
+        "description": "Gestioná eventos, clientes e invitaciones desde un panel pensado para equipos profesionales"
       },
       {
         "icon": "🎯",
-        "title": "ROI inmediato",
-        "description": "Lo incluís en tu paquete de servicios y recuperás la inversión rápidamente"
+        "title": "ROI claro para tu negocio",
+        "description": "Sumás más valor a tus paquetes y recuperás la inversión con eventos recurrentes"
       },
       {
         "icon": "✨",
-        "title": "Prueba sin compromiso",
-        "description": "Primer mes gratis para que lo pruebes con tus clientes"
+        "title": "Seguimiento y acompañamiento",
+        "description": "No ofrecés solo un link: acompañás a tus clientes durante todo el proceso del evento"
       }
     ],
     "cta": {
-      "primary": "Ver planes para empresas",
+      "primary": "Conocer Bento Empresas",
       "secondary": "Hablar con ventas"
     },
-    "trustLine": "+50 salones en Argentina · Planes flexibles según volumen · Primer mes sin costo"
+    "trustLine": "Para salones, wedding planners y organizadores profesionales en Argentina"
   }
 }

@@ -1,12 +1,12 @@
 import { getTranslations } from "next-intl/server";
-import { Calendar, MessageCircle, ArrowRight } from "lucide-react";
+import { Calendar, ArrowRight } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { CountUp } from "@/components/features/empresas/CountUp";
 import { RevealOnScroll } from "@/components/features/empresas/RevealOnScroll";
 import { SideRaysB2B } from "@/components/features/empresas/SideRaysB2B";
 
-const APP_URL = "https://app.bento.com.ar";
 const WHATSAPP_NUMBER = "5491139441413";
+const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio";
 
 export default async function FinalCTAB2B() {
   const t = await getTranslations("FinalCTAB2B");
@@ -52,9 +52,9 @@ export default async function FinalCTAB2B() {
           </RevealOnScroll>
 
           <RevealOnScroll delay={0.3}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
+            <div className="flex flex-col items-center justify-center gap-3 mb-6">
               <a
-                href={`${APP_URL}/contact`}
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group/btn inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xl font-semibold text-base text-neutral-950 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#FFA459]/30 hover:shadow-xl hover:shadow-[#FFA459]/50"
@@ -66,16 +66,6 @@ export default async function FinalCTAB2B() {
                 <Calendar className="w-4 h-4" />
                 {t("ctaPrimary")}
                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
-              </a>
-
-              <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hola!%20Quiero%20información%20sobre%20Bento%20para%20mi%20salón`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group/btn inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xl font-semibold text-base border-2 border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300"
-              >
-                <MessageCircle className="w-4 h-4" />
-                {t("ctaSecondary")}
               </a>
             </div>
           </RevealOnScroll>

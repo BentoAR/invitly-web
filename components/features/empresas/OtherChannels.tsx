@@ -4,7 +4,8 @@ import { Container } from "@/components/shared/Container";
 import { RevealOnScroll, StaggerItem } from "@/components/features/empresas/RevealOnScroll";
 import { DotGrid } from "@/components/features/empresas/BackgroundPatterns";
 
-const APP_URL = "https://app.bento.com.ar";
+const WHATSAPP_NUMBER = "5491139441413";
+const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio";
 
 export default async function OtherChannels() {
   const t = await getTranslations("OtherChannelsB2B");
@@ -85,7 +86,7 @@ export default async function OtherChannels() {
                     {channel.description}
                   </p>
                   <a
-                    href={`${APP_URL}/contact`}
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#FFA459] hover:gap-2.5 transition-all"

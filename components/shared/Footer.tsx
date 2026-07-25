@@ -15,6 +15,7 @@ export default function Footer() {
     { label: t("home"), href: `/${locale}` },
     { label: t("invitations"), href: `/${locale}/templates` },
     { label: t("pricing"), href: `/${locale}/pricing` },
+    { label: t("business"), href: `/${locale}/empresas` },
     { label: t("contact"), href: `/${locale}/contact` },
   ];
 

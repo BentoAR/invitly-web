@@ -2,7 +2,8 @@
 import { ArrowRight } from "lucide-react";
 import { analytics } from "@/utils/analytics";
 
-const APP_URL = "https://app.bento.com.ar";
+const WHATSAPP_NUMBER = "5491139441413";
+const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio";
 
 interface HeroB2BCtaProps {
   label: string;
@@ -11,7 +12,7 @@ interface HeroB2BCtaProps {
 export function HeroB2BCta({ label }: HeroB2BCtaProps) {
   return (
     <a
-      href={`${APP_URL}/contact`}
+      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => analytics.b2bDemoClick()}

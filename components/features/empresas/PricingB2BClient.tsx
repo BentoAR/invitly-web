@@ -4,7 +4,8 @@ import { Check, ArrowRight, Sparkles, MessageCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { RevealOnScroll, StaggerItem } from "@/components/features/empresas/RevealOnScroll";
 
-const APP_URL = "https://app.bento.com.ar";
+const WHATSAPP_NUMBER = "5491139441413";
+const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio";
 
 interface PricingTier {
   name: string;
@@ -129,7 +130,7 @@ export default function PricingB2BClient() {
             </ul>
 
             <a
-              href={`${APP_URL}/contact`}
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
               target="_blank"
               rel="noopener noreferrer"
               className={`relative z-10 flex items-center justify-center gap-2 w-full h-12 rounded-xl font-semibold text-sm transition-all duration-300 group/btn ${
