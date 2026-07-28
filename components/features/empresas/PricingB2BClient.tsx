@@ -10,7 +10,6 @@ const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio"
 
 interface PricingTier {
   name: string;
-  price: string;
   description: string;
   features: string[];
   cta: string;
@@ -24,7 +23,6 @@ export default function PricingB2BClient() {
   const tiers: PricingTier[] = [
     {
       name: t("esencial.name"),
-      price: t("esencial.price"),
       description: t("esencial.description"),
       features: t.raw("esencial.features") as string[],
       cta: t("esencial.cta"),
@@ -32,7 +30,6 @@ export default function PricingB2BClient() {
     },
     {
       name: t("profesional.name"),
-      price: t("profesional.price"),
       description: t("profesional.description"),
       features: t.raw("profesional.features") as string[],
       cta: t("profesional.cta"),
@@ -41,7 +38,6 @@ export default function PricingB2BClient() {
     },
     {
       name: t("escala.name"),
-      price: t("escala.price"),
       description: t("escala.description"),
       features: t.raw("escala.features") as string[],
       cta: t("escala.cta"),
@@ -91,10 +87,9 @@ export default function PricingB2BClient() {
                 {tier.name}
               </h3>
               <div className="mb-1 min-h-[2.25rem]">
-                <span className="text-2xl font-bold text-white tracking-tight">
-                  {tier.price}
+                <span className="text-lg font-semibold text-[#FFA459] tracking-tight">
+                  Consultanos
                 </span>
-                <span className="text-sm text-neutral-400 ml-1">/ mes</span>
               </div>
               <p className="text-sm text-neutral-400">{tier.description}</p>
             </div>
