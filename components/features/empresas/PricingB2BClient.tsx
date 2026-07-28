@@ -1,7 +1,8 @@
 "use client";
 
-import { Check, ArrowRight, Sparkles, MessageCircle } from "lucide-react";
+import { Check, ArrowRight, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Link as LocaleLink } from "@/src/i18n/routing";
 import { RevealOnScroll, StaggerItem } from "@/components/features/empresas/RevealOnScroll";
 
 const WHATSAPP_NUMBER = "5491139441413";
@@ -9,6 +10,7 @@ const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio"
 
 interface PricingTier {
   name: string;
+  price: string;
   description: string;
   features: string[];
   cta: string;
@@ -21,25 +23,28 @@ export default function PricingB2BClient() {
 
   const tiers: PricingTier[] = [
     {
-      name: t("basico.name"),
-      description: t("basico.description"),
-      features: t.raw("basico.features") as string[],
-      cta: t("basico.cta"),
+      name: t("esencial.name"),
+      price: t("esencial.price"),
+      description: t("esencial.description"),
+      features: t.raw("esencial.features") as string[],
+      cta: t("esencial.cta"),
       highlighted: false,
     },
     {
-      name: t("medio.name"),
-      description: t("medio.description"),
-      features: t.raw("medio.features") as string[],
-      cta: t("medio.cta"),
-      badge: t("medio.badge"),
+      name: t("profesional.name"),
+      price: t("profesional.price"),
+      description: t("profesional.description"),
+      features: t.raw("profesional.features") as string[],
+      cta: t("profesional.cta"),
+      badge: t("profesional.badge"),
       highlighted: true,
     },
     {
-      name: t("full.name"),
-      description: t("full.description"),
-      features: t.raw("full.features") as string[],
-      cta: t("full.cta"),
+      name: t("escala.name"),
+      price: t("escala.price"),
+      description: t("escala.description"),
+      features: t.raw("escala.features") as string[],
+      cta: t("escala.cta"),
       highlighted: false,
     },
   ];
@@ -85,14 +90,11 @@ export default function PricingB2BClient() {
               <h3 className="text-base font-semibold text-neutral-400 mb-4 tracking-wide uppercase">
                 {tier.name}
               </h3>
-              <div className="flex items-center gap-2 mb-2 min-h-[2.25rem]">
-                <MessageCircle
-                  className="w-4 h-4 text-[#FFA459]"
-                  strokeWidth={2}
-                />
-                <span className="text-lg font-semibold text-[#FFA459] tracking-tight">
-                  Plan a medida
+              <div className="mb-1 min-h-[2.25rem]">
+                <span className="text-2xl font-bold text-white tracking-tight">
+                  {tier.price}
                 </span>
+                <span className="text-sm text-neutral-400 ml-1">/ mes</span>
               </div>
               <p className="text-sm text-neutral-400">{tier.description}</p>
             </div>
@@ -123,7 +125,16 @@ export default function PricingB2BClient() {
                     />
                   </div>
                   <span className="text-sm text-neutral-300 leading-relaxed">
-                    {feature}
+                    {feature.toLowerCase().includes("celebr") ? (
+                      <LocaleLink
+                        href="/pricing"
+                        className="underline underline-offset-2 decoration-dotted hover:text-[#FFA459] transition-colors"
+                      >
+                        {feature}
+                      </LocaleLink>
+                    ) : (
+                      feature
+                    )}
                   </span>
                 </li>
               ))}

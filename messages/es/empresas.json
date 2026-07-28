@@ -118,48 +118,44 @@
   },
   "PricingB2B": {
     "title": "Planes diseñados para tu volumen de eventos",
-    "subtitle": "Elegí el tier que mejor se adapte a cuántos eventos hacés por mes. Sin comisiones, sin sorpresas.",
+    "subtitle": "Elegí el plan que mejor se adapte a cuántos eventos hacés por mes. Sin comisiones, sin sorpresas.",
     "trustLine": "Sin contrato largo · Soporte en español · Cancelás cuando quieras",
-    "basico": {
-      "name": "Básico",
-      "description": "Hasta 5 eventos por mes",
-      "cta": "Contactar",
+    "esencial": {
+      "name": "Esencial",
+      "price": "$290.000",
+      "description": "Hasta 3 eventos por mes",
+      "cta": "Empezar ahora",
       "features": [
-        "Link único de salón para trackear eventos",
-        "Todas las plantillas premium (200+)",
-        "RSVP automático ilimitado",
-        "Playlist colaborativa de Spotify",
-        "Galería de fotos ilimitada",
-        "Panel de control para ver tus eventos",
-        "Soporte prioritario por WhatsApp",
-        "Materiales de venta para tus clientes"
+        "Plan Celebración en cada evento",
+        "Hasta 400 invitados por evento",
+        "Panel manager: creá eventos, asigná planners y seguí el portfolio",
+        "Panel planner: cada miembro gestiona sus eventos asignados",
+        "Hasta 2 usuarios del equipo"
       ]
     },
-    "medio": {
-      "name": "Medio",
-      "description": "Hasta 15 eventos por mes",
-      "badge": "Más elegido por salones",
-      "cta": "Contactar",
+    "profesional": {
+      "name": "Profesional",
+      "price": "$650.000",
+      "description": "Hasta 8 eventos por mes",
+      "badge": "Más elegido",
+      "cta": "Empezar ahora",
       "features": [
-        "Todo del plan Básico",
-        "Hasta 15 eventos simultáneos",
-        "Analytics de uso por evento",
-        "Templates exclusivas para tu salón (opcional)",
-        "Onboarding personalizado para tu equipo",
-        "Reportes mensuales de actividad"
+        "Todo lo incluido en Esencial",
+        "Hasta 5 usuarios del equipo",
+        "Reportes mensuales",
+        "Soporte prioritario"
       ]
     },
-    "full": {
-      "name": "Full",
-      "description": "Eventos ilimitados",
-      "cta": "Contactar",
+    "escala": {
+      "name": "Escala",
+      "price": "$1.350.000",
+      "description": "Hasta 20 eventos por mes",
+      "cta": "Empezar ahora",
       "features": [
-        "Todo del plan Medio",
-        "Sin límite de eventos por mes",
-        "Branding personalizado (tu logo en invitaciones)",
-        "Subdomain personalizado (tusalon.bento.com.ar)",
-        "Account manager dedicado",
-        "Dashboard white-label para tu equipo"
+        "Todo lo incluido en Profesional",
+        "Hasta 10 usuarios del equipo",
+        "Reportes avanzados",
+        "Gestión de múltiples sedes"
       ]
     }
   },
