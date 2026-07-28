@@ -1,47 +1,129 @@
 {
   "HeroB2B": {
-    "badge": "For event venues",
-    "title": "Add Bento to your service and turn it into a new revenue stream",
-    "subtitle": "Offer premium digital invitations to all your clients. You charge a fixed monthly fee, no commissions, no intervention needed. The venue decides how to sell it and Bento handles the technology.",
-    "value1Title": "Recover your investment with the first client of the month",
-    "value1Description": "An event is worth $10,000,000 or more. Bento costs from $250,000/month. Include it in your package and you've already covered it.",
-    "value2Title": "Your clients organize everything in one place",
-    "value2Description": "Guest list, confirmations, tables, dietary restrictions, photo gallery, playlist. No Excel, no WhatsApp, no papers.",
-    "value3Title": "No extra work for you",
-    "value3Description": "You send a unique link to each client when they confirm the date. They handle the rest. You only receive the credit.",
-    "ctaPrimary": "Let's talk about your venue",
-    "ctaSecondary": "See how it works",
-    "trustLine": "+50 venues in Argentina already trust Bento · Free trial for the first month"
+    "badge": "Bento Business",
+    "title": "More revenue with premium invitations",
+    "subtitle": "Add Bento to your service and offer premium invitations to your clients. No commissions, no extra work.",
+    "value1Title": "ROI from the first event",
+    "value2Title": "Zero extra work for your team",
+    "value3Title": "Your clients organize themselves",
+    "ctaPrimary": "Let's talk about your business",
+    "ctaSecondary": "See plans",
+    "trustLine": "No contract · Support in Spanish · Cancel anytime",
+    "mockup": {
+      "salon": "Las Cañitas Venue",
+      "events": "Active events",
+      "thisMonth": "Events this month",
+      "satisfaction": "Satisfaction",
+      "listTitle": "Recent events",
+      "statusActive": "Active",
+      "statusWarning": "Almost full",
+      "statusFull": "Full"
+    }
+  },
+  "BeforeAfterB2B": {
+    "title": "Without Bento vs With Bento",
+    "subtitle": "What changes in your operation when your clients use Bento for their events.",
+    "sinTitle": "Today",
+    "sinSubtitle": "Your current operation",
+    "sinItems": [
+      "Excel with hundreds of rows to coordinate",
+      "WhatsApp flooded with messages and questions",
+      "“Did they confirm yet?” — repeated calls and messages all day",
+      "You don't know what each client is working on until you ask"
+    ],
+    "conTitle": "With Bento",
+    "conSubtitle": "Your new operation",
+    "conItems": [
+      "Panel with all your events in one place",
+      "Automatic RSVP — clients organize themselves",
+      "Unique link per client — they handle everything",
+      "See each event's progress in real time"
+    ]
   },
   "LogoWallB2B": {
-    "title": "Venues already using Bento"
+    "title": "Built for teams that manage events",
+    "logos": [
+      "Event venues",
+      "Wedding planners",
+      "Production teams",
+      "Corporate organizers",
+      "Party venues",
+      "Sales teams"
+    ]
   },
   "ValuePropsB2B": {
     "title": "Why venues choose Bento",
-    "prop1Title": "Immediate ROI",
-    "prop1Description": "An event in Argentina is worth $10,000,000 or more. Bento costs from $250,000/month. Include it in your premium package and with the first client of the month you've already covered the full fee. Everything you sell after that is pure profit.",
+    "subtitle": "A complete platform, ready for your team to deliver to your clients with no learning curve.",
+    "prop1Title": "New revenue, not new expense",
+    "prop1Description": "Offer premium digital invitations as part of your service. Your clients value it, you include it in the package, and it pays for itself with the first event you manage. Everything after that is pure profit.",
     "prop2Title": "Zero extra work",
     "prop2Description": "You send a unique link to each client when they confirm the date. They create and manage their event from Bento. You don't intervene, you don't provide technical support, you don't do anything. You just take the credit for offering a premium service.",
     "prop3Title": "Competitive differentiation",
-    "prop3Description": "While other venues continue with paper invitations or WhatsApp PDFs, you offer a complete platform: automatic RSVP, table assignment, dietary restrictions, collaborative playlist, photo gallery. That closes deals."
+    "prop3Description": "While other venues continue with paper invitations or WhatsApp PDFs, you offer a complete platform: automatic RSVP, table assignment, dietary restrictions, collaborative playlist, photo gallery. That closes deals.",
+    "prop4Title": "Analytics and control",
+    "prop4Description": "Centralized panel with all your clients' events. How many slots you consumed this month, metrics per event, automatic reports. Full visibility of your operation in one place."
   },
   "HowItWorksB2B": {
     "title": "Three steps to integrate Bento into your business",
-    "step1Title": "1. Choose your plan and receive your unique link",
+    "subtitle": "From signing to first published event, in less than 24 hours.",
+    "step1Title": "Choose your plan and receive your unique link",
     "step1Description": "We assign you a personalized link (e.g., app.bento.com.ar/nuevo?salon=yourvenue). This is the link you'll share with each client when they confirm the date.",
-    "step2Title": "2. Send the link to each client",
-    "step2Description": "Via WhatsApp, email, or however you prefer. The client (or their event planner) enters, creates their event, and is automatically linked to your venue. It consumes a slot from your monthly plan. You don't have to do anything else.",
-    "step3Title": "3. The client organizes everything from Bento",
-    "step3Description": "They create their invitation, manage confirmations, upload photos, build the playlist. All from their phone. We save hours of coordination and add value to the service without extra work."
+    "step2Title": "Send the link to each client",
+    "step2Description": "Via WhatsApp, email, or however you prefer. The client enters, creates their event and is automatically linked to your venue. It consumes a slot from your monthly plan.",
+    "step3Title": "The client organizes everything from Bento",
+    "step3Description": "They create their invitation, manage confirmations, upload photos, build the playlist. All from their phone. We handle the technical support."
+  },
+  "DashboardShowcaseB2B": {
+    "title": "One panel to manage all your events",
+    "subtitle": "See in real time how your clients' events are doing, how many slots you have left this month, and which templates they're using.",
+    "features": {
+      "multiEvent": {
+        "title": "Multi-event view",
+        "description": "All your clients' events in one screen, with real-time status."
+      },
+      "analytics": {
+        "title": "Per-event analytics",
+        "description": "Confirmation metrics, attendance, playlist, gallery. What you need to understand what works."
+      },
+      "templates": {
+        "title": "Premium templates",
+        "description": "200+ ready-to-use designs. Each client picks theirs without you having to intervene."
+      },
+      "tracking": {
+        "title": "Automatic tracking",
+        "description": "Each event is automatically assigned to your account. You know exactly how many slots you've used."
+      },
+      "support": {
+        "title": "Priority support",
+        "description": "Dedicated support team via WhatsApp for you and your clients. We respond in less than 1 hour."
+      },
+      "reports": {
+        "title": "Monthly reports",
+        "description": "Automatic report with the month's activity: events published, confirmed, photos shared."
+      }
+    }
+  },
+  "SalonControlB2B": {
+    "badge": "For your venue",
+    "title": "Your venue, under control",
+    "subtitle": "Bento isn't just a digital invitation. It's the platform that organizes your operation, professionalizes your service, and helps you earn more.",
+    "benefit1Title": "Panel for every planner",
+    "benefit1Description": "Each planner at your venue has their own access. See what events they're managing, the status of each one, what's still pending. No chasing anyone on WhatsApp.",
+    "benefit2Title": "Your clients organize themselves",
+    "benefit2Description": "Clients enter the link, confirm their RSVP, assign tables, upload photos, build the playlist. You do nothing extra. They feel premium service and you charge more.",
+    "benefit3Title": "Total visibility of your operation",
+    "benefit3Description": "From one place see how many events you have this month, how many slots are left, which templates your clients use most. Data-driven decisions, not intuition.",
+    "benefit4Title": "Premium service, no extra effort",
+    "benefit4Description": "Offer digital invitations as part of your package. Your clients value it, you charge more, and you don't work more. Everyone wins."
   },
   "PricingB2B": {
     "title": "Plans designed for your event volume",
     "subtitle": "Choose the tier that best fits how many events you do per month. No commissions, no surprises.",
-    "trustLine": "All plans include: First month free · No long-term contract · Support in Spanish",
+    "trustLine": "No long-term contract · Support in Spanish · Cancel anytime",
     "basico": {
       "name": "Basic",
       "description": "Up to 5 events per month",
-      "cta": "Start with Basic",
+      "cta": "Contact us",
       "features": [
         "Unique venue link to track events",
         "All premium templates (200+)",
@@ -57,7 +139,7 @@
       "name": "Medium",
       "description": "Up to 15 events per month",
       "badge": "Most chosen by venues",
-      "cta": "Choose Medium",
+      "cta": "Contact us",
       "features": [
         "Everything from the Basic plan",
         "Up to 15 simultaneous events",
@@ -70,63 +152,65 @@
     "full": {
       "name": "Full",
       "description": "Unlimited events",
-      "cta": "Talk to sales",
+      "cta": "Contact us",
       "features": [
         "Everything from the Medium plan",
         "No limit on events per month",
         "Personalized branding (your logo on invitations)",
         "Personalized subdomain (yourvenue.bento.com.ar)",
         "Dedicated account manager",
-        "Custom integrations (CRM, calendar)",
         "White-label dashboard for your team"
       ]
     }
   },
   "OtherChannelsB2B": {
     "title": "Bento is also for...",
-    "subtitle": "Not just venues. Any business that manages events can benefit from Bento's B2B model.",
+    "subtitle": "Not just venues. Any business that manages events can benefit from Bento's business model.",
     "weddingPlanners": {
       "title": "Wedding Planners",
-      "description": "Manage all your events in one place. Automatic RSVP, confirmation tracking, Excel export. Stop using spreadsheets and take your service to the next level. Your clients see everything centralized and you maintain full control.",
+      "description": "Manage all your events in one place. Automatic RSVP, confirmation tracking, Excel export. Stop using spreadsheets and take your service to the next level.",
       "cta": "See demo for planners"
     },
     "photographers": {
       "title": "Event Photographers",
-      "description": "Offer your clients a photo gallery integrated into the invitation. You upload the event photos and they're available on the same link your clients shared with their guests. An extra service that sets your work apart.",
+      "description": "Offer your clients a photo gallery integrated into the invitation. You upload the event photos and they're available on the same link your clients shared with their guests.",
       "cta": "Talk to sales"
     },
     "corporate": {
       "title": "Corporate Events",
-      "description": "Product launches, conferences, after-office, year-end parties. Automatic confirmations, personalized branding with your logo, attendance analytics, and data export to Excel or CRM.",
+      "description": "Product launches, conferences, after-office, year-end parties. Automatic confirmations, personalized branding with your logo, attendance analytics, and data export.",
       "cta": "See corporate demo"
     },
     "dressShops": {
       "title": "Dress Shops",
-      "description": "Your client is already organizing their wedding or quinceañera. Offer them Bento as a complementary service and generate extra income without additional work. A perfect partnership.",
+      "description": "Your client is already organizing their wedding or quinceañera. Offer them Bento as a complementary service and generate extra income without additional work.",
       "cta": "Contact us"
     }
   },
   "TestimonialsB2B": {
     "title": "What our partners say",
     "testimonial1": {
-      "quote": "Integrating Bento was the best decision of the year. We offer the service to all our clients and practically 100% accept it. They organize everything from their phone. We save hours of coordination and add value to the service without extra work. We've already done 30+ events and everyone was delighted.",
+      "quote": "Integrating Bento was the best decision of the year. We offer the service to all our clients and practically 100% accept it. We've already done 30+ events and everyone was delighted.",
       "author": "Gabriel Fernández",
-      "role": "Manager at Salón Las Cañitas · Buenos Aires · 40 events/year"
+      "role": "Manager · Las Cañitas Venue",
+      "metric": "40 events/year"
     },
     "testimonial2": {
-      "quote": "As a wedding planner, I manage 15-20 weddings a year. Bento became my number one tool. My clients see everything centralized, I have real-time control of confirmations and restrictions, and the photo gallery looks beautiful. I stopped using Excel forever.",
+      "quote": "As a wedding planner, I manage 15-20 weddings a year. Bento became my number one tool. My clients see everything centralized, I have real-time control of confirmations and restrictions.",
       "author": "Lucía Ramírez",
-      "role": "Wedding Planner · Rosario · Medium Plan (15 events/month)"
+      "role": "Wedding Planner · Rosario",
+      "metric": "Medium Plan · 15 events/month"
     },
     "testimonial3": {
-      "quote": "I offer my clients the gallery integrated into Bento as a plus. I upload the photos after the event and they're available on the same invitation link. It's added value that sets me apart from other photographers and my clients love it. Zero friction.",
+      "quote": "I offer my clients the gallery integrated into Bento as a plus. I upload the photos after the event and they're available on the same invitation link. Zero friction.",
       "author": "Matías Sosa",
-      "role": "Wedding Photographer · Mendoza · Basic Plan"
+      "role": "Wedding Photographer · Mendoza",
+      "metric": "Basic Plan"
     }
   },
   "FAQB2B": {
     "title": "Frequently asked questions",
-    "badge": "B2B FAQ",
+    "badge": "Frequently asked questions",
     "faqs": [
       {
         "question": "What does my venue need to start using Bento?",
@@ -141,16 +225,12 @@
         "answer": "No. Bento has its own support team via WhatsApp and live chat. If a client has a technical question, they contact Bento directly. You're only responsible for sharing the link and charging for the service."
       },
       {
-        "question": "Can I customize the invitations with my branding?",
-        "answer": "Yes, in the Full plan you can add your logo and create a personalized subdomain (yourvenue.bento.com.ar). In the Basic and Medium plans, invitations have Bento branding, but you can request exclusive templates for your venue."
+        "question": "What happens if I do fewer events in a month than my plan allows?",
+        "answer": "Nothing happens. If your plan allows 15 events and you only do 8, there are no penalties. You can downgrade the next month if your volume has changed."
       },
       {
         "question": "How do I charge my clients?",
         "answer": "However you want. Some venues include it in the base package, others offer it as a premium upgrade, others sell it separately. You decide the business model and the price. Bento charges you a fixed monthly fee, regardless of how you sell the service."
-      },
-      {
-        "question": "What happens if I do fewer events in a month than my plan allows?",
-        "answer": "Nothing happens. If your plan is for 15 events/month and you only do 8, you pay the same. There are no proportional refunds, but there are no penalties either. You can downgrade the next month if you see your volume has changed."
       },
       {
         "question": "Can I cancel at any time?",
@@ -158,15 +238,21 @@
       },
       {
         "question": "Do you offer integrations with my CRM or management system?",
-        "answer": "In the Full plan, yes. We can connect Bento with your CRM, calendar, or internal system to sync client and event data. Each integration is evaluated case by case."
+        "answer": "Not at the moment. We're focused on making the platform work great as a standalone solution. If you need something specific in the future, we can discuss it."
       }
     ]
   },
   "FinalCTAB2B": {
-    "title": "Want to offer Bento at your venue?",
-    "subtitle": "Let's talk about how to integrate it into your business. No commitment, no runaround.",
+    "title": "Ready to offer Bento in your business?",
+    "subtitle": "Let's talk about how to integrate it. No commitment, no runaround.",
     "ctaPrimary": "Schedule a meeting",
     "ctaSecondary": "Contact via WhatsApp",
-    "trustLine": "📞 We respond in less than 24hrs · First meeting without commitment · First month free"
+    "trustLine": "We respond in less than 24hrs · First meeting without commitment",
+    "statsTitle": "Why venues choose Bento",
+    "stats": [
+      { "value": "0%", "label": "Commissions on what you charge" },
+      { "value": "24h", "label": "To start using it" },
+      { "value": "100%", "label": "Support in Spanish" }
+    ]
   }
 }

@@ -1,8 +1,8 @@
 {
   "Hero": {
     "badge": "More than an invitation",
-    "title": "your event from your phone",
-    "subtitle": "Automatic confirmations, real-time guest list and everything ready to export. No paper, no spreadsheets, no stress.",
+    "title": "Your entire event.",
+    "subtitle": "From the guest list to the photo album, all sorted.",
     "button": {
       "primary": "Create my invitation",
       "secondary": "See a real example"
@@ -13,7 +13,7 @@
       "guests": "Unlimited guests",
       "support": "Average response time"
     },
-    "words": ["Organize", "Share", "Manage"],
+    "words": ["More than an invitation.", "RSVP included.", "Collaborative album.", "Shared playlist.", "Day timeline."],
     "imageAlt": "Elegant event decoration, example of personalized digital invitation",
     "whatsappMessage": "Hi! 👋 Can you help me make my digital invitation?"
   },
@@ -24,23 +24,23 @@
     "viewDesigns": "View designs"
   },
   "HowItWorks": {
-    "badge": "Super simple",
-    "title": "Your invitation in 3 steps",
+    "badge": "Simple and complete",
+    "title": "Your event, set up in 3 steps",
     "steps": [
       {
         "number": "01",
-        "title": "Choose your favorite design",
-        "description": "Unique designs for every type of event. Elegant weddings, festive birthdays, corporate events — every template includes RSVP, gallery, map and playlist."
+        "title": "Choose your design",
+        "description": "Over 200 designs for every type of event. Weddings, quinceañeras, birthdays — every template already comes with RSVP, collaborative album, map and playlist ready to activate."
       },
       {
         "number": "02",
-        "title": "Customize in minutes",
-        "description": "Change the text, upload your photos, choose colors and add your music. If you use WhatsApp, you can use Bento. No design, no complications."
+        "title": "Set up your full event",
+        "description": "Customize the invitation, activate RSVP, set up the photo album, add songs to the playlist and load the day's timeline. All from the same place, in minutes."
       },
       {
         "number": "03",
-        "title": "Share and done",
-        "description": "Send the link via WhatsApp, Instagram or email. Your guests confirm with a tap and you see responses in real time. No calls, no spreadsheets, no headaches."
+        "title": "Live the day without chaos",
+        "description": "Send the link via WhatsApp. Your guests confirm on their own, upload photos to the album in real time and you see everything from your dashboard. No groups, no spreadsheets, no repeated questions."
       }
     ],
     "whatsappMessage": "I want to invite you to my wedding! 💍 Confirm here: bento.com/mywedding",
@@ -51,32 +51,32 @@
   },
   "Features": {
     "badge": "No apps, no complications",
-    "title": "More than a digital invitation",
-    "description": "Each invitation comes with all the tools you need to create a memorable experience for your guests",
+    "title": "Everything your invitation includes.",
+    "description": "Every Bento comes with the tools you need to make your event a complete experience, not just a digital card",
     "features": [
       {
-        "title": "Designer digital invitation",
-        "description": "Professional-level designs with automatic RSVP, live countdown, custom dress code and direct links. Everything you need to impress from the first moment."
-      },
-      {
         "title": "Real-time photo album",
-        "description": "Upload your photos from your phone and your guests see them instantly. Create a visual gallery that updates live while you organize your event. Shared magic."
+        "description": "Everyone uploads photos from their phone and sees them instantly. A gallery that builds itself while you live the event. No shared folders, no photo groups."
       },
       {
         "title": "Collaborative playlist",
-        "description": "Let your guests create the perfect soundtrack for your event. Moderate, approve and create the definitive list that will play at your party. Zero improvisation."
-      },
-      {
-        "title": "Total control dashboard",
-        "description": "Live confirmations, playlist management, edit images, activate/deactivate features, change template whenever you want. Your entire event from one screen. Stress-free."
+        "description": "Let your guests suggest songs. You moderate, approve and build the definitive list. The perfect soundtrack, chosen together."
       },
       {
         "title": "Professional event management",
-        "description": "Organize tables, manage guests by groups, control gifts, export everything to Excel and deliver it ready to your event planner or venue. Professional coordinator level."
+        "description": "Organize tables, manage guests by groups, control gifts and export everything to Excel. Professional coordinator level, without hiring one."
+      },
+      {
+        "title": "Total control dashboard",
+        "description": "Live confirmations, playlist management, activate or deactivate sections, change template whenever you want. Your entire event from one screen."
+      },
+      {
+        "title": "Designer digital invitation",
+        "description": "Professional-level designs with automatic RSVP, live countdown, dress code and direct links. The first impression your guests will never forget."
       },
       {
         "title": "Support when you need it",
-        "description": "Real assistance according to your plan. We don't leave you alone: we respond quickly, solve problems and help you make your event perfect. Guaranteed backup."
+        "description": "Real assistance according to your plan. We don't leave you alone: we respond quickly, solve problems and help make your event perfect."
       }
     ],
     "benefitsTitle": "And much more included",
@@ -237,30 +237,30 @@
     "subtitle": "Choose your favorite and customize it in minutes. Each template includes RSVP, map, gallery and playlist."
   },
   "B2BAwarenessBanner": {
-    "badge": "For venues and businesses",
-    "title": "Do you manage events as part of your business?",
-    "subtitle": "If you have a venue, are a wedding planner or organize events professionally, Bento has a plan designed for you. Offer premium invitations to your clients and generate recurring income with no extra work.",
+    "badge": "Bento for business",
+    "title": "A solution for teams that organize events all year",
+    "subtitle": "If you run a venue, are a wedding planner, or manage events professionally, Bento for Business helps you offer premium digital invitations to your clients with plans designed for volume.",
     "benefits": [
       {
         "icon": "💰",
-        "title": "Simple business model",
-        "description": "Fixed monthly fee based on your volume, no commissions or surprises"
+        "title": "Dashboard for planners",
+        "description": "Manage events, clients and invitations from a panel designed for professional teams"
       },
       {
         "icon": "🎯",
-        "title": "Immediate ROI",
-        "description": "Include it in your service package and recover your investment quickly"
+        "title": "Clear ROI for your business",
+        "description": "Add more value to your packages and recover the investment through recurring events"
       },
       {
         "icon": "✨",
-        "title": "Try without commitment",
-        "description": "First month free to test with your clients"
+        "title": "Tracking and support",
+        "description": "You don't just offer a link: you support clients throughout the whole event process"
       }
     ],
     "cta": {
-      "primary": "See business plans",
+      "primary": "Explore Bento for Business",
       "secondary": "Talk to sales"
     },
-    "trustLine": "+50 venues in Argentina · Flexible plans by volume · First month free"
+    "trustLine": "For venues, wedding planners and professional event organizers"
   }
 }

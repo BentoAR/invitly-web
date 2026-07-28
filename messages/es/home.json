@@ -1,8 +1,8 @@
 {
   "Hero": {
     "badge": "Más que una invitación",
-    "title": "invitaciones digitales para tu evento",
-    "subtitle": "Confirmaciones automáticas, lista de invitados en tiempo real y todo listo para exportar. Sin papel, sin planillas, sin estrés.",
+    "title": "Todo tu evento.",
+    "subtitle": "De la lista de invitados al álbum de fotos, todo resuelto.",
     "button": {
       "primary": "Crear mi invitación",
       "secondary": "Ver un ejemplo real"
@@ -13,7 +13,7 @@
       "guests": "Invitados ilimitados",
       "support": "Tiempo de respuesta promedio"
     },
-    "words": ["Organizá", "Compartí", "Gestioná"],
+    "words": ["Más que una invitación.", "RSVP incluido.", "Álbum colaborativo.", "Playlist compartida.", "Timeline del día."],
     "imageAlt": "Decoración elegante de evento, ejemplo de invitación digital personalizada",
     "whatsappMessage": "Hola! 👋 Me das una mano para hacer mi invitacion digital?"
   },
@@ -24,23 +24,23 @@
     "viewDesigns": "Ver diseños"
   },
   "HowItWorks": {
-    "badge": "Súper simple",
-    "title": "Tu invitación en 3 pasos",
+    "badge": "Simple y completo",
+    "title": "Tu evento, armado en 3 pasos",
     "steps": [
       {
         "number": "01",
-        "title": "Elegí tu diseño favorito",
-        "description": "Diseños únicos para cada tipo de evento. Bodas elegantes, cumpleaños festivos, eventos corporativos — cada plantilla incluye RSVP, galería, mapa y playlist."
+        "title": "Elegí tu diseño",
+        "description": "Más de 200 diseños para cada tipo de evento. Bodas, XV años, cumpleaños — cada plantilla ya viene con RSVP, álbum colaborativo, mapa y playlist lista para activar."
       },
       {
         "number": "02",
-        "title": "Personalizá en minutos",
-        "description": "Cambiá el texto, subí tus fotos, elegí los colores y agregá tu música. Si usas WhatsApp, podés usar Bento. Sin diseño, sin complicaciones."
+        "title": "Armá tu evento completo",
+        "description": "Personalizá la invitación, activá el RSVP, configurá el álbum de fotos, sumá canciones a la playlist y cargá el timeline del día. Todo desde el mismo lugar, en minutos."
       },
       {
         "number": "03",
-        "title": "Compartí y listo",
-        "description": "Mandá el link por WhatsApp, Instagram o mail. Tus invitados confirman con un toque y vos ves las respuestas en tiempo real. Sin llamadas, sin planillas, sin dolores de cabeza."
+        "title": "Viví el día sin caos",
+        "description": "Mandá el link por WhatsApp. Tus invitados confirman solos, suben fotos al álbum en tiempo real y vos ves todo desde tu dashboard. Sin grupos, sin planillas, sin preguntas repetidas."
       }
     ],
     "whatsappMessage": "¡Quiero invitarte a mi boda! 💍 Confirmá acá: bento.com/miboda",
@@ -51,32 +51,32 @@
   },
   "Features": {
     "badge": "Sin apps, sin complicaciones",
-    "title": "Más que una invitación digital",
-    "description": "Cada invitación viene con todas las herramientas que necesitas para crear una experiencia memorable para tus invitados",
+    "title": "Todo lo que incluye tu invitación.",
+    "description": "Cada Bento viene con las herramientas que necesitás para que tu evento sea una experiencia completa, no solo una tarjeta digital",
     "features": [
       {
-        "title": "Invitación digital de diseñador",
-        "description": "Diseños de nivel profesional con RSVP automático, cuenta regresiva en vivo, dress code personalizado y links directos. Todo lo que necesitás para impresionar desde el primer momento."
-      },
-      {
         "title": "Álbum de fotos en tiempo real",
-        "description": "Subí tus fotos desde el celular y tus invitados las ven al instante. Creá una galería visual que se actualiza en vivo mientras organizás tu evento. Magia compartida."
+        "description": "Todos suben fotos desde el celular y las ven al instante. Una galería que se arma sola mientras vivís el evento. Sin compartir carpetas, sin grupos de fotos."
       },
       {
         "title": "Playlist colaborativa",
-        "description": "Dejá que tus invitados armen la banda sonora perfecta de tu evento. Moderá, aprobá y creá la lista definitiva que va a sonar en tu fiesta. Cero improvisación."
-      },
-      {
-        "title": "Dashboard de control total",
-        "description": "Confirmaciones en vivo, gestión de playlist, modificá imágenes, activá/desactivá funciones, cambiá template cuando quieras. Todo tu evento desde una sola pantalla. Sin estrés."
+        "description": "Dejá que tus invitados propongan las canciones. Moderás, aprobás y armás la lista definitiva. La banda sonora perfecta, elegida entre todos."
       },
       {
         "title": "Gestión profesional del evento",
-        "description": "Organizá mesas, gestioná invitados por grupos, controlá regalos, exportá todo a Excel y entregáselo listo a tu event planner o salón. Nivel coordinador profesional."
+        "description": "Organizá mesas, gestioná invitados por grupos, controlá regalos y exportá todo a Excel. Nivel coordinador profesional, sin contratar uno."
+      },
+      {
+        "title": "Dashboard de control total",
+        "description": "Confirmaciones en vivo, gestión de playlist, activá o desactivá secciones, cambiá template cuando quieras. Todo tu evento desde una sola pantalla."
+      },
+      {
+        "title": "Invitación digital de diseñador",
+        "description": "Diseños de nivel profesional con RSVP automático, cuenta regresiva en vivo, dress code y links directos. La primera impresión que tus invitados nunca van a olvidar."
       },
       {
         "title": "Soporte cuando lo necesités",
-        "description": "Asistencia real según tu plan. No te dejamos solo: respondemos rápido, resolvemos problemas y te ayudamos a que tu evento salga perfecto. Respaldo garantizado."
+        "description": "Asistencia real según tu plan. No te dejamos solo: respondemos rápido, resolvemos problemas y te ayudamos a que tu evento salga perfecto."
       }
     ],
     "benefitsTitle": "Y mucho más incluido",
@@ -237,30 +237,30 @@
     "subtitle": "Elegí tu favorito y personalizalo en minutos. Cada plantilla incluye RSVP, mapa, galería y playlist."
   },
   "B2BAwarenessBanner": {
-    "badge": "Para salones y empresas",
-    "title": "¿Gestionás eventos como parte de tu negocio?",
-    "subtitle": "Si tenés un salón, sos wedding planner o organizás eventos profesionalmente, Bento tiene un plan diseñado para vos. Ofrecé invitaciones premium a tus clientes y generá un ingreso recurrente sin trabajo extra.",
+    "badge": "Bento para empresas",
+    "title": "Una solución para quienes organizan eventos todo el año",
+    "subtitle": "Si tenés un salón, sos wedding planner o gestionás eventos profesionalmente, Bento Empresas te permite ofrecer invitaciones digitales premium a tus clientes con planes pensados para volumen.",
     "benefits": [
       {
         "icon": "💰",
-        "title": "Modelo de negocio simple",
-        "description": "Cuota mensual fija según tu volumen, sin comisiones ni sorpresas"
+        "title": "Dashboard para planners",
+        "description": "Gestioná eventos, clientes e invitaciones desde un panel pensado para equipos profesionales"
       },
       {
         "icon": "🎯",
-        "title": "ROI inmediato",
-        "description": "Lo incluís en tu paquete de servicios y recuperás la inversión rápidamente"
+        "title": "ROI claro para tu negocio",
+        "description": "Sumás más valor a tus paquetes y recuperás la inversión con eventos recurrentes"
       },
       {
         "icon": "✨",
-        "title": "Prueba sin compromiso",
-        "description": "Primer mes gratis para que lo pruebes con tus clientes"
+        "title": "Seguimiento y acompañamiento",
+        "description": "No ofrecés solo un link: acompañás a tus clientes durante todo el proceso del evento"
       }
     ],
     "cta": {
-      "primary": "Ver planes para empresas",
+      "primary": "Conocer Bento Empresas",
       "secondary": "Hablar con ventas"
     },
-    "trustLine": "+50 salones en Argentina · Planes flexibles según volumen · Primer mes sin costo"
+    "trustLine": "Para salones, wedding planners y organizadores profesionales en Argentina"
   }
 }

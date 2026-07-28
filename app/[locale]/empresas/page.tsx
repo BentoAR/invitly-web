@@ -1,9 +1,12 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import HeroB2B from "@/components/features/empresas/HeroB2B";
+import BeforeAfterB2B from "@/components/features/empresas/BeforeAfterB2B";
 import LogoWall from "@/components/features/empresas/LogoWall";
 import ValuePropsB2B from "@/components/features/empresas/ValuePropsB2B";
 import HowItWorksB2B from "@/components/features/empresas/HowItWorksB2B";
+import SalonControlB2B from "@/components/features/empresas/SalonControlB2B";
+import DashboardShowcaseB2B from "@/components/features/empresas/DashboardShowcaseB2B";
 import PricingB2B from "@/components/features/empresas/PricingB2B";
 import OtherChannels from "@/components/features/empresas/OtherChannels";
 import TestimonialsB2B from "@/components/features/empresas/TestimonialsB2B";
@@ -21,32 +24,32 @@ export async function generateMetadata({
 
   const title =
     locale === "es"
-      ? "Planes B2B para Salones y Wedding Planners | Bento Empresas"
-      : "B2B Plans for Event Venues and Wedding Planners | Bento Business";
+      ? "Planes para Salones y Wedding Planners | Bento para Empresas"
+      : "Plans for Event Venues and Wedding Planners | Bento for Business";
 
   const description =
     locale === "es"
-      ? "Ofrecé invitaciones digitales premium a tus clientes. Más de 50 salones confían en Bento. Planes B2B desde $250k/mes para salones de eventos, wedding planners y organizadores profesionales en Argentina. Primer mes gratis, ROI inmediato, soporte prioritario."
-      : "Offer premium digital invitations to your clients. Over 50 venues trust Bento. B2B plans from $250k/month for event venues, wedding planners and professional organizers in Argentina. First month free, immediate ROI, priority support.";
+      ? "Ofrecé invitaciones digitales premium a tus clientes. Planes a medida para salones de eventos, wedding planners y organizadores profesionales en Argentina. Plataforma completa con panel para planners, soporte en español."
+      : "Offer premium digital invitations to your clients. Custom plans for event venues, wedding planners and professional organizers. Complete platform with planner panel, support in Spanish.";
 
   const keywords =
     locale === "es"
       ? [
           "salones de eventos argentina",
           "wedding planner software",
-          "invitaciones digitales b2b",
+          "invitaciones digitales para empresas",
           "plataforma eventos corporativos",
           "software para wedding planners",
-          "gestión de eventos b2b",
+          "gestión de eventos profesionales",
           "invitaciones premium para salones",
         ]
       : [
           "event venues argentina",
           "wedding planner software",
-          "b2b digital invitations",
+          "business digital invitations",
           "corporate event platform",
           "wedding planner software",
-          "b2b event management",
+          "professional event management",
           "premium invitations for venues",
         ];
 
@@ -74,40 +77,53 @@ export async function generateMetadata({
   };
 }
 
+const SectionSkeleton = () => <div className="bg-neutral-950 py-24 md:py-32" />;
+
 export default async function EmpresasPage() {
   return (
-    <div className="min-h-screen">
-      {/* Hero B2B */}
+    <div className="min-h-screen bg-neutral-950">
       <HeroB2B />
 
-      {/* Logo Wall */}
-      <LogoWall />
+      <Suspense fallback={<SectionSkeleton />}>
+        <BeforeAfterB2B />
+      </Suspense>
 
-      {/* Value Props */}
-      <ValuePropsB2B />
+      <Suspense fallback={<SectionSkeleton />}>
+        <LogoWall />
+      </Suspense>
 
-      {/* How It Works */}
-      <HowItWorksB2B />
+      <Suspense fallback={<SectionSkeleton />}>
+        <ValuePropsB2B />
+      </Suspense>
 
-      {/* Pricing */}
-      <Suspense fallback={<div className="py-24" />}>
+      <Suspense fallback={<SectionSkeleton />}>
+        <HowItWorksB2B />
+      </Suspense>
+
+      <Suspense fallback={<SectionSkeleton />}>
+        <SalonControlB2B />
+      </Suspense>
+
+      <Suspense fallback={<SectionSkeleton />}>
+        <DashboardShowcaseB2B />
+      </Suspense>
+
+      <Suspense fallback={<SectionSkeleton />}>
         <PricingB2B />
       </Suspense>
 
-      {/* Other Channels */}
-      <OtherChannels />
+      <Suspense fallback={<SectionSkeleton />}>
+        <OtherChannels />
+      </Suspense>
 
-      {/* Testimonials */}
-      <Suspense fallback={<div className="py-24" />}>
+      <Suspense fallback={<SectionSkeleton />}>
         <TestimonialsB2B />
       </Suspense>
 
-      {/* FAQ */}
-      <Suspense fallback={<div className="py-24" />}>
+      <Suspense fallback={<SectionSkeleton />}>
         <FAQB2B />
       </Suspense>
 
-      {/* Final CTA */}
       <FinalCTAB2B />
     </div>
   );

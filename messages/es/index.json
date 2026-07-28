@@ -2,7 +2,7 @@
   "Navbar": {
     "inicio": "Inicio",
     "invitaciones": "Invitaciones",
-    "empresas": "Empresas",
+    "empresas": "Para empresas",
     "precios": "Precios",
     "contacto": "Contacto",
     "brand": "Bento",
@@ -15,6 +15,7 @@
     "home": "Inicio",
     "invitations": "Invitaciones",
     "pricing": "Precios",
+    "business": "Empresas",
     "contact": "Contacto",
     "contactTitle": "Contacto",
     "madeIn": "Hecho con ♥ en Argentina",

@@ -1,49 +1,50 @@
 import { getTranslations } from "next-intl/server";
+import {
+  BriefcaseBusiness,
+  Building2,
+  CalendarDays,
+  Handshake,
+  Heart,
+  PartyPopper,
+} from "lucide-react";
 import { Container } from "@/components/shared/Container";
+
+const icons = [Building2, Heart, CalendarDays, BriefcaseBusiness, PartyPopper, Handshake];
 
 export default async function LogoWall() {
   const t = await getTranslations("LogoWallB2B");
-
-  // Placeholders de logos de salones (SVG simples)
-  const logos = [
-    "Salón Las Cañitas",
-    "Espacio Eventos",
-    "La Quinta",
-    "Villa Marina",
-    "Salón Premier",
-    "Casa Rosada Events",
-  ];
+  const logos = t.raw("logos") as string[];
 
   return (
-    <section className="py-16 bg-[var(--muted-b2b)] border-y border-[var(--border-b2b)]">
-      <Container>
-        <p className="text-center text-sm font-semibold text-muted-foreground mb-10 uppercase tracking-wide">
-          {t("title")}
-        </p>
+    <section className="relative bg-neutral-950 py-14 overflow-hidden">
+      <p className="text-center text-xs font-semibold text-neutral-500 mb-10 uppercase tracking-[0.2em] relative z-10">
+        {t("title")}
+      </p>
 
-        {/* Grid de logos */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-          {logos.map((logo, idx) => (
-            <div
-              key={idx}
-              className="flex items-center justify-center p-4 rounded-lg bg-white/50 border border-[var(--border-b2b)] hover:bg-white transition-colors"
-            >
-              <div className="text-center">
-                {/* SVG placeholder simple */}
-                <svg
-                  className="w-full h-12 mx-auto mb-2"
-                  viewBox="0 0 120 40"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+      <Container>
+        <div className="relative overflow-hidden" style={{
+          maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+        }}>
+          <div className="flex w-max gap-px animate-marquee-b2b">
+            {[...logos, ...logos, ...logos].map((logo, idx) => {
+              const Icon = icons[idx % logos.length] ?? Building2;
+
+              return (
+                <div
+                  key={idx}
+                  className="flex-shrink-0 w-56 h-20 flex items-center justify-center px-6 border-r border-neutral-900/60 last:border-r-0 group cursor-pointer"
                 >
-                  <rect x="10" y="10" width="20" height="20" rx="4" fill="currentColor" opacity="0.3" />
-                  <rect x="35" y="10" width="75" height="6" rx="3" fill="currentColor" opacity="0.2" />
-                  <rect x="35" y="20" width="60" height="6" rx="3" fill="currentColor" opacity="0.15" />
-                </svg>
-                <p className="text-xs font-medium text-muted-foreground">{logo}</p>
+                  <div className="flex items-center gap-2 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
+                    <Icon className="h-[22px] w-[22px] text-neutral-400 group-hover:text-[#FFA459] transition-colors" strokeWidth={1.6} />
+                  <span className="text-sm font-semibold text-neutral-400 group-hover:text-white whitespace-nowrap tracking-tight transition-colors">
+                    {logo}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
       </Container>
     </section>

@@ -1,19 +1,32 @@
-import { getTranslations, getLocale } from "next-intl/server";
+"use client";
+
+import { useTranslations, useLocale } from "next-intl";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Container } from "./Container";
 
-export default async function Footer() {
-  const [t, locale] = await Promise.all([getTranslations("Footer"), getLocale()]);
+export default function Footer() {
+  const t = useTranslations("Footer");
+  const locale = useLocale();
+  const pathname = usePathname();
+  const isDarkPage = pathname.includes("/empresas");
 
   const links = [
     { label: t("home"), href: `/${locale}` },
     { label: t("invitations"), href: `/${locale}/templates` },
     { label: t("pricing"), href: `/${locale}/pricing` },
+    { label: t("business"), href: `/${locale}/empresas` },
     { label: t("contact"), href: `/${locale}/contact` },
   ];
 
   return (
-    <footer className="border-t bg-secondary/30 mt-20">
+    <footer
+      className={`${isDarkPage ? "" : "mt-20"} border-t ${
+        isDarkPage
+          ? "bg-neutral-950 border-neutral-800/60"
+          : "bg-secondary/30 border-border"
+      }`}
+    >
       <Container>
         <div className="py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-1 md:col-span-2">
@@ -29,17 +42,34 @@ export default async function Footer() {
                 className="h-8 w-auto"
               />
             </a>
-            <p className="text-sm text-muted-foreground max-w-md">
+            <p
+              className={`text-sm max-w-md ${
+                isDarkPage ? "text-neutral-400" : "text-muted-foreground"
+              }`}
+            >
               {t("description")}
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">{t("navigation")}</h4>
+            <h4
+              className={`font-semibold mb-4 ${
+                isDarkPage ? "text-white" : ""
+              }`}
+            >
+              {t("navigation")}
+            </h4>
             <ul className="space-y-2 text-sm">
               {links.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="text-muted-foreground hover:text-primary transition-colors">
+                  <a
+                    href={link.href}
+                    className={`transition-colors ${
+                      isDarkPage
+                        ? "text-neutral-400 hover:text-[#FFA459]"
+                        : "text-muted-foreground hover:text-primary"
+                    }`}
+                  >
                     {link.label}
                   </a>
                 </li>
@@ -48,7 +78,13 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="py-6 border-t flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-muted-foreground">
+        <div
+          className={`py-6 border-t flex flex-col sm:flex-row items-center justify-between gap-2 text-sm ${
+            isDarkPage
+              ? "border-neutral-800/60 text-neutral-500"
+              : "border-border text-muted-foreground"
+          }`}
+        >
           <p>{t("copyright")}</p>
           <p>{t("madeIn")}</p>
         </div>
