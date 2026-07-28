@@ -118,48 +118,44 @@
   },
   "PricingB2B": {
     "title": "Plans designed for your event volume",
-    "subtitle": "Choose the tier that best fits how many events you do per month. No commissions, no surprises.",
+    "subtitle": "Choose the plan that best fits how many events you do per month. No commissions, no surprises.",
     "trustLine": "No long-term contract · Support in Spanish · Cancel anytime",
-    "basico": {
-      "name": "Basic",
-      "description": "Up to 5 events per month",
-      "cta": "Contact us",
+    "esencial": {
+      "name": "Essential",
+      "price": "$290.000",
+      "description": "Up to 3 events per month",
+      "cta": "Get started",
       "features": [
-        "Unique venue link to track events",
-        "All premium templates (200+)",
-        "Unlimited automatic RSVP",
-        "Spotify collaborative playlist",
-        "Unlimited photo gallery",
-        "Control panel to view your events",
-        "Priority WhatsApp support",
-        "Sales materials for your clients"
+        "Celebration Plan on every event",
+        "Up to 400 guests per event",
+        "Manager panel: create events, assign planners and track your portfolio",
+        "Planner panel: each team member manages their assigned events",
+        "Up to 2 team members"
       ]
     },
-    "medio": {
-      "name": "Medium",
-      "description": "Up to 15 events per month",
-      "badge": "Most chosen by venues",
-      "cta": "Contact us",
+    "profesional": {
+      "name": "Professional",
+      "price": "$650.000",
+      "description": "Up to 8 events per month",
+      "badge": "Most popular",
+      "cta": "Get started",
       "features": [
-        "Everything from the Basic plan",
-        "Up to 15 simultaneous events",
-        "Usage analytics per event",
-        "Exclusive templates for your venue (optional)",
-        "Personalized onboarding for your team",
-        "Monthly activity reports"
+        "Everything in Essential",
+        "Up to 5 team members",
+        "Monthly reports",
+        "Priority support"
       ]
     },
-    "full": {
-      "name": "Full",
-      "description": "Unlimited events",
-      "cta": "Contact us",
+    "escala": {
+      "name": "Scale",
+      "price": "$1.350.000",
+      "description": "Up to 20 events per month",
+      "cta": "Get started",
       "features": [
-        "Everything from the Medium plan",
-        "No limit on events per month",
-        "Personalized branding (your logo on invitations)",
-        "Personalized subdomain (yourvenue.bento.com.ar)",
-        "Dedicated account manager",
-        "White-label dashboard for your team"
+        "Everything in Professional",
+        "Up to 10 team members",
+        "Advanced reports",
+        "Multi-venue management"
       ]
     }
   },
