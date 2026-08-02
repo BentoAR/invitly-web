@@ -16,7 +16,7 @@ import {
 import { getTemplates } from "@/services/templates";
 import { getCategories } from "@/services/categories";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
