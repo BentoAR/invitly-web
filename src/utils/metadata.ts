@@ -139,8 +139,5 @@ export function generatePageMetadata({
             "max-snippet": -1,
           },
         },
-    verification: {
-      google: "google-site-verification-code", // TODO: Add actual verification code
-    },
   };
 }
