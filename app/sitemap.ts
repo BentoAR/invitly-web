@@ -1,34 +1,33 @@
 import { MetadataRoute } from "next";
+import { siteConfig } from "@/src/utils/metadata";
+
+const STATIC_PAGES = [
+  { path: "", changeFrequency: "weekly" as const, priority: 1 },
+  { path: "/templates", changeFrequency: "daily" as const, priority: 0.9 },
+  { path: "/pricing", changeFrequency: "monthly" as const, priority: 0.9 },
+  { path: "/empresas", changeFrequency: "monthly" as const, priority: 0.8 },
+  { path: "/contact", changeFrequency: "monthly" as const, priority: 0.7 },
+];
+
+const LOCALES = ["es", "en"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://bento.com.ar";
-  const locales = ["es", "en"];
+  const baseUrl = siteConfig.url;
+  const lastModified = new Date();
 
-  const staticPages = [
-    "",
-    "/templates",
-    "/contact",
-  ];
-
-  const urls: MetadataRoute.Sitemap = [];
-
-  // Generate URLs for each locale
-  locales.forEach((locale) => {
-    staticPages.forEach((page) => {
-      urls.push({
-        url: `${baseUrl}/${locale}${page}`,
-        lastModified: new Date(),
-        changeFrequency: page === "" ? "weekly" : page === "/templates" ? "daily" : "monthly",
-        priority: page === "" ? 1 : page === "/templates" ? 0.9 : 0.8,
-        alternates: {
-          languages: {
-            es: `${baseUrl}/es${page}`,
-            en: `${baseUrl}/en${page}`,
-          },
+  return LOCALES.flatMap((locale) =>
+    STATIC_PAGES.map(({ path, changeFrequency, priority }) => ({
+      url: `${baseUrl}/${locale}${path}`,
+      lastModified,
+      changeFrequency,
+      priority,
+      alternates: {
+        languages: {
+          es: `${baseUrl}/es${path}`,
+          en: `${baseUrl}/en${path}`,
+          "x-default": `${baseUrl}/es${path}`,
         },
-      });
-    });
-  });
-
-  return urls;
+      },
+    }))
+  );
 }

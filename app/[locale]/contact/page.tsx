@@ -4,7 +4,7 @@ import ContactInfo from "@/components/features/contact/ContactInfo";
 import ContactForm from "@/components/features/contact/ContactForm";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import { generatePageMetadata } from "@/src/utils/metadata";
+import { generatePageMetadata, siteConfig } from "@/src/utils/metadata";
 import StructuredData from "@/components/shared/StructuredData";
 import { getOrganizationSchema, getBreadcrumbSchema } from "@/src/utils/structuredData";
 
@@ -47,8 +47,8 @@ export default async function Contact({
 
   const breadcrumbSchema = getBreadcrumbSchema(
     [
-      { name: "Home", url: `https://app.bento.com.ar/${locale}` },
-      { name: locale === "es" ? "Contacto" : "Contact", url: `https://app.bento.com.ar/${locale}/contact` },
+      { name: "Home", url: `${siteConfig.url}/${locale}` },
+      { name: locale === "es" ? "Contacto" : "Contact", url: `${siteConfig.url}/${locale}/contact` },
     ],
     locale
   );
