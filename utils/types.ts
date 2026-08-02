@@ -9,13 +9,12 @@ export interface Category {
   created_at: string;
   updated_at: string;
 }
+export type TemplateCategory = Pick<Category, "id" | "key" | "display_name">;
+
 export interface Template {
   id: string;
   name: string;
   display_name: string;
-  category: Category;
-  preview_url: string;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
+  category: TemplateCategory | null;
+  preview_url: string | null;
 }

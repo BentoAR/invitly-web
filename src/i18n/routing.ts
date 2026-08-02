@@ -1,10 +1,11 @@
 import { defineRouting } from "next-intl/routing";
 import { createNavigation } from "next-intl/navigation";
 
-export const LOCALES = ["en", "es"];
+export const LOCALES = ["es", "en"];
 export const routing = defineRouting({
   locales: LOCALES,
   defaultLocale: "es",
+  localeDetection: false,
 });
 
 export function stripLocaleFromPath(path: string) {

@@ -71,9 +71,8 @@ export function generatePageMetadata({
   ogImage = siteConfig.ogImage,
   noIndex = false,
 }: GenerateMetadataParams): Metadata {
-  const fullTitle = title ? `${title} | Bento` : "Bento";
+  const brandedTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.name;
   const url = `${siteConfig.url}/${locale}${path}`;
-  const canonicalPath = `/${locale}${path}`;
 
   const allKeywords = [
     ...keywords,
@@ -81,7 +80,7 @@ export function generatePageMetadata({
   ];
 
   return {
-    title: fullTitle,
+    title: title || { absolute: siteConfig.name },
     description,
     keywords: allKeywords.join(", "),
     authors: [{ name: "Bento", url: siteConfig.url }],
@@ -101,7 +100,7 @@ export function generatePageMetadata({
       },
     },
     openGraph: {
-      title: fullTitle,
+      title: brandedTitle,
       description,
       url,
       siteName: "Bento",
@@ -118,7 +117,7 @@ export function generatePageMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: fullTitle,
+      title: brandedTitle,
       description,
       images: [ogImage],
       creator: "@bentoinvitaciones",
@@ -139,8 +138,5 @@ export function generatePageMetadata({
             "max-snippet": -1,
           },
         },
-    verification: {
-      google: "google-site-verification-code", // TODO: Add actual verification code
-    },
   };
 }

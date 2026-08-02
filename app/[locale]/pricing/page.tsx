@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import type { Metadata } from "next";
-import { generatePageMetadata } from "@/src/utils/metadata";
+import { generatePageMetadata, siteConfig } from "@/src/utils/metadata";
 import StructuredData from "@/components/shared/StructuredData";
 import { getOrganizationSchema, getBreadcrumbSchema } from "@/src/utils/structuredData";
 import { PricingSkeleton } from "@/components/shared/skeletons/HomeSectionSkeletons";
@@ -49,10 +49,10 @@ export default async function PricingPage({
 
   const breadcrumbSchema = getBreadcrumbSchema(
     [
-      { name: "Home", url: `https://app.bento.com.ar/${locale}` },
+      { name: "Home", url: `${siteConfig.url}/${locale}` },
       {
         name: locale === "es" ? "Precios" : "Pricing",
-        url: `https://app.bento.com.ar/${locale}/pricing`,
+        url: `${siteConfig.url}/${locale}/pricing`,
       },
     ],
     locale

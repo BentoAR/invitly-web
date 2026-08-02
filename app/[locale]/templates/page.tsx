@@ -4,10 +4,17 @@ import { TemplatesGrid } from "@/components/features/templates/TemplatesGrid";
 import { CategorySelect } from "@/components/features/templates/CategorySelect";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import { generatePageMetadata } from "@/src/utils/metadata";
+import { generatePageMetadata, siteConfig } from "@/src/utils/metadata";
 import StructuredData from "@/components/shared/StructuredData";
 import { getOrganizationSchema, getBreadcrumbSchema } from "@/src/utils/structuredData";
 import { Suspense } from "react";
+import {
+  QueryClient,
+  dehydrate,
+  HydrationBoundary,
+} from "@tanstack/react-query";
+import { getTemplates } from "@/services/templates";
+import { getCategories } from "@/services/categories";
 
 export const revalidate = 3600;
 
@@ -68,10 +75,22 @@ export default async function Templates({
   const { locale } = await params;
   const t = await getTranslations("Templates");
 
+  const queryClient = new QueryClient();
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ["templates", []],
+      queryFn: () => getTemplates(),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["categories"],
+      queryFn: getCategories,
+    }),
+  ]);
+
   const breadcrumbSchema = getBreadcrumbSchema(
     [
-      { name: "Home", url: `https://app.bento.com.ar/${locale}` },
-      { name: locale === "es" ? "Plantillas" : "Templates", url: `https://app.bento.com.ar/${locale}/templates` },
+      { name: "Home", url: `${siteConfig.url}/${locale}` },
+      { name: locale === "es" ? "Plantillas" : "Templates", url: `${siteConfig.url}/${locale}/templates` },
     ],
     locale
   );
@@ -86,12 +105,12 @@ export default async function Templates({
           title={t("featuredInvitations")}
           description={t("featuredDescription")}
         />
-        <Suspense fallback={<div className="h-12 bg-muted/50 rounded-lg animate-pulse w-60" />}>
-          <CategorySelect />
-        </Suspense>
-        <Suspense fallback={<div className="mt-8 h-96 bg-muted/50 rounded-lg animate-pulse" />}>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <Suspense fallback={<div className="h-12 bg-muted/50 rounded-lg animate-pulse w-60" />}>
+            <CategorySelect />
+          </Suspense>
           <TemplatesGrid />
-        </Suspense>
+        </HydrationBoundary>
       </Container>
     </section>
   );
