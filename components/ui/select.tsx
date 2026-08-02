@@ -103,8 +103,9 @@ function SelectLabel({
 function SelectItem({
   className,
   children,
+  checked,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Item>) {
+}: React.ComponentProps<typeof SelectPrimitive.Item> & { checked?: boolean }) {
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
@@ -115,9 +116,13 @@ function SelectItem({
       {...props}
     >
       <span className="absolute right-2 flex size-3.5 items-center justify-center">
-        <SelectPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
-        </SelectPrimitive.ItemIndicator>
+        {checked !== undefined ? (
+          checked && <CheckIcon className="size-4" />
+        ) : (
+          <SelectPrimitive.ItemIndicator>
+            <CheckIcon className="size-4" />
+          </SelectPrimitive.ItemIndicator>
+        )}
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
     </SelectPrimitive.Item>

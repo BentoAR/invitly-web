@@ -67,13 +67,17 @@ export function CategorySelect() {
   if (!categories) return null;
   return (
     <div>
-      <Select onValueChange={handleAddCategory} aria-label={t("filterValue")}>
+      <Select value="" onValueChange={handleAddCategory} aria-label={t("filterValue")}>
         <SelectTrigger className="w-60">
           <SelectValue placeholder={t("filterValue")} />
         </SelectTrigger>
         <SelectContent className="w-60">
           {categories.map((cat: Category) => (
-            <SelectItem key={cat.id} value={cat.display_name}>
+            <SelectItem
+              key={cat.id}
+              value={cat.display_name}
+              checked={selectedCategories.some((c) => c.id === cat.id)}
+            >
               {cat.display_name}
             </SelectItem>
           ))}
