@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom";
 
-// Mock next-intl/server
 jest.mock("next-intl/server", () => ({
   getTranslations: jest.fn(() => (key: string) => {
     const translations: Record<string, string> = {
@@ -38,6 +37,17 @@ Object.defineProperty(window, "ResizeObserver", {
   })),
 });
 
+Object.defineProperty(window, "IntersectionObserver", {
+  writable: true,
+  value: jest.fn().mockImplementation((callback) => ({
+    observe: jest.fn(() => {
+      callback([{ isIntersecting: true }]);
+    }),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  })),
+});
+
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
@@ -51,7 +61,6 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
-// Mock GSAP and ScrollTrigger
 jest.mock("gsap", () => {
   const mockTimeline = {
     to: jest.fn().mockReturnThis(),
