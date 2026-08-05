@@ -24,6 +24,8 @@
       "Video": "Video",
       "Lista regalos": "Lista regalos"
     },
-    "getMessage": "Hola, quiero obtener esta invitación: {name}"
+    "getMessage": "Hola, quiero obtener esta invitación: {name}",
+    "seeAllTitle": "¿Querés ver todas las plantillas?",
+    "seeAllCta": "Ver catálogo completo"
   }
 }
