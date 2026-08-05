@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useMemo } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,6 @@ interface Plan {
 }
 
 interface PricingClientProps {
-  badge: string;
   title: string;
   subtitle: string;
   plans: Plan[];
@@ -40,7 +39,6 @@ interface PricingClientProps {
 }
 
 export default function PricingClient({
-  badge,
   title,
   subtitle,
   plans,
@@ -55,10 +53,7 @@ export default function PricingClient({
   const rightTextRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  const getCtaHref = useMemo(
-    () => (_planName: string) => `${APP_URL}/billing/upgrade?reason=purchase`,
-    []
-  );
+  const ctaHref = `${APP_URL}/billing/upgrade?reason=purchase`;
 
   useLayoutEffect(() => {
     if (headerRef.current) gsap.set(headerRef.current, { opacity: 1, filter: "blur(0px)" });
@@ -75,7 +70,6 @@ export default function PricingClient({
       id="precios"
       className="relative flex items-center bg-background overflow-hidden py-16 lg:py-24"
     >
-      {/* Fade top/bottom — mobile only */}
       <div
         className="lg:hidden absolute top-0 left-0 right-0 h-24 pointer-events-none z-20"
         style={{ background: "linear-gradient(to bottom, var(--background) 0%, transparent 100%)" }}
@@ -85,51 +79,43 @@ export default function PricingClient({
         style={{ background: "linear-gradient(to top, var(--background) 0%, transparent 100%)" }}
       />
 
-      {/* Círculos naranjas decorativos de fondo - más intensos */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {/* Círculo superior izquierda */}
         <div
           className="absolute -top-48 -left-48 w-96 h-96 rounded-full blur-3xl"
           style={{
             background: "radial-gradient(circle, rgba(255,164,89,0.25) 0%, transparent 70%)",
           }}
         />
-        {/* Círculo superior derecha */}
         <div
           className="absolute -top-32 -right-32 w-80 h-80 rounded-full blur-3xl"
           style={{
             background: "radial-gradient(circle, rgba(188,129,41,0.22) 0%, transparent 70%)",
           }}
         />
-        {/* Círculo centro */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32rem] h-[32rem] rounded-full blur-3xl"
           style={{
             background: "radial-gradient(ellipse, rgba(255,164,89,0.15) 0%, transparent 60%)",
           }}
         />
-        {/* Círculo inferior izquierda */}
         <div
           className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-3xl"
           style={{
             background: "radial-gradient(circle, rgba(188,129,41,0.18) 0%, transparent 70%)",
           }}
         />
-        {/* Círculo inferior derecha */}
         <div
           className="absolute -bottom-32 -right-24 w-72 h-72 rounded-full blur-3xl"
           style={{
             background: "radial-gradient(circle, rgba(255,164,89,0.2) 0%, transparent 70%)",
           }}
         />
-        {/* Círculo extra izquierda medio */}
         <div
           className="absolute top-1/3 -left-24 w-64 h-64 rounded-full blur-3xl"
           style={{
             background: "radial-gradient(circle, rgba(255,164,89,0.18) 0%, transparent 70%)",
           }}
         />
-        {/* Círculo extra derecha medio */}
         <div
           className="absolute top-2/3 -right-32 w-80 h-80 rounded-full blur-3xl"
           style={{
@@ -138,7 +124,6 @@ export default function PricingClient({
         />
       </div>
 
-      {/* Patrón de dots para más textura */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -150,7 +135,6 @@ export default function PricingClient({
         aria-hidden="true"
       />
 
-      {/* Overlay izquierdo con blur + texto - solo desktop */}
       <div
         ref={leftOverlayRef}
         className="hidden lg:flex absolute top-0 left-0 h-full items-center justify-end pr-12 pointer-events-none z-20"
@@ -177,7 +161,6 @@ export default function PricingClient({
         </div>
       </div>
 
-      {/* Overlay derecho con blur + texto - solo desktop */}
       <div
         ref={rightOverlayRef}
         className="hidden lg:flex absolute top-0 right-0 h-full items-center justify-start pl-12 pointer-events-none z-20"
@@ -205,7 +188,22 @@ export default function PricingClient({
       </div>
 
       <div className="relative max-w-6xl mx-auto px-6 lg:px-16 z-10 w-full">
-        <div ref={headerRef} />
+        {/* El encabezado existía como `<div ref={headerRef} />` VACÍO: badge,
+            title y subtitle llegaban por props y nunca se renderizaban. La
+            sección de precios se mostraba sin ningún texto que la explicara. */}
+        <div ref={headerRef} className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+          <h2
+            className="font-display font-normal leading-[1.1] mb-4"
+            style={{
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              color: "#200041",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            {title}
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground">{subtitle}</p>
+        </div>
 
         <div ref={cardsGridRef} className="grid md:grid-cols-3 gap-6 items-start">
           {plans.map((plan) => (
@@ -247,10 +245,10 @@ export default function PricingClient({
                 ))}
               </ul>
               <Link
-                href={getCtaHref(plan.name)}
+                href={ctaHref}
                 onClick={() => analytics.planCtaClick(plan.name)}
               >
-                <Button className="w-full" variant={plan.featured ? "default" : "outline"}>
+                <Button className="min-h-11 w-full" variant={plan.featured ? "default" : "outline"}>
                   {plan.cta}
                 </Button>
               </Link>
@@ -265,7 +263,7 @@ export default function PricingClient({
           <span className="hidden sm:block">·</span>
           <span>
             {footer.line3}{" "}
-            <a href="#contacto" className="text-primary underline underline-offset-4 hover:no-underline">
+            <a href="#contacto" className="inline-flex min-h-11 items-center text-primary underline underline-offset-4 hover:no-underline">
               {footer.line3Link}
             </a>
           </span>

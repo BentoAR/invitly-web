@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import type { Metadata } from "next";
 import Hero from "@/components/features/home/Hero";
 import SEOContent from "@/components/features/home/SEOContent";
+import ProblemSection from "@/components/features/home/ProblemSection";
 
 const SocialProofBanner = lazy(() => import("@/components/features/home/SocialProofBanner"));
 import StructuredData from "@/components/shared/StructuredData";
@@ -12,20 +13,18 @@ import {
   getServiceSchema,
   getEventSchema,
 } from "@/src/utils/structuredData";
-import { getTranslations } from "next-intl/server";
 
-const HowItWorksSection = lazy(() => import("@/components/features/home/HowItWorksSection"));
+const LiveDemo = lazy(() => import("@/components/features/home/LiveDemo"));
+const DashboardShowcase = lazy(() => import("@/components/features/home/DashboardShowcase"));
 const TemplatesSection = lazy(() => import("@/components/features/home/TemplatesSection"));
-const B2BAwarenessBanner = lazy(() => import("@/components/features/home/B2BAwarenessBanner"));
-const Features = lazy(() => import("@/components/features/home/Features"));
-const Testimonials = lazy(() => import("@/components/features/home/Testimonials"));
+const Pricing = lazy(() => import("@/components/features/home/Pricing"));
+const RiskReversal = lazy(() => import("@/components/features/home/RiskReversal"));
 const FAQ = lazy(() => import("@/components/features/home/FAQ"));
+const FinalCta = lazy(() => import("@/components/features/home/FinalCta"));
 
 import { FeaturesSkeleton } from "@/components/shared/skeletons/FeaturesSkeleton";
 import {
-  HowItWorksSkeleton,
   TemplatesSectionSkeleton,
-  TestimonialsSkeleton,
   BannerSkeleton,
   FAQSkeleton,
 } from "@/components/shared/skeletons/HomeSectionSkeletons";
@@ -38,12 +37,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Hero" });
 
   const description =
     locale === "es"
-      ? "Crea invitaciones digitales profesionales para bodas, cumpleaños, eventos corporativos y más. Más de 200 plantillas premium, RSVP automático, playlist colaborativa y gestión completa de invitados. La plataforma #1 de invitaciones digitales en Argentina con más de 10,000 eventos organizados."
-      : "Create professional digital invitations for weddings, birthdays, corporate events and more. Over 200 premium templates, automatic RSVP, collaborative playlist and complete guest management. The #1 digital invitation platform in Argentina with over 10,000 events organized.";
+      ? "Invitaciones digitales con panel de control para bodas, XV años, cumpleaños y eventos corporativos. RSVP automático, álbum colaborativo, playlist moderada y gestión completa de invitados. Pagás una vez por evento, desde $60.000. Sin suscripción."
+      : "Digital invitations with a control panel for weddings, birthdays and corporate events. Automatic RSVP, collaborative album, moderated playlist and complete guest management. One payment per event. No subscription.";
 
   const keywords =
     locale === "es"
@@ -84,6 +82,31 @@ export async function generateMetadata({
   };
 }
 
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * HOME — estructura de embudo
+ * ─────────────────────────────────────────────────────────────────────────────
+ * El orden NO es estético, es un argumento de venta. Cada bloque responde a la
+ * objeción que deja abierta el anterior:
+ *
+ *   1  Hero              → qué es y cuánto sale
+ *   2  Problema          → por qué te importa
+ *   3  Demo interactiva  → cómo se siente (única vista del panel pre-compra)
+ *   4  Templates         → cómo se va a ver el mío
+ *   5  Panel real        → qué estás comprando
+ *   6  Precio            → cuánto sale exactamente
+ *   7  Sin riesgo        → qué pasa si me arrepiento
+ *   8  FAQ               → objeciones de compra restantes
+ *   9  CTA final         → dónde hago click
+ *
+ * Antes la home terminaba en el FAQ, sin CTA de cierre, y el precio vivía en
+ * otra página. Si movés un bloque, movés el argumento.
+ *
+ * `HowItWorksSection` quedó DESMONTADA a propósito: la demo interactiva del
+ * bloque 3 cumple su función de forma verificable, y su pin costaba ~7
+ * viewports de scroll. El componente sigue en el repo por si se quiere volver.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
 export default async function Home({
   params,
 }: {
@@ -102,62 +125,41 @@ export default async function Home({
     <div className="min-h-screen">
       <StructuredData data={structuredData} />
       <SEOContent />
+
       <Hero />
+
       <Suspense fallback={<BannerSkeleton />}>
         <SocialProofBanner />
       </Suspense>
-      <Suspense fallback={<HowItWorksSkeleton />}>
-        <HowItWorksSection />
+
+      <ProblemSection />
+
+      <Suspense fallback={<FeaturesSkeleton />}>
+        <LiveDemo />
       </Suspense>
+
       <Suspense fallback={<TemplatesSectionSkeleton />}>
         <TemplatesSection />
       </Suspense>
-      <div className="relative" style={{ backgroundColor: "#fff8f0" }}>
-        <div
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{
-            backgroundImage: `
-              radial-gradient(ellipse 900px 500px at 20% 65%,
-                rgba(255, 164, 89, 0.45) 0%,
-                rgba(255, 180, 120, 0.35) 18%,
-                rgba(255, 200, 150, 0.25) 35%,
-                rgba(255, 220, 180, 0.15) 50%,
-                transparent 68%),
-              radial-gradient(ellipse 750px 420px at 80% 30%,
-                rgba(255, 140, 70, 0.5) 0%,
-                rgba(255, 164, 89, 0.38) 20%,
-                rgba(255, 190, 130, 0.25) 40%,
-                rgba(255, 210, 170, 0.12) 55%,
-                transparent 70%),
-              radial-gradient(ellipse 650px 380px at 45% 50%,
-                rgba(255, 180, 100, 0.42) 0%,
-                rgba(255, 200, 140, 0.3) 22%,
-                rgba(255, 220, 180, 0.18) 45%,
-                transparent 65%),
-              radial-gradient(ellipse 550px 320px at 70% 75%,
-                rgba(255, 150, 80, 0.48) 0%,
-                rgba(255, 175, 110, 0.32) 20%,
-                rgba(255, 200, 150, 0.2) 42%,
-                transparent 62%),
-              radial-gradient(ellipse 800px 450px at 10% 25%,
-                rgba(255, 164, 89, 0.4) 0%,
-                rgba(255, 185, 125, 0.28) 22%,
-                rgba(255, 210, 165, 0.15) 45%,
-                transparent 68%)`,
-          }}
-        />
-        <Suspense fallback={<FeaturesSkeleton />}>
-          <Features />
-        </Suspense>
-        <Suspense fallback={<TestimonialsSkeleton />}>
-          <Testimonials />
-        </Suspense>
-      </div>
-      <Suspense fallback={<BannerSkeleton />}>
-        <B2BAwarenessBanner />
+
+      <Suspense fallback={<FeaturesSkeleton />}>
+        <DashboardShowcase />
       </Suspense>
+
+      <Suspense fallback={<FeaturesSkeleton />}>
+        <Pricing />
+      </Suspense>
+
+      <Suspense fallback={<FeaturesSkeleton />}>
+        <RiskReversal />
+      </Suspense>
+
       <Suspense fallback={<FAQSkeleton />}>
         <FAQ />
+      </Suspense>
+
+      <Suspense fallback={<BannerSkeleton />}>
+        <FinalCta />
       </Suspense>
     </div>
   );

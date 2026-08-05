@@ -7,17 +7,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const ITEMS = [
-  { text: "Pagás por evento", highlight: true },
-  { text: "Casamientos", highlight: false },
-  { text: "Quinceañeros", highlight: false },
-  { text: "Cumpleaños", highlight: false },
-  { text: "Eventos corporativos", highlight: false },
-  { text: "Egresados", highlight: false },
-  { text: "Baby showers", highlight: false },
-  { text: "Bautismos", highlight: false },
-  { text: "Aniversarios", highlight: false },
+  { text: "Un pago por evento", highlight: true },
   { text: "Sin suscripción mensual", highlight: true },
-  { text: "Respuesta en menos de 1hs", highlight: true },
+  { text: "Para todos tus invitados", highlight: false },
+  { text: "RSVP automático", highlight: false },
+  { text: "Álbum colaborativo", highlight: false },
+  { text: "Playlist compartida", highlight: false },
+  { text: "Respuesta en menos de 1 h", highlight: true },
   { text: "Soporte en español", highlight: true },
 ];
 
@@ -34,13 +30,14 @@ export default function SocialProofBanner() {
     const ticker = tickerRef.current;
     if (!banner || !ticker) return;
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     // Estado inicial fuera del context
     gsap.set(banner, { autoAlpha: 0, y: 28 });
 
     const rafId = requestAnimationFrame(() => ScrollTrigger.refresh());
 
     const ctx = gsap.context(() => {
-      // Entrada del banner con scrub
       gsap.fromTo(
         banner,
         { autoAlpha: 0, y: 28 },
@@ -58,6 +55,8 @@ export default function SocialProofBanner() {
         }
       );
 
+      if (prefersReducedMotion) return;
+
       // Ticker infinito — arranca después del primer frame para medir scrollWidth
       const innerRafId = requestAnimationFrame(() => {
         const totalWidth = ticker.scrollWidth / 3;
@@ -72,7 +71,9 @@ export default function SocialProofBanner() {
         });
       });
 
-      return () => cancelAnimationFrame(innerRafId);
+      return () => {
+        if (!prefersReducedMotion) cancelAnimationFrame(innerRafId);
+      };
     }, banner);
 
     return () => {
@@ -109,7 +110,8 @@ export default function SocialProofBanner() {
         ))}
       </div>
       <p className="sr-only">
-        Casamientos, quinceañeros, cumpleaños, eventos corporativos, egresados, baby showers, bautismos y aniversarios. Pagás por evento, sin suscripción mensual. Soporte en español con respuesta en menos de una hora.
+        Un pago por evento, sin suscripción mensual. Invitados para todo tu evento, RSVP automático,
+        álbum colaborativo, playlist compartida y soporte en español.
       </p>
     </div>
   );

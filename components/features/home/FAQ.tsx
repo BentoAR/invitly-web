@@ -18,7 +18,7 @@ export default async function FAQ() {
   return (
     <>
       <StructuredData data={faqSchema} />
-      <FAQClient badge={t("badge")} title={t("title")} faqs={faqs} />
+      <FAQClient title={t("title")} subtitle={t("subtitle")} faqs={faqs} />
     </>
   );
 }
