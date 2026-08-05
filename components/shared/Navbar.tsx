@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations, useLocale } from "next-intl";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import { Container } from "@/components/shared/Container";
 import { analytics } from "@/utils/analytics";
 
 const APP_URL = "https://app.bento.com.ar";
+const subscribeToHydration = () => () => {};
 
 export const Navbar = () => {
   const t = useTranslations("Navbar");
@@ -29,6 +30,11 @@ export const Navbar = () => {
   ];
 
   const [isOpen, setIsOpen] = useState(false);
+  const isInteractive = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false
+  );
   const [hasScrolled, setHasScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
 
@@ -54,8 +60,8 @@ export const Navbar = () => {
       }`;
 
   const linkBaseClass = isDarkPage
-    ? "text-sm font-medium transition-colors relative text-white/70 hover:text-white"
-    : "text-sm font-medium transition-colors hover:text-primary relative";
+    ? "inline-flex min-h-11 min-w-11 items-center justify-center text-sm font-medium transition-colors relative text-white/70 hover:text-white"
+    : "inline-flex min-h-11 min-w-11 items-center justify-center text-sm font-medium transition-colors hover:text-primary relative";
   const linkActiveClass = isDarkPage
     ? "text-[#FFA459]"
     : "text-primary";
@@ -73,13 +79,13 @@ export const Navbar = () => {
     >
       <Container>
         <div className="flex h-16 items-center justify-between">
-          <a href={`/${locale}`} className="flex items-center gap-2 group">
+          <a href={`/${locale}`} className="flex min-h-11 items-center gap-2 group">
             <Image
               src="https://d14sb9d2krfjkl.cloudfront.net/media/Frame+14+(1).svg"
               alt="Bento Logo"
-              width={120}
+              width={81}
               height={32}
-              className="transition-transform group-hover:scale-105"
+              className="h-8 w-[81px] transition-transform group-hover:scale-105"
               priority
             />
           </a>
@@ -109,13 +115,24 @@ export const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <LanguageToggle
-              className={
-                isDarkPage
-                  ? "bg-white/5 border-white/20 text-white hover:bg-white/10"
-                  : ""
-              }
-            />
+            {isInteractive ? (
+              <LanguageToggle
+                className={
+                  isDarkPage
+                    ? "bg-white/5 border-white/20 text-white hover:bg-white/10"
+                    : ""
+                }
+              />
+            ) : (
+              <span
+                aria-hidden="true"
+                className={`inline-flex h-11 w-24 items-center rounded-md border px-3 text-sm ${
+                  isDarkPage ? "border-white/20 bg-white/5 text-white" : "border-input bg-background"
+                }`}
+              >
+                {locale.toUpperCase()}
+              </span>
+            )}
             <a
               href={`${APP_URL}/login`}
               target="_blank"
@@ -125,7 +142,7 @@ export const Navbar = () => {
               <Button
                 variant="outline"
                 size="sm"
-                className={loginButtonClass}
+                className={`min-h-11 ${loginButtonClass}`}
               >
                 {t("login")}
               </Button>
@@ -133,20 +150,31 @@ export const Navbar = () => {
           </div>
 
           <div className="flex md:hidden items-center gap-2">
-            <LanguageToggle
-              className={
-                isDarkPage
-                  ? "bg-white/5 border-white/20 text-white"
-                  : ""
-              }
-            />
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            {isInteractive ? (
+              <LanguageToggle
+                className={
+                  isDarkPage
+                    ? "bg-white/5 border-white/20 text-white"
+                    : ""
+                }
+              />
+            ) : (
+              <span
+                aria-hidden="true"
+                className={`inline-flex h-11 w-24 items-center rounded-md border px-3 text-sm ${
+                  isDarkPage ? "border-white/20 bg-white/5 text-white" : "border-input bg-background"
+                }`}
+              >
+                {locale.toUpperCase()}
+              </span>
+            )}
+            {isInteractive ? <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
                   aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
-                  className={isDarkPage ? "text-white hover:bg-white/10" : ""}
+                  className={`size-11 ${isDarkPage ? "text-white hover:bg-white/10" : ""}`}
                 >
                   {isOpen ? (
                     <X className="h-5 w-5" />
@@ -201,7 +229,7 @@ export const Navbar = () => {
                     >
                       <Button
                         variant="outline"
-                        className={`w-full ${
+                        className={`min-h-11 w-full ${
                           isDarkPage
                             ? "border-white/20 bg-white/5 text-white hover:bg-white/10"
                             : ""
@@ -213,7 +241,16 @@ export const Navbar = () => {
                   </div>
                 </div>
               </SheetContent>
-            </Sheet>
+            </Sheet> : (
+              <span
+                aria-hidden="true"
+                className={`inline-flex size-11 items-center justify-center rounded-lg ${
+                  isDarkPage ? "text-white" : "text-foreground"
+                }`}
+              >
+                <Menu className="h-5 w-5" />
+              </span>
+            )}
           </div>
         </div>
       </Container>

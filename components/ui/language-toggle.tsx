@@ -25,7 +25,7 @@ export function LanguageToggle({ className }: LanguageToggleProps) {
   return (
     <Select value={currentLocale} onValueChange={handleLocaleChange}>
       <SelectTrigger
-        className={`w-24 ${className || ""}`}
+        className={`h-11 min-h-11 w-24 ${className || ""}`}
         aria-label="Cambiar idioma"
       >
         <SelectValue placeholder="Idioma" />

@@ -37,9 +37,9 @@ export default function Footer() {
               <Image
                 src="https://d14sb9d2krfjkl.cloudfront.net/media/Frame+14+(1).svg"
                 alt="Bento Logo"
-                width={100}
+                width={81}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-[81px]"
               />
             </a>
             <p
@@ -49,6 +49,16 @@ export default function Footer() {
             >
               {t("description")}
             </p>
+            <a
+              href={`/${locale}/empresas`}
+              className={`mt-4 inline-flex text-sm transition-colors ${
+                isDarkPage
+                  ? "text-neutral-400 hover:text-white"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {t("businessCta")}
+            </a>
           </div>
 
           <div>
@@ -59,12 +69,12 @@ export default function Footer() {
             >
               {t("navigation")}
             </h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-1 text-sm">
               {links.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className={`transition-colors ${
+                    className={`inline-flex py-1 transition-colors ${
                       isDarkPage
                         ? "text-neutral-400 hover:text-[#FFA459]"
                         : "text-muted-foreground hover:text-primary"

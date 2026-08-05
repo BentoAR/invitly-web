@@ -8,10 +8,14 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (window.innerWidth < 768) return;
+    // El smooth scroll altera la relación entre el gesto y el movimiento de
+    // la página. Para quien pidió menos movimiento, eso es exactamente lo que
+    // no quiere: se respeta la preferencia del sistema.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // Diferir la inicialización de Lenis + GSAP hasta después de que el
-    // navegador haya pintado el LCP y esté idle. Esto elimina el bloqueo
-    // de main thread durante FCP/LCP.
+    // Lenis no es crítico para leer ni navegar la home. Arrancarlo durante
+    // la carga compite con el LCP y el JS de producto; el scroll nativo ya
+    // funciona mientras tanto y la mejora se activa luego del primer tramo.
     const initScroll = async () => {
       const [{ default: Lenis }, { gsap }, { ScrollTrigger }] = await Promise.all([
         import("lenis"),
@@ -79,20 +83,12 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       };
     };
 
-    // Usar requestIdleCallback cuando esté disponible; fallback a setTimeout
-    if ("requestIdleCallback" in window) {
-      const id = requestIdleCallback(initScroll, { timeout: 2000 });
-      return () => {
-        cancelIdleCallback(id);
-        cleanupRef.current?.();
-      };
-    } else {
-      const id = setTimeout(initScroll, 200);
-      return () => {
-        clearTimeout(id);
-        cleanupRef.current?.();
-      };
-    }
+    const timeoutId = window.setTimeout(initScroll, 8000);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      cleanupRef.current?.();
+    };
   }, []);
 
   return <>{children}</>;
