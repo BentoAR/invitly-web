@@ -31,7 +31,6 @@ export default async function Pricing() {
 
   return (
     <PricingClient
-      badge={t("badge")}
       title={t("title")}
       subtitle={t("subtitle")}
       plans={plans}

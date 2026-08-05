@@ -1,25 +1,37 @@
-import { ArrowRight, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/shared/Container";
 import { getTranslations, getLocale } from "next-intl/server";
-import Link from "next/link";
 import Image from "next/image";
-import HeroTypewriter from "@/components/features/home/HeroTypewriter";
+import { Container } from "@/components/shared/Container";
 import HeroPhonesWrapper from "@/components/features/home/HeroPhonesWrapper";
+import HeroActions from "@/components/features/home/HeroActions";
+import {
+  DEMO_INVITATION_URL,
+  getPrimaryCtaHref,
+  isPrimaryCtaExternal,
+  CTA_MODE,
+} from "@/src/config/cta";
 
 const PHONE_FRONT_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+costado.png";
 const PHONE_LATERAL_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+lateral.png";
 
-const DEMO_INVITATION_URL = "https://inv.bento.com.ar/demo/autumn";
-
+/**
+ * Bloque 1 — Hero.
+ *
+ * Cambios respecto de la versión anterior:
+ *  · Se quitó el typewriter rotativo del H1. La promesa ahora es FIJA: un
+ *    visitante que aterriza en el segundo 3 leía una promesa distinta al que
+ *    aterrizaba en el segundo 6. Eso costaba comprensión.
+ *  · El precio de entrada aparece arriba del pliegue. En un modelo pay-first
+ *    el precio es la primera objeción: esconderlo solo mueve el rebote una
+ *    página más adelante.
+ *  · El destino del CTA sale de `src/config/cta.ts`, no está hardcodeado acá.
+ */
 export default async function Hero() {
   const [t, locale] = await Promise.all([getTranslations("Hero"), getLocale()]);
-  const words = t.raw("words") as string[];
 
   const stats = [
     { value: "RSVP", label: t("stats.rsvp") },
-    { value: "∞", label: t("stats.guests") },
-    { value: "<1hs", label: t("stats.support") },
+    { value: t("stats.guestsValue"), label: t("stats.guests") },
+    { value: "<1 h", label: t("stats.support") },
   ];
 
   return (
@@ -31,16 +43,19 @@ export default async function Hero() {
         aria-label={t("title") + " " + t("subtitle")}
       >
         <div
-          className="absolute inset-0 bg-(--gradient-hero) opacity-60"
+          className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
+          style={{
+            backgroundImage:
+              "radial-gradient(ellipse 1100px 620px at 18% 28%, rgba(255,164,89,0.22) 0%, transparent 68%), radial-gradient(ellipse 900px 520px at 82% 72%, rgba(255,140,70,0.16) 0%, transparent 70%)",
+          }}
         />
 
         <Container className="relative z-10">
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:items-center" style={{ minHeight: "min(600px, 80vh)" }}>
-            {/* Phones: first on mobile (top), second column on desktop (right) */}
-            <div aria-hidden="true" className="lg:order-2">
-              <div className="lg:hidden relative h-[380px]">
-                <div className="absolute right-[4%] top-8 w-[50%] md:w-[72%] drop-shadow-[0_24px_48px_rgba(0,0,0,0.22)]">
+          <div className="flex flex-col gap-7 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12" style={{ minHeight: "min(600px, 80vh)" }}>
+            <div aria-hidden="true" className="order-2 lg:order-2">
+              <div className="relative h-[280px] sm:h-[330px] lg:hidden">
+                <div className="absolute right-[8%] top-5 w-[45%] drop-shadow-[0_24px_48px_rgba(0,0,0,0.22)]">
                   <Image
                     src={PHONE_FRONT_URL}
                     alt={t("imageAlt")}
@@ -49,10 +64,10 @@ export default async function Hero() {
                     className="w-full h-auto"
                     priority
                     fetchPriority="high"
-                    sizes="(max-width: 768px) 50vw, 72vw"
+                    sizes="45vw"
                   />
                 </div>
-                <div className="absolute left-[-5%] top-16 w-[82%] md:top-0 md:left-[2%] md:w-[42%] drop-shadow-[0_20px_40px_rgba(0,0,0,0.20)] opacity-100 md:opacity-[0.88]">
+                <div className="absolute left-[-2%] top-10 w-[72%] drop-shadow-[0_20px_40px_rgba(0,0,0,0.20)] opacity-95">
                   <Image
                     src={PHONE_LATERAL_URL}
                     alt={t("imageAlt")}
@@ -61,63 +76,40 @@ export default async function Hero() {
                     className="w-full h-auto"
                     priority
                     fetchPriority="high"
-                    sizes="(max-width: 768px) 82vw, 42vw"
+                    sizes="72vw"
                   />
                 </div>
               </div>
             </div>
-            {/* Content: second on mobile (below phones), first column on desktop (left) */}
+
             <div
               data-hero="content"
-              className="text-center lg:text-left lg:order-1"
+              className="order-1 pt-6 text-center lg:order-1 lg:pt-0 lg:text-left"
             >
               <h1
                 data-hero="title"
-                className="font-display font-normal mb-4 leading-tight"
-                style={{ fontSize: "clamp(3rem, 7.5vh, 4.5rem)" }}
+                className="font-display font-normal mb-4 leading-[1.08]"
+                style={{ fontSize: "clamp(2.5rem, 6.5vh, 4.25rem)", letterSpacing: "-0.02em" }}
               >
-                <HeroTypewriter words={words} />{" "}
                 {t("title")}
               </h1>
 
               <p
                 data-hero="subtitle"
-                className="text-muted-foreground mb-5 max-w-xl mx-auto lg:mx-0"
-                style={{ fontSize: "clamp(0.9rem, 2vh, 1.25rem)" }}
+                className="text-muted-foreground mb-6 max-w-xl mx-auto lg:mx-0"
+                style={{ fontSize: "clamp(0.95rem, 2vh, 1.2rem)" }}
               >
                 {t("subtitle")}
               </p>
 
-              <div
-                data-hero="cta"
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-              >
-                <Link href={`/${locale}/pricing`}>
-                  <Button
-                    size="lg"
-                    className="shadow-elegant group w-full sm:w-auto"
-                    aria-label={t("button.primary")}
-                  >
-                    {t("button.primary")}
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </Button>
-                </Link>
-                <Link
-                  href={DEMO_INVITATION_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="w-full sm:w-auto"
-                    aria-label={t("button.secondary")}
-                  >
-                    {t("button.secondary")}
-                    <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </Button>
-                </Link>
-              </div>
+              <HeroActions
+                primaryLabel={t("button.primary")}
+                secondaryLabel={t("button.secondary")}
+                primaryHref={getPrimaryCtaHref(locale)}
+                primaryExternal={isPrimaryCtaExternal()}
+                ctaMode={CTA_MODE}
+                demoHref={DEMO_INVITATION_URL}
+              />
 
               <p className="mt-4 text-xs text-muted-foreground text-center lg:text-left">
                 {t("trust")}
@@ -138,15 +130,13 @@ export default async function Hero() {
             </div>
           </div>
         </Container>
-      </section>
 
-      {/* Phones outside the hero section so they have their own stacking context (z:20),
-          floating above HowItWorks (z:10) as it slides over the hero */}
-      <HeroPhonesWrapper
-        frontImage={PHONE_FRONT_URL}
-        lateralImage={PHONE_LATERAL_URL}
-        imageAlt={t("imageAlt")}
-      />
+        <HeroPhonesWrapper
+          frontImage={PHONE_FRONT_URL}
+          lateralImage={PHONE_LATERAL_URL}
+          imageAlt={t("imageAlt")}
+        />
+      </section>
     </>
   );
 }

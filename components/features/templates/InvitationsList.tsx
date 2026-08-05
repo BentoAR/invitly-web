@@ -1,389 +1,363 @@
 "use client";
+
 import { Template } from "@/utils/types";
 import Image from "next/image";
+import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
+import { ArrowRight, Play } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+
 import { InvitationsListSkeleton } from "@/components/shared/skeletons/InvitationsListSkeleton";
 import { useTemplates } from "@/hooks/useTemplates";
-import { useCategoriesStore } from "@/stores/categoriesStore";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
-import { ErrorState } from "@/components/shared/states/ErrorState";
-import { EmptyState } from "@/components/shared/states/EmptyState";
 import { openWhatsApp } from "@/utils/openWhatsapp";
 import { analytics } from "@/utils/analytics";
-import { Play, ArrowRight } from "lucide-react";
-import { useLayoutEffect, useRef, useCallback } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
-import { useLocale } from "next-intl";
 
-gsap.registerPlugin(ScrollTrigger);
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * PREVIEWS DE PLANTILLAS EN LA HOME
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Historia de este componente, para que no se vuelva atrás por accidente:
+ *
+ * 1. Carrusel horizontal con pin de ScrollTrigger + `containerAnimation`.
+ *    Obligaba a `height: 100vh`, que obligaba al `md:-mt-[100vh]` de la sección
+ *    contenedora — ese margen negativo es el que tapaba el resto de la home.
+ *
+ * 2. Bento grid asimétrico. Resolvió el solapamiento pero no se apreciaba
+ *    ningún diseño: las `preview_url` son capturas de celular de ~1358×2150
+ *    (relación 0.63). En un tile chico y encima con degradado oscuro, una
+ *    invitación se ve como un rectángulo de color.
+ *
+ * 3. Esta versión. Tres decisiones, todas al servicio de que el diseño SE VEA:
+ *      · Una selección acotada de previews. La home no es el catálogo; su
+ *        trabajo es que alguien diga "ah, así se va a ver la mía".
+ *      · Relación de aspecto NATURAL de la imagen. Sin recorte: se ve la
+ *        portada completa, que es lo que hace elegir un diseño.
+ *      · Nombre, categoría y acciones DEBAJO de la imagen. El degradado negro
+ *        encima tapaba justo el tercio inferior del diseño.
+ *      · Composición editorial: el diseño central lidera y los laterales lo
+ *        acompañan. En mobile se exploran con scroll horizontal nativo.
+ *
+ * Cero JavaScript de animación.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+const DEMO_BASE_URL = "https://inv.bento.com.ar/demo";
+const TEMPLATE_PREVIEW_BASE =
+  "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/templates-preview";
+
+/** Relación real de las capturas que sirve la API. Evita cualquier recorte. */
+const PREVIEW_ASPECT = "1358 / 2150";
+
+const HOME_PREVIEW_COUNT = 5;
+
+const FALLBACK_TEMPLATE_DATA = [
+  {
+    id: "home-confetti",
+    name: "confetti-pop",
+    display_name: "Confetti",
+    categoryKey: "birthday",
+    preview_url: `${TEMPLATE_PREVIEW_BASE}/Confetti.webp`,
+  },
+  {
+    id: "home-phantom",
+    name: "phantom",
+    display_name: "Phantom",
+    categoryKey: "quinces",
+    preview_url: `${TEMPLATE_PREVIEW_BASE}/Phantom.webp`,
+  },
+  {
+    id: "home-autumn",
+    name: "autumn",
+    display_name: "Otoño",
+    categoryKey: "wedding",
+    preview_url: `${TEMPLATE_PREVIEW_BASE}/Autumn.webp`,
+  },
+  {
+    id: "home-blush",
+    name: "blush",
+    display_name: "Blush",
+    categoryKey: "quinces",
+    preview_url: `${TEMPLATE_PREVIEW_BASE}/Blush.webp`,
+  },
+  {
+    id: "home-noir",
+    name: "corporate-noir",
+    display_name: "Noir",
+    categoryKey: "corporate",
+    preview_url: `${TEMPLATE_PREVIEW_BASE}/Noir.webp`,
+  },
+] as const;
+
+const FALLBACK_CATEGORY_NAMES = {
+  es: {
+    birthday: "Cumpleaños",
+    quinces: "15 años",
+    wedding: "Boda",
+    corporate: "Corporativos",
+  },
+  en: {
+    birthday: "Birthday",
+    quinces: "Quinceañera",
+    wedding: "Wedding",
+    corporate: "Corporate",
+  },
+} as const;
+
+function getFallbackTemplates(locale: string): Template[] {
+  const labels = locale === "es" ? FALLBACK_CATEGORY_NAMES.es : FALLBACK_CATEGORY_NAMES.en;
+
+  return FALLBACK_TEMPLATE_DATA.map((template) => ({
+    id: template.id,
+    name: template.name,
+    display_name: template.display_name,
+    preview_url: template.preview_url,
+    category: {
+      id: `home-${template.categoryKey}`,
+      key: template.categoryKey,
+      display_name: labels[template.categoryKey],
+    },
+  }));
+}
+
+/**
+ * Orden editorial de la home: cumpleanos, XV, boda, XV y corporativo.
+ * Los nombres preferidos mantienen el resultado estable aunque cambie el orden
+ * de respuesta de la API. La categoria funciona como fallback mientras un
+ * template preferido (por ejemplo Meadow en QA) todavia no este publicado.
+ */
+const CURATED_TEMPLATE_SLOTS = [
+  { names: ["confetti-pop", "flowers", "carousel"], categoryKey: "birthday" },
+  { names: ["meadow", "phantom", "disco", "blush"], categoryKey: "quinces" },
+  { names: ["autumn"], categoryKey: "wedding" },
+  { names: ["shimmer", "disco", "blush", "phantom"], categoryKey: "quinces" },
+  { names: ["corporate-noir", "corporate-summit"], categoryKey: "corporate" },
+] as const;
+
+const DESKTOP_STEP_CLASSES = [
+  "lg:mt-16",
+  "lg:mt-8",
+  "lg:mt-0",
+  "lg:mt-8",
+  "lg:mt-16",
+] as const;
+
+function curateHomeTemplates(invitations: Template[]): Template[] {
+  const usedIds = new Set<Template["id"]>();
+
+  return CURATED_TEMPLATE_SLOTS.flatMap(({ names, categoryKey }) => {
+    const preferredTemplate = names.reduce<Template | undefined>(
+      (match, name) =>
+        match ??
+        invitations.find(
+          (invitation) => invitation.name === name && !usedIds.has(invitation.id)
+        ),
+      undefined
+    );
+    const categoryFallback = invitations.find(
+      (invitation) =>
+        invitation.category?.key === categoryKey && !usedIds.has(invitation.id)
+    );
+    const anyFallback = invitations.find((invitation) => !usedIds.has(invitation.id));
+    const selectedTemplate = preferredTemplate ?? categoryFallback ?? anyFallback;
+
+    if (!selectedTemplate) return [];
+
+    usedIds.add(selectedTemplate.id);
+    return [selectedTemplate];
+  });
+}
+
+interface TemplatePreviewCardProps {
+  invitation: Template;
+  index: number;
+  isMobile?: boolean;
+  getMessage: (values: { name: string }) => string;
+  viewDemo: string;
+  get: string;
+}
+
+function TemplatePreviewCard({
+  invitation,
+  index,
+  isMobile = false,
+  getMessage,
+  viewDemo,
+  get,
+}: TemplatePreviewCardProps) {
+  const isFeatured = index === 2;
+  const stepClass = DESKTOP_STEP_CLASSES[index] ?? "lg:mt-16";
+
+  return (
+    <article
+      className={`group flex h-full flex-col ${isMobile ? "" : stepClass}`}
+    >
+      <div
+        className="relative w-full overflow-hidden rounded-2xl transition-transform duration-500 ease-out motion-reduce:transition-none group-hover:-translate-y-1"
+        style={{
+          boxShadow: isFeatured
+            ? "0 24px 56px rgba(32, 0, 65, 0.15)"
+            : "0 14px 38px rgba(32, 0, 65, 0.1)",
+        }}
+      >
+        <div
+          className="relative w-full overflow-hidden rounded-2xl"
+          style={{ aspectRatio: PREVIEW_ASPECT, backgroundColor: "#F5F1E8" }}
+        >
+          {invitation.preview_url && (
+            <Image
+              src={invitation.preview_url}
+              alt={`Invitación digital ${invitation.display_name} — ${
+                invitation.category?.display_name ?? ""
+              }`}
+              fill
+              className="object-contain transition-transform duration-700 ease-out motion-reduce:transition-none group-hover:scale-[1.015]"
+              sizes="(max-width: 640px) 78vw, (max-width: 1024px) 30vw, 20vw"
+              unoptimized
+            />
+          )}
+        </div>
+      </div>
+
+      <div className="mt-5 px-1">
+        <div className="mb-4 flex items-end justify-between gap-4">
+          <div>
+            <p
+              className="font-mono uppercase mb-1.5"
+              style={{
+                fontSize: "0.6rem",
+                letterSpacing: "0.26em",
+                color: "rgba(32, 0, 65, 0.48)",
+              }}
+            >
+              {invitation.category?.display_name}
+            </p>
+            <h3
+              className="font-display font-normal leading-tight"
+              style={{
+                fontSize: isFeatured ? "1.55rem" : "1.35rem",
+                color: "#200041",
+                letterSpacing: "-0.015em",
+              }}
+            >
+              {invitation.display_name}
+            </h3>
+          </div>
+          <span
+            className="hidden shrink-0 font-mono tabular-nums lg:block"
+            style={{
+              fontSize: "0.6rem",
+              letterSpacing: "0.2em",
+              color: "rgba(32, 0, 65, 0.28)",
+            }}
+            aria-hidden="true"
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2.5">
+          <a
+            href={`${DEMO_BASE_URL}/${invitation.name}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => analytics.templateDemoClick(invitation.name, invitation.category?.display_name)}
+            className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-3 py-2.5 font-medium no-underline transition-colors duration-200 motion-reduce:transition-none hover:bg-[rgba(32,0,65,0.06)]"
+            style={{
+              fontSize: "0.8rem",
+              color: "#200041",
+              border: "1px solid rgba(32, 0, 65, 0.18)",
+            }}
+          >
+            <Play size={11} fill="currentColor" aria-hidden="true" />
+            {viewDemo}
+          </a>
+          <button
+            type="button"
+            onClick={() => {
+              analytics.templateGetClick(invitation.name, invitation.category?.display_name);
+              openWhatsApp(getMessage({ name: invitation.display_name }));
+            }}
+            className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-3 py-2.5 font-medium transition-all duration-200 motion-reduce:transition-none hover:gap-3"
+            style={{ fontSize: "0.8rem", backgroundColor: "#FFA459", color: "#FFFFFF" }}
+          >
+            {get}
+            <ArrowRight size={13} strokeWidth={2.5} aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export function InvitationsList() {
   const t = useTranslations("Templates");
   const locale = useLocale();
-  const selectedCategories = useCategoriesStore((s) => s.selectedCategories);
-  const { data: invitations = [], isLoading, error, refetch } = useTemplates(selectedCategories);
+  const { data: invitations = [], isLoading } = useTemplates([]);
+  const source = invitations.length > 0 ? invitations : getFallbackTemplates(locale);
 
-  const desktopList = invitations.slice(0, 6);
-  const mobileList = invitations.slice(0, 5);
-
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const stripRef = useRef<HTMLDivElement>(null);
-  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  // Memoizar el parallax handler para evitar recrearlo
-  const handleParallaxUpdate = useCallback((strip: HTMLDivElement, CARD_W: number, GAP: number) => {
-    return () => {
-      const currentX = gsap.getProperty(strip, "x") as number;
-      imageRefs.current.forEach((img, i) => {
-        if (!img) return;
-        const cardCenter = i * (CARD_W + GAP) + currentX + CARD_W / 2;
-        const distFromCenter = cardCenter - window.innerWidth / 2;
-        gsap.set(img, { x: -(distFromCenter * 0.06), force3D: true });
-      });
-    };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!invitations.length) return;
-    const wrapper = wrapperRef.current;
-    const strip = stripRef.current;
-    if (!wrapper || !strip) return;
-    if (window.innerWidth < 768) return;
-
-    let ctx: gsap.Context;
-
-    // rAF garantiza que el layout esté painted y scrollWidth sea correcto
-    const raf = requestAnimationFrame(() => {
-      ctx = gsap.context(() => {
-        const cards = Array.from(strip.querySelectorAll<HTMLElement>(".carousel-card"));
-        const CARD_W = cards[0]?.offsetWidth ?? 400;
-        const GAP = 40; // gap-10
-        const totalScroll = strip.scrollWidth - window.innerWidth;
-        if (totalScroll <= 0) return;
-
-        // Strip horizontal scrolleado por GSAP scrub
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: wrapper,
-            pin: true,
-            start: "top top",
-            end: `+=${totalScroll}`,
-            scrub: 1.2,
-            anticipatePin: 1,
-            onUpdate: handleParallaxUpdate(strip, CARD_W, GAP),
-          },
-        });
-        tl.to(strip, { x: -totalScroll, ease: "none" });
-
-        // Efecto "tren": cada card entra desde más lejos y se pega a la siguiente
-        cards.forEach((card) => {
-          gsap.fromTo(
-            card,
-            { x: 220 },
-            {
-              x: 0,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: card,
-                containerAnimation: tl,
-                start: "left right",
-                end: "left 35%",
-                scrub: 0.4,
-              },
-            }
-          );
-        });
-      }, wrapper);
-    });
-
-    return () => {
-      cancelAnimationFrame(raf);
-      ctx?.revert();
-    };
-  }, [invitations.length, handleParallaxUpdate]);
+  const list = curateHomeTemplates(source).slice(0, HOME_PREVIEW_COUNT);
 
   if (isLoading) return <InvitationsListSkeleton />;
-  if (error) return <ErrorState message={t("error")} onRetry={() => refetch()} retryLabel={t("retry")} />;
-  if (invitations.length === 0) return <EmptyState message={t("noResults")} />;
 
   return (
-    <>
-      {/* Desktop: GSAP horizontal carousel */}
-      <div
-        ref={wrapperRef}
-        className="hidden md:block relative w-full overflow-hidden"
-        style={{ height: "100vh" }}
-      >
-        {/* Header fijo dentro del pin — split data bar */}
-        <div
-          className="absolute z-20 pointer-events-none flex items-end justify-between"
-          style={{ top: "clamp(2rem, 5vh, 3.5rem)", left: "12vw", right: "12vw" }}
-        >
-          <h2
-            className="font-display font-normal leading-none"
-            style={{
-              fontSize: "clamp(2rem, 3.8vw, 4rem)",
-              color: "#200041",
-              letterSpacing: "-0.03em",
-            }}
-          >
-            Invitaciones
-          </h2>
-          <div className="flex items-center gap-6 pb-1">
-            <span
-              className="font-mono uppercase"
-              style={{ fontSize: "0.6rem", letterSpacing: "0.25em", color: "#bc8129" }}
-            >
-              +15 plantillas
-            </span>
-            <span style={{ color: "rgba(32,0,65,0.2)", fontSize: "0.6rem" }}>·</span>
-            <span
-              className="font-mono uppercase"
-              style={{ fontSize: "0.6rem", letterSpacing: "0.25em", color: "rgba(32,0,65,0.4)" }}
-            >
-              Scroll para explorar →
-            </span>
-          </div>
-        </div>
-
-        <div
-          ref={stripRef}
-          className="absolute top-0 left-0 h-full flex items-center gap-10"
-          style={{ paddingLeft: "12vw", paddingRight: "20vw", willChange: "transform" }}
-        >
-          {desktopList.map((invitation: Template, index: number) => (
-            <div
-              key={invitation.id}
-              className="carousel-card group relative shrink-0 overflow-hidden rounded-2xl cursor-pointer"
-              style={{
-                width: "clamp(300px, 36vw, 500px)",
-                height: "clamp(460px, 60vh, 720px)",
-                boxShadow: "0 20px 60px rgba(32,0,65,0.18)",
-              }}
-            >
-              {/* Image parallax container */}
-              <div
-                ref={(el) => { imageRefs.current[index] = el; }}
-                className="absolute inset-0"
-                style={{ transform: "scale(1.14)", willChange: "transform" }}
-              >
-                {invitation.preview_url && (
-                  <Image
-                    src={invitation.preview_url}
-                    alt={invitation.display_name}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1200px) 40vw, 30vw"
-                    unoptimized
-                  />
-                )}
-              </div>
-
-              {/* Gradient */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background:
-                    "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.08) 50%, transparent 100%)",
-                }}
+    <div>
+      <div className="-mx-4 sm:hidden">
+        <Swiper slidesPerView={1.16} spaceBetween={20} grabCursor className="px-4 pb-6" aria-label={t("title")}>
+          {list.map((invitation: Template, index: number) => (
+            <SwiperSlide key={invitation.id} className="!h-auto">
+              <TemplatePreviewCard
+                invitation={invitation}
+                index={index}
+                isMobile
+                getMessage={(values) => t("getMessage", values)}
+                viewDemo={t("viewDemo")}
+                get={t("get")}
               />
-
-              {/* Text */}
-              <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
-                <p
-                  className="font-mono uppercase mb-1.5"
-                  style={{
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.25em",
-                    color: "rgba(255,255,255,0.5)",
-                  }}
-                >
-                  {invitation.category?.display_name}
-                </p>
-                <h3
-                  className="font-display font-normal text-white leading-tight"
-                  style={{ fontSize: "clamp(1rem, 1.6vw, 1.3rem)", letterSpacing: "-0.01em" }}
-                >
-                  {invitation.display_name}
-                </h3>
-              </div>
-
-              {/* Hover CTA */}
-              <div
-                className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
-                style={{ backdropFilter: "blur(4px)", background: "rgba(0,0,0,0.25)" }}
-              >
-                <a
-                  href={`https://inv.bento.com.ar/demo/${invitation.name}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => analytics.templateDemoClick(invitation.name, invitation.category?.display_name)}
-                >
-                  <Button variant="secondary" size="sm">
-                    {t("viewDemo")}
-                  </Button>
-                </a>
-                <Button
-                  variant="default"
-                  size="sm"
-                  onClick={() => {
-                    analytics.templateGetClick(invitation.name, invitation.category?.display_name)
-                    openWhatsApp(t("getMessage", { name: invitation.display_name }))
-                  }}
-                >
-                  {t("get")}
-                </Button>
-              </div>
-            </div>
+            </SwiperSlide>
           ))}
-
-          {/* Card CTA — Ver todas */}
-          <Link
-              href={`/${locale}/templates`}
-              className="carousel-card shrink-0 rounded-2xl flex flex-col items-center justify-center gap-6 group"
-              style={{
-                width: "clamp(300px, 36vw, 500px)",
-                height: "clamp(460px, 60vh, 720px)",
-                backgroundColor: "#ffffff",
-                boxShadow: "0 20px 60px rgba(32,0,65,0.18)",
-                textDecoration: "none",
-              }}
-            >
-              <p
-                className="font-mono uppercase text-center"
-                style={{ fontSize: "0.6rem", letterSpacing: "0.3em", color: "#FFA459" }}
-              >
-                +15 plantillas disponibles
-              </p>
-              <h3
-                className="font-display font-normal text-center leading-tight"
-                style={{
-                  fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)",
-                  letterSpacing: "-0.02em",
-                  color: "#200041",
-                }}
-              >
-                ¿Querés ver
-                <br />
-                <em style={{ color: "#FFA459" }}>todas las plantillas?</em>
-              </h3>
-              <div
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 group-hover:gap-4"
-                style={{
-                  backgroundColor: "#FFA459",
-                  color: "#ffffff",
-                  fontSize: "0.85rem",
-                }}
-              >
-                Ver catálogo completo
-                <ArrowRight size={16} strokeWidth={2.5} />
-              </div>
-            </Link>
-        </div>
+        </Swiper>
       </div>
 
-      {/* Mobile: grid 2 columnas */}
-      <div className="md:hidden grid grid-cols-2 gap-3 mt-4 px-4 pb-16">
-        {mobileList.map((invitation: Template) => (
-          <div
-            key={invitation.id}
-            className="group relative overflow-hidden rounded-xl cursor-pointer"
-            style={{
-              aspectRatio: "3/4",
-              boxShadow: "0 8px 24px rgba(32,0,65,0.14)",
-            }}
-          >
-            {invitation.preview_url && (
-              <Image
-                src={invitation.preview_url}
-                alt={invitation.display_name}
-                fill
-                className="object-cover"
-                sizes="50vw"
-                unoptimized
-              />
-            )}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)" }}
+      <div className="hidden sm:mx-auto sm:grid sm:grid-cols-2 sm:gap-5 md:grid-cols-3 lg:max-w-7xl lg:grid-cols-5 lg:items-start lg:gap-5 lg:pt-0">
+        {list.map((invitation: Template, index: number) => {
+          return (
+            <TemplatePreviewCard
+              key={invitation.id}
+              invitation={invitation}
+              index={index}
+              getMessage={(values) => t("getMessage", values)}
+              viewDemo={t("viewDemo")}
+              get={t("get")}
             />
-            <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
-              <p
-                className="font-mono uppercase mb-0.5"
-                style={{ fontSize: "0.5rem", letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)" }}
-              >
-                {invitation.category?.display_name}
-              </p>
-              <h3
-                className="font-display font-normal text-white leading-tight mb-2"
-                style={{ fontSize: "0.95rem", letterSpacing: "-0.01em" }}
-              >
-                {invitation.display_name}
-              </h3>
-              <div className="flex gap-1.5">
-                <a
-                  href={`https://inv.bento.com.ar/demo/${invitation.name}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => analytics.templateDemoClick(invitation.name, invitation.category?.display_name)}
-                  className="flex-1 flex items-center justify-center gap-1 rounded-full border border-white/40 bg-black/30 backdrop-blur-sm py-1.5 text-white/90 font-medium"
-                  style={{ fontSize: "0.6rem", letterSpacing: "0.02em" }}
-                >
-                  <Play size={9} fill="currentColor" />
-                  {t("viewDemo")}
-                </a>
-                <button
-                  onClick={() => {
-                    analytics.templateGetClick(invitation.name, invitation.category?.display_name)
-                    openWhatsApp(t("getMessage", { name: invitation.display_name }))
-                  }}
-                  className="flex-1 flex items-center justify-center gap-1 rounded-full bg-white py-1.5 text-neutral-900 font-semibold"
-                  style={{ fontSize: "0.6rem", letterSpacing: "0.02em" }}
-                >
-                  {t("get")}
-                  <ArrowRight size={9} strokeWidth={2.5} />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {/* Card CTA mobile */}
-        <Link
-            href={`/${locale}/templates`}
-            className="relative overflow-hidden rounded-xl flex flex-col items-center justify-center gap-3"
-            style={{
-              aspectRatio: "3/4",
-              backgroundColor: "#ffffff",
-              boxShadow: "0 8px 24px rgba(32,0,65,0.14)",
-              textDecoration: "none",
-            }}
-          >
-            <p
-              className="font-mono uppercase text-center px-4"
-              style={{ fontSize: "0.5rem", letterSpacing: "0.2em", color: "#FFA459" }}
-            >
-              +15 plantillas
-            </p>
-            <h3
-              className="font-display font-normal text-center leading-tight px-4"
-              style={{ fontSize: "1.1rem", letterSpacing: "-0.02em", color: "#200041" }}
-            >
-              ¿Querés ver
-              <br />
-              <em style={{ color: "#FFA459" }}>todas?</em>
-            </h3>
-            <div
-              className="flex items-center gap-1.5 px-4 py-2 rounded-full font-medium mt-1"
-              style={{ backgroundColor: "#FFA459", color: "#fff", fontSize: "0.6rem" }}
-            >
-              Ver catálogo
-              <ArrowRight size={10} strokeWidth={2.5} />
-            </div>
-          </Link>
+          );
+        })}
       </div>
-    </>
+
+      <Link
+        href={`/${locale}/templates`}
+        className="group mx-auto mt-12 flex max-w-5xl flex-col items-center justify-between gap-6 border-t px-2 py-8 text-center no-underline sm:flex-row sm:text-left md:mt-14"
+        style={{ borderColor: "rgba(32, 0, 65, 0.12)" }}
+      >
+        <h3
+          className="font-display font-normal leading-tight"
+          style={{
+            fontSize: "clamp(1.25rem, 2vw, 1.7rem)",
+            color: "#200041",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          {t("seeAllTitle")}
+        </h3>
+        <span
+          className="shrink-0 inline-flex min-h-12 items-center gap-2 rounded-full px-6 py-3 font-medium transition-all duration-300 motion-reduce:transition-none group-hover:gap-3"
+          style={{ backgroundColor: "#FFA459", color: "#FFFFFF", fontSize: "0.85rem" }}
+        >
+          {t("seeAllCta")}
+          <ArrowRight size={15} strokeWidth={2.5} aria-hidden="true" />
+        </span>
+      </Link>
+    </div>
   );
 }

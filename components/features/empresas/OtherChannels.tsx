@@ -4,7 +4,7 @@ import { Container } from "@/components/shared/Container";
 import { RevealOnScroll, StaggerItem } from "@/components/features/empresas/RevealOnScroll";
 import { DotGrid } from "@/components/features/empresas/BackgroundPatterns";
 
-const WHATSAPP_NUMBER = "5491139441413";
+const WHATSAPP_NUMBER = "541157572713";
 const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio";
 
 export default async function OtherChannels() {

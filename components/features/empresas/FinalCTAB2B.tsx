@@ -5,7 +5,7 @@ import { CountUp } from "@/components/features/empresas/CountUp";
 import { RevealOnScroll } from "@/components/features/empresas/RevealOnScroll";
 import { SideRaysB2B } from "@/components/features/empresas/SideRaysB2B";
 
-const WHATSAPP_NUMBER = "5491139441413";
+const WHATSAPP_NUMBER = "541157572713";
 const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio";
 
 export default async function FinalCTAB2B() {

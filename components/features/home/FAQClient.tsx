@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+
+import { Container } from "@/components/shared/Container";
 
 interface FAQItem {
   question: string;
@@ -10,72 +12,110 @@ interface FAQItem {
 }
 
 interface FAQClientProps {
-  badge: string;
   title: string;
+  subtitle: string;
   faqs: FAQItem[];
 }
 
-function FAQRow({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; onToggle: () => void }) {
+function FAQRow({
+  item,
+  isOpen,
+  onToggle,
+  answerId,
+}: {
+  item: FAQItem;
+  isOpen: boolean;
+  onToggle: () => void;
+  answerId: string;
+}) {
   return (
-    <div className="border-b border-border/60">
+    <div className="border-b last:border-b-0" style={{ borderColor: "rgba(32, 0, 65, 0.12)" }}>
       <button
+        type="button"
         onClick={onToggle}
-        className="w-full flex items-center justify-between gap-4 py-5 text-left"
+        className="flex min-h-16 w-full items-center justify-between gap-5 py-5 text-left outline-none focus-visible:ring-2 focus-visible:ring-[var(--bento-focus)] focus-visible:ring-offset-2"
         aria-expanded={isOpen}
+        aria-controls={answerId}
       >
-        <span className="text-base font-medium text-foreground">{item.question}</span>
-        <ChevronDown
-          className={`h-5 w-5 text-muted-foreground shrink-0 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
+        <span className="text-base font-medium leading-snug md:text-lg" style={{ color: "var(--bento-ink)" }}>
+          {item.question}
+        </span>
+        <span
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-200"
+          style={{ backgroundColor: isOpen ? "#FFA459" : "var(--bento-peach)", color: "var(--bento-ink)" }}
+        >
+          <ChevronDown
+            className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+            aria-hidden="true"
+          />
+        </span>
       </button>
       <AnimatePresence initial={false}>
-        {isOpen && (
+        {isOpen ? (
           <motion.div
+            id={answerId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22, ease: "easeInOut" }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className="overflow-hidden"
           >
-            <p className="pb-5 text-sm text-muted-foreground leading-relaxed">{item.answer}</p>
+            <p
+              className="max-w-[68ch] pb-6 pr-12 text-sm leading-relaxed md:text-base"
+              style={{ color: "rgba(32, 0, 65, 0.64)" }}
+            >
+              {item.answer}
+            </p>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );
 }
 
-export default function FAQClient({ badge, title, faqs }: FAQClientProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+export default function FAQClient({ title, subtitle, faqs }: FAQClientProps) {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-12 md:py-24 bg-background">
-      <div className="max-w-3xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-14">
-          <p className="font-mono text-xs tracking-[0.35em] uppercase mb-5" style={{ color: "#9B5A00" }}>
-            {badge}
-          </p>
-          <h2
-            className="font-display font-normal leading-[1.08]"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#200041", letterSpacing: "-0.03em" }}
-          >
-            {title}
-          </h2>
-        </div>
-        <div>
-          {faqs.map((faq, i) => (
-            <div key={i}>
-              <FAQRow
-                item={faq}
-                isOpen={openIndex === i}
-                onToggle={() => setOpenIndex(openIndex === i ? null : i)}
-              />
+    <section className="relative py-16 md:py-24" style={{ backgroundColor: "var(--bento-peach)" }}>
+      <Container>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <h2
+              className="max-w-xl font-display font-normal leading-[1.05]"
+              style={{
+                fontSize: "clamp(2.35rem, 4.6vw, 4rem)",
+                color: "#200041",
+                letterSpacing: "-0.035em",
+              }}
+            >
+              {title}
+            </h2>
+            <p
+              className="mt-5 max-w-md text-base leading-relaxed md:text-lg"
+              style={{ color: "rgba(32, 0, 65, 0.62)" }}
+            >
+              {subtitle}
+            </p>
+            <div className="mt-8 flex items-center gap-3" aria-hidden="true">
+              <span className="h-px w-12" style={{ backgroundColor: "#FFA459" }} />
+              <span className="h-2 w-2 rounded-full" style={{ backgroundColor: "#FFA459" }} />
             </div>
-          ))}
+          </div>
+
+          <div className="rounded-2xl bg-white px-5 sm:px-7 md:px-9">
+            {faqs.map((faq, index) => (
+              <FAQRow
+                key={faq.question}
+                item={faq}
+                isOpen={openIndex === index}
+                onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+                answerId={`faq-answer-${index}`}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

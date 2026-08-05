@@ -24,6 +24,8 @@
       "Video": "Video",
       "Lista regalos": "Gift list"
     },
-    "getMessage": "Hello, I want to get this invitation: {name}"
+    "getMessage": "Hello, I want to get this invitation: {name}",
+    "seeAllTitle": "Want to see every template?",
+    "seeAllCta": "View full catalog"
   }
 }

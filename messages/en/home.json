@@ -1,21 +1,157 @@
 {
   "Hero": {
     "badge": "More than an invitation",
-    "title": "Your entire event.",
-    "subtitle": "From the guest list to the photo album, all sorted.",
+    "eyebrow": "Digital invitations + control panel",
+    "title": "Your entire event, in a single link.",
+    "subtitle": "The invitation your guests open, and the panel where you see everything live: who confirmed, which songs they requested, and how the event is going.",
     "button": {
       "primary": "Create my invitation",
-      "secondary": "See a real example"
+      "secondary": "See a real invitation"
     },
-    "trust": "Pay per event · No monthly subscription · Everything included",
+    "trust": "From $60 · One payment, per event · No monthly subscription",
     "stats": {
       "rsvp": "Automatic",
-      "guests": "Unlimited guests",
-      "support": "Average response time"
+      "guestsValue": "Flexible",
+      "guests": "For every guest",
+      "support": "Average response"
     },
-    "words": ["More than an invitation.", "RSVP included.", "Collaborative album.", "Shared playlist.", "Day timeline."],
-    "imageAlt": "Elegant event decoration, example of personalized digital invitation",
+    "words": [
+      "More than an invitation.",
+      "RSVP included.",
+      "Collaborative album.",
+      "Shared playlist.",
+      "Day timeline."
+    ],
+    "imageAlt": "Bento digital invitation open on a phone next to the organizer's control panel",
     "whatsappMessage": "Hi! 👋 Can you help me make my digital invitation?"
+  },
+  "Problem": {
+    "eyebrow": "Before Bento",
+    "title": "Organizing the event isn't the problem. Chasing people is.",
+    "subtitle": "If you've organized one before, this will sound familiar.",
+    "pains": [
+      {
+        "headline": "\"Are you coming?\" again and again",
+        "description": "You send the same message one by one. Half never reply, the other half say \"I'll confirm later\" and never do."
+      },
+      {
+        "headline": "The spreadsheet that never closes",
+        "description": "Confirmations in Excel, changes over WhatsApp, cancellations by phone. You end up guessing the final headcount two days before."
+      },
+      {
+        "headline": "400 photos nobody collects",
+        "description": "Spread across four different groups, compressed, unsorted. A month later nobody even looks for them."
+      },
+      {
+        "headline": "The invitation lost in the chat",
+        "description": "You send a nice image and two days later it's buried under memes. Nobody remembers the address or the time."
+      }
+    ],
+    "bridge": "Bento solves all four with the same link."
+  },
+  "LiveDemo": {
+    "eyebrow": "Try it right here",
+    "title": "Two screens. One link.",
+    "subtitle": "On the left, the invitation your guest receives. On the right, your event organizing itself — that easy.",
+    "guestLabel": "What your guest sees",
+    "ownerLabel": "What you see",
+    "autoHint": "This is what it looks like, running live",
+    "actions": [
+      {
+        "id": "rsvp",
+        "label": "Confirm attendance",
+        "helper": "The guest confirms from their phone"
+      },
+      {
+        "id": "song",
+        "label": "Suggest a song",
+        "helper": "Proposes a track for the playlist"
+      }
+    ],
+    "dashboard": {
+      "eventName": "Sofia & Mateo",
+      "eventDate": "November 28",
+      "statusLabel": "Active",
+      "confirmedLabel": "Confirmed",
+      "pendingLabel": "Pending",
+      "tablesLabel": "Tables set up",
+      "songsLabel": "Songs suggested",
+      "activityTitle": "Live activity",
+      "emptyActivity": "Waiting for the first update...",
+      "guestName": "Julieta Ramos",
+      "events": {
+        "rsvp": "confirmed attendance",
+        "song": "suggested \"Vivir mi vida\" for the playlist"
+      }
+    }
+  },
+  "DashboardShowcase": {
+    "eyebrow": "Your control panel",
+    "title": "This is what you're buying.",
+    "subtitle": "It's not just a pretty invitation. It's the system that keeps your whole event in order, from the moment you send the link until the last light goes out.",
+    "panels": [
+      {
+        "title": "Guests and RSVP",
+        "description": "Who confirmed, who hasn't opened the link yet, who isn't coming. Individual links per guest and Excel export whenever you need it.",
+        "alt": "Bento guest panel showing real-time confirmations"
+      },
+      {
+        "title": "Collaborative album",
+        "description": "Everyone's photos in one place, sorted by moment. No asking, no collecting, no losing them.",
+        "alt": "Bento collaborative photo album"
+      },
+      {
+        "title": "Playlist with moderation",
+        "description": "Your guests suggest, you approve. The event's music is chosen together, but the final word is yours.",
+        "alt": "Bento collaborative playlist panel with moderation"
+      },
+      {
+        "title": "Tables and groups",
+        "description": "Build the seating layout, group families and track gifts. A coordinator's job, without hiring one.",
+        "alt": "Bento table organization panel"
+      }
+    ],
+    "placeholderLabel": "Screenshot pending"
+  },
+  "RiskReversal": {
+    "title": "Choose with confidence. Change it later.",
+    "subtitle": "Your event can change. Your invitation can too: switch designs, update the details and talk to us before moving forward.",
+    "items": [
+      {
+        "title": "Change designs without losing anything",
+        "description": "Try other templates whenever you want. Your guests and every event detail stay intact."
+      },
+      {
+        "title": "Edit once and the same link updates",
+        "description": "If the date, venue or time changes, everyone who already has the link sees the new version."
+      },
+      {
+        "title": "One payment, no renewal",
+        "description": "Pay once per event. There is no monthly subscription or automatic renewal."
+      }
+    ],
+    "visual": {
+      "dashboardTitle": "Customization",
+      "dashboardSubtitle": "Change designs whenever you want",
+      "colorsLabel": "Colors",
+      "coverLabel": "Cover photo",
+      "imageAlt": "Bento customization panel and an updated invitation",
+      "supportLabel": "Bento team",
+      "supportDetail": "We reply in under an hour"
+    },
+    "cta": "Talk to the team",
+    "whatsappMessage": "Hi! I'd like to know a little more before moving forward with my invitation 🙂"
+  },
+  "FinalCta": {
+    "eyebrow": "Last step",
+    "title": "Your event already has a date. The invitation can be ready today.",
+    "subtitle": "Pick your plan, build your invitation and send the link over WhatsApp. Most people have it running in under an hour.",
+    "button": {
+      "primary": "Create my invitation",
+      "secondary": "Chat on WhatsApp"
+    },
+    "trust": "One payment · No subscription · Support in Spanish",
+    "whatsappMessage": "Hi! I want to build my digital invitation with Bento 🙌"
   },
   "Categories": {
     "title": "Categories we work with",
@@ -123,7 +259,7 @@
   "Pricing": {
     "badge": "Pricing",
     "title": "Choose the plan that fits your event",
-    "subtitle": "From functional digital invitations to fully customized designs. No fine print, no hidden costs.",
+    "subtitle": "One payment per event. No subscription, no auto-renewal, no fine print.",
     "plans": [
       {
         "name": "Digital",
@@ -133,11 +269,26 @@
         "cta": "Inquire",
         "featured": false,
         "features": [
-          { "label": "Customizable digital invitation", "included": true },
-          { "label": "Automatic RSVP", "included": true },
-          { "label": "Up to 100 guests", "included": true },
-          { "label": "Collaborative playlist (up to 30 songs)", "included": true },
-          { "label": "Photo gallery up to 6 photos", "included": true }
+          {
+            "label": "Customizable digital invitation",
+            "included": true
+          },
+          {
+            "label": "Automatic RSVP",
+            "included": true
+          },
+          {
+            "label": "Up to 100 guests",
+            "included": true
+          },
+          {
+            "label": "Collaborative playlist (up to 30 songs)",
+            "included": true
+          },
+          {
+            "label": "Photo gallery up to 6 photos",
+            "included": true
+          }
         ]
       },
       {
@@ -148,13 +299,34 @@
         "cta": "Inquire",
         "featured": true,
         "features": [
-          { "label": "All of Digital +", "included": true },
-          { "label": "Up to 150 guests", "included": true },
-          { "label": "Unlimited playlist", "included": true },
-          { "label": "Unlimited photo gallery", "included": true },
-          { "label": "Table organization", "included": true },
-          { "label": "Personalized links per guest", "included": true },
-          { "label": "Priority support", "included": true }
+          {
+            "label": "All of Digital +",
+            "included": true
+          },
+          {
+            "label": "Up to 150 guests",
+            "included": true
+          },
+          {
+            "label": "Unlimited playlist",
+            "included": true
+          },
+          {
+            "label": "Unlimited photo gallery",
+            "included": true
+          },
+          {
+            "label": "Table organization",
+            "included": true
+          },
+          {
+            "label": "Personalized links per guest",
+            "included": true
+          },
+          {
+            "label": "Priority support",
+            "included": true
+          }
         ]
       },
       {
@@ -165,29 +337,55 @@
         "cta": "Inquire",
         "featured": false,
         "features": [
-          { "label": "All of Digital and Celebration +", "included": true },
-          { "label": "100% custom design", "included": true },
-          { "label": "Theme chosen by you", "included": true },
-          { "label": "Cover video", "included": true },
-          { "label": "Special animations in the invitation", "included": true },
-          { "label": "Collaborative post-event album via QR", "included": true },
-          { "label": "Real-time support", "included": true }
+          {
+            "label": "All of Digital and Celebration +",
+            "included": true
+          },
+          {
+            "label": "100% custom design",
+            "included": true
+          },
+          {
+            "label": "Theme chosen by you",
+            "included": true
+          },
+          {
+            "label": "Cover video",
+            "included": true
+          },
+          {
+            "label": "Special animations in the invitation",
+            "included": true
+          },
+          {
+            "label": "Collaborative post-event album via QR",
+            "included": true
+          },
+          {
+            "label": "Real-time support",
+            "included": true
+          }
         ]
       }
     ],
     "featuredBadge": "Most popular",
     "footer": {
-      "line1": "Save over $300,000 vs. printed invitations + coordinator",
-      "line2": "Cancel anytime, no penalty",
-      "line3": "Have a venue or are you an organizer?",
-      "line3Link": "View business plans",
-      "priceNote": "Less than 1% of a wedding budget. Includes everything you need to manage your event."
+      "line1": "One payment per event, no monthly fees",
+      "line2": "Edit everything until the event day",
+      "line3": "Need help choosing?",
+      "line3Link": "Talk to the team",
+      "priceNote": "Invitation, RSVP and dashboard included from the first plan."
     }
   },
   "FAQ": {
     "badge": "Frequently asked questions",
     "title": "Have questions?",
+    "subtitle": "The important details, explained clearly before you choose your plan.",
     "faqs": [
+      {
+        "question": "What if I don't like the design I picked?",
+        "answer": "You change it. You can switch from one template to another as many times as you want, right up to the event day, at no extra cost and without losing anything you've already loaded. You're not locked into your first decision."
+      },
       {
         "question": "Do guests need to download anything?",
         "answer": "No. The link opens directly in the phone browser — no app, no login, nothing. Anyone who receives the link can see the invitation instantly."
@@ -199,10 +397,6 @@
       {
         "question": "How do my guests confirm?",
         "answer": "With one tap. They open the link, tap 'Confirm attendance' and done. You see who confirmed in real time from your dashboard, without having to call or ask each one."
-      },
-      {
-        "question": "Is it complicated to set up?",
-        "answer": "Not at all. Most of our users have their invitation ready in less than 10 minutes. If you can write a WhatsApp message, you can create your invitation in Bento."
       },
       {
         "question": "Is it worth it if I send everything via WhatsApp anyway?",
@@ -233,8 +427,8 @@
   },
   "TemplatesSection": {
     "badge": "Unique designs",
-    "title": "+200 designs for your event",
-    "subtitle": "Choose your favorite and customize it in minutes. Each template includes RSVP, map, gallery and playlist."
+    "title": "Pick your invitation design",
+    "subtitle": "Every template already ships with RSVP, map, gallery and playlist. You customize it in minutes."
   },
   "B2BAwarenessBanner": {
     "badge": "Bento for business",

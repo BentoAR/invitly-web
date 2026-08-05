@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link as LocaleLink } from "@/src/i18n/routing";
 import { RevealOnScroll, StaggerItem } from "@/components/features/empresas/RevealOnScroll";
 
-const WHATSAPP_NUMBER = "5491139441413";
+const WHATSAPP_NUMBER = "541157572713";
 const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio";
 
 interface PricingTier {

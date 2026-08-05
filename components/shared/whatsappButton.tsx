@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { MessageCircle, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { openWhatsApp } from "@/utils/openWhatsapp";
 import { useTranslations } from "next-intl";
 
@@ -19,15 +18,22 @@ export const WhatsAppButton = ({
   const [buttonLoaded, setButtonLoaded] = useState(false);
 
   useEffect(() => {
+    let dismissTimeout: ReturnType<typeof setTimeout> | undefined;
     const interval = setInterval(() => {
       setShowText(true);
 
-      setTimeout(() => {
+      dismissTimeout = setTimeout(() => {
         setShowText(false);
       }, 3000);
     }, 15000);
 
-    return () => clearInterval(interval);
+    const loadedTimeout = setTimeout(() => setButtonLoaded(true), 3400);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(loadedTimeout);
+      if (dismissTimeout) clearTimeout(dismissTimeout);
+    };
   }, []);
 
   const handleClick = () => {
@@ -37,28 +43,14 @@ export const WhatsAppButton = ({
   return (
     <div className={`fixed bottom-6 right-6 z-50 ${className}`}>
       <div className="relative flex items-center justify-end">
-        <AnimatePresence>
-          {showText && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, x: 10 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              exit={{ opacity: 0, scale: 0.8, x: 10 }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-              }}
-              className="mr-4 relative"
-            >
+        {showText && (
+            <div className="relative mr-4 animate-[whatsapp-pop_0.22s_cubic-bezier(0.16,1,0.3,1)_both]">
               <div className="bg-white dark:bg-gray-800 px-4 py-3 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 max-w-[200px]">
                 <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
                   {t("helpButton")}
                 </p>
 
-                <div className="absolute top-1/2 -right-2 transform -translate-y-1/2">
-                  <div className="w-0 h-0 border-l-8 border-l-white dark:border-l-gray-800 border-t-4 border-t-transparent border-b-4 border-b-transparent"></div>
-                  <div className="absolute top-1/2 -right-1 transform -translate-y-1/2 w-0 h-0 border-l-6 border-l-gray-200 dark:border-l-gray-700 border-t-3 border-t-transparent border-b-3 border-b-transparent"></div>
-                </div>
+                <div className="absolute top-1/2 -right-1.5 h-3 w-3 -translate-y-1/2 rotate-45 border-r border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800" />
               </div>
 
               <button
@@ -70,30 +62,18 @@ export const WhatsAppButton = ({
               >
                 <X className="w-3 h-3" />
               </button>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
 
         <div className="relative">
-          <motion.button
+          <button
             onClick={handleClick}
-            className="w-14 h-14 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group relative z-10"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              delay: 3,
-              type: "spring",
-              stiffness: 300,
-              damping: 20,
-            }}
-            onAnimationComplete={() => setButtonLoaded(true)}
+            className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:bg-[#20BA5A] hover:shadow-xl active:scale-95 animate-[whatsapp-enter_0.45s_cubic-bezier(0.16,1,0.3,1)_3s_both]"
           >
             <MessageCircle
               className={`w-6 h-6 group-hover:scale-110 transition-transform `}
             />
-          </motion.button>
+          </button>
 
           {!showText && buttonLoaded && (
             <div className="absolute inset-0 rounded-full bg-[#25D366] whatsapp-pulse"></div>

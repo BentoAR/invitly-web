@@ -2,9 +2,6 @@
 
 import { useLayoutEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface Testimonial {
   name: string;
@@ -28,10 +25,8 @@ export default function TestimonialsClient({
   testimonials,
 }: TestimonialsClientProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const contentWrapperRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Memoizar handlers para evitar recrearlos y facilitar cleanup
   const handleMouseEnter = useCallback((card: HTMLDivElement) => () => {
     gsap.to(card, {
       y: -6,
@@ -52,55 +47,24 @@ export default function TestimonialsClient({
 
   useLayoutEffect(() => {
     if (window.innerWidth < 768) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const section = sectionRef.current;
-    const contentWrapper = contentWrapperRef.current;
     const cards = cardsRef.current.filter(Boolean);
 
-    if (!section || !contentWrapper) return;
+    if (!section) return;
 
-    // Delay mayor para esperar a que Features se inicialice completamente
-    const timeoutId = setTimeout(() => {
-      ScrollTrigger.refresh(true);
-    }, 1000);
-
+    // ─────────────────────────────────────────────────────────────────────────
+    // Se eliminó el pin de +=150% con expansión scale 0.75 → 1.
+    //
+    // Costaba 1.5 viewports de scroll para revelar tres testimonios, obligaba a
+    // un `ScrollTrigger.refresh(true)` con setTimeout de 1s para sincronizar con
+    // el pin de Features (hack frágil), y forzaba `refreshPriority: -100`.
+    // Al sacar el pin de Features, toda esa maquinaria dejó de tener sentido.
+    //
+    // Queda solo el hover de las cards: microinteracción, sin costo de scroll.
+    // ─────────────────────────────────────────────────────────────────────────
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-
-      // Estado inicial del wrapper: más pequeño en el centro con border-radius y sombra
-      gsap.set(contentWrapper, {
-        scale: 0.75,
-        borderRadius: "32px",
-        boxShadow: "0 20px 60px rgba(32, 0, 65, 0.12)",
-      });
-
-      // Pin de la sección con animación scrub de expansión
-      // refreshPriority muy bajo para que se calcule DESPUÉS de Features
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=150%", // Pin total más largo
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-          refreshPriority: -100, // Prioridad muy baja para no interferir con Features
-          id: "testimonials-pin",
-        },
-      });
-
-      // Animación de expansión (solo la primera parte del timeline)
-      tl.to(contentWrapper, {
-        scale: 1,
-        borderRadius: "0px",
-        boxShadow: "0 0px 0px rgba(32, 0, 65, 0)",
-        ease: "none",
-        duration: 0.6, // 60% del timeline - se expande rápido
-      })
-      // Hold (el resto del tiempo se queda fijo)
-      .to({}, { duration: 0.4 }); // 40% restante - aguanta en pantalla completa
-
-      // Hover animations para las cards con cleanup correcto
       const cardHandlers: Array<{ card: HTMLDivElement; enter: () => void; leave: () => void }> = [];
 
       cards.forEach((card) => {
@@ -115,7 +79,6 @@ export default function TestimonialsClient({
         cardHandlers.push({ card, enter: enterHandler, leave: leaveHandler });
       });
 
-      // Cleanup de event listeners
       return () => {
         cardHandlers.forEach(({ card, enter, leave }) => {
           card.removeEventListener("mouseenter", enter);
@@ -125,7 +88,6 @@ export default function TestimonialsClient({
     }, section);
 
     return () => {
-      clearTimeout(timeoutId);
       ctx.revert();
     };
   }, [handleMouseEnter, handleMouseLeave]);
@@ -134,7 +96,7 @@ export default function TestimonialsClient({
     <section
       ref={sectionRef}
       id="testimonios"
-      className="relative h-auto lg:h-screen flex items-center justify-center overflow-hidden"
+      className="relative flex items-center justify-center"
       style={{
         zIndex: 40,
         position: "relative",
@@ -143,16 +105,13 @@ export default function TestimonialsClient({
     >
 
       <div
-        ref={contentWrapperRef}
-        className="w-full lg:h-full overflow-hidden relative"
+        className="w-full relative"
         style={{
-          willChange: "transform, border-radius, box-shadow",
           zIndex: 10,
           backgroundColor: "#ffffff",
-          boxShadow: "0 20px 60px rgba(32, 0, 65, 0.12)"
         }}
       >
-        <div className="lg:h-full flex flex-col justify-center py-12 md:py-24">
+        <div className="flex flex-col justify-center py-12 md:py-24">
           <div className="max-w-6xl mx-auto px-6 lg:px-16 w-full">
             <div className="text-center mb-16">
               <p

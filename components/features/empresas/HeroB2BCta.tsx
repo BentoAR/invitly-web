@@ -2,7 +2,7 @@
 import { ArrowRight } from "lucide-react";
 import { analytics } from "@/utils/analytics";
 
-const WHATSAPP_NUMBER = "5491139441413";
+const WHATSAPP_NUMBER = "541157572713";
 const WHATSAPP_MESSAGE = "Hola! Quiero información sobre Bento para mi negocio";
 
 interface HeroB2BCtaProps {
