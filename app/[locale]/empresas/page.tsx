@@ -12,6 +12,9 @@ import OtherChannels from "@/components/features/empresas/OtherChannels";
 import TestimonialsB2B from "@/components/features/empresas/TestimonialsB2B";
 import FAQB2B from "@/components/features/empresas/FAQB2B";
 import FinalCTAB2B from "@/components/features/empresas/FinalCTAB2B";
+import StructuredData from "@/components/shared/StructuredData";
+import { getOrganizationSchema, getBreadcrumbSchema, getB2BServiceSchema } from "@/src/utils/structuredData";
+import { siteConfig } from "@/src/utils/metadata";
 
 export const revalidate = 3600;
 
@@ -79,9 +82,30 @@ export async function generateMetadata({
 
 const SectionSkeleton = () => <div className="bg-neutral-950 py-24 md:py-32" />;
 
-export default async function EmpresasPage() {
+export default async function EmpresasPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  const breadcrumbSchema = getBreadcrumbSchema(
+    [
+      { name: "Home", url: `${siteConfig.url}/${locale}` },
+      { name: locale === "es" ? "Empresas" : "Business", url: `${siteConfig.url}/${locale}/empresas` },
+    ],
+    locale
+  );
+
+  const structuredData = [
+    getOrganizationSchema(locale),
+    getB2BServiceSchema(locale),
+    breadcrumbSchema,
+  ];
+
   return (
     <div className="min-h-screen bg-neutral-950">
+      <StructuredData data={structuredData} />
       <HeroB2B />
 
       <Suspense fallback={<SectionSkeleton />}>

@@ -208,3 +208,36 @@ export function getEventSchema(locale: string): WithContext<SoftwareApplication>
     },
   };
 }
+
+export function getB2BServiceSchema(locale: string): WithContext<Service> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": "https://bento.com.ar/#b2bservice",
+    name: locale === "es" ? "Bento para Empresas y Wedding Planners" : "Bento for Business and Wedding Planners",
+    description:
+      locale === "es"
+        ? "Plataforma de invitaciones digitales y gestión de eventos diseñada para salones de eventos, wedding planners y organizadores profesionales."
+        : "Digital invitation and event management platform designed for event venues, wedding planners, and professional organizers.",
+    provider: {
+      "@type": "Organization",
+      "@id": "https://bento.com.ar/#organization",
+    },
+    serviceType:
+      locale === "es"
+        ? "Software B2B para Gestión de Eventos"
+        : "B2B Event Management Software",
+    areaServed: {
+      "@type": "Country",
+      name: "Argentina",
+    },
+    audience: {
+      "@type": "Audience",
+      audienceType:
+        locale === "es"
+          ? "Salones de eventos, wedding planners, organizadores profesionales"
+          : "Event venues, wedding planners, professional organizers",
+    },
+    category: "B2B Software",
+  };
+}

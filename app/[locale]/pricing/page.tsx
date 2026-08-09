@@ -2,7 +2,7 @@ import { Suspense, lazy } from "react";
 import type { Metadata } from "next";
 import { generatePageMetadata, siteConfig } from "@/src/utils/metadata";
 import StructuredData from "@/components/shared/StructuredData";
-import { getOrganizationSchema, getBreadcrumbSchema } from "@/src/utils/structuredData";
+import { getOrganizationSchema, getBreadcrumbSchema, getServiceSchema } from "@/src/utils/structuredData";
 import { PricingSkeleton } from "@/components/shared/skeletons/HomeSectionSkeletons";
 import { TemplatesHeader } from "@/components/features/templates/TemplatesHeader";
 import { Container } from "@/components/shared/Container";
@@ -58,7 +58,11 @@ export default async function PricingPage({
     locale
   );
 
-  const structuredData = [getOrganizationSchema(locale), breadcrumbSchema];
+  const structuredData = [
+    getOrganizationSchema(locale),
+    getServiceSchema(locale),
+    breadcrumbSchema
+  ];
 
   const t = await getTranslations({ locale, namespace: "Pricing" });
 
