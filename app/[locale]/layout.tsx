@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/src/i18n/routing";
 import { Toaster } from "@/components/ui/sonner";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
+import MetaPixel from "@/components/shared/MetaPixel";
 import MicrosoftClarity from "@/components/analytics/MicrosoftClarity";
 import { Playfair_Display, Inter } from "next/font/google";
 import { siteConfig } from "@/src/utils/metadata";
@@ -128,6 +129,7 @@ export default async function RootLayout({
       </head>
       <body className="antialiased font-sans">
         <GoogleAnalytics />
+        <MetaPixel />
         <MicrosoftClarity />
         <NextIntlClientProvider messages={messages}>
           <ReactQueryProvider>
