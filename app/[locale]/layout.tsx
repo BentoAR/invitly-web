@@ -103,6 +103,12 @@ export async function generateMetadata({
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+
+// Only Spanish and English are valid route segments. Reject anything else
+// before Next attempts a runtime render for a scanner-provided path such as
+// `/.env` or `/private-key`.
+export const dynamicParams = false;
+
 export default async function RootLayout({
   children,
   params,
