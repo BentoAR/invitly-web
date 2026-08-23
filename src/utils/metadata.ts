@@ -93,6 +93,7 @@ export function generatePageMetadata({
     },
     metadataBase: new URL(siteConfig.url),
     alternates: {
+      canonical: url,
       languages: {
         es: `/es${path}`,
         en: `/en${path}`,

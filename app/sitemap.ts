@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
   const lastModified = new Date();
 
-  return LOCALES.flatMap((locale) =>
+  const localizedPages = LOCALES.flatMap((locale) =>
     STATIC_PAGES.map(({ path, changeFrequency, priority }) => ({
       url: `${baseUrl}/${locale}${path}`,
       lastModified,
@@ -30,4 +30,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     }))
   );
+
+  const occasionPaths = [
+    "/invitaciones-digitales-bodas",
+    "/invitaciones-digitales-quince-anos",
+    "/invitaciones-digitales-cumpleanos",
+    "/invitaciones-digitales-eventos-corporativos",
+  ];
+
+  return [
+    ...localizedPages,
+    ...occasionPaths.map((path) => ({
+      url: `${baseUrl}/es${path}`,
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+      alternates: {
+        languages: {
+          es: `${baseUrl}/es${path}`,
+          "x-default": `${baseUrl}/es${path}`,
+        },
+      },
+    })),
+  ];
 }

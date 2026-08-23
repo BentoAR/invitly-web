@@ -2,9 +2,19 @@ type TemplatesHeaderProps = {
   title: string;
   description: string;
   eyebrow?: string;
+  headingLevel?: "h1" | "h2";
+  fullWidthDescription?: boolean;
 };
 
-export function TemplatesHeader({ title, description, eyebrow = "Catálogo · 2025" }: TemplatesHeaderProps) {
+export function TemplatesHeader({
+  title,
+  description,
+  eyebrow = "Catálogo · 2026",
+  headingLevel = "h1",
+  fullWidthDescription = false,
+}: TemplatesHeaderProps) {
+  const Heading = headingLevel;
+
   return (
     <div className="mb-12 md:mb-16">
       <p
@@ -17,7 +27,7 @@ export function TemplatesHeader({ title, description, eyebrow = "Catálogo · 20
       >
         {eyebrow}
       </p>
-      <h2
+      <Heading
         className="font-display font-normal leading-[1.1]"
         style={{
           fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
@@ -26,9 +36,11 @@ export function TemplatesHeader({ title, description, eyebrow = "Catálogo · 20
         }}
       >
         {title}
-      </h2>
+      </Heading>
       <p
-        className="mt-4 max-w-2xl text-base md:text-lg"
+        className={`mt-4 text-base md:text-lg ${
+          fullWidthDescription ? "" : "max-w-2xl"
+        }`}
         style={{ color: "rgba(32,0,65,0.7)" }}
       >
         {description}

@@ -12,11 +12,23 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { X } from "lucide-react";
 import { useEffect } from "react";
 
-export function CategorySelect() {
+const categoryLandingPaths: Record<string, string> = {
+  wedding: "/es/invitaciones-digitales-bodas",
+  quinces: "/es/invitaciones-digitales-quince-anos",
+  birthday: "/es/invitaciones-digitales-cumpleanos",
+  corporate: "/es/invitaciones-digitales-eventos-corporativos",
+};
+
+export function CategorySelect({ categoryKey }: { categoryKey?: string }) {
   const t = useTranslations("Templates");
+  const locale = useLocale();
+  const router = useRouter();
   const { data: categories } = useCategories();
   const { paramValues, updateParam } = useURLParams("categories");
 
@@ -32,6 +44,12 @@ export function CategorySelect() {
     );
 
     if (catObj) {
+      const landingPath = categoryLandingPaths[catObj.key];
+      if (locale === "es" && landingPath) {
+        router.push(landingPath);
+        return;
+      }
+
       addCategory(catObj);
 
       const newSelected = [...selectedCategories, catObj]
@@ -65,9 +83,17 @@ export function CategorySelect() {
   }, [categories]);
 
   if (!categories) return null;
+  const activeCategory = categoryKey
+    ? categories.find((category: Category) => category.key === categoryKey)
+    : undefined;
+
   return (
     <div>
-      <Select value="" onValueChange={handleAddCategory} aria-label={t("filterValue")}>
+      <Select
+        value={activeCategory?.display_name ?? ""}
+        onValueChange={handleAddCategory}
+        aria-label={t("filterValue")}
+      >
         <SelectTrigger className="w-60">
           <SelectValue placeholder={t("filterValue")} />
         </SelectTrigger>
@@ -83,6 +109,14 @@ export function CategorySelect() {
           ))}
         </SelectContent>
       </Select>
+      {categoryKey && locale === "es" && (
+        <Link
+          href="/es/templates"
+          className="mt-4 inline-flex text-sm text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
+        >
+          Ver todas las plantillas
+        </Link>
+      )}
       {selectedCategories.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-2">
           {selectedCategories.map((cat) => (

@@ -1,7 +1,8 @@
 "use client";
-import { Template } from "@/utils/types";
+import { Category, Template } from "@/utils/types";
 import Image from "next/image";
 import { useTemplates } from "@/hooks/useTemplates";
+import { useCategories } from "@/hooks/useCategories";
 import { useCategoriesStore } from "@/stores/categoriesStore";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
@@ -11,18 +12,40 @@ import { openWhatsApp } from "@/utils/openWhatsapp";
 import { analytics } from "@/utils/analytics";
 import { Play, ArrowRight } from "lucide-react";
 
-export function TemplatesGrid() {
+export function TemplatesGrid({
+  categoryKey,
+  excludeCategoryKey,
+}: {
+  categoryKey?: string;
+  excludeCategoryKey?: string;
+}) {
   const t = useTranslations("Templates");
   const selectedCategories = useCategoriesStore((s) => s.selectedCategories);
-  const { data: templates = [], isLoading, error, refetch } = useTemplates(selectedCategories);
+  const { data: categories } = useCategories();
+  const selectedCategory = categoryKey
+    ? categories?.find((category: Category) => category.key === categoryKey)
+    : undefined;
+  const categoriesForQuery = categoryKey
+    ? selectedCategory
+      ? [selectedCategory]
+      : []
+    : selectedCategories;
+  const { data: templates = [], isLoading, error, refetch } = useTemplates(
+    categoriesForQuery,
+    { enabled: !categoryKey || Boolean(selectedCategory) }
+  );
 
-  if (isLoading) return <TemplatesGridSkeleton />;
+  if (isLoading || (categoryKey && !selectedCategory)) return <TemplatesGridSkeleton />;
   if (error) return <ErrorState message={t("error")} onRetry={() => refetch()} retryLabel={t("retry")} />;
-  if (templates.length === 0) return <EmptyState message={t("noResults")} />;
+  const visibleTemplates = excludeCategoryKey
+    ? templates.filter((template: Template) => template.category?.key !== excludeCategoryKey)
+    : templates;
+
+  if (visibleTemplates.length === 0) return <EmptyState message={t("noResults")} />;
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-8">
-      {templates.map((template: Template) => (
+      {visibleTemplates.map((template: Template) => (
         <TemplateCard key={template.id} template={template} t={t} />
       ))}
     </div>

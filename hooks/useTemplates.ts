@@ -3,7 +3,10 @@ import { useMemo } from "react";
 import { getTemplates } from "@/services/templates";
 import { Category } from "@/utils/types";
 
-export function useTemplates(categories: Category[]) {
+export function useTemplates(
+  categories: Category[],
+  options: { enabled?: boolean } = {}
+) {
   // Estabilizar query key para evitar refetches innecesarios
   const categoryIds = useMemo(
     () => categories.map((cat) => cat.id).sort(),
@@ -17,6 +20,7 @@ export function useTemplates(categories: Category[]) {
         categoryIds.length ? { categories: categoryIds } : undefined
       );
     },
+    enabled: options.enabled,
     // Datos estáticos del CMS — staleTime alto
     staleTime: 30 * 60 * 1000, // 30 minutos
     gcTime: 60 * 60 * 1000, // 1 hora

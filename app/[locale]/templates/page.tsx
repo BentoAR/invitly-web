@@ -20,10 +20,13 @@ export const revalidate = 60;
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ categories?: string | string[] }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const { categories } = await searchParams;
 
   const title =
     locale === "es"
@@ -58,13 +61,17 @@ export async function generateMetadata({
           "quinceañera invitations",
         ];
 
-  return generatePageMetadata({
+  const metadata = generatePageMetadata({
     title,
     description,
     path: "/templates",
     locale,
     keywords,
   });
+
+  return categories
+    ? { ...metadata, robots: { index: false, follow: true } }
+    : metadata;
 }
 
 export default async function Templates({
@@ -73,6 +80,7 @@ export default async function Templates({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+
   const t = await getTranslations("Templates");
 
   const queryClient = new QueryClient();

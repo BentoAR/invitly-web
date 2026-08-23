@@ -20,10 +20,11 @@ export const Navbar = () => {
 
   const isHome = pathname === `/${locale}` || pathname === "/";
   const isDarkPage = pathname.includes("/empresas");
+  const invitationsPath = `/${locale}/templates`;
 
   const navLinks = [
     { name: t("inicio"), id: "inicio", href: `/${locale}` },
-    { name: t("invitaciones"), id: "templates", href: `/${locale}/templates` },
+    { name: t("invitaciones"), id: "templates", href: invitationsPath },
     { name: t("precios"), id: "pricing", href: `/${locale}/pricing` },
     { name: t("contacto"), id: "contact", href: `/${locale}/contact` },
     { name: t("empresas"), id: "empresas", href: `/${locale}/empresas` },
@@ -92,7 +93,11 @@ export const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
-              const isActive = link.id === "inicio" ? isHome : pathname === `/${locale}/${link.id}`;
+              const isActive = link.id === "inicio"
+                ? isHome
+                : link.id === "templates"
+                  ? pathname === invitationsPath
+                  : pathname === `/${locale}/${link.id}`;
               return (
                 <a
                   key={link.id}

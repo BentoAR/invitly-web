@@ -10,10 +10,11 @@ export default function Footer() {
   const locale = useLocale();
   const pathname = usePathname();
   const isDarkPage = pathname.includes("/empresas");
+  const invitationsPath = `/${locale}/templates`;
 
   const links = [
     { label: t("home"), href: `/${locale}` },
-    { label: t("invitations"), href: `/${locale}/templates` },
+    { label: t("invitations"), href: invitationsPath },
     { label: t("pricing"), href: `/${locale}/pricing` },
     { label: t("business"), href: `/${locale}/empresas` },
     { label: t("contact"), href: `/${locale}/contact` },

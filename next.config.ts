@@ -9,6 +9,26 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/templates",
+        destination: "/es/templates",
+        permanent: true,
+      },
+      {
+        source: "/pricing",
+        destination: "/es/pricing",
+        permanent: true,
+      },
+      {
+        source: "/empresas",
+        destination: "/es/empresas",
+        permanent: true,
+      },
+      {
+        source: "/contact",
+        destination: "/es/contact",
+        permanent: true,
+      },
+      {
         source: "/:path*",
         has: [{ type: "host", value: "www.bento.com.ar" }],
         destination: "https://bento.com.ar/:path*",
