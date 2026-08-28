@@ -201,6 +201,27 @@ export default async function OccasionInvitationsPage({
             </p>
             <TemplatesGrid excludeCategoryKey={occasionPage.categoryKey} />
           </section>
+
+          <nav aria-label="Otros tipos de evento" className="mt-16 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
+            {(Object.keys(occasionPages) as OccasionSlug[])
+              .filter((slug) => slug !== occasion)
+              .map((slug, index) => (
+                <span key={slug} className="flex items-center gap-3">
+                  {index > 0 ? (
+                    <span aria-hidden="true" style={{ color: "rgba(32, 0, 65, 0.25)" }}>
+                      ·
+                    </span>
+                  ) : null}
+                  <a
+                    href={`/es/${slug}`}
+                    className="transition-colors hover:text-primary"
+                    style={{ color: "rgba(32, 0, 65, 0.6)" }}
+                  >
+                    {occasionPages[slug].title}
+                  </a>
+                </span>
+              ))}
+          </nav>
         </HydrationBoundary>
       </Container>
     </section>

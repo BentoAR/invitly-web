@@ -1,8 +1,15 @@
 export const dynamic = "force-static";
 
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { Container } from "@/components/shared/Container";
 import { InvitationsList } from "@/components/features/templates/InvitationsList";
+
+const OCCASION_LINKS = [
+  { slug: "invitaciones-digitales-bodas", labelKey: "occasionWeddings" },
+  { slug: "invitaciones-digitales-quince-anos", labelKey: "occasionQuinces" },
+  { slug: "invitaciones-digitales-cumpleanos", labelKey: "occasionBirthdays" },
+  { slug: "invitaciones-digitales-eventos-corporativos", labelKey: "occasionCorporate" },
+] as const;
 
 /**
  * Bloque 5 — Plantillas.
@@ -22,6 +29,8 @@ import { InvitationsList } from "@/components/features/templates/InvitationsList
  */
 export default async function TemplatesSection() {
   const t = await getTranslations("TemplatesSection");
+  const tFooter = await getTranslations("Footer");
+  const locale = await getLocale();
 
   return (
     <section
@@ -51,6 +60,30 @@ export default async function TemplatesSection() {
         </div>
 
         <InvitationsList />
+
+        {locale === "es" ? (
+          <nav
+            aria-label={tFooter("eventTypes")}
+            className="mt-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm"
+          >
+            {OCCASION_LINKS.map((occasion, index) => (
+              <span key={occasion.slug} className="flex items-center gap-3">
+                {index > 0 ? (
+                  <span aria-hidden="true" style={{ color: "rgba(32, 0, 65, 0.25)" }}>
+                    ·
+                  </span>
+                ) : null}
+                <a
+                  href={`/es/${occasion.slug}`}
+                  className="transition-colors hover:text-primary"
+                  style={{ color: "rgba(32, 0, 65, 0.6)" }}
+                >
+                  {tFooter(occasion.labelKey)}
+                </a>
+              </span>
+            ))}
+          </nav>
+        ) : null}
       </Container>
     </section>
   );

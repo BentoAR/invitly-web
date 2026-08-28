@@ -20,6 +20,16 @@ export default function Footer() {
     { label: t("contact"), href: `/${locale}/contact` },
   ];
 
+  const occasionLinks =
+    locale === "es"
+      ? [
+          { label: t("occasionWeddings"), href: "/es/invitaciones-digitales-bodas" },
+          { label: t("occasionQuinces"), href: "/es/invitaciones-digitales-quince-anos" },
+          { label: t("occasionBirthdays"), href: "/es/invitaciones-digitales-cumpleanos" },
+          { label: t("occasionCorporate"), href: "/es/invitaciones-digitales-eventos-corporativos" },
+        ]
+      : [];
+
   return (
     <footer
       className={`${isDarkPage ? "" : "mt-20"} border-t ${
@@ -29,7 +39,11 @@ export default function Footer() {
       }`}
     >
       <Container>
-        <div className="py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          className={`py-12 grid grid-cols-1 gap-8 ${
+            occasionLinks.length > 0 ? "md:grid-cols-4" : "md:grid-cols-3"
+          }`}
+        >
           <div className="col-span-1 md:col-span-2">
             <a
               href={`/${locale}`}
@@ -87,6 +101,34 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+
+          {occasionLinks.length > 0 ? (
+            <div>
+              <h4
+                className={`font-semibold mb-4 ${
+                  isDarkPage ? "text-white" : ""
+                }`}
+              >
+                {t("eventTypes")}
+              </h4>
+              <ul className="space-y-1 text-sm">
+                {occasionLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className={`inline-flex py-1 transition-colors ${
+                        isDarkPage
+                          ? "text-neutral-400 hover:text-[#FFA459]"
+                          : "text-muted-foreground hover:text-primary"
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
 
         <div
