@@ -73,10 +73,15 @@ export async function generateMetadata({
     keywords,
   });
 
+  const absoluteTitle =
+    locale === "es"
+      ? "Invitaciones Digitales y Gestión de Eventos | Bento"
+      : "Digital Invitations & Event Management | Bento";
+
   return {
     ...baseMetadata,
     title: {
-      absolute: "Invitaciones Digitales y Gestión de Eventos | Bento",
+      absolute: absoluteTitle,
     },
   };
 }
