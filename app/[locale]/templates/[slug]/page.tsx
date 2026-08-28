@@ -121,12 +121,14 @@ export async function generateMetadata({
   };
 }
 
-const INCLUDED = [
-  { title: "RSVP automático", description: "Tus invitados confirman con un toque y vos ves la lista en vivo." },
-  { title: "Mapa del lugar", description: "La ubicación con su mapa, para que nadie pregunte la dirección." },
-  { title: "Galería de fotos", description: "Las fotos del evento en un álbum que se arma solo." },
-  { title: "Playlist colaborativa", description: "Tus invitados proponen canciones y vos aprobás cuáles suenan." },
-];
+/**
+ * Ficha técnica, no contenido. Es idéntica en las 17 fichas a propósito: es
+ * verdad común a todo el catálogo, y sirve para que quien cae de Google en una
+ * plantilla suelta entienda que atrás hay algo más que una imagen linda. Se
+ * mantiene deliberadamente compacta para no competir con lo único propio de
+ * cada página —el diseño y su paleta— ni disfrazarse de texto único.
+ */
+const INCLUDED = ["RSVP automático", "Mapa del lugar", "Galería de fotos", "Playlist colaborativa"];
 
 export default async function TemplateDetailPage({
   params,
@@ -340,38 +342,35 @@ export default async function TemplateDetailPage({
                 Ver precios
               </Link>
             </div>
+
+            <section className="mt-12" aria-labelledby="included-title">
+              <h2
+                id="included-title"
+                className="font-mono uppercase"
+                style={{ fontSize: "0.6rem", letterSpacing: "0.28em", color: "rgba(32,0,65,0.45)" }}
+              >
+                Incluido en todas las plantillas
+              </h2>
+              <ul className="mt-4 space-y-2.5">
+                {INCLUDED.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-3 text-sm"
+                    style={{ color: "rgba(32,0,65,0.7)" }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="h-1 w-1 shrink-0 rounded-full"
+                      style={{ backgroundColor: BRONZE }}
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
           </div>
         </div>
       </Container>
-
-      {/* Qué trae la plantilla — verdad común a todo el catálogo */}
-      <section className="mt-24" aria-labelledby="included-title">
-        <Container>
-          <h2
-            id="included-title"
-            className="font-display font-normal leading-[1.1]"
-            style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", color: INK, letterSpacing: "-0.025em" }}
-          >
-            {template.display_name} ya viene con todo esto
-          </h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {INCLUDED.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl border bg-white p-5"
-                style={{ borderColor: "rgba(32,0,65,0.1)" }}
-              >
-                <h3 className="text-base font-medium" style={{ color: INK }}>
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed" style={{ color: "rgba(32,0,65,0.64)" }}>
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
 
       {siblings.length > 0 ? (
         <section className="mt-24" aria-labelledby="siblings-title">
