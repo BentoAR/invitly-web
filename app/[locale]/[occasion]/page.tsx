@@ -34,42 +34,23 @@ const occasionPages = {
       "RSVP para bodas",
       "invitaciones de boda Argentina",
     ],
-    intro:
-      "Tu invitación de boda no es solo la tarjeta que ven tus invitados: es el lugar donde confirman asistencia, ven el mapa a la ceremonia y la fiesta, sugieren canciones para la pista y suben las fotos del día después. Elegís el diseño, cargás la info de los dos, y compartís un solo link por WhatsApp.",
-    features: [
-      {
-        title: "RSVP para ambas familias",
-        description:
-          "Cada invitado confirma con un toque, y vos ves en tiempo real quién viene por parte de novio y quién por parte de novia, sin tener que preguntarle a nadie.",
-      },
-      {
-        title: "Playlist para la pista",
-        description:
-          "Tus invitados proponen las canciones que quieren bailar. Vos moderás y armás la lista definitiva antes de la fiesta.",
-      },
-      {
-        title: "Álbum del día después",
-        description:
-          "Todas las fotos que sacaron tus invitados, en un solo lugar, sin pedirlas por WhatsApp una semana después.",
-      },
-    ],
     faqSubtitle:
       "Lo que más preguntan las parejas antes de elegir su invitación.",
     faqs: [
       {
-        question: "¿Puedo poner el nombre de los dos, o solo de uno?",
+        question: "¿Puedo poner el nombre de los dos?",
         answer:
-          "Los dos. La invitación está pensada para mostrar la historia de la pareja, con espacio para fotos, fecha y el lugar de la ceremonia y la fiesta.",
+          "Sí. La invitación tiene espacio para mostrar la historia de la pareja, con fotos, fecha y el lugar de la celebración.",
       },
       {
-        question: "¿Sirve si la ceremonia y la fiesta son en lugares distintos?",
+        question: "¿Puedo armar la distribución de mesas para la fiesta?",
         answer:
-          "Sí, podés cargar las dos ubicaciones con su propio mapa, para que nadie se pierda ni llegue tarde a ninguna de las dos partes.",
+          "Sí, tenés un panel para organizar mesas y asignar invitados, para que el día de la boda ya esté todo resuelto.",
       },
       {
-        question: "¿Puedo separar la lista de invitados por ceremonia y por fiesta?",
+        question: "¿Puedo cambiar la fecha o el lugar después de mandar la invitación?",
         answer:
-          "Sí, podés armar grupos distintos y mandar información específica a cada uno según corresponda.",
+          "Sí. Lo editás desde tu panel y el mismo link se actualiza automáticamente para todos los que ya lo tienen — no hace falta reenviar nada.",
       },
     ],
   },
@@ -87,25 +68,6 @@ const occasionPages = {
       "invitaciones para XV años",
       "invitaciones de quinceañera Argentina",
     ],
-    intro:
-      "Tus 15 son tuyos, y la invitación también. Elegís el diseño, cargás la cuenta regresiva, el lugar de la fiesta y el dress code, y tus amigos confirman con un toque desde el celular. Nada de andar juntando confirmaciones por grupos de WhatsApp.",
-    features: [
-      {
-        title: "Cuenta regresiva en vivo",
-        description:
-          "Tus invitados ven cuánto falta para la fiesta apenas abren el link, para que el hype no se corte.",
-      },
-      {
-        title: "Dress code claro",
-        description:
-          "Cargás el código de vestimenta y el color que elegiste, así nadie llega con la ropa que no va.",
-      },
-      {
-        title: "Playlist armada entre todos",
-        description:
-          "Tus amigos sugieren las canciones para la pista, vos aprobás cuáles suenan esa noche.",
-      },
-    ],
     faqSubtitle:
       "Lo que más preguntan las quinceañeras (y sus papás) antes de elegir la invitación.",
     faqs: [
@@ -117,11 +79,12 @@ const occasionPages = {
       {
         question: "¿Mis papás pueden ver quién confirmó?",
         answer:
-          "Sí, el panel de control lo pueden usar juntos — ideal para que ellos hagan el seguimiento de confirmaciones sin que vos tengas que estar pendiente todo el tiempo.",
+          "Sí, compartís el usuario y contraseña del panel con quien quieras, así lo pueden revisar juntos cuando quieran.",
       },
       {
-        question: "¿Sirve para invitar por separado a familia y amigos?",
-        answer: "Sí, podés armar grupos distintos y organizar la lista de invitados como quieras.",
+        question: "¿Puedo cambiar el diseño si me arrepiento?",
+        answer:
+          "Sí, podés probar otros templates las veces que quieras, hasta el día de la fiesta, sin perder nada de lo que ya cargaste.",
       },
     ],
   },
@@ -138,24 +101,6 @@ const occasionPages = {
       "invitaciones de cumpleaños digitales",
       "invitaciones cumpleaños online Argentina",
       "RSVP cumpleaños",
-    ],
-    intro:
-      "Desde un cumple de 5 hasta los 50 de tu viejo, la lógica es la misma: elegís un diseño, cargás la fecha y el lugar, y mandás un link por WhatsApp. Tus invitados confirman solos y vos ves en tiempo real cuántos van a venir.",
-    features: [
-      {
-        title: "Un diseño para cada edad",
-        description:
-          "Tenés plantillas para cumpleaños infantiles, adolescentes y adultos, cada una con su estética propia.",
-      },
-      {
-        title: "RSVP sin perseguir a nadie",
-        description:
-          "Confirman con un toque desde el link. Vos ves la lista actualizada sin tener que llamar a nadie dos veces.",
-      },
-      {
-        title: "Playlist de la fiesta",
-        description: "Tus invitados proponen temas, vos armás la lista final antes de que arranque.",
-      },
     ],
     faqSubtitle:
       "Lo que más preguntan antes de armar la invitación de cumpleaños.",
@@ -191,24 +136,6 @@ const occasionPages = {
       "invitaciones para eventos empresariales",
       "RSVP eventos corporativos",
     ],
-    intro:
-      "Un lanzamiento, una convención, un evento de fin de año: la lógica es la misma que cualquier evento, pero con otra imagen. Cargás la identidad de tu empresa, gestionás confirmaciones por área o por invitado individual, y centralizás toda la logística en un solo panel.",
-    features: [
-      {
-        title: "Imagen profesional",
-        description: "Diseños pensados para eventos de empresa, sin la estética festiva de una fiesta de cumpleaños.",
-      },
-      {
-        title: "Gestión de asistentes",
-        description:
-          "Confirmá por persona o por empresa invitada, y exportá la lista a Excel cuando la necesites para catering o accesos.",
-      },
-      {
-        title: "Info centralizada",
-        description:
-          "Ubicación, agenda del evento y contacto de organización, todo en el mismo link que mandás por mail o WhatsApp.",
-      },
-    ],
     faqSubtitle:
       "Lo que más preguntan las empresas antes de elegir su invitación.",
     faqs: [
@@ -218,7 +145,8 @@ const occasionPages = {
       },
       {
         question: "¿Sirve para eventos con cupo limitado?",
-        answer: "Sí, podés ver en tiempo real cuántos confirmaron y cerrar el RSVP cuando llegues al cupo.",
+        answer:
+          "Sí, podés definir un cupo máximo para el evento y ves en tiempo real cuántos lugares quedan disponibles.",
       },
       {
         question: "¿Puedo exportar la lista de invitados?",
@@ -350,39 +278,16 @@ export default async function OccasionInvitationsPage({
             </p>
             <TemplatesGrid excludeCategoryKey={occasionPage.categoryKey} />
           </section>
-
-          <section className="mt-16" aria-labelledby="occasion-about-title">
-            <h2
-              id="occasion-about-title"
-              className="font-display font-normal leading-[1.1]"
-              style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", color: "#200041", letterSpacing: "-0.025em" }}
-            >
-              Qué incluye tu invitación
-            </h2>
-            <p className="mt-4 max-w-3xl text-base leading-relaxed md:text-lg" style={{ color: "rgba(32,0,65,0.75)" }}>
-              {occasionPage.intro}
-            </p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              {occasionPage.features.map((feature) => (
-                <div key={feature.title} className="rounded-2xl border bg-white p-5" style={{ borderColor: "rgba(32,0,65,0.1)" }}>
-                  <h3 className="text-base font-medium" style={{ color: "#200041" }}>
-                    {feature.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed" style={{ color: "rgba(32,0,65,0.64)" }}>
-                    {feature.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
         </HydrationBoundary>
       </Container>
 
-      <FAQClient
-        title="Preguntas frecuentes"
-        subtitle={occasionPage.faqSubtitle}
-        faqs={[...occasionPage.faqs]}
-      />
+      <div className="mt-16">
+        <FAQClient
+          title="Preguntas frecuentes"
+          subtitle={occasionPage.faqSubtitle}
+          faqs={[...occasionPage.faqs]}
+        />
+      </div>
 
       <Container>
         <nav aria-label="Otros tipos de evento" className="mt-16 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
