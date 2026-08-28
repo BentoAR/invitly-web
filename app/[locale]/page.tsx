@@ -1,7 +1,6 @@
 import { Suspense, lazy } from "react";
 import type { Metadata } from "next";
 import Hero from "@/components/features/home/Hero";
-import SEOContent from "@/components/features/home/SEOContent";
 import ProblemSection from "@/components/features/home/ProblemSection";
 
 const SocialProofBanner = lazy(() => import("@/components/features/home/SocialProofBanner"));
@@ -124,7 +123,6 @@ export default async function Home({
   return (
     <div className="min-h-screen">
       <StructuredData data={structuredData} />
-      <SEOContent />
 
       <Hero />
 
