@@ -1,4 +1,4 @@
-import { WithContext, Organization, WebSite, FAQPage, Question, Service, BreadcrumbList, SoftwareApplication } from "schema-dts";
+import { WithContext, Organization, WebSite, FAQPage, Question, Service, BreadcrumbList, SoftwareApplication, CreativeWork } from "schema-dts";
 
 interface SearchActionWithQueryInput {
   "@type": "SearchAction";
@@ -239,5 +239,42 @@ export function getB2BServiceSchema(locale: string): WithContext<Service> {
           : "Event venues, wedding planners, professional organizers",
     },
     category: "B2B Software",
+  };
+}
+
+/**
+ * Ficha de una plantilla del catálogo. `CreativeWork` y no `Product` a
+ * propósito: el precio vive en el plan, no en la plantilla, y declarar un
+ * `Offer` por diseño sería una afirmación comercial falsa.
+ */
+export function getTemplateCreativeWorkSchema({
+  name,
+  description,
+  image,
+  url,
+  genre,
+  siteUrl,
+}: {
+  name: string;
+  description: string;
+  image: string;
+  url: string;
+  genre: string;
+  siteUrl: string;
+}): WithContext<CreativeWork> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name,
+    description,
+    image,
+    url,
+    genre,
+    inLanguage: "es-AR",
+    creator: {
+      "@type": "Organization",
+      name: "Bento",
+      url: siteUrl,
+    },
   };
 }

@@ -5,7 +5,8 @@ import { useTemplates } from "@/hooks/useTemplates";
 import { useCategories } from "@/hooks/useCategories";
 import { useCategoriesStore } from "@/stores/categoriesStore";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { getTemplateDetail } from "@/src/content/templateDetails";
 import { ErrorState } from "@/components/shared/states/ErrorState";
 import { EmptyState } from "@/components/shared/states/EmptyState";
 import { openWhatsApp } from "@/utils/openWhatsapp";
@@ -53,6 +54,14 @@ export function TemplatesGrid({
 }
 
 function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeof useTranslations> }) {
+  const locale = useLocale();
+  // La ficha propia hoy existe solo en español y solo para plantillas con
+  // entrada editorial. Sin ficha, el título no es un link.
+  const detailHref =
+    locale === "es" && getTemplateDetail(template.name)
+      ? `/es/templates/${template.name}`
+      : null;
+
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white"
       style={{ boxShadow: "0 4px 20px rgba(32,0,65,0.08)" }}
@@ -125,7 +134,13 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
             className="font-display font-normal text-white leading-tight mb-2"
             style={{ fontSize: "0.95rem", letterSpacing: "-0.01em" }}
           >
-            {template.display_name}
+            {detailHref ? (
+              <a href={detailHref} className="underline-offset-4 hover:underline">
+                {template.display_name}
+              </a>
+            ) : (
+              template.display_name
+            )}
           </h3>
           <div className="flex gap-1.5">
             <a
@@ -160,7 +175,13 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
           className="font-display font-normal leading-tight"
           style={{ fontSize: "0.95rem", color: "#200041", letterSpacing: "-0.01em" }}
         >
-          {template.display_name}
+          {detailHref ? (
+            <a href={detailHref} className="underline-offset-4 transition-colors hover:text-primary hover:underline">
+              {template.display_name}
+            </a>
+          ) : (
+            template.display_name
+          )}
         </h3>
       </div>
     </div>

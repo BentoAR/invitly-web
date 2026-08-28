@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { siteConfig } from "@/src/utils/metadata";
+import { TEMPLATE_DETAIL_SLUGS } from "@/src/content/templateDetails";
 
 const STATIC_PAGES = [
   { path: "", changeFrequency: "weekly" as const, priority: 1 },
@@ -49,6 +50,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
         languages: {
           es: `${baseUrl}/es${path}`,
           "x-default": `${baseUrl}/es${path}`,
+        },
+      },
+    })),
+    ...TEMPLATE_DETAIL_SLUGS.map((slug) => ({
+      url: `${baseUrl}/es/templates/${slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      alternates: {
+        languages: {
+          es: `${baseUrl}/es/templates/${slug}`,
+          "x-default": `${baseUrl}/es/templates/${slug}`,
         },
       },
     })),
