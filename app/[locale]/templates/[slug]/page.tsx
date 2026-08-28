@@ -311,9 +311,6 @@ export default async function TemplateDetailPage({
                   </li>
                 ))}
               </ul>
-              <p className="mt-4 text-sm" style={{ color: "rgba(32,0,65,0.55)" }}>
-                Los colores se ajustan a tu evento desde el panel.
-              </p>
             </section>
 
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
