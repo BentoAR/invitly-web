@@ -167,14 +167,15 @@ export default function ExperienceSurvey({ token }: { token: string }) {
       );
   }, [token]);
   const question = data?.survey.questions[index];
-  const complete = useMemo(
-    () =>
-      !question?.required ||
-      (Array.isArray(answers[question.id])
-        ? answers[question.id].length > 0
-        : answers[question.id] !== undefined && answers[question.id] !== ""),
-    [answers, question],
-  );
+  const complete = useMemo(() => {
+    if (!question?.required) return true;
+
+    const answer = answers[question.id];
+    if (Array.isArray(answer)) return answer.length > 0;
+    if (typeof answer === "string") return answer.trim().length > 0;
+
+    return answer !== undefined;
+  }, [answers, question]);
   const submit = async () => {
     if (!data) return;
     setSubmitting(true);
