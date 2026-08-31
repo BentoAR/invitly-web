@@ -262,6 +262,7 @@
     "subtitle": "One payment per event. No subscription, no auto-renewal, no fine print.",
     "plans": [
       {
+        "code": "DIGITAL",
         "name": "Digital",
         "price": "$60",
         "priceNote": "per event",
@@ -292,6 +293,7 @@
         ]
       },
       {
+        "code": "CELEBRATION",
         "name": "Celebration",
         "price": "$90",
         "priceNote": "per event",
@@ -330,6 +332,7 @@
         ]
       },
       {
+        "code": "CUSTOMIZED",
         "name": "Custom Made",
         "price": "$150",
         "priceNote": "per event",
