@@ -11,7 +11,7 @@ import {
   getOrganizationSchema,
   getTemplateCreativeWorkSchema,
 } from "@/src/utils/structuredData";
-import { getTemplates } from "@/services/templates";
+import { getTemplatesForStaticGeneration } from "@/services/templates";
 import {
   TEMPLATE_DETAIL_SLUGS,
   getTemplateDetail,
@@ -66,7 +66,7 @@ interface ApiTemplate {
 }
 
 async function findTemplate(slug: string) {
-  const templates: ApiTemplate[] = await getTemplates();
+  const templates = (await getTemplatesForStaticGeneration()) as ApiTemplate[];
   const template = templates.find((item) => item.name === slug);
   return { template, templates };
 }
