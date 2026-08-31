@@ -15,6 +15,7 @@ interface PlanFeature {
 }
 
 interface Plan {
+  code?: string;
   name: string;
   price: string;
   priceNote: string;
@@ -53,7 +54,10 @@ export default function PricingClient({
   const rightTextRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  const ctaHref = `${APP_URL}/billing/upgrade?reason=purchase`;
+  const buildCtaHref = (planCode?: string) => {
+    const base = `${APP_URL}/billing/upgrade?reason=purchase`;
+    return planCode ? `${base}&plan=${encodeURIComponent(planCode)}` : base;
+  };
 
   useLayoutEffect(() => {
     if (headerRef.current) gsap.set(headerRef.current, { opacity: 1, filter: "blur(0px)" });
@@ -245,7 +249,7 @@ export default function PricingClient({
                 ))}
               </ul>
               <Link
-                href={ctaHref}
+                href={buildCtaHref(plan.code)}
                 onClick={() => analytics.planCtaClick(plan.name)}
               >
                 <Button className="min-h-11 w-full" variant={plan.featured ? "default" : "outline"}>

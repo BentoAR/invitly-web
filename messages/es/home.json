@@ -262,6 +262,7 @@
     "subtitle": "Un pago por evento. Sin suscripción, sin renovación automática, sin letra chica.",
     "plans": [
       {
+        "code": "DIGITAL",
         "name": "Digital",
         "price": "$60.000",
         "priceNote": "por evento",
@@ -292,6 +293,7 @@
         ]
       },
       {
+        "code": "CELEBRATION",
         "name": "Celebración",
         "price": "$90.000",
         "priceNote": "por evento",
@@ -330,6 +332,7 @@
         ]
       },
       {
+        "code": "CUSTOMIZED",
         "name": "A Medida",
         "price": "$160.000",
         "priceNote": "por evento",
