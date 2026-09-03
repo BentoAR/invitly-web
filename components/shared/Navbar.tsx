@@ -142,7 +142,7 @@ export const Navbar = () => {
               href={`${APP_URL}/login`}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => analytics.loginClick()}
+              onClick={() => analytics.loginClicked('navbar_desktop')}
             >
               <Button
                 variant="outline"
@@ -230,7 +230,7 @@ export const Navbar = () => {
                       href={`${APP_URL}/login`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => analytics.loginClick()}
+                      onClick={() => analytics.loginClicked('navbar_mobile')}
                     >
                       <Button
                         variant="outline"

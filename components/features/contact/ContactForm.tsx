@@ -41,14 +41,14 @@ export default function ContactForm() {
   const onSubmit = async (data: ContactFormValues) => {
     try {
       await postNewInquiry(data);
-      analytics.contactFormSuccess(data.eventType)
+      analytics.contactFormSubmitted(data.eventType)
       toast.success(t("form.success"), {
         description: t("form.successDescription"),
         position: "top-right",
       });
       form.reset();
     } catch {
-      analytics.contactFormError()
+      analytics.contactFormFailed()
       toast.error(t("form.error"), {
         description: t("form.errorDescription"),
         position: "top-right",

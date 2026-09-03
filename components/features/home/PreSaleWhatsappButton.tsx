@@ -24,7 +24,7 @@ export default function PreSaleWhatsappButton({
       size="lg"
       className="w-full rounded-full bg-[#FFA459] px-6 text-white hover:bg-[#FFA459]/90 sm:w-auto"
       onClick={() => {
-        analytics.preSaleWhatsappClick();
+        analytics.whatsappClicked('presale');
         openWhatsApp(message);
       }}
       aria-label={label}

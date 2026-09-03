@@ -1,3 +1,5 @@
+import { trackMixpanel } from './mixpanel'
+
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void
@@ -6,53 +8,65 @@ declare global {
 
 type EventParams = Record<string, string | number | boolean>
 
+// Nombres de evento en Object-Action Framework (Title Case): "Plan Selected",
+// "Whatsapp Clicked", etc. GA4 no acepta espacios en el nombre del evento, así
+// que derivamos la versión snake_case para gtag desde el mismo nombre canónico
+// en vez de mantener dos catálogos.
+// https://growthmethod.com/object-action-framework/
+function toGaEventName(event: string) {
+  return event.toLowerCase().replace(/\s+/g, '_')
+}
+
 function track(event: string, params?: EventParams) {
+  trackMixpanel(event, params)
+
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
-  window.gtag('event', event, params)
+  window.gtag('event', toGaEventName(event), params)
 }
 
 export const analytics = {
-  planCtaClick: (planName: string) =>
-    track('plan_whatsapp_click', { plan_name: planName }),
+  planSelected: (planName: string, planCode?: string) =>
+    track('Plan Selected', { plan_name: planName, plan_code: planCode ?? '' }),
 
-  templateDemoClick: (templateName: string, category?: string) =>
-    track('template_demo_click', { template_name: templateName, template_category: category ?? '' }),
+  templateDemoClicked: (templateName: string, category?: string) =>
+    track('Template Demo Clicked', { template_name: templateName, template_category: category ?? '' }),
 
-  templateGetClick: (templateName: string, category?: string) =>
-    track('template_whatsapp_click', { template_name: templateName, template_category: category ?? '' }),
+  templateSelected: (templateName: string, category?: string) =>
+    track('Template Selected', { template_name: templateName, template_category: category ?? '' }),
 
-  contactFormSuccess: (eventType: string) =>
-    track('generate_lead', { event_type: eventType, method: 'contact_form' }),
+  /** CTA de WhatsApp, del origen que sea. Se distingue por `source`, no por evento. */
+  whatsappClicked: (source: string) =>
+    track('Whatsapp Clicked', { source }),
 
-  contactFormError: () =>
-    track('contact_form_error'),
+  contactFormSubmitted: (eventType: string) =>
+    track('Contact Form Submitted', { event_type: eventType, method: 'contact_form' }),
 
-  loginClick: () =>
-    track('login_click'),
+  contactFormFailed: () =>
+    track('Contact Form Failed'),
 
-  ctaWhatsappClick: () =>
-    track('cta_whatsapp_click'),
+  loginClicked: (source: string) =>
+    track('Login Clicked', { source }),
 
-  heroCtaClick: (mode: string) =>
-    track('hero_cta_click', { cta_mode: mode }),
+  heroCtaClicked: (mode: string) =>
+    track('Hero Cta Clicked', { cta_mode: mode }),
 
-  heroDemoClick: () =>
-    track('hero_demo_click'),
+  heroDemoClicked: () =>
+    track('Hero Demo Clicked'),
 
-  finalCtaClick: (mode: string) =>
-    track('final_cta_click', { cta_mode: mode }),
-
-  finalCtaWhatsappClick: () =>
-    track('final_cta_whatsapp_click'),
+  finalCtaClicked: (mode: string) =>
+    track('Final Cta Clicked', { cta_mode: mode }),
 
   /** Interacción con la demo "Dos pantallas". Mide si el bloque estrella se usa. */
-  demoActionClick: (actionId: string) =>
-    track('demo_action_click', { action_id: actionId }),
+  demoActionClicked: (actionId: string) =>
+    track('Demo Action Clicked', { action_id: actionId }),
 
-  /** Consulta previa a la compra. Proxy directo de intención en modelo pay-first. */
-  preSaleWhatsappClick: () =>
-    track('presale_whatsapp_click'),
+  categorySelected: (categoryName: string) =>
+    track('Category Selected', { category_name: categoryName }),
 
-  b2bDemoClick: () =>
-    track('b2b_demo_request'),
+  categoryDeselected: (categoryName: string) =>
+    track('Category Deselected', { category_name: categoryName }),
+
+  /** Fire-once cuando la sección de precios entra en viewport. Funnel real: cuántos la ven vs. cuántos clickean un plan. */
+  pricingSectionViewed: () =>
+    track('Pricing Section Viewed'),
 }

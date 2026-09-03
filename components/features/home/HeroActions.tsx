@@ -36,7 +36,7 @@ export default function HeroActions({
     >
       <Link
         href={primaryHref}
-        onClick={() => analytics.heroCtaClick(ctaMode)}
+        onClick={() => analytics.heroCtaClicked(ctaMode)}
         {...(primaryExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         <Button
@@ -53,7 +53,7 @@ export default function HeroActions({
         href={demoHref}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => analytics.heroDemoClick()}
+        onClick={() => analytics.heroDemoClicked()}
       >
         <Button
           variant="outline"

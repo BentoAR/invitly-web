@@ -262,7 +262,7 @@ function TemplatePreviewCard({
             href={`${DEMO_BASE_URL}/${invitation.name}`}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => analytics.templateDemoClick(invitation.name, invitation.category?.display_name)}
+            onClick={() => analytics.templateDemoClicked(invitation.name, invitation.category?.display_name)}
             className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-3 py-2.5 font-medium no-underline transition-colors duration-200 motion-reduce:transition-none hover:bg-[rgba(32,0,65,0.06)]"
             style={{
               fontSize: "0.8rem",
@@ -276,7 +276,7 @@ function TemplatePreviewCard({
           <button
             type="button"
             onClick={() => {
-              analytics.templateGetClick(invitation.name, invitation.category?.display_name);
+              analytics.templateSelected(invitation.name, invitation.category?.display_name);
               openWhatsApp(getMessage({ name: invitation.display_name }));
             }}
             className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-3 py-2.5 font-medium transition-all duration-200 motion-reduce:transition-none hover:gap-3"
