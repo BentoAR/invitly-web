@@ -12,6 +12,7 @@ import { Toaster } from "@/components/ui/sonner";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
 import MetaPixel from "@/components/shared/MetaPixel";
 import MicrosoftClarity from "@/components/analytics/MicrosoftClarity";
+import MixpanelAnalytics from "@/components/shared/MixpanelAnalytics";
 import { Playfair_Display, Inter } from "next/font/google";
 import { siteConfig } from "@/src/utils/metadata";
 import type { Metadata } from "next";
@@ -137,6 +138,7 @@ export default async function RootLayout({
         <GoogleAnalytics />
         <MetaPixel />
         <MicrosoftClarity />
+        <MixpanelAnalytics />
         <NextIntlClientProvider messages={messages}>
           <ReactQueryProvider>
             <Toaster />

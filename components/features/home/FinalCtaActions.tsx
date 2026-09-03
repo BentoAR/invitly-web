@@ -27,7 +27,7 @@ export default function FinalCtaActions({
     <div className="flex flex-col sm:flex-row gap-4 justify-center">
       <Link
         href={primaryHref}
-        onClick={() => analytics.finalCtaClick(ctaMode)}
+        onClick={() => analytics.finalCtaClicked(ctaMode)}
         {...(primaryExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         <Button size="lg" className="shadow-elegant w-full sm:w-auto" aria-label={primaryLabel}>
@@ -43,7 +43,7 @@ export default function FinalCtaActions({
         className="w-full sm:w-auto"
         aria-label={secondaryLabel}
         onClick={() => {
-          analytics.finalCtaWhatsappClick();
+          analytics.whatsappClicked('final_cta');
           openWhatsApp(whatsappMessage);
         }}
       >

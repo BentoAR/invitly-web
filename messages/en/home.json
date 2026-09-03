@@ -296,6 +296,8 @@
         "code": "CELEBRATION",
         "name": "Celebration",
         "price": "$90",
+        "originalPrice": "",
+        "discountBadge": "",
         "priceNote": "per event",
         "description": "For events that deserve professional organization",
         "cta": "Inquire",

@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { useEffect } from "react";
+import { analytics } from "@/utils/analytics";
 
 const categoryLandingPaths: Record<string, string> = {
   wedding: "/es/invitaciones-digitales-bodas",
@@ -44,6 +45,8 @@ export function CategorySelect({ categoryKey }: { categoryKey?: string }) {
     );
 
     if (catObj) {
+      analytics.categorySelected(catObj.display_name);
+
       const landingPath = categoryLandingPaths[catObj.key];
       if (locale === "es" && landingPath) {
         router.push(landingPath);
@@ -61,6 +64,9 @@ export function CategorySelect({ categoryKey }: { categoryKey?: string }) {
   };
 
   const handleRemoveCategory = (idCategory: string) => {
+    const removed = selectedCategories.find((c) => c.id === idCategory);
+    if (removed) analytics.categoryDeselected(removed.display_name);
+
     removeCategory(idCategory);
 
     const newSelected = selectedCategories

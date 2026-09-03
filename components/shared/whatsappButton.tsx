@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { MessageCircle, X } from "lucide-react";
 import { openWhatsApp } from "@/utils/openWhatsapp";
 import { useTranslations } from "next-intl";
+import { analytics } from "@/utils/analytics";
 
 interface WhatsAppButtonProps {
   message?: string;
@@ -37,6 +38,7 @@ export const WhatsAppButton = ({
   }, []);
 
   const handleClick = () => {
+    analytics.whatsappClicked('floating_button');
     openWhatsApp(message);
   };
 

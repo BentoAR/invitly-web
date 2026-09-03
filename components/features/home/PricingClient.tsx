@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -68,6 +68,24 @@ export default function PricingClient({
     if (rightOverlayRef.current) gsap.set(rightOverlayRef.current, { width: "0%" });
     if (leftTextRef.current) gsap.set(leftTextRef.current, { opacity: 0 });
     if (rightTextRef.current) gsap.set(rightTextRef.current, { opacity: 0 });
+  }, []);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          analytics.pricingSectionViewed();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -262,7 +280,7 @@ export default function PricingClient({
               </ul>
               <Link
                 href={buildCtaHref(plan.code)}
-                onClick={() => analytics.planCtaClick(plan.name)}
+                onClick={() => analytics.planSelected(plan.name, plan.code)}
               >
                 <Button className="min-h-11 w-full" variant={plan.featured ? "default" : "outline"}>
                   {plan.cta}

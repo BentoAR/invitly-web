@@ -413,7 +413,7 @@ export default function LiveDemoClient({
       if (id === "rsvp" && rsvpDone) return;
 
       if (options?.source !== "auto") {
-        analytics.demoActionClick(id);
+        analytics.demoActionClicked(id);
       }
 
       setDoneActions((prev) => {

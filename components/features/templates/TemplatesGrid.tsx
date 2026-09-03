@@ -105,7 +105,7 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
             href={`https://inv.bento.com.ar/demo/${template.name}`}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => analytics.templateDemoClick(template.name, template.category?.display_name)}
+            onClick={() => analytics.templateDemoClicked(template.name, template.category?.display_name)}
           >
             <Button size="sm" className="gap-1.5 bg-white text-[#FFA459] hover:bg-white/90">
               <Play size={11} fill="currentColor" />
@@ -116,7 +116,7 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
             size="sm"
             className="gap-1.5 bg-[#FFA459] text-white hover:bg-[#FFA459]/90"
             onClick={() => {
-              analytics.templateGetClick(template.name, template.category?.display_name);
+              analytics.templateSelected(template.name, template.category?.display_name);
               openWhatsApp(t("getMessage", { name: template.display_name }));
             }}
           >
@@ -147,7 +147,7 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
               href={`https://inv.bento.com.ar/demo/${template.name}`}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => analytics.templateDemoClick(template.name, template.category?.display_name)}
+              onClick={() => analytics.templateDemoClicked(template.name, template.category?.display_name)}
               className="flex-1 flex items-center justify-center gap-1 rounded-full border border-white/40 bg-black/30 backdrop-blur-sm py-1.5 text-white/90 font-medium"
               style={{ fontSize: "0.6rem", letterSpacing: "0.02em" }}
             >
@@ -156,7 +156,7 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
             </a>
             <button
               onClick={() => {
-                analytics.templateGetClick(template.name, template.category?.display_name);
+                analytics.templateSelected(template.name, template.category?.display_name);
                 openWhatsApp(t("getMessage", { name: template.display_name }));
               }}
               className="flex-1 flex items-center justify-center gap-1 rounded-full bg-white py-1.5 text-neutral-900 font-semibold"
