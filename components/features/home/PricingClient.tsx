@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,11 +20,35 @@ interface Plan {
   price: string;
   originalPrice?: string;
   discountBadge?: string;
+  discountEndsAt?: string;
   priceNote: string;
   description: string;
   cta: string;
   featured: boolean;
   features: PlanFeature[];
+}
+
+function useCountdown(endsAt?: string) {
+  const [remainingMs, setRemainingMs] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!endsAt) return;
+    const endTime = new Date(endsAt).getTime();
+    const tick = () => setRemainingMs(Math.max(0, endTime - Date.now()));
+    tick();
+    const id = setInterval(tick, 30_000);
+    return () => clearInterval(id);
+  }, [endsAt]);
+
+  if (!endsAt || remainingMs === null) return null;
+
+  const totalMinutes = Math.floor(remainingMs / 60_000);
+  return {
+    days: Math.floor(totalMinutes / (60 * 24)),
+    hours: Math.floor((totalMinutes % (60 * 24)) / 60),
+    minutes: totalMinutes % 60,
+    expired: remainingMs <= 0,
+  };
 }
 
 interface PricingClientProps {
@@ -39,6 +63,84 @@ interface PricingClientProps {
     line3Link: string;
     priceNote: string;
   };
+}
+
+function PlanCard({
+  plan,
+  featuredBadge,
+  ctaHref,
+}: {
+  plan: Plan;
+  featuredBadge: string;
+  ctaHref: string;
+}) {
+  const countdown = useCountdown(plan.discountEndsAt);
+  const offerActive = !plan.discountEndsAt || !countdown?.expired;
+  const displayPrice = offerActive ? plan.price : plan.originalPrice ?? plan.price;
+  const showStrike = offerActive && !!plan.originalPrice;
+  const showBadge = offerActive && !!plan.discountBadge;
+
+  return (
+    <div
+      className={`relative flex flex-col rounded-2xl border p-5 ${
+        plan.featured
+          ? "border-primary shadow-lg bg-background"
+          : "border-border/60 bg-background/50"
+      }`}
+    >
+      {plan.featured && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span className="bg-primary text-foreground text-xs font-semibold px-3 py-1 rounded-full">
+            {featuredBadge}
+          </span>
+        </div>
+      )}
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold mb-1">{plan.name}</h3>
+        <div className="flex items-baseline gap-2 mb-1">
+          {showStrike && (
+            <span className="text-base text-muted-foreground line-through">
+              {plan.originalPrice}
+            </span>
+          )}
+          <span className="text-2xl font-bold font-display">{displayPrice}</span>
+          <span className="text-sm text-muted-foreground">{plan.priceNote}</span>
+        </div>
+        {showBadge && (
+          <span className="inline-block mb-2 text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+            {plan.discountBadge}
+            {countdown && !countdown.expired && (
+              <>
+                {" · "}
+                Termina en {countdown.days > 0 ? `${countdown.days}d ` : ""}
+                {countdown.hours}h {countdown.minutes}m
+              </>
+            )}
+          </span>
+        )}
+        <p className="text-sm text-muted-foreground">{plan.description}</p>
+      </div>
+      <ul className="flex flex-col gap-2 mb-6 flex-1">
+        {plan.features.map((f) => (
+          <li key={f.label} className="flex items-center gap-2 text-sm">
+            {f.included ? (
+              <Check className="h-4 w-4 text-primary shrink-0" />
+            ) : (
+              <X className="h-4 w-4 text-muted-foreground/40 shrink-0" />
+            )}
+            <span className={f.included ? "text-foreground" : "text-muted-foreground/60"}>
+              {f.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <Link href={ctaHref} onClick={() => analytics.planCtaClick(plan.name)}>
+        <Button className="min-h-11 w-full" variant={plan.featured ? "default" : "outline"}>
+          {plan.cta}
+        </Button>
+      </Link>
+    </div>
+  );
 }
 
 export default function PricingClient({
@@ -213,62 +315,12 @@ export default function PricingClient({
 
         <div ref={cardsGridRef} className="grid md:grid-cols-3 gap-6 items-start">
           {plans.map((plan) => (
-            <div
+            <PlanCard
               key={plan.name}
-              className={`relative flex flex-col rounded-2xl border p-5 ${
-                plan.featured
-                  ? "border-primary shadow-lg bg-background"
-                  : "border-border/60 bg-background/50"
-              }`}
-            >
-              {plan.featured && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-primary text-foreground text-xs font-semibold px-3 py-1 rounded-full">
-                    {featuredBadge}
-                  </span>
-                </div>
-              )}
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold mb-1">{plan.name}</h3>
-                <div className="flex items-baseline gap-2 mb-1">
-                  {plan.originalPrice && (
-                    <span className="text-base text-muted-foreground line-through">
-                      {plan.originalPrice}
-                    </span>
-                  )}
-                  <span className="text-2xl font-bold font-display">{plan.price}</span>
-                  <span className="text-sm text-muted-foreground">{plan.priceNote}</span>
-                </div>
-                {plan.discountBadge && (
-                  <span className="inline-block mb-2 text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                    {plan.discountBadge}
-                  </span>
-                )}
-                <p className="text-sm text-muted-foreground">{plan.description}</p>
-              </div>
-              <ul className="flex flex-col gap-2 mb-6 flex-1">
-                {plan.features.map((f) => (
-                  <li key={f.label} className="flex items-center gap-2 text-sm">
-                    {f.included ? (
-                      <Check className="h-4 w-4 text-primary shrink-0" />
-                    ) : (
-                      <X className="h-4 w-4 text-muted-foreground/40 shrink-0" />
-                    )}
-                    <span className={f.included ? "text-foreground" : "text-muted-foreground/60"}>
-                      {f.label}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href={buildCtaHref(plan.code)}
-                onClick={() => analytics.planCtaClick(plan.name)}
-              >
-                <Button className="min-h-11 w-full" variant={plan.featured ? "default" : "outline"}>
-                  {plan.cta}
-                </Button>
-              </Link>
-            </div>
+              plan={plan}
+              featuredBadge={featuredBadge}
+              ctaHref={buildCtaHref(plan.code)}
+            />
           ))}
         </div>
 

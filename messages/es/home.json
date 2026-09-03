@@ -298,6 +298,7 @@
         "price": "$75.000",
         "originalPrice": "$90.000",
         "discountBadge": "Oferta por tiempo limitado",
+        "discountEndsAt": "2026-09-10T23:59:59-03:00",
         "priceNote": "por evento",
         "description": "Para eventos que se merecen organización profesional",
         "cta": "Empezar ahora",

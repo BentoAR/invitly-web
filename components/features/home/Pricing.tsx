@@ -13,6 +13,7 @@ interface Plan {
   price: string;
   originalPrice?: string;
   discountBadge?: string;
+  discountEndsAt?: string;
   priceNote: string;
   description: string;
   cta: string;
