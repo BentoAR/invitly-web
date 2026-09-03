@@ -18,6 +18,8 @@ interface Plan {
   code?: string;
   name: string;
   price: string;
+  originalPrice?: string;
+  discountBadge?: string;
   priceNote: string;
   description: string;
   cta: string;
@@ -228,10 +230,20 @@ export default function PricingClient({
               )}
               <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-1">{plan.name}</h3>
-                <div className="flex items-baseline gap-1 mb-1">
+                <div className="flex items-baseline gap-2 mb-1">
+                  {plan.originalPrice && (
+                    <span className="text-base text-muted-foreground line-through">
+                      {plan.originalPrice}
+                    </span>
+                  )}
                   <span className="text-2xl font-bold font-display">{plan.price}</span>
                   <span className="text-sm text-muted-foreground">{plan.priceNote}</span>
                 </div>
+                {plan.discountBadge && (
+                  <span className="inline-block mb-2 text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                    {plan.discountBadge}
+                  </span>
+                )}
                 <p className="text-sm text-muted-foreground">{plan.description}</p>
               </div>
               <ul className="flex flex-col gap-2 mb-6 flex-1">
