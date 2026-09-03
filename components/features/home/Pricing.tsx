@@ -11,6 +11,8 @@ interface PlanFeature {
 interface Plan {
   name: string;
   price: string;
+  originalPrice?: string;
+  discountBadge?: string;
   priceNote: string;
   description: string;
   cta: string;

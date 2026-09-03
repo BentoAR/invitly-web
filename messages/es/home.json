@@ -295,7 +295,9 @@
       {
         "code": "CELEBRATION",
         "name": "Celebración",
-        "price": "$90.000",
+        "price": "$75.000",
+        "originalPrice": "$90.000",
+        "discountBadge": "Oferta por tiempo limitado",
         "priceNote": "por evento",
         "description": "Para eventos que se merecen organización profesional",
         "cta": "Empezar ahora",
