@@ -5,9 +5,8 @@ import gsap from "gsap";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import { analytics } from "@/utils/analytics";
-
-const APP_URL = "https://app.bento.com.ar";
 
 interface PlanFeature {
   label: string;
@@ -48,6 +47,7 @@ export default function PricingClient({
   featuredBadge,
   footer,
 }: PricingClientProps) {
+  const locale = useLocale();
   const sectionRef = useRef<HTMLElement>(null);
   const leftOverlayRef = useRef<HTMLDivElement>(null);
   const rightOverlayRef = useRef<HTMLDivElement>(null);
@@ -55,11 +55,6 @@ export default function PricingClient({
   const leftTextRef = useRef<HTMLDivElement>(null);
   const rightTextRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-
-  const buildCtaHref = (planCode?: string) => {
-    const base = `${APP_URL}/billing/upgrade?reason=purchase`;
-    return planCode ? `${base}&plan=${encodeURIComponent(planCode)}` : base;
-  };
 
   useLayoutEffect(() => {
     if (headerRef.current) gsap.set(headerRef.current, { opacity: 1, filter: "blur(0px)" });
@@ -279,7 +274,7 @@ export default function PricingClient({
                 ))}
               </ul>
               <Link
-                href={buildCtaHref(plan.code)}
+                href={`/${locale}/templates`}
                 onClick={() => analytics.planSelected(plan.name, plan.code)}
               >
                 <Button className="min-h-11 w-full" variant={plan.featured ? "default" : "outline"}>

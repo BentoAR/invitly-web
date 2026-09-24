@@ -71,7 +71,7 @@ export default async function PricingPage({
       <StructuredData data={structuredData} />
       <Container>
         <TemplatesHeader
-          eyebrow={locale === "es" ? "Planes · 2025" : "Plans · 2025"}
+          eyebrow={locale === "es" ? "Planes" : "Plans"}
           title={t("title")}
           description={t("subtitle")}
         />
