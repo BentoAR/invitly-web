@@ -1,28 +1,22 @@
 import { render, screen } from "@testing-library/react";
 import Hero from "@/components/features/home/Hero";
 
+jest.mock("@/components/features/home/HeroPhonesWrapper", () => () => null);
+
 jest.mock("next-intl/server", () => ({
   getLocale: jest.fn(async () => "es"),
   getTranslations: jest.fn(async () => {
     const translations: Record<string, string | string[]> = {
-      badge: "Invitaciones únicas y personalizadas",
-      title: "Celebra tus momentos",
-      subtitle:
-        "Crea invitaciones digitales elegantes e interactivas que sorprenderán a tus invitados. Diseño personalizado, animaciones únicas y gestión de RSVP en una sola plataforma.",
-      "button.categories": "Ver categorías",
-      "button.contact": "Contactanos",
-      "stats.designs": "Diseños",
-      "stats.clients": "Clientes",
-      "stats.satisfaction": "Satisfacción",
-      words: ["especiales", "únicos"],
+      eyebrow: "Tu evento empieza gratis",
+      title: "Invitaciones digitales que organizan tu evento entero.",
+      subtitle: "Elegí un diseño, personalizá tu invitación y empezá a organizar tu evento sin pagar. Elegís un plan cuando quieras publicarlo.",
+      "stats.design": "Elegí un diseño",
+      "stats.personalize": "Probá cómo queda",
+      "stats.publish": "Publicá al pagar",
       imageAlt:
-        "Decoración elegante de evento, ejemplo de invitación digital personalizada",
-      "button.primary": "Crear mi invitación",
-      "button.secondary": "Ver un ejemplo real",
-      trust:
-        "Sin tarjeta de crédito · +10.000 eventos en Argentina · Cancelas cuando quieras",
-      whatsappMessage:
-        "Hola! 👋 Me das una mano para hacer mi invitacion digital?",
+        "Invitación digital de Bento abierta en un celular",
+      "button.primary": "Elegir diseño y probar gratis",
+      "button.secondary": "Ver precios",
     };
 
     const t = (key: string) => {
@@ -41,39 +35,32 @@ describe("Componente Hero", () => {
     const HeroComponent = await Hero();
     render(HeroComponent);
 
-    expect(screen.getByText(/Celebra tus momentos/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Invitaciones digitales que organizan tu evento entero." })).toBeInTheDocument();
+    expect(screen.getByText(/Elegís un plan cuando quieras publicarlo/i)).toBeInTheDocument();
   });
 
-  it("debería tener un botón primario que enlace a #precios", async () => {
+  it("lleva al catálogo antes del registro o pago", async () => {
     const HeroComponent = await Hero();
     render(HeroComponent);
 
-    const primaryButton = screen.getByLabelText(/crear mi invitación/i);
+    const primaryButton = screen.getByLabelText(/elegir diseño y probar gratis/i);
     const link = primaryButton.closest("a");
-    expect(link).toHaveAttribute("href", "/es/pricing");
+    expect(link).toHaveAttribute("href", "/es/templates");
   });
 
-  it("debería tener un botón secundario que abra la demo real", async () => {
+  it("muestra precios como opción secundaria", async () => {
     const HeroComponent = await Hero();
     render(HeroComponent);
 
-    const demoButton = screen.getByLabelText(/ver un ejemplo real/i);
-    const link = demoButton.closest("a");
-
-    expect(link).toHaveAttribute(
-      "href",
-      "https://inv.bento.com.ar/demo/autumn"
-    );
-    expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    const pricingButton = screen.getByLabelText(/ver precios/i);
+    expect(pricingButton.closest("a")).toHaveAttribute("href", "/es/pricing");
   });
 
-  it("debería mostrar las estadísticas correctamente", async () => {
+  it("explica que se prueba gratis y se publica con un plan", async () => {
     const HeroComponent = await Hero();
     render(HeroComponent);
 
-    expect(screen.getByText("RSVP")).toBeInTheDocument();
-    expect(screen.getByText("∞")).toBeInTheDocument();
-    expect(screen.getByText("<1hs")).toBeInTheDocument();
+    expect(screen.getByText(/organizar tu evento sin pagar/i)).toBeInTheDocument();
+    expect(screen.getByText("Publicá al pagar")).toBeInTheDocument();
   });
 });

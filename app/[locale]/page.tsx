@@ -16,6 +16,7 @@ import {
 const LiveDemo = lazy(() => import("@/components/features/home/LiveDemo"));
 const DashboardShowcase = lazy(() => import("@/components/features/home/DashboardShowcase"));
 const TemplatesSection = lazy(() => import("@/components/features/home/TemplatesSection"));
+const WhatYouCanTry = lazy(() => import("@/components/features/home/WhatYouCanTry"));
 const Pricing = lazy(() => import("@/components/features/home/Pricing"));
 const RiskReversal = lazy(() => import("@/components/features/home/RiskReversal"));
 const FAQ = lazy(() => import("@/components/features/home/FAQ"));
@@ -94,15 +95,16 @@ export async function generateMetadata({
  * El orden NO es estético, es un argumento de venta. Cada bloque responde a la
  * objeción que deja abierta el anterior:
  *
- *   1  Hero              → qué es y cuánto sale
+ *   1  Hero              → podés empezar gratis
  *   2  Templates         → cómo se va a ver el mío
- *   3  Problema          → por qué te importa
- *   4  Demo interactiva  → cómo se siente (única vista del panel pre-compra)
- *   5  Panel real        → qué estás comprando
- *   6  Precio            → cuánto sale exactamente
- *   7  Sin riesgo        → qué pasa si me arrepiento
- *   8  FAQ               → objeciones de compra restantes
- *   9  CTA final         → dónde hago click
+ *   3  Modo prueba       → qué puedo hacer antes de pagar
+ *   4  Problema          → por qué te importa
+ *   5  Demo interactiva  → cómo se siente (evento publicado de muestra)
+ *   6  Panel real        → qué desbloqueás al publicar
+ *   7  Precio            → cuánto sale exactamente
+ *   8  Sin riesgo        → qué pasa si me arrepiento
+ *   9  FAQ               → objeciones de compra restantes
+ *  10  CTA final         → dónde hago click
  *
  * Antes la home terminaba en el FAQ, sin CTA de cierre, y el precio vivía en
  * otra página. Si movés un bloque, movés el argumento.
@@ -139,6 +141,8 @@ export default async function Home({
       <Suspense fallback={<TemplatesSectionSkeleton />}>
         <TemplatesSection />
       </Suspense>
+
+      <WhatYouCanTry />
 
       <ProblemSection />
 

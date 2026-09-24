@@ -1,19 +1,17 @@
 {
   "Hero": {
     "badge": "Más que una invitación",
-    "eyebrow": "Invitaciones digitales + panel de control",
+    "eyebrow": "Tu evento empieza gratis",
     "title": "Invitaciones digitales que organizan tu evento entero.",
-    "subtitle": "La invitación que abren tus invitados, y el panel donde vos ves todo en vivo: quién confirmó, qué canciones pidieron y cómo viene el evento.",
+    "subtitle": "Elegí un diseño, personalizá tu invitación y empezá a organizar tu evento sin pagar. Elegís un plan cuando quieras publicarlo.",
     "button": {
-      "primary": "Ver invitaciones reales",
+      "primary": "Elegir diseño y probar gratis",
       "secondary": "Ver precios"
     },
-    "trust": "Desde $60.000 · Pagás una vez, por evento · Sin suscripción mensual",
     "stats": {
-      "rsvp": "Automático",
-      "guestsValue": "A medida",
-      "guests": "Para todos tus invitados",
-      "support": "Respuesta promedio"
+      "design": "Elegí un diseño",
+      "personalize": "Probá cómo queda",
+      "publish": "Publicá al pagar"
     },
     "words": [
       "Más que una invitación.",
@@ -24,6 +22,21 @@
     ],
     "imageAlt": "Invitación digital de Bento abierta en un celular junto al panel de control del organizador",
     "whatsappMessage": "Hola! 👋 Me das una mano para hacer mi invitacion digital?"
+  },
+  "WhatYouCanTry": {
+    "eyebrow": "Qué podés probar",
+    "title": "Primero hacelo tuyo. Después compartilo con todos.",
+    "subtitle": "Elegí un diseño, personalizá tu invitación y empezá a organizar los primeros detalles de tu evento gratis.",
+    "publishNote": "Para compartir el link con tus invitados, elegís un plan y publicás.",
+    "workspaceTitle": "Tu evento, en construcción",
+    "draftBadge": "Modo prueba",
+    "items": [
+      { "title": "Diseñá y mirá la vista previa", "description": "Probá cómo se ve tu invitación antes de publicarla." },
+      { "title": "Sumá hasta 15 personas", "description": "Empezá a armar tu lista de invitados y acompañantes." },
+      { "title": "Organizá hasta 3 mesas", "description": "Distribuí a las personas y probá la organización." },
+      { "title": "Agregá hasta 5 fotos", "description": "Dale identidad a tu evento con tus primeras imágenes." }
+    ],
+    "footer": "Todo queda guardado para cuando decidas publicar."
   },
   "Problem": {
     "eyebrow": "Antes de Bento",
@@ -143,14 +156,13 @@
     "whatsappMessage": "Hola! Quiero conocer un poco más antes de avanzar con mi invitación 🙂"
   },
   "FinalCta": {
-    "eyebrow": "Último paso",
-    "title": "Tu evento ya tiene fecha. La invitación puede estar lista hoy.",
-    "subtitle": "Elegí el diseño que más te guste, creá tu cuenta y personalizalo a tu manera.",
+    "eyebrow": "Empezá por el diseño",
+    "title": "Tu invitación puede empezar hoy. El pago, cuando quieras publicarla.",
+    "subtitle": "Elegí el diseño que más te guste y creá tu cuenta gratis para empezar a personalizarlo.",
     "button": {
-      "primary": "Ver diseños",
+      "primary": "Elegir diseño y probar gratis",
       "secondary": "Hablar por WhatsApp"
     },
-    "trust": "Pagás una vez · Sin suscripción · Soporte en español",
     "whatsappMessage": "Hola! Quiero armar mi invitación digital con Bento 🙌"
   },
   "Categories": {
@@ -388,6 +400,10 @@
     "subtitle": "Lo importante, explicado sin letra chica antes de que elijas tu plan.",
     "faqs": [
       {
+        "question": "¿Tengo que pagar antes de probar?",
+        "answer": "No. Elegís un diseño, creás tu cuenta gratis y personalizás tu invitación. Podés empezar con hasta 15 personas, 3 mesas y 5 fotos. Cuando quieras compartir el link con tus invitados, elegís un plan y publicás."
+      },
+      {
         "question": "¿Y si no me gusta el diseño que elegí?",
         "answer": "Lo cambiás. Podés pasar de un template a otro las veces que quieras, hasta el día del evento, sin costo extra y sin perder nada de lo que ya cargaste. No te casás con la primera decisión."
       },
@@ -441,7 +457,7 @@
   "TemplatesSection": {
     "badge": "Diseños únicos",
     "title": "Elegí el diseño de tu invitación",
-    "subtitle": "Cada plantilla ya viene con RSVP, mapa, galería y playlist. La personalizás en minutos."
+    "subtitle": "Explorá los diseños y elegí el que va con tu evento. Podés probarlo gratis antes de publicarlo."
   },
   "IntentAssist": {
     "title": "¿Querés una mano para elegir?",

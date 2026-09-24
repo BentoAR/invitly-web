@@ -17,6 +17,7 @@ import {
   getTemplateDetail,
   isDarkPlate,
 } from "@/src/content/templateDetails";
+import { getPersonalizationHref } from "@/src/config/personalization";
 
 export const revalidate = 3600;
 
@@ -39,12 +40,12 @@ export const revalidate = 3600;
  *
  * STORY: alguien llega desde Google buscando un look ("invitaciones acuarela").
  *   Ve el diseño a escala en sus colores reales, entiende para qué evento es y
- *   qué incluye, y abre la demo en vivo o va a precios.
+ *   qué incluye, abre una demo de ejemplo o empieza su evento gratis.
  *
  * FIRST VIEWPORT: breadcrumb mono. Dos columnas en desktop. Izquierda:
  *   eyebrow "{CATEGORÍA} · PLANTILLA", H1 display con el nombre, descripción
  *   real, filete bronce, la paleta como tres muestras con su hex en mono, y
- *   dos acciones (naranja "Ver demo en vivo", fantasma "Ver precios").
+ *   acción primaria para probar gratis y acceso secundario a la demo.
  *   Derecha: el plate — panel alto con el fondo propio del template, grano, y
  *   el preview flotando con sombra profunda.
  *
@@ -54,7 +55,6 @@ export const revalidate = 3600;
 
 const INK = "#200041";
 const BRONZE = "#bc8129";
-const ORANGE = "#FFA459";
 const DEMO_BASE = "https://inv.bento.com.ar/demo";
 
 interface ApiTemplate {
@@ -317,16 +317,13 @@ export default async function TemplateDetailPage({
 
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
-                href={`${DEMO_BASE}/${slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-sm font-semibold transition-transform hover:-translate-y-0.5"
-                style={{ backgroundColor: ORANGE, color: INK }}
+                href={getPersonalizationHref(slug, "template_detail")}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--bento-orange)] px-7 py-3 text-center text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-[var(--bento-orange-deep)]"
               >
-                Ver demo en vivo
+                Elegir este diseño y probar gratis
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
-                    d="M7 17 17 7M9 7h8v8"
+                    d="M5 12h14m-6-6 6 6-6 6"
                     stroke="currentColor"
                     strokeWidth="2.2"
                     strokeLinecap="round"
@@ -334,13 +331,15 @@ export default async function TemplateDetailPage({
                   />
                 </svg>
               </a>
-              <Link
-                href="/es/pricing"
+              <a
+                href={`${DEMO_BASE}/${slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-12 items-center justify-center rounded-full border px-7 text-sm font-medium transition-colors hover:bg-[rgba(32,0,65,0.04)]"
                 style={{ borderColor: "rgba(32,0,65,0.2)", color: INK }}
               >
-                Ver precios
-              </Link>
+                Ver demo ↗
+              </a>
             </div>
 
             <section className="mt-12" aria-labelledby="included-title">
@@ -349,7 +348,7 @@ export default async function TemplateDetailPage({
                 className="font-mono uppercase"
                 style={{ fontSize: "0.6rem", letterSpacing: "0.28em", color: "rgba(32,0,65,0.45)" }}
               >
-                Incluido en todas las plantillas
+                Funciones disponibles al publicar
               </h2>
               <ul className="mt-4 space-y-2.5">
                 {INCLUDED.map((item) => (
