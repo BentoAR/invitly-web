@@ -38,6 +38,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          NEXT_PUBLIC_API_TEMPLATE_URL: https://invitation-api-production.up.railway.app
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4
