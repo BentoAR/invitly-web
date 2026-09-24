@@ -279,7 +279,7 @@
         "price": "$60",
         "priceNote": "per event",
         "description": "For events where sharing and confirming matter most",
-        "cta": "Inquire",
+        "cta": "Choose a design and try free",
         "featured": false,
         "features": [
           {
@@ -312,7 +312,7 @@
         "discountBadge": "",
         "priceNote": "per event",
         "description": "For events that deserve professional organization",
-        "cta": "Inquire",
+        "cta": "Choose a design and try free",
         "featured": true,
         "features": [
           {
@@ -351,7 +351,7 @@
         "price": "$150",
         "priceNote": "per event",
         "description": "Your event deserves a unique visual identity. Delivered within 3 to 5 business days.",
-        "cta": "Inquire",
+        "cta": "Choose a design and try free",
         "featured": false,
         "features": [
           {
