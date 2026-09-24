@@ -61,9 +61,6 @@ export default async function FinalCta() {
             whatsappMessage={t("whatsappMessage")}
           />
 
-          <p className="mt-6 text-xs" style={{ color: "rgba(32, 0, 65, 0.45)" }}>
-            {t("trust")}
-          </p>
         </div>
       </Container>
       <span id="contacto" aria-hidden="true" />
