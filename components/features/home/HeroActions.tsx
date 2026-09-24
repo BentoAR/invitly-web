@@ -34,7 +34,7 @@ export default function HeroActions({
       data-hero="cta"
       className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
     >
-      <Button asChild size="lg" className="group w-full sm:w-auto">
+      <Button asChild size="lg" className="group w-full bg-[var(--bento-orange)] text-white shadow-[0_12px_28px_rgba(255,164,89,0.28)] hover:bg-[var(--bento-orange-deep)] hover:text-white sm:w-auto">
         <Link
           href={primaryHref}
           onClick={() => analytics.heroCtaClicked(ctaMode)}

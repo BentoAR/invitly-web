@@ -96,88 +96,10 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
           </span>
         </div>
 
-        {/* Desktop: hover overlay with CTAs */}
-        <div
-          className="absolute inset-0 hidden md:flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ backdropFilter: "blur(2px)", background: "rgba(255,164,89,0.2)" }}
-        >
-          <Button asChild size="sm" className="gap-1.5 bg-white text-[#9B4E12] hover:bg-white/90">
-            <a
-              href={`https://inv.bento.com.ar/demo/${template.name}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => analytics.templateDemoClicked(template.name, template.category?.display_name)}
-            >
-              <Play size={11} fill="currentColor" />
-              {t("viewDemo")}
-            </a>
-          </Button>
-          <Button asChild size="sm" className="gap-1.5">
-            <a
-              href={getPersonalizationHref(template.name, "catalog")}
-              onClick={() => {
-                analytics.templateSelected(template.name, template.category?.display_name);
-                analytics.personalizationStarted(template.name, template.category?.display_name, "catalog");
-              }}
-            >
-              {t("get")}
-              <ArrowRight size={11} strokeWidth={2.5} />
-            </a>
-          </Button>
-        </div>
-
-        {/* Mobile: always-visible gradient + CTAs */}
-        <div className="md:hidden absolute inset-0 pointer-events-none"
-          style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)" }}
-        />
-        <div className="md:hidden absolute bottom-0 left-0 right-0 p-3 z-10">
-          <h3
-            className="font-display font-normal text-white leading-tight mb-2"
-            style={{ fontSize: "0.95rem", letterSpacing: "-0.01em" }}
-          >
-            {detailHref ? (
-              <a href={detailHref} className="underline-offset-4 hover:underline">
-                {template.display_name}
-              </a>
-            ) : (
-              template.display_name
-            )}
-          </h3>
-          <div className="flex gap-1.5">
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="h-8 min-w-0 flex-1 rounded-full border-white/40 bg-black/30 px-2 text-[0.6rem] text-white hover:bg-black/45 hover:text-white"
-            >
-              <a
-                href={`https://inv.bento.com.ar/demo/${template.name}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => analytics.templateDemoClicked(template.name, template.category?.display_name)}
-              >
-                <Play size={9} fill="currentColor" />
-                {t("viewDemo")}
-              </a>
-            </Button>
-            <Button asChild size="sm" className="h-8 min-w-0 flex-1 rounded-full bg-white px-2 text-[0.6rem] text-neutral-900 hover:bg-white/90">
-              <a
-                href={getPersonalizationHref(template.name, "catalog")}
-                onClick={() => {
-                  analytics.templateSelected(template.name, template.category?.display_name);
-                  analytics.personalizationStarted(template.name, template.category?.display_name, "catalog");
-                }}
-              >
-                {t("get")}
-                <ArrowRight size={9} strokeWidth={2.5} />
-              </a>
-            </Button>
-          </div>
-        </div>
       </div>
 
-      {/* Footer — desktop only */}
-      <div className="hidden md:block p-3 md:p-4">
+      {/* Acciones visibles también en mobile, sin tapar el diseño ni el nombre. */}
+      <div className="p-3 md:p-4">
         <h3
           className="font-display font-normal leading-tight"
           style={{ fontSize: "0.95rem", color: "#200041", letterSpacing: "-0.01em" }}
@@ -190,6 +112,28 @@ function TemplateCard({ template, t }: { template: Template; t: ReturnType<typeo
             template.display_name
           )}
         </h3>
+        <Button asChild size="sm" className="mt-4 w-full rounded-full bg-[var(--bento-orange)] px-2 text-xs text-white hover:bg-[var(--bento-orange-deep)] hover:text-white md:px-3 md:text-sm">
+          <a
+            href={getPersonalizationHref(template.name, "catalog")}
+            onClick={() => {
+              analytics.templateSelected(template.name, template.category?.display_name);
+              analytics.personalizationStarted(template.name, template.category?.display_name, "catalog");
+            }}
+          >
+            {t("get")}
+            <ArrowRight size={12} strokeWidth={2.5} />
+          </a>
+        </Button>
+        <a
+          href={`https://inv.bento.com.ar/demo/${template.name}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 inline-flex w-full items-center justify-center gap-1.5 text-xs font-medium text-[var(--bento-ink)] underline-offset-4 transition-colors hover:text-[var(--bento-orange-deep)] hover:underline"
+          onClick={() => analytics.templateDemoClicked(template.name, template.category?.display_name)}
+        >
+          <Play size={10} fill="currentColor" />
+          {t("viewDemo")}
+        </a>
       </div>
     </div>
   );

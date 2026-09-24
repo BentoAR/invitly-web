@@ -1,19 +1,17 @@
 {
   "Hero": {
     "badge": "More than an invitation",
-    "eyebrow": "Digital invitations + control panel",
+    "eyebrow": "Start your event for free",
     "title": "Your entire event, in a single link.",
-    "subtitle": "The invitation your guests open, and the panel where you see everything live: who confirmed, which songs they requested, and how the event is going.",
+    "subtitle": "Choose a design, personalize your invitation and start organizing your event for free. Choose a plan when you're ready to publish.",
     "button": {
-      "primary": "View real invitations",
+      "primary": "Choose a design and try it free",
       "secondary": "View pricing"
     },
-    "trust": "From $60 · One payment, per event · No monthly subscription",
     "stats": {
-      "rsvp": "Automatic",
-      "guestsValue": "Flexible",
-      "guests": "For every guest",
-      "support": "Average response"
+      "design": "Choose a design",
+      "personalize": "See how it looks",
+      "publish": "Pay to publish"
     },
     "words": [
       "More than an invitation.",
@@ -24,6 +22,21 @@
     ],
     "imageAlt": "Bento digital invitation open on a phone next to the organizer's control panel",
     "whatsappMessage": "Hi! 👋 Can you help me make my digital invitation?"
+  },
+  "WhatYouCanTry": {
+    "eyebrow": "What you can try",
+    "title": "Make it yours first. Share it with everyone later.",
+    "subtitle": "Choose a design, personalize your invitation and start organizing your event for free.",
+    "publishNote": "To share the link with your guests, choose a plan and publish.",
+    "workspaceTitle": "Your event, in progress",
+    "draftBadge": "Trial mode",
+    "items": [
+      { "title": "Design and preview", "description": "See how your invitation looks before publishing it." },
+      { "title": "Add up to 15 people", "description": "Start your guest list, including companions." },
+      { "title": "Arrange up to 3 tables", "description": "Seat people and try the planning tools." },
+      { "title": "Add up to 5 photos", "description": "Give your event a personal touch with your first images." }
+    ],
+    "footer": "Everything stays saved until you're ready to publish."
   },
   "Problem": {
     "eyebrow": "Before Bento",
@@ -143,14 +156,13 @@
     "whatsappMessage": "Hi! I'd like to know a little more before moving forward with my invitation 🙂"
   },
   "FinalCta": {
-    "eyebrow": "Last step",
-    "title": "Your event already has a date. The invitation can be ready today.",
-    "subtitle": "Choose your favorite design, create your account, and make it your own.",
+    "eyebrow": "Start with a design",
+    "title": "Your invitation can start today. Pay when you're ready to publish.",
+    "subtitle": "Choose a design you love and create a free account to start personalizing it.",
     "button": {
-      "primary": "View designs",
+      "primary": "Choose a design and try it free",
       "secondary": "Chat on WhatsApp"
     },
-    "trust": "One payment · No subscription · Support in Spanish",
     "whatsappMessage": "Hi! I want to build my digital invitation with Bento 🙌"
   },
   "Categories": {
@@ -388,6 +400,10 @@
     "subtitle": "The important details, explained clearly before you choose your plan.",
     "faqs": [
       {
+        "question": "Do I need to pay before I try it?",
+        "answer": "No. Choose a design, create a free account and personalize your invitation. You can start with up to 15 people, 3 tables and 5 photos. When you're ready to share the link with guests, choose a plan and publish."
+      },
+      {
         "question": "What if I don't like the design I picked?",
         "answer": "You change it. You can switch from one template to another as many times as you want, right up to the event day, at no extra cost and without losing anything you've already loaded. You're not locked into your first decision."
       },
@@ -441,7 +457,7 @@
   "TemplatesSection": {
     "badge": "Unique designs",
     "title": "Pick your invitation design",
-    "subtitle": "Every template already ships with RSVP, map, gallery and playlist. You customize it in minutes."
+    "subtitle": "Explore the designs and choose one that fits your event. Try it for free before publishing."
   },
   "IntentAssist": {
     "title": "Want help choosing?",

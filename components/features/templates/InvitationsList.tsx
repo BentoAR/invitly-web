@@ -256,25 +256,10 @@ function TemplatePreviewCard({
           </span>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-col items-stretch gap-1.5">
           <Button
             asChild
-            variant="outline"
-            className="min-h-11 min-w-0 flex-1 rounded-full px-3 text-[0.8rem]"
-          >
-            <a
-              href={`${DEMO_BASE_URL}/${invitation.name}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => analytics.templateDemoClicked(invitation.name, invitation.category?.display_name)}
-            >
-              <Play size={11} fill="currentColor" aria-hidden="true" />
-              {viewDemo}
-            </a>
-          </Button>
-          <Button
-            asChild
-            className="group/action min-h-11 min-w-0 flex-1 rounded-full px-3 text-[0.8rem]"
+            className="group/action min-h-11 w-full rounded-full bg-[var(--bento-orange)] px-3 text-[0.8rem] text-white hover:bg-[var(--bento-orange-deep)] hover:text-white"
           >
             <a
               href={getPersonalizationHref(invitation.name, "home_templates")}
@@ -287,6 +272,16 @@ function TemplatePreviewCard({
               <ArrowRight className="transition-transform group-hover/action:translate-x-0.5" size={13} strokeWidth={2.5} aria-hidden="true" />
             </a>
           </Button>
+          <a
+            href={`${DEMO_BASE_URL}/${invitation.name}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-9 items-center justify-center gap-1.5 text-xs font-medium text-[var(--bento-ink)] underline-offset-4 transition-colors hover:text-[var(--bento-orange-deep)] hover:underline"
+            onClick={() => analytics.templateDemoClicked(invitation.name, invitation.category?.display_name)}
+          >
+            <Play size={10} fill="currentColor" aria-hidden="true" />
+            {viewDemo}
+          </a>
         </div>
       </div>
     </article>

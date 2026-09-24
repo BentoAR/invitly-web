@@ -15,6 +15,7 @@ describe("Embudo de la home — contrato de contenido", () => {
   it("todos los bloques del embudo tienen copy en español", () => {
     const bloques = [
       "Hero",
+      "WhatYouCanTry",
       "Problem",
       "LiveDemo",
       "DashboardShowcase",
@@ -36,14 +37,18 @@ describe("Embudo de la home — contrato de contenido", () => {
     expect(flatten(es as Json).sort()).toEqual(flatten(en as Json).sort());
   });
 
-  it("el hero muestra el precio de entrada arriba del pliegue", () => {
-    // En modelo pay-first el precio es la primera objeción: si desaparece de
-    // acá, el visitante rebota una página más adelante y no nos enteramos.
-    expect(es.Hero.trust).toMatch(/\$60\.000/);
+  it("el hero comunica la prueba gratis y mantiene design-first", () => {
+    expect(es.Hero.button.primary).toMatch(/probar gratis/);
+    expect(getPrimaryCtaHref("es")).toBe("/es/templates");
   });
 
-  it("el FAQ abre respondiendo la objeción del pago por adelantado", () => {
-    expect(es.FAQ.faqs[0].question).toMatch(/pago antes/i);
+  it("la prueba distingue sus límites del momento de publicar", () => {
+    expect(es.WhatYouCanTry.items.map((item) => item.title).join(" ")).toMatch(/15 personas.*3 mesas/);
+    expect(es.WhatYouCanTry.publishNote).toMatch(/elegís un plan y publicás/);
+  });
+
+  it("el FAQ abre respondiendo si hay que pagar antes de probar", () => {
+    expect(es.FAQ.faqs[0].question).toMatch(/pagar antes de probar/i);
   });
 
   it("la reversión de riesgo no promete devolución de dinero", () => {
