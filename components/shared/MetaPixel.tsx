@@ -1,19 +1,17 @@
 "use client";
 
 import Script from "next/script";
-import { useDeferredLoad } from "@/hooks/useDeferredLoad";
 
 export default function MetaPixel() {
   const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
-  const shouldLoad = useDeferredLoad();
 
-  if (!PIXEL_ID || !shouldLoad) {
+  if (!PIXEL_ID) {
     return null;
   }
 
   return (
     <>
-      <Script id="meta-pixel" strategy="lazyOnload">
+      <Script id="meta-pixel" strategy="afterInteractive">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -25,6 +23,8 @@ export default function MetaPixel() {
           'https://connect.facebook.net/en_US/fbevents.js');
           fbq('init', '${PIXEL_ID}');
           fbq('track', 'PageView');
+          (window.bentoMetaQueue || []).forEach(function(args){fbq.apply(null,args)});
+          delete window.bentoMetaQueue;
         `}
       </Script>
       <noscript>

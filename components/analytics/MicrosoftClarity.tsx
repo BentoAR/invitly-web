@@ -1,20 +1,13 @@
-"use client";
-
-import Script from "next/script";
-import { useDeferredLoad } from "@/hooks/useDeferredLoad";
-
 export default function MicrosoftClarity() {
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
-  const shouldLoad = useDeferredLoad();
 
-  if (!clarityId || !shouldLoad) {
+  if (!clarityId) {
     return null;
   }
 
   return (
-    <Script
+    <script
       id="microsoft-clarity"
-      strategy="lazyOnload"
       dangerouslySetInnerHTML={{
         __html: `
           (function(c,l,a,r,i,t,y){

@@ -3,6 +3,9 @@ import { trackMixpanel } from './mixpanel'
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void
+    fbq?: (...args: unknown[]) => void
+    dataLayer?: unknown[][]
+    bentoMetaQueue?: Array<[string, string, EventParams?]>
   }
 }
 
@@ -19,6 +22,31 @@ function toGaEventName(event: string) {
   return event.toLowerCase().replace(/\s+/g, '_')
 }
 
+function trackMeta(event: string, params?: EventParams) {
+  if (typeof window === 'undefined') return
+
+  const standardEvents: Record<string, string> = {
+    'Plan Selected': 'InitiateCheckout',
+    'Template Demo Clicked': 'ViewContent',
+    'Template Selected': 'ViewContent',
+    'Personalization Started': 'CustomizeProduct',
+    'Whatsapp Clicked': 'Contact',
+    'Contact Form Submitted': 'Lead',
+  }
+  const metaEvent = standardEvents[event]
+
+  const method = metaEvent
+    ? 'track'
+    : ['Hero Cta Clicked', 'Pricing Link Clicked', 'Final Cta Clicked'].includes(event)
+      ? 'trackCustom'
+      : null
+  if (!method) return
+
+  const command: [string, string, EventParams?] = [method, metaEvent ?? toGaEventName(event), params]
+  if (typeof window.fbq === 'function') window.fbq(...command)
+  else (window.bentoMetaQueue ??= []).push(command)
+}
+
 function track(event: string, params?: EventParams) {
   trackMixpanel(event, params)
 
@@ -28,8 +56,13 @@ function track(event: string, params?: EventParams) {
     }))
   }
 
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
-  window.gtag('event', toGaEventName(event), params)
+  trackMeta(event, params)
+
+  if (typeof window === 'undefined') return
+
+  const gaCommand = ['event', toGaEventName(event), params]
+  if (typeof window.gtag === 'function') window.gtag(...gaCommand)
+  else (window.dataLayer ??= []).push(gaCommand)
 }
 
 export const analytics = {
