@@ -4,6 +4,7 @@ import { MessageCircle, X } from "lucide-react";
 import { openWhatsApp } from "@/utils/openWhatsapp";
 import { useTranslations } from "next-intl";
 import { analytics } from "@/utils/analytics";
+import { usePathname } from "next/navigation";
 
 interface WhatsAppButtonProps {
   message?: string;
@@ -15,6 +16,7 @@ export const WhatsAppButton = ({
   className = "",
 }: WhatsAppButtonProps) => {
   const t = useTranslations("WhatsappHelp");
+  const pathname = usePathname();
   const [showText, setShowText] = useState(false);
   const [buttonLoaded, setButtonLoaded] = useState(false);
 
@@ -41,6 +43,8 @@ export const WhatsAppButton = ({
     analytics.whatsappClicked('floating_button');
     openWhatsApp(message);
   };
+
+  if (pathname.includes("/invitaciones-digitales-para-organizadores")) return null;
 
   return (
     <div className={`fixed bottom-6 right-6 z-50 ${className}`}>

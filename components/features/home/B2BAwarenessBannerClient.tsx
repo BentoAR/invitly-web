@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
   Building2,
+  ClipboardList,
   Handshake,
   LayoutDashboard,
+  Palette,
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
@@ -17,7 +19,8 @@ interface Benefit {
   description: string;
 }
 
-const benefitIcons = [LayoutDashboard, TrendingUp, Handshake];
+const benefitIconsForBusiness = [LayoutDashboard, TrendingUp, Handshake];
+const benefitIconsForOrganizers = [Palette, ClipboardList, Handshake];
 
 interface B2BAwarenessBannerClientProps {
   badge: string;
@@ -40,6 +43,11 @@ export default function B2BAwarenessBannerClient({
   trustLine,
 }: B2BAwarenessBannerClientProps) {
   const locale = useLocale();
+  const isSpanish = locale === "es";
+  const benefitIcons = isSpanish ? benefitIconsForOrganizers : benefitIconsForBusiness;
+  const destination = isSpanish
+    ? "/es/invitaciones-digitales-para-organizadores"
+    : `/${locale}/empresas`;
 
   return (
     <section className="py-12 md:py-20 bg-gradient-to-br from-secondary/20 to-secondary/5">
@@ -79,7 +87,7 @@ export default function B2BAwarenessBannerClient({
         </div>
 
         <div className="flex flex-col items-center justify-center gap-4 mb-6">
-          <Link href={`/${locale}/empresas`}>
+          <Link href={destination}>
             <Button size="lg" className="group">
               {cta.primary}
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

@@ -123,15 +123,16 @@ const occasionPages = {
     ],
   },
   "invitaciones-digitales-eventos-corporativos": {
-    title: "Invitaciones digitales para eventos corporativos",
-    metadataTitle: "Invitaciones Digitales para Eventos Corporativos",
+    title: "Invitaciones digitales para empresas y eventos corporativos",
+    metadataTitle: "Invitaciones Digitales para Empresas y Eventos Corporativos",
     description:
       "Presentá tu evento corporativo y centralizá confirmaciones, ubicación y toda la información importante en un solo link.",
     categoryKey: "corporate",
     metadataDescription:
-      "Creá invitaciones digitales para eventos corporativos. Compartí un solo link con RSVP, ubicación y toda la información de tu evento.",
+      "Creá invitaciones digitales para eventos de empresa: lanzamientos, reuniones y celebraciones corporativas. Compartí un link con RSVP, ubicación e información del evento.",
     keywords: [
       "invitaciones digitales eventos corporativos",
+      "invitaciones digitales para empresas",
       "invitaciones corporativas digitales",
       "invitaciones para eventos empresariales",
       "RSVP eventos corporativos",

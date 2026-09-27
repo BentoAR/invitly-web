@@ -6,7 +6,6 @@ const STATIC_PAGES = [
   { path: "", changeFrequency: "weekly" as const, priority: 1 },
   { path: "/templates", changeFrequency: "daily" as const, priority: 0.9 },
   { path: "/pricing", changeFrequency: "monthly" as const, priority: 0.9 },
-  { path: "/empresas", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/contact", changeFrequency: "monthly" as const, priority: 0.7 },
 ];
 
@@ -32,16 +31,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  const occasionPaths = [
+  const spanishOnlyPaths = [
     "/invitaciones-digitales-bodas",
     "/invitaciones-digitales-quince-anos",
     "/invitaciones-digitales-cumpleanos",
     "/invitaciones-digitales-eventos-corporativos",
+    "/invitaciones-digitales-para-organizadores",
   ];
 
   return [
     ...localizedPages,
-    ...occasionPaths.map((path) => ({
+    ...spanishOnlyPaths.map((path) => ({
       url: `${baseUrl}/es${path}`,
       lastModified,
       changeFrequency: "weekly" as const,

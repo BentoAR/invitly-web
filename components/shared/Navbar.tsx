@@ -2,7 +2,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useState, useEffect, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -19,15 +19,17 @@ export const Navbar = () => {
   const pathname = usePathname();
 
   const isHome = pathname === `/${locale}` || pathname === "/";
-  const isDarkPage = pathname.includes("/empresas");
+  const isAgencyPage = pathname.includes("/invitaciones-digitales-para-organizadores");
+  const isDarkPage = isAgencyPage;
   const invitationsPath = `/${locale}/templates`;
+  const professionalPath = "/es/invitaciones-digitales-para-organizadores";
 
   const navLinks = [
     { name: t("inicio"), id: "inicio", href: `/${locale}` },
     { name: t("invitaciones"), id: "templates", href: invitationsPath },
     { name: t("precios"), id: "pricing", href: `/${locale}/pricing` },
     { name: t("contacto"), id: "contact", href: `/${locale}/contact` },
-    { name: t("empresas"), id: "empresas", href: `/${locale}/empresas` },
+    ...(locale === "es" ? [{ name: t("empresas"), id: "empresas", href: professionalPath }] : []),
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -71,6 +73,41 @@ export const Navbar = () => {
     ? "border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/30"
     : "";
 
+  if (isAgencyPage) {
+    return (
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#25262b] bg-[#08090b]/95 backdrop-blur-md">
+        <Container>
+          <div className="flex h-16 items-center justify-between gap-4">
+            <a href={`/${locale}`} className="flex min-h-11 items-center gap-3" aria-label="Bento, inicio">
+              <Image
+                src="https://d14sb9d2krfjkl.cloudfront.net/media/Frame+14+(1).svg"
+                alt="Bento"
+                width={81}
+                height={32}
+                className="h-8 w-[81px]"
+                priority
+              />
+              <span className="hidden border-l border-[#34353b] pl-3 text-xs font-medium text-[#a0a1aa] sm:inline">Para organizadores</span>
+            </a>
+            <div className="hidden items-center gap-8 text-sm text-white/70 md:flex">
+              <a href="#que-podemos-hacer" className="hover:text-white">La propuesta</a>
+              <a href="#como-trabajamos" className="hover:text-white">Cómo trabajamos</a>
+            </div>
+            <a
+              href="https://wa.me/541157572713?text=Hola%2C%20organizo%20eventos%20y%20quiero%20conversar%20sobre%20una%20invitaci%C3%B3n%20digital%20para%20un%20cliente."
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => analytics.whatsappClicked('agencias_navbar')}
+              className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[#62636c] px-3 text-xs font-semibold text-white hover:bg-white/10 sm:px-4 sm:text-sm"
+            >
+              Hablemos <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </Container>
+      </nav>
+    );
+  }
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${navClasses} ${
@@ -97,7 +134,7 @@ export const Navbar = () => {
                 ? isHome
                 : link.id === "templates"
                   ? pathname === invitationsPath
-                  : pathname === `/${locale}/${link.id}`;
+                  : pathname === link.href;
               return (
                 <a
                   key={link.id}
@@ -201,7 +238,7 @@ export const Navbar = () => {
                     const isActive =
                       link.id === "inicio"
                         ? isHome
-                        : pathname === `/${locale}/${link.id}`;
+                        : pathname === link.href;
                     return (
                       <a
                         key={link.id}

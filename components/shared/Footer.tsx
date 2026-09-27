@@ -9,14 +9,16 @@ export default function Footer() {
   const t = useTranslations("Footer");
   const locale = useLocale();
   const pathname = usePathname();
-  const isDarkPage = pathname.includes("/empresas");
+  const isAgencyPage = pathname.includes("/invitaciones-digitales-para-organizadores");
+  const isDarkPage = isAgencyPage;
   const invitationsPath = `/${locale}/templates`;
+  const professionalPath = "/es/invitaciones-digitales-para-organizadores";
 
   const links = [
     { label: t("home"), href: `/${locale}` },
     { label: t("invitations"), href: invitationsPath },
     { label: t("pricing"), href: `/${locale}/pricing` },
-    { label: t("business"), href: `/${locale}/empresas` },
+    ...(locale === "es" ? [{ label: t("business"), href: professionalPath }] : []),
     { label: t("contact"), href: `/${locale}/contact` },
   ];
 
@@ -29,6 +31,28 @@ export default function Footer() {
           { label: t("occasionCorporate"), href: "/es/invitaciones-digitales-eventos-corporativos" },
         ]
       : [];
+
+  if (isAgencyPage) {
+    return (
+      <footer className="border-t border-[#25262b] bg-[#08090b] text-white">
+        <Container>
+          <div className="flex flex-col gap-5 py-10 sm:flex-row sm:items-center sm:justify-between">
+            <a href={`/${locale}`} aria-label="Bento, inicio">
+              <Image
+                src="https://d14sb9d2krfjkl.cloudfront.net/media/Frame+14+(1).svg"
+                alt="Bento"
+                width={81}
+                height={32}
+                className="h-8 w-[81px]"
+              />
+            </a>
+            <p className="text-sm text-white/55">Experiencias digitales a medida para los eventos de tus clientes.</p>
+            <span className="text-xs text-white/40">© 2026 Bento</span>
+          </div>
+        </Container>
+      </footer>
+    );
+  }
 
   return (
     <footer
@@ -64,16 +88,18 @@ export default function Footer() {
             >
               {t("description")}
             </p>
-            <a
-              href={`/${locale}/empresas`}
-              className={`mt-4 inline-flex text-sm transition-colors ${
-                isDarkPage
-                  ? "text-neutral-400 hover:text-white"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {t("businessCta")}
-            </a>
+            {locale === "es" && (
+              <a
+                href={professionalPath}
+                className={`mt-4 inline-flex text-sm transition-colors ${
+                  isDarkPage
+                    ? "text-neutral-400 hover:text-white"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {t("businessCta")}
+              </a>
+            )}
           </div>
 
           <div>

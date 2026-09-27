@@ -425,7 +425,7 @@
       },
       {
         "question": "¿Sirve para eventos corporativos?",
-        "answer": "Sí. Tenemos planes para empresas con funcionalidades específicas para eventos corporativos, lanzamientos y reuniones. Contactanos para armar algo a medida."
+        "answer": "Sí. Podemos preparar invitaciones digitales para eventos corporativos, lanzamientos y reuniones. Contanos qué necesita tu evento y te proponemos una solución."
       },
       {
         "question": "¿Qué es Bento, exactamente?",
@@ -467,30 +467,30 @@
     "message": "Hola, estuve viendo los diseños de Bento y quiero ayuda para elegir uno para mi evento."
   },
   "B2BAwarenessBanner": {
-    "badge": "Bento para empresas",
-    "title": "Una solución para quienes organizan eventos todo el año",
-    "subtitle": "Si tenés un salón, sos wedding planner o gestionás eventos profesionalmente, Bento Empresas te permite ofrecer invitaciones digitales premium a tus clientes con planes pensados para volumen.",
+    "badge": "Para quienes organizan eventos",
+    "title": "Tu cliente trae la idea. Bento resuelve la invitación digital.",
+    "subtitle": "Si producís eventos, organizás bodas o trabajás con empresas, somos tu proveedor de invitaciones digitales a medida. Cotizamos cada proyecto para que armes tu propuesta al cliente.",
     "benefits": [
       {
         "icon": "💰",
-        "title": "Dashboard para planners",
-        "description": "Gestioná eventos, clientes e invitaciones desde un panel pensado para equipos profesionales"
+        "title": "Diseño para cada cliente",
+        "description": "La invitación parte de la identidad y las necesidades de ese evento"
       },
       {
         "icon": "🎯",
-        "title": "ROI claro para tu negocio",
-        "description": "Sumás más valor a tus paquetes y recuperás la inversión con eventos recurrentes"
+        "title": "Presupuesto por proyecto",
+        "description": "Evaluamos los pedidos especiales y te cotizamos el alcance antes de producir"
       },
       {
         "icon": "✨",
-        "title": "Seguimiento y acompañamiento",
-        "description": "No ofrecés solo un link: acompañás a tus clientes durante todo el proceso del evento"
+        "title": "Tu cliente sigue siendo tuyo",
+        "description": "Vos mantenés la relación comercial; nosotros le explicamos cómo usar Bento y damos soporte"
       }
     ],
     "cta": {
-      "primary": "Conocer Bento Empresas",
+      "primary": "Conocer cómo trabajamos",
       "secondary": "Hablar con ventas"
     },
-    "trustLine": "Para salones, wedding planners y organizadores profesionales en Argentina"
+    "trustLine": "Para productoras, organizadores de eventos y planners"
   }
 }

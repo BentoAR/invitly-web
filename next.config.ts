@@ -20,7 +20,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/empresas",
-        destination: "/es/empresas",
+        destination: "/es/invitaciones-digitales-para-organizadores",
+        permanent: true,
+      },
+      {
+        source: "/:locale(es|en)/empresas",
+        destination: "/es/invitaciones-digitales-para-organizadores",
         permanent: true,
       },
       {

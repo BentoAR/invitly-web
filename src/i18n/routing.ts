@@ -6,6 +6,7 @@ export const routing = defineRouting({
   locales: LOCALES,
   defaultLocale: "es",
   localeDetection: false,
+  alternateLinks: false,
 });
 
 export function stripLocaleFromPath(path: string) {
