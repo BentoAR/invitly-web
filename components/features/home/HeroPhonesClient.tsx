@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import HeroLoopVideo from "@/components/features/home/HeroLoopVideo";
 
 type HeroPhonesClientProps = {
   webmSrc: string;
@@ -49,21 +50,7 @@ export default function HeroPhonesClient({
           className="relative w-full"
           style={{ maxWidth: "min(720px, 46vw)" }}
         >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster={poster}
-            width={1080}
-            height={1080}
-            className="w-full h-auto"
-            aria-label={ariaLabel}
-          >
-            <source src={movSrc} type="video/quicktime" />
-            <source src={webmSrc} type="video/webm" />
-          </video>
+          <HeroLoopVideo webmSrc={webmSrc} movSrc={movSrc} poster={poster} ariaLabel={ariaLabel} />
         </div>
       </div>
     </div>

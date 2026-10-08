@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Hero from "@/components/features/home/Hero";
 
 jest.mock("@/components/features/home/HeroPhonesWrapper", () => () => null);
+jest.mock("@/components/features/home/HeroLoopVideo", () => () => null);
 
 jest.mock("next-intl/server", () => ({
   getLocale: jest.fn(async () => "es"),

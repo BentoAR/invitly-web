@@ -1,6 +1,7 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { Container } from "@/components/shared/Container";
 import HeroPhonesWrapper from "@/components/features/home/HeroPhonesWrapper";
+import HeroLoopVideo from "@/components/features/home/HeroLoopVideo";
 import HeroActions from "@/components/features/home/HeroActions";
 import {
   getPrimaryCtaHref,
@@ -49,21 +50,12 @@ export default async function Hero() {
           <div className="flex flex-col gap-7 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12" style={{ minHeight: "min(600px, 80vh)" }}>
             <div aria-hidden="true" className="order-2 lg:order-2">
               <div className="relative mx-auto w-full max-w-[380px] sm:max-w-[460px] lg:hidden">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
+                <HeroLoopVideo
+                  webmSrc={HERO_VIDEO_WEBM_URL}
+                  movSrc={HERO_VIDEO_MOV_URL}
                   poster={HERO_VIDEO_POSTER_URL}
-                  width={1080}
-                  height={1080}
-                  className="w-full h-auto"
-                  aria-label={t("imageAlt")}
-                >
-                  <source src={HERO_VIDEO_MOV_URL} type="video/quicktime" />
-                  <source src={HERO_VIDEO_WEBM_URL} type="video/webm" />
-                </video>
+                  ariaLabel={t("imageAlt")}
+                />
               </div>
             </div>
 
