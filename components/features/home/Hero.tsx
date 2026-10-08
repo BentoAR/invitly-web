@@ -10,7 +10,7 @@ import {
 } from "@/src/config/cta";
 
 const HERO_VIDEO_WEBM_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/videos/hero/bento-hero-v2.webm";
-const HERO_VIDEO_MOV_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/videos/hero/bento-hero-v2-safari.mov";
+const HERO_VIDEO_MOV_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/videos/hero/bento-hero-v3-safari.mov";
 const HERO_VIDEO_POSTER_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/videos/hero/bento-hero-v2-poster.webp";
 
 /**
