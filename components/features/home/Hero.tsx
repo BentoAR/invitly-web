@@ -1,5 +1,4 @@
 import { getTranslations, getLocale } from "next-intl/server";
-import Image from "next/image";
 import { Container } from "@/components/shared/Container";
 import HeroPhonesWrapper from "@/components/features/home/HeroPhonesWrapper";
 import HeroActions from "@/components/features/home/HeroActions";
@@ -10,8 +9,9 @@ import {
   CTA_MODE,
 } from "@/src/config/cta";
 
-const PHONE_FRONT_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+costado.png";
-const PHONE_LATERAL_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/iMockup+-+iPhone+15+Pro+Max+lateral.png";
+const HERO_VIDEO_WEBM_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/videos/hero/bento-hero-v2.webm";
+const HERO_VIDEO_MOV_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/videos/hero/bento-hero-v2-safari.mov";
+const HERO_VIDEO_POSTER_URL = "https://invitation-bucket-aws.s3.us-east-2.amazonaws.com/media/videos/hero/bento-hero-v2-poster.webp";
 
 /**
  * Bloque 1 — Hero.
@@ -48,31 +48,22 @@ export default async function Hero() {
         <Container className="relative z-10">
           <div className="flex flex-col gap-7 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12" style={{ minHeight: "min(600px, 80vh)" }}>
             <div aria-hidden="true" className="order-2 lg:order-2">
-              <div className="relative h-[280px] sm:h-[330px] lg:hidden">
-                <div className="absolute right-[8%] top-5 w-[45%] drop-shadow-[0_24px_48px_rgba(0,0,0,0.22)]">
-                  <Image
-                    src={PHONE_FRONT_URL}
-                    alt={t("imageAlt")}
-                    width={1080}
-                    height={1132}
-                    className="w-full h-auto"
-                    priority
-                    fetchPriority="high"
-                    sizes="45vw"
-                  />
-                </div>
-                <div className="absolute left-[-2%] top-10 w-[72%] drop-shadow-[0_20px_40px_rgba(0,0,0,0.20)] opacity-95">
-                  <Image
-                    src={PHONE_LATERAL_URL}
-                    alt={t("imageAlt")}
-                    width={1080}
-                    height={1132}
-                    className="w-full h-auto"
-                    priority
-                    fetchPriority="high"
-                    sizes="72vw"
-                  />
-                </div>
+              <div className="relative mx-auto w-full max-w-[380px] sm:max-w-[460px] lg:hidden">
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  poster={HERO_VIDEO_POSTER_URL}
+                  width={1080}
+                  height={1080}
+                  className="w-full h-auto"
+                  aria-label={t("imageAlt")}
+                >
+                  <source src={HERO_VIDEO_WEBM_URL} type="video/webm" />
+                  <source src={HERO_VIDEO_MOV_URL} type="video/quicktime" />
+                </video>
               </div>
             </div>
 
@@ -126,9 +117,10 @@ export default async function Hero() {
         </Container>
 
         <HeroPhonesWrapper
-          frontImage={PHONE_FRONT_URL}
-          lateralImage={PHONE_LATERAL_URL}
-          imageAlt={t("imageAlt")}
+          webmSrc={HERO_VIDEO_WEBM_URL}
+          movSrc={HERO_VIDEO_MOV_URL}
+          poster={HERO_VIDEO_POSTER_URL}
+          ariaLabel={t("imageAlt")}
         />
       </section>
     </>

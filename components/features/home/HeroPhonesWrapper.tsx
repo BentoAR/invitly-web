@@ -8,9 +8,10 @@ const HeroPhonesClient = dynamic(
 );
 
 type Props = {
-  frontImage: string;
-  lateralImage: string;
-  imageAlt: string;
+  webmSrc: string;
+  movSrc: string;
+  poster: string;
+  ariaLabel: string;
 };
 
 export default function HeroPhonesWrapper(props: Props) {
