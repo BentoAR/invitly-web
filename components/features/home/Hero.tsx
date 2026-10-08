@@ -63,10 +63,6 @@ export default async function Hero() {
               data-hero="content"
               className="order-1 pt-6 text-center lg:order-1 lg:pt-0 lg:text-left"
             >
-              <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--bento-border)] bg-[var(--bento-peach)] px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.17em] text-[var(--bento-ink)] shadow-sm">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--bento-orange)]" aria-hidden="true" />
-                {t("eyebrow")}
-              </p>
               <h1
                 data-hero="title"
                 className="font-display font-normal mb-5 leading-[1.06] text-[var(--bento-ink)]"

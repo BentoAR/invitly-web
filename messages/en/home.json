@@ -1,9 +1,8 @@
 {
   "Hero": {
     "badge": "More than an invitation",
-    "eyebrow": "Start your event for free",
     "title": "Your entire event, in a single link.",
-    "subtitle": "Choose a design, personalize your invitation and start organizing your event for free. Choose a plan when you're ready to publish.",
+    "subtitle": "Choose a design and personalize your invitation. Choose a plan when you're ready to publish.",
     "button": {
       "primary": "Choose a design and try it free",
       "secondary": "View pricing"

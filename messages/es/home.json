@@ -1,9 +1,8 @@
 {
   "Hero": {
     "badge": "Más que una invitación",
-    "eyebrow": "Tu evento empieza gratis",
     "title": "Invitaciones digitales que organizan tu evento entero.",
-    "subtitle": "Elegí un diseño, personalizá tu invitación y empezá a organizar tu evento sin pagar. Elegís un plan cuando quieras publicarlo.",
+    "subtitle": "Elegí un diseño y personalizá tu invitación. Elegís un plan cuando quieras publicarlo.",
     "button": {
       "primary": "Elegir diseño y probar gratis",
       "secondary": "Ver precios"
