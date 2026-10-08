@@ -61,8 +61,8 @@ export default async function Hero() {
                   className="w-full h-auto"
                   aria-label={t("imageAlt")}
                 >
-                  <source src={HERO_VIDEO_WEBM_URL} type="video/webm" />
                   <source src={HERO_VIDEO_MOV_URL} type="video/quicktime" />
+                  <source src={HERO_VIDEO_WEBM_URL} type="video/webm" />
                 </video>
               </div>
             </div>

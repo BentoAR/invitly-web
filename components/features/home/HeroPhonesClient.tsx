@@ -61,8 +61,8 @@ export default function HeroPhonesClient({
             className="w-full h-auto"
             aria-label={ariaLabel}
           >
-            <source src={webmSrc} type="video/webm" />
             <source src={movSrc} type="video/quicktime" />
+            <source src={webmSrc} type="video/webm" />
           </video>
         </div>
       </div>
