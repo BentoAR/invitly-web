@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Hero from "@/components/features/home/Hero";
 
 jest.mock("@/components/features/home/HeroPhonesWrapper", () => () => null);
+jest.mock("@/components/features/home/HeroLoopVideo", () => () => null);
 
 jest.mock("next-intl/server", () => ({
   getLocale: jest.fn(async () => "es"),
@@ -9,7 +10,7 @@ jest.mock("next-intl/server", () => ({
     const translations: Record<string, string | string[]> = {
       eyebrow: "Tu evento empieza gratis",
       title: "Invitaciones digitales que organizan tu evento entero.",
-      subtitle: "Elegí un diseño, personalizá tu invitación y empezá a organizar tu evento sin pagar. Elegís un plan cuando quieras publicarlo.",
+      subtitle: "Elegí un diseño y personalizá tu invitación. Elegís un plan cuando quieras publicarlo.",
       "stats.design": "Elegí un diseño",
       "stats.personalize": "Probá cómo queda",
       "stats.publish": "Publicá al pagar",
@@ -60,7 +61,7 @@ describe("Componente Hero", () => {
     const HeroComponent = await Hero();
     render(HeroComponent);
 
-    expect(screen.getByText(/organizar tu evento sin pagar/i)).toBeInTheDocument();
+    expect(screen.getByText(/personalizá tu invitación/i)).toBeInTheDocument();
     expect(screen.getByText("Publicá al pagar")).toBeInTheDocument();
   });
 });
