@@ -1,7 +1,10 @@
 {
   "Templates": {
-    "featuredInvitations": "Featured invitations",
-    "featuredDescription": "Explore the designs and find the one that fits your event.",
+    "featuredInvitations": "Digital invitation templates",
+    "featuredDescription": "Explore designs for weddings, birthdays, quinceañeras and corporate events. Find the style that fits your event.",
+    "seoTitle": "Customizable designs for every event",
+    "seoDescription": "Adapt each template with your text, colors, photos and event details to create an invitation that feels unique.",
+    "seoFeatures": "Every invitation can include RSVPs, location, countdown, music and a collaborative photo album.",
     "viewDemo": "View demo",
     "get": "Try for free",
     "viewAll": "View all invitations",

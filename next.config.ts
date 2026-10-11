@@ -29,8 +29,19 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/es/invitaciones-quince-anos",
+        destination: "/es/invitaciones-digitales-quince-anos",
+        permanent: true,
+      },
+      {
         source: "/contact",
         destination: "/es/contact",
+        permanent: true,
+      },
+      {
+        source: "/",
+        has: [{ type: "host", value: "www.bento.com.ar" }],
+        destination: "https://bento.com.ar/es",
         permanent: true,
       },
       {

@@ -13,12 +13,10 @@ const LOCALES = ["es", "en"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
-  const lastModified = new Date();
 
   const localizedPages = LOCALES.flatMap((locale) =>
     STATIC_PAGES.map(({ path, changeFrequency, priority }) => ({
       url: `${baseUrl}/${locale}${path}`,
-      lastModified,
       changeFrequency,
       priority,
       alternates: {
@@ -43,7 +41,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...localizedPages,
     ...spanishOnlyPaths.map((path) => ({
       url: `${baseUrl}/es${path}`,
-      lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.9,
       alternates: {
@@ -55,7 +52,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...TEMPLATE_DETAIL_SLUGS.map((slug) => ({
       url: `${baseUrl}/es/templates/${slug}`,
-      lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.7,
       alternates: {

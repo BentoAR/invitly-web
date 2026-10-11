@@ -61,7 +61,6 @@ export function getWebSiteSchema(locale: string): WithContext<WebSite> {
         : "Create professional digital invitations for any event. Over 200 templates, automatic RSVP and complete guest management.",
     inLanguage: locale === "es" ? "es-AR" : "en-US",
     publisher: {
-      "@type": "Organization",
       "@id": "https://bento.com.ar/#organization",
     },
     potentialAction: {
@@ -107,7 +106,6 @@ export function getServiceSchema(locale: string): WithContext<Service> {
         ? "Servicio profesional de creación de invitaciones digitales para bodas, cumpleaños, eventos corporativos y celebraciones. Incluye RSVP automático, playlist colaborativa, álbum de fotos en tiempo real y gestión completa de invitados."
         : "Professional digital invitation creation service for weddings, birthdays, corporate events and celebrations. Includes automatic RSVP, collaborative playlist, real-time photo album and complete guest management.",
     provider: {
-      "@type": "Organization",
       "@id": "https://bento.com.ar/#organization",
     },
     serviceType:
@@ -220,7 +218,6 @@ export function getB2BServiceSchema(locale: string): WithContext<Service> {
         ? "Plataforma de invitaciones digitales y gestión de eventos diseñada para salones de eventos, wedding planners y organizadores profesionales."
         : "Digital invitation and event management platform designed for event venues, wedding planners, and professional organizers.",
     provider: {
-      "@type": "Organization",
       "@id": "https://bento.com.ar/#organization",
     },
     serviceType:
@@ -272,9 +269,7 @@ export function getTemplateCreativeWorkSchema({
     genre,
     inLanguage: "es-AR",
     creator: {
-      "@type": "Organization",
-      name: "Bento",
-      url: siteUrl,
+      "@id": `${siteUrl}/#organization`,
     },
   };
 }

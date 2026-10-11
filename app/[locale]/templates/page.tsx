@@ -30,13 +30,13 @@ export async function generateMetadata({
 
   const title =
     locale === "es"
-      ? "Plantillas de Invitaciones Digitales | +200 Diseños Premium"
-      : "Digital Invitation Templates | +200 Premium Designs";
+      ? "Plantillas de Invitaciones Digitales | Bento"
+      : "Digital Invitation Templates | Bento";
 
   const description =
     locale === "es"
-      ? "Descubre más de 200 plantillas profesionales de invitaciones digitales para bodas, cumpleaños, eventos corporativos, XV años y más. Diseños elegantes, modernos y completamente personalizables. Crea tu invitación perfecta en minutos con Bento, la plataforma líder en Argentina."
-      : "Discover over 200 professional digital invitation templates for weddings, birthdays, corporate events, quinceañeras and more. Elegant, modern and fully customizable designs. Create your perfect invitation in minutes with Bento, the leading platform in Argentina.";
+      ? "Explorá plantillas de invitaciones digitales para bodas, 15 años, cumpleaños y eventos. Elegí un diseño y personalizalo en Bento."
+      : "Explore digital invitation templates for weddings, birthdays and events. Choose a design and customize it in Bento.";
 
   const keywords =
     locale === "es"
@@ -119,6 +119,13 @@ export default async function Templates({
           </Suspense>
           <TemplatesGrid />
         </HydrationBoundary>
+        <div className="mx-auto mt-16 max-w-3xl text-center">
+          <h2 className="text-2xl font-semibold tracking-tight">
+            {t("seoTitle")}
+          </h2>
+          <p className="mt-4 text-muted-foreground">{t("seoDescription")}</p>
+          <p className="mt-3 text-sm text-muted-foreground">{t("seoFeatures")}</p>
+        </div>
       </Container>
     </section>
   );
