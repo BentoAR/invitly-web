@@ -1,7 +1,10 @@
 {
   "Templates": {
-    "featuredInvitations": "Invitaciones destacadas",
-    "featuredDescription": "Explorá los diseños y encontrá el que va con tu evento.",
+    "featuredInvitations": "Plantillas de invitaciones digitales",
+    "featuredDescription": "Explorá diseños para bodas, 15 años, cumpleaños y eventos corporativos. Encontrá el estilo que va con tu evento.",
+    "seoTitle": "Diseños personalizables para cada tipo de evento",
+    "seoDescription": "Cada plantilla se adapta con tus textos, colores, fotos y datos del evento para que puedas crear una invitación única.",
+    "seoFeatures": "Todas las invitaciones pueden incluir confirmación de asistencia, ubicación, cuenta regresiva, música y álbum colaborativo.",
     "viewDemo": "Ver demo",
     "get": "Probar gratis",
     "viewAll": "Ver todas las invitaciones",

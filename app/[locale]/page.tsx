@@ -41,8 +41,8 @@ export async function generateMetadata({
 
   const description =
     locale === "es"
-      ? "Invitaciones digitales con panel de control para bodas, XV años, cumpleaños y eventos corporativos. RSVP automático, álbum colaborativo, playlist moderada y gestión completa de invitados. Pagás una vez por evento, desde $60.000. Sin suscripción."
-      : "Digital invitations with a control panel for weddings, birthdays and corporate events. Automatic RSVP, collaborative album, moderated playlist and complete guest management. One payment per event. No subscription.";
+      ? "Creá invitaciones digitales para bodas, 15 años, cumpleaños y eventos. Gestioná RSVP, invitados, álbum y playlist desde un solo lugar."
+      : "Create digital invitations for weddings, birthdays and events. Manage RSVPs, guests, photos and playlists from one place.";
 
   const keywords =
     locale === "es"
