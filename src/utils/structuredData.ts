@@ -165,7 +165,7 @@ export function getServiceSchema(locale: string): WithContext<Service> {
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "ARS",
-      lowPrice: "60000",
+      lowPrice: "35000",
       highPrice: "160000",
       offerCount: "3",
     },

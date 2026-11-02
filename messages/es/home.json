@@ -275,7 +275,7 @@
       {
         "code": "DIGITAL",
         "name": "Digital",
-        "price": "$60.000",
+        "price": "$35.000",
         "priceNote": "por evento",
         "description": "Para eventos donde lo que importa es compartir y confirmar",
         "cta": "Elegir diseño y probar gratis",
@@ -306,7 +306,7 @@
       {
         "code": "CELEBRATION",
         "name": "Celebración",
-        "price": "$75.000",
+        "price": "$60.000",
         "originalPrice": "$90.000",
         "discountBadge": "Oferta por tiempo limitado",
         "priceNote": "por evento",

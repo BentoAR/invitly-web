@@ -275,7 +275,7 @@
       {
         "code": "DIGITAL",
         "name": "Digital",
-        "price": "$60",
+        "price": "ARS 35,000",
         "priceNote": "per event",
         "description": "For events where sharing and confirming matter most",
         "cta": "Choose a design and try free",
@@ -306,7 +306,7 @@
       {
         "code": "CELEBRATION",
         "name": "Celebration",
-        "price": "$90",
+        "price": "ARS 60,000",
         "originalPrice": "",
         "discountBadge": "",
         "priceNote": "per event",
@@ -347,7 +347,7 @@
       {
         "code": "CUSTOMIZED",
         "name": "Custom Made",
-        "price": "$150",
+        "price": "ARS 160,000",
         "priceNote": "per event",
         "description": "Your event deserves a unique visual identity. Delivered within 3 to 5 business days.",
         "cta": "Choose a design and try free",

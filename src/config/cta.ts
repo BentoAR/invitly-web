@@ -41,5 +41,5 @@ export function getPricingHref(locale: string): string {
 }
 
 /** Precio de entrada. Se muestra en el hero para calificar al visitante temprano. */
-export const ENTRY_PRICE_ES = "$60.000";
-export const ENTRY_PRICE_EN = "$60";
+export const ENTRY_PRICE_ES = "$35.000";
+export const ENTRY_PRICE_EN = "ARS 35,000";

@@ -42,7 +42,7 @@ export const chatbotSteps: Record<string, ChatStep> = {
   pricing: {
     id: "pricing",
     message:
-      "Tenemos 3 planes por evento:\n\n📱 Digital — $60.000\n• Invitación personalizable + RSVP + hasta 100 invitados\n\n🎉 Celebración — $90.000 (más elegido)\n• Todo lo anterior + mesas + playlist ilimitada + soporte prioritario\n\n✨ A Medida — $160.000\n• Diseño 100% personalizado + animaciones + álbum QR post-evento\n\n¿Te gustaría más info sobre algún plan o querés empezar?",
+      "Tenemos 3 planes por evento:\n\n📱 Digital — $35.000\n• Invitación personalizable + RSVP + hasta 100 invitados\n\n🎉 Celebración — $60.000 (más elegido)\n• Todo lo anterior + mesas + playlist ilimitada + soporte prioritario\n\n✨ A Medida — $160.000\n• Diseño 100% personalizado + animaciones + álbum QR post-evento\n\n¿Te gustaría más info sobre algún plan o querés empezar?",
     options: [
       {
         id: "whatsapp",
